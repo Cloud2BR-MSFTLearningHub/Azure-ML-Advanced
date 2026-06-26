@@ -38,3 +38,16 @@
   font-size: 0.92rem;
   line-height: 1.35;
 }
+
+/* Sidebar nav alignment: keep main nav flush to the left edge. */
+.site-nav,
+.site-nav .nav-list,
+.site-nav .nav-list .nav-list-item {
+  margin-left: 0;
+  padding-left: 0;
+}
+
+/* Keep a small indent only for second-level items. */
+.site-nav .nav-list .nav-list {
+  padding-left: 0.75rem;
+}

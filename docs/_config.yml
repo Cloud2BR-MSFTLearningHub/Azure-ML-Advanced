@@ -7,6 +7,7 @@ plugins:
 color_scheme: light
 search_enabled: true
 heading_anchors: true
+footer_content: "Maintained by <a href='https://github.com/Cloud2BR-MSFTLearningHub'>Cloud2BR-MSFTLearningHub</a>."
 mermaid:
   version: "10.9.1"
 markdown: kramdown
