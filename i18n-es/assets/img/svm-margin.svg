@@ -54,5 +54,5 @@
   <text class="note" x="656" y="455">clase B</text>
   <circle class="sv" cx="760" cy="420" r="11"/>
   <text class="note" x="780" y="425">vector de soporte</text>
-  <text class="note" x="640" y="478" font-weight="700" fill="#15803d">C controla cuántas violaciones del margen se toleran</text>
+  <text class="note" x="955" y="478" text-anchor="end" font-weight="700" fill="#15803d">C controla cuántas violaciones del margen se toleran</text>
 </svg>

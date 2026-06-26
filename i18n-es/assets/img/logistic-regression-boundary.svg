@@ -48,5 +48,5 @@
   <text class="note" x="656" y="430">clase 0 (p &lt; 0.5)</text>
   <circle class="c1" cx="640" cy="455" r="8"/>
   <text class="note" x="656" y="460">clase 1 (p &gt; 0.5)</text>
-  <text class="note" x="800" y="440" font-weight="700" fill="#004a99">banda sombreada = región menos confiable</text>
+  <text class="note" x="955" y="490" text-anchor="end" font-weight="700" fill="#004a99">banda sombreada = región menos confiable</text>
 </svg>
