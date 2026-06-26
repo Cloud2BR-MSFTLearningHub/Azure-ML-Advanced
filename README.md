@@ -2,12 +2,12 @@
 
 Atlanta, USA
 
-[![GitHub](https://img.shields.io/badge/--181717?logo=github&logoColor=ffffff)](https://github.com/)
+![GitHub](https://img.shields.io/badge/--181717?logo=github&logoColor=ffffff)  
 [Cloud2BR OSS - Learning Hub](https://github.com/Cloud2BR-MSFTLearningHub)
 
 Last updated: 2026-06-26
 
-----------
+---
 
 This repository provides a structured Azure Machine Learning (Azure ML) overview from foundational concepts to advanced MLOps and production operations. It covers the **conceptual model**, the **mathematics**, **what happens in the backend**, the **minimum lifecycle stages**, and **how each piece looks** in practice.
 
@@ -16,7 +16,8 @@ This repository provides a structured Azure Machine Learning (Azure ML) overview
 Use the structured training navigation at [docs/index.md](docs/index.md).
 
 GitHub Pages deployment is wired via [deploy-github-pages.yml](.github/workflows/deploy-github-pages.yml).
-In GitHub, set **Settings -> Pages -> Source = GitHub Actions**.
+
+> In GitHub, set **Settings -> Pages -> Source = GitHub Actions**.
 
 This documentation site now builds with **MkDocs (Material theme)**.
 
@@ -110,8 +111,8 @@ flowchart LR
 
 Given dataset $(x_i, y_i)$, learn parameters $\theta$ that minimize empirical risk:
 
-$$
-\min_{\theta} \frac{1}{N}\sum_{i=1}^{N}\mathcal{L}(f_{\theta}(x_i), y_i)
+$$  
+\min_{\theta} \frac{1}{N}\sum_{i=1}^{N}\mathcal{L}(f_{\theta}(x_i), y_i)  
 $$
 
 Where:
@@ -124,20 +125,20 @@ Where:
 
 - **MSE (regression)**:
 
-$$
-\mathcal{L}_{MSE} = \frac{1}{N}\sum_{i=1}^{N}(y_i-\hat{y}_i)^2
+$$  
+\mathcal{L}*{MSE} = \frac{1}{N}\sum*{i=1}^{N}(y_i-\hat{y}_i)^2  
 $$
 
 - **Binary cross-entropy (classification)**:
 
-$$
-\mathcal{L}_{BCE} = -\frac{1}{N}\sum_{i=1}^{N}\left[y_i\log(\hat{p}_i)+(1-y_i)\log(1-\hat{p}_i)\right]
+$$  
+\mathcal{L}*{BCE} = -\frac{1}{N}\sum*{i=1}^{N}\left[y_i\log(\hat{p}_i)+(1-y_i)\log(1-\hat{p}_i)\right]  
 $$
 
 ### Optimization (Gradient Descent)
 
-$$
-\theta_{t+1} = \theta_t - \eta \nabla_{\theta}\mathcal{L}
+$$  
+\theta_{t+1} = \theta_t - \eta \nabla_{\theta}\mathcal{L}  
 $$
 
 Where $\eta$ is the learning rate. In Azure ML training jobs, this process executes on provisioned CPU/GPU compute, and each step's metrics can be logged for run comparison.
@@ -149,22 +150,22 @@ Where $\eta$ is the learning rate. In Azure ML training jobs, this process execu
 
 These reduce overfitting and improve generalization for production reliability. The regularized objective becomes:
 
-$$
-\min_{\theta} \frac{1}{N}\sum_{i=1}^{N}\mathcal{L}(f_{\theta}(x_i), y_i) + \lambda R(\theta)
+$$  
+\min_{\theta} \frac{1}{N}\sum_{i=1}^{N}\mathcal{L}(f_{\theta}(x_i), y_i) + \lambda R(\theta)  
 $$
 
 ### Evaluation Metrics
 
 - **Classification** — precision, recall, and their harmonic mean:
 
-$$
-\text{Precision} = \frac{TP}{TP+FP}, \quad \text{Recall} = \frac{TP}{TP+FN}, \quad F_1 = 2\cdot\frac{\text{Precision}\cdot\text{Recall}}{\text{Precision}+\text{Recall}}
+$$  
+\text{Precision} = \frac{TP}{TP+FP}, \quad \text{Recall} = \frac{TP}{TP+FN}, \quad F_1 = 2\cdot\frac{\text{Precision}\cdot\text{Recall}}{\text{Precision}+\text{Recall}}  
 $$
 
 - **Regression** — root mean squared error:
 
-$$
-\text{RMSE} = \sqrt{\frac{1}{N}\sum_{i=1}^{N}(y_i-\hat{y}_i)^2}
+$$  
+\text{RMSE} = \sqrt{\frac{1}{N}\sum_{i=1}^{N}(y_i-\hat{y}_i)^2}  
 $$
 
 ## 4) What Happens in the Backend
@@ -261,20 +262,20 @@ Production ML requires both software and statistical observability:
 - **Drift**:
   - Covariate drift: input feature distribution changes over time.
 
-$$
-P_t(X)\neq P_{t+\Delta}(X)
+$$  
+P_t(X)\neq P_{t+\Delta}(X)  
 $$
 
-  - Concept drift: target relationship changes, so the same inputs map to different outcomes.
+- Concept drift: target relationship changes, so the same inputs map to different outcomes.
 
-$$
-P_t(Y\mid X)\neq P_{t+\Delta}(Y\mid X)
+$$  
+P_t(Y\mid X)\neq P_{t+\Delta}(Y\mid X)  
 $$
 
 These equations indicate distributional change between time windows. In practice, teams detect drift with distance or hypothesis metrics. For example, the **Population Stability Index (PSI)** across $B$ bins:
 
-$$
-\text{PSI} = \sum_{b=1}^{B}(a_b - e_b)\ln\frac{a_b}{e_b}
+$$  
+\text{PSI} = \sum_{b=1}^{B}(a_b - e_b)\ln\frac{a_b}{e_b}  
 $$
 
 where $a_b$ and $e_b$ are the actual and expected proportions in bin $b$. Other common detectors include KL-divergence and the Kolmogorov–Smirnov (KS) test. Retraining is triggered when business and statistical thresholds are exceeded.
@@ -301,9 +302,6 @@ This repository is positioned as an Azure ML learning hub covering:
 
 Use this as a baseline to add notebooks, pipeline examples, deployment templates, and monitoring playbooks in future increments.
 
-<!-- START BADGE -->
-<div align="center">
-  <img src="https://img.shields.io/badge/Total%20views-40-limegreen" alt="Total views">
-  <p>Refresh Date: 2026-04-07</p>
-</div>
-<!-- END BADGE -->
+![Total views](https://img.shields.io/badge/Total%20views-40-limegreen)
+
+Refresh Date: 2026-04-07
