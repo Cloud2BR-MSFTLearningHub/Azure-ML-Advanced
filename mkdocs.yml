@@ -60,8 +60,10 @@ extra:
 
 nav:
   - Home: index.md
+  - Math Prerequisites: modules/math-prerequisites.md
   - Introduction and Lifecycle: modules/introduction.md
   - ML Foundations: modules/ml-foundations.md
+  - Neural Networks and Deep Learning: modules/neural-networks.md
   - Azure ML Environment: modules/azure-ml-environment.md
   - Environment Setup: modules/environment-setup.md
   - Data Preparation: modules/data-preparation.md

@@ -345,3 +345,451 @@ it. Each term is defined in one plain sentence.
 3. What is the difference between API and web service?
 4. Given a business goal, what are the five problem-framing questions you must answer first?
 5. Why can a model with excellent accuracy still be the wrong choice for production?
+
+---
+
+## Probability foundations for ML
+
+Machine learning is fundamentally applied probability. Every loss function, every metric, and every generalization guarantee has a probabilistic argument behind it. This section builds the minimum required vocabulary.
+
+### Joint and marginal probability
+
+The **joint probability** $P(X = x, Y = y)$ is the probability that a randomly drawn example has feature value $x$ *and* label $y$ simultaneously. Supervised learning assumes your dataset is sampled i.i.d. from this joint distribution.
+
+The **marginal probability** of $X$ is obtained by summing (or integrating) out $Y$:
+
+$$
+P(X = x) = \sum_{y} P(X = x, Y = y)
+$$
+
+This tells you nothing about the label — only what the input looks like.
+
+### Conditional probability
+
+The **conditional probability** $P(Y = y \mid X = x)$ is the probability of label $y$ given that the input is $x$. This is exactly what a classifier learns to estimate. Formally:
+
+$$
+P(Y \mid X) = \frac{P(X, Y)}{P(X)}
+$$
+
+The denominator $P(X)$ normalizes the joint so that probabilities over all $y$ sum to 1. When a model outputs a "probability" of class 1, it is estimating $P(Y=1 \mid X=x)$.
+
+### Bayes' theorem
+
+Bayes' theorem is the central engine of probabilistic reasoning. It inverts conditioning:
+
+$$
+P(Y \mid X) = \frac{P(X \mid Y) \cdot P(Y)}{P(X)}
+$$
+
+- $P(Y)$ is the **prior**: what you believe about $Y$ before seeing $X$. For spam, this might be "5% of all emails are spam."
+- $P(X \mid Y)$ is the **likelihood**: how probable is this input given the label? E.g., how likely is the word "lottery" in a spam email?
+- $P(Y \mid X)$ is the **posterior**: your updated belief after seeing $X$. This is what you want.
+- $P(X)$ is the **evidence**: a normalizing constant.
+
+A **Naive Bayes classifier** directly applies this theorem, assuming features are conditionally independent given the class. Despite this unrealistic assumption, it performs surprisingly well on text classification because the relative ordering of posteriors is preserved.
+
+### Why probabilistic thinking is essential for ML
+
+- **Calibration**: a model predicting 0.9 probability should be right 90% of the time. Miscalibrated models mislead downstream decision systems.
+- **Uncertainty quantification**: knowing *how confident* the model is matters as much as the prediction itself in medical and financial settings.
+- **Loss derivation**: most standard loss functions (cross-entropy, MSE) fall out naturally as maximum likelihood objectives under specific probabilistic assumptions.
+- **Handling class imbalance**: imbalanced datasets have a skewed prior $P(Y)$; understanding this prevents naive accuracy from being a misleading metric.
+
+> **Note - Probability vs statistics:** Probability reasons forward from a known model to data. Statistics reasons backward from data to unknown parameters. ML does both simultaneously: it uses statistical estimation to learn a probabilistic model, then uses that model to reason forward at inference time.
+
+---
+
+## Information theory and entropy in ML
+
+Information theory, developed by Claude Shannon in 1948, provides the mathematical language for measuring uncertainty. It turns out to be the natural foundation for classification losses.
+
+### Entropy: measuring uncertainty
+
+The **entropy** of a discrete probability distribution $P$ over $K$ classes measures the average surprise (unpredictability) of drawing a sample:
+
+$$
+H(P) = -\sum_{k=1}^{K} p_k \log_2 p_k
+$$
+
+Entropy is measured in **bits** when using $\log_2$, and in **nats** when using $\ln$. Key properties:
+
+- $H = 0$ when one class has probability 1 (no uncertainty).
+- $H$ is maximized at $\log_2 K$ bits when all $K$ classes are equally likely (maximum uncertainty).
+- For a fair coin (binary, $p = 0.5$): $H = -0.5 \log_2 0.5 - 0.5 \log_2 0.5 = 1$ bit.
+
+### Cross-entropy as the natural classification loss
+
+Suppose the true distribution over classes is $P$ (the one-hot label vector), and your model produces a predicted distribution $Q$ (the softmax outputs). The **cross-entropy** between $P$ and $Q$ is:
+
+$$
+H(P, Q) = -\sum_{k=1}^{K} p_k \log q_k
+$$
+
+For a single example with true class $c$, the one-hot vector makes $p_k = 1$ only for $k = c$, so this reduces to:
+
+$$
+H(P, Q) = -\log q_c
+$$
+
+This is exactly the **negative log-likelihood** of the correct class under the model's distribution. Minimizing cross-entropy is equivalent to maximizing the probability the model assigns to the true labels — the most principled objective possible.
+
+The averaged cross-entropy over a dataset is the standard **categorical cross-entropy loss** used in virtually every classification model:
+
+$$
+\mathcal{L}_{CE} = -\frac{1}{N} \sum_{i=1}^{N} \sum_{k=1}^{K} y_{ik} \log \hat{p}_{ik}
+$$
+
+### KL divergence: measuring distribution mismatch
+
+The **Kullback-Leibler (KL) divergence** from distribution $Q$ to $P$ measures how much information is lost when $Q$ is used to approximate $P$:
+
+$$
+D_{KL}(P \| Q) = \sum_{k} p_k \log \frac{p_k}{q_k} = H(P, Q) - H(P)
+$$
+
+Key facts:
+
+- $D_{KL}(P \| Q) \geq 0$ always, with equality only when $P = Q$ (Gibbs inequality).
+- It is **asymmetric**: $D_{KL}(P \| Q) \neq D_{KL}(Q \| P)$ in general.
+- Minimizing cross-entropy $H(P, Q)$ with respect to model parameters is identical to minimizing $D_{KL}(P \| Q)$, because $H(P)$ does not depend on the model.
+
+KL divergence appears throughout ML: in variational autoencoders (as the regularization term), in knowledge distillation (aligning student and teacher distributions), and in monitoring (measuring how much a production distribution has drifted from training).
+
+> **Tip - Intuition for cross-entropy:** Think of $-\log q_c$ as the "cost" of encoding the true class using your model's probability distribution. If the model is very confident and correct ($q_c \approx 1$), the cost is near zero. If the model is confidently wrong ($q_c \approx 0$), the cost is enormous. This is why cross-entropy strongly penalizes overconfident mistakes.
+
+---
+
+## Statistical learning theory overview
+
+Statistical learning theory is the branch of mathematics that asks: *when does empirical risk minimization actually work?* It provides formal guarantees connecting what we observe on training data to what we can expect on unseen data.
+
+### The generalization problem formally
+
+We want to learn a function $f$ from a hypothesis class $\mathcal{H}$ such that the **true risk** $R(f)$ is small. We only have access to the **empirical risk** on $N$ samples:
+
+$$
+\hat{R}(f) = \frac{1}{N} \sum_{i=1}^{N} \mathcal{L}(f(x_i), y_i)
+$$
+
+The generalization gap $R(f) - \hat{R}(f)$ is the core quantity theory tries to bound.
+
+### PAC learning
+
+**Probably Approximately Correct (PAC) learning**, introduced by Leslie Valiant (1984), formalizes what it means for a learning algorithm to succeed. An algorithm PAC-learns a concept class $\mathcal{C}$ if: for any target concept, any distribution over inputs, and any $\epsilon, \delta > 0$, the algorithm outputs a hypothesis $h$ such that:
+
+$$
+P\big[R(h) \leq \epsilon\big] \geq 1 - \delta
+$$
+
+using a number of samples that is polynomial in $1/\epsilon$, $1/\delta$, and the complexity of the concept class. Intuitively: with enough data, the algorithm will (with high probability) find a hypothesis whose true error is small.
+
+### VC dimension
+
+The **Vapnik-Chervonenkis (VC) dimension** of a hypothesis class $\mathcal{H}$ is the largest set of points that $\mathcal{H}$ can **shatter** — classify in all $2^n$ possible binary labelings. It measures the expressive power of the model class.
+
+Examples:
+
+- Linear classifiers in $\mathbb{R}^2$ (half-planes): VC dimension = 3. Any 3 non-collinear points can be shattered; no set of 4 can.
+- Decision stumps (threshold on one feature): VC dimension = 2.
+- $k$-nearest-neighbor: VC dimension = $\infty$ (infinitely expressive).
+
+The fundamental sample complexity bound:
+
+$$
+N = O\!\left(\frac{d_{VC} + \log(1/\delta)}{\epsilon^2}\right)
+$$
+
+where $d_{VC}$ is the VC dimension. To halve the allowed error $\epsilon$, you need roughly **four times as much data**.
+
+### Generalization bounds
+
+A uniform convergence bound states that with probability at least $1 - \delta$:
+
+$$
+R(f) \leq \hat{R}(f) + O\!\left(\sqrt{\frac{d_{VC} \log N + \log(1/\delta)}{N}}\right)
+$$
+
+Practical implications:
+
+- **More data** ($N$ increases): the bound tightens — variance falls.
+- **More complex model** ($d_{VC}$ increases): the bound loosens — variance rises.
+- **Bias** is not captured by this bound; it only describes how much the model can overfit.
+
+### Why more data helps variance but not bias
+
+Increasing $N$ reduces the generalization gap by concentrating the empirical distribution around the true distribution (law of large numbers). However, if the hypothesis class is too simple (small $d_{VC}$), no amount of data will allow the model to express the true function — that is bias, a structural limitation of the model family.
+
+> **Note - Practical implication:** If your model plateaus despite adding data, the problem is bias (capacity). If train and test error diverge, the problem is variance (complexity). These two diagnostics drive all model selection decisions.
+
+---
+
+## The scientific method as ML workflow
+
+Good ML practice is good science. The scientific method provides the epistemological discipline that prevents teams from fooling themselves.
+
+### Mapping science to ML
+
+| Scientific step      | ML equivalent                                      | Risk if skipped                              |
+| -------------------- | -------------------------------------------------- | -------------------------------------------- |
+| Hypothesis           | Define the problem and success metric precisely    | Building a model that answers the wrong question |
+| Experimental design  | Design the train/val/test split and evaluation     | Data leakage; optimistic results that do not transfer |
+| Experiment           | Train model with controlled hyperparameters        | Uninterpretable results; cannot isolate causes |
+| Measurement          | Record metrics on held-out data                    | Overfitting the reported number to the test set |
+| Conclusion           | Accept/reject the hypothesis; decide next step     | Premature deployment or abandoned good models |
+| Replication          | Version code, data, and environment                | Results that cannot be reproduced by teammates or auditors |
+
+### Controlled experiments in ML
+
+A **controlled experiment** changes one variable at a time. In ML this means:
+
+- When comparing models, hold the dataset, preprocessing, and evaluation metric constant.
+- When comparing feature sets, hold the model architecture and hyperparameters constant.
+- When comparing hyperparameters, use the same random seed and data split.
+
+Azure ML **experiment tracking** enforces this discipline by logging every run with its hyperparameters, data version, code commit, and metrics.
+
+### Reproducibility and its enemies
+
+A result is **reproducible** if anyone with the same inputs can get the same outputs. Reproducibility is threatened by:
+
+- **Random seeds**: randomness in weight initialization, data shuffling, or augmentation must be fixed and logged.
+- **Library versions**: a different version of scikit-learn or PyTorch may produce numerically different results.
+- **Data version**: if the training dataset changes without versioning, you cannot re-create historical runs.
+- **Hardware**: GPU non-determinism means bit-identical reproduction sometimes requires pinning hardware.
+
+Azure ML addresses these with dataset versioning, environment snapshots, and run reproducibility metadata.
+
+> **Tip - The reproducibility checklist:** Before publishing or deploying a result, verify: (1) the data version is pinned, (2) the code commit is tagged, (3) the environment is containerized, (4) random seeds are logged. A result that cannot be reproduced is not a result.
+
+---
+
+## Responsible AI and ethical framing
+
+Responsible AI is not a box to check at the end of a project — it is a design discipline that must be embedded from problem framing onwards.
+
+### Why ethics is a first-class engineering concern
+
+A model encodes decisions. Those decisions affect people. When a credit-scoring model denies a loan, a hiring model ranks résumés, or a medical triage model allocates attention, the downstream consequences are real and potentially discriminatory. The question "is this model accurate?" is incomplete without also asking "accurate for whom, and at what cost to which group?"
+
+### Fairness definitions
+
+There is no single agreed definition of fairness. The three most common statistical definitions are:
+
+**Demographic parity (statistical parity):** The positive prediction rate is equal across groups $A$ and $B$:
+
+$$
+P(\hat{Y} = 1 \mid G = A) = P(\hat{Y} = 1 \mid G = B)
+$$
+
+This ensures equal representation of positive outcomes. It does not require equal accuracy.
+
+**Equalized odds:** Both the true positive rate (TPR) and false positive rate (FPR) are equal across groups:
+
+$$
+P(\hat{Y} = 1 \mid Y = y, G = A) = P(\hat{Y} = 1 \mid Y = y, G = B) \quad \text{for } y \in \{0, 1\}
+$$
+
+This is stricter: the model must be equally accurate *and* equally inaccurate across groups.
+
+**Calibration:** The predicted probability $\hat{p}$ matches the true positive rate within each group. A model calibrated at the population level may be miscalibrated within sub-groups — a common failure mode in medical scoring.
+
+> **Note - The impossibility theorem:** It is mathematically impossible to satisfy demographic parity, equalized odds, and calibration simultaneously when base rates differ across groups (Chouldechova 2017; Kleinberg et al. 2016). Choosing a fairness criterion is a value judgment that must involve stakeholders, not just engineers.
+
+### Transparency and explainability
+
+- **Transparency** refers to the ability to understand *why* a model made a specific decision. Opaque "black box" models create accountability gaps in regulated industries.
+- **Explainability** techniques (SHAP, LIME, attention visualization) approximate or expose feature attributions. These are covered in the Results and Explainability module.
+- Regulations such as GDPR (Article 22) and the EU AI Act require that automated decisions affecting individuals be explainable on request.
+
+### Privacy and data minimization
+
+- **Data minimization**: only collect and use the features necessary for the task. Every additional personal attribute is a liability.
+- **Differential privacy**: a formal mathematical guarantee that the presence or absence of any single individual in the training data cannot be inferred from the model's output.
+- **Federated learning**: train models on data that never leaves the device or institution. Gradients are aggregated centrally but raw data stays local.
+
+### Accountability and governance
+
+- Every model deployed in production should have a named owner responsible for monitoring, retraining, and decommissioning.
+- **Model cards** document a model's intended use, performance across sub-groups, known limitations, and out-of-scope uses. They are the audit trail that regulated organizations require.
+- In the EU AI Act framework, high-risk AI systems (hiring, credit, biometric identification, critical infrastructure) face mandatory conformity assessments, logging requirements, and human-oversight mechanisms.
+
+> **Note - GDPR and Azure ML:** If training data includes personal data of EU residents, the data controller must document the legal basis, retention period, and processing purpose. Model outputs that constitute automated decisions triggering legal effects require a human review pathway. Azure ML's audit logs and dataset lineage features directly support this compliance requirement.
+
+---
+
+## Industry applications taxonomy
+
+The table below catalogs 22 real-world ML applications across major industries. For each application the relevant ML problem type, typical model family, data type, and a key deployment risk are listed.
+
+| # | Industry | Application | Problem type | Model family | Data type | Key risk |
+|---|----------|-------------|--------------|--------------|-----------|----------|
+| 1 | Healthcare | Disease risk scoring | Binary classification | Gradient boosting, logistic regression | Tabular (EHR) | Disparate performance across demographic groups |
+| 2 | Healthcare | Medical image diagnosis | Multi-class classification | CNN, Vision Transformer | Images (X-ray, MRI) | Distribution shift between hospital systems |
+| 3 | Healthcare | Length-of-stay prediction | Regression | XGBoost, RNN | Tabular + time series | Temporal leakage from future observations |
+| 4 | Healthcare | Drug discovery | Generative / regression | Graph neural networks | Molecular graphs | Out-of-distribution extrapolation |
+| 5 | Finance | Credit default scoring | Binary classification | Logistic regression, XGBoost | Tabular (bureau data) | Regulatory fairness (ECOA); model explainability |
+| 6 | Finance | Fraud detection | Anomaly detection / binary | Isolation Forest, XGBoost | Tabular + graph | Severe class imbalance; adversarial evolution |
+| 7 | Finance | Algorithmic trading | Time-series forecasting | LSTM, Transformer | Market tick data | Non-stationarity; regime change |
+| 8 | Finance | Document processing (KYC) | NER / classification | BERT, LayoutLM | Text + PDF layout | Hallucination risk from LLMs |
+| 9 | Retail | Product recommendation | Collaborative filtering | Matrix factorization, two-tower neural net | Interaction logs | Popularity bias; cold-start problem |
+| 10 | Retail | Demand forecasting | Time-series regression | LightGBM, N-BEATS | Tabular + calendar features | Promotions causing distributional breaks |
+| 11 | Retail | Dynamic pricing | Regression + RL | Bandit models, policy gradient | Tabular | Price elasticity model errors amplify losses |
+| 12 | Retail | Churn prediction | Binary classification | XGBoost, logistic regression | Tabular (CRM) | Label ambiguity; what counts as churned? |
+| 13 | Manufacturing | Predictive maintenance | Anomaly detection / binary | Autoencoder, LSTM | Sensor time series | Rare event class imbalance; cost of false negatives |
+| 14 | Manufacturing | Visual quality inspection | Object detection | YOLO, ResNet | Images | Lighting / background shift across production lines |
+| 15 | Manufacturing | Supply chain optimization | Combinatorial optimization | Reinforcement learning, OR solvers | Mixed (tabular + graph) | Reward shaping errors; sim-to-real gap |
+| 16 | Government | Document classification | Multi-class classification | BERT fine-tune | Text | Sensitive categories; privacy regulations |
+| 17 | Government | Benefits fraud detection | Anomaly detection | Graph analytics + XGBoost | Tabular + relational | Disparate impact on vulnerable populations |
+| 18 | Government | Traffic flow prediction | Time-series regression | GNN, LSTM | Sensor + GPS data | Sensor failures causing silent covariate shift |
+| 19 | Energy | Renewable output forecasting | Time-series regression | Prophet, TCN | Weather + grid sensors | Distribution shift from climate trends |
+| 20 | Media | Content moderation | Multi-label classification | BERT, CLIP | Text + images | Adversarial bypass; language/dialect fairness |
+| 21 | HR / Talent | Résumé screening | Ranking / classification | BERT, logistic regression | Text | Historical hiring bias encoded in labels |
+| 22 | Logistics | Route optimization | Combinatorial + regression | Reinforcement learning | Graph + spatial | Objective function mismatch with real cost |
+
+> **Note - Using this table:** Before selecting a model family, identify your industry row. The "Key risk" column is the most valuable: it contains the specific failure mode most commonly observed in production for that application type. Ignoring it is the most frequent cause of ML projects that succeed in offline evaluation but fail in deployment.
+
+---
+
+## A complete numeric walkthrough: spam classification from scratch
+
+This section walks through an end-to-end spam classification example with full arithmetic at every step. No step is left as "and then magic happens."
+
+### Step 1: Problem definition and features
+
+**Task**: classify an email as spam (1) or not spam (0).
+
+**Features** (two, for clarity):
+
+- $x_1$: number of suspicious links in the email.
+- $x_2$: 1 if the subject contains the word "FREE", 0 otherwise.
+
+**Training dataset** (four examples):
+
+| Email | $x_1$ | $x_2$ | Label $y$ |
+|-------|--------|--------|-----------|
+| A     | 3      | 1      | 1 (spam)  |
+| B     | 0      | 0      | 0 (not)   |
+| C     | 5      | 1      | 1 (spam)  |
+| D     | 1      | 0      | 0 (not)   |
+
+### Step 2: The logistic regression model
+
+Logistic regression learns weights $w_1, w_2$ and a bias $b$ to compute:
+
+$$
+z_i = w_1 x_{i1} + w_2 x_{i2} + b
+$$
+
+$$
+\hat{p}_i = \sigma(z_i) = \frac{1}{1 + e^{-z_i}}
+$$
+
+The sigmoid function $\sigma$ squashes any real number to $(0, 1)$, making it interpretable as a probability.
+
+**Initialize:** $w_1 = 0,\; w_2 = 0,\; b = 0$.
+
+### Step 3: Forward pass — compute predictions
+
+With all parameters at zero, $z_i = 0$ for all emails, so $\hat{p}_i = \sigma(0) = 0.5$ for all four examples.
+
+### Step 4: Compute the binary cross-entropy loss
+
+$$
+\mathcal{L} = -\frac{1}{N} \sum_{i=1}^{N} \left[ y_i \log \hat{p}_i + (1 - y_i) \log(1 - \hat{p}_i) \right]
+$$
+
+For $\hat{p}_i = 0.5$ and $N = 4$, each term equals $-\log 0.5 = \log 2 \approx 0.693$.
+
+Total: $\mathcal{L} = 0.693$. This is the maximum-entropy baseline — the model knows nothing.
+
+### Step 5: Compute gradients
+
+For logistic regression with binary cross-entropy, the gradient with respect to $w_j$ is:
+
+$$
+\frac{\partial \mathcal{L}}{\partial w_j} = \frac{1}{N} \sum_{i=1}^{N} (\hat{p}_i - y_i) x_{ij}
+$$
+
+**Gradient for $w_1$:**
+
+$$
+\frac{\partial \mathcal{L}}{\partial w_1} = \frac{1}{4}\big[(0.5-1)(3) + (0.5-0)(0) + (0.5-1)(5) + (0.5-0)(1)\big]
+= \frac{-1.5 + 0 - 2.5 + 0.5}{4} = -0.875
+$$
+
+**Gradient for $w_2$:**
+
+$$
+\frac{\partial \mathcal{L}}{\partial w_2} = \frac{1}{4}\big[(0.5-1)(1) + (0.5-0)(0) + (0.5-1)(1) + (0.5-0)(0)\big]
+= \frac{-0.5 + 0 - 0.5 + 0}{4} = -0.25
+$$
+
+**Gradient for $b$:**
+
+$$
+\frac{\partial \mathcal{L}}{\partial b} = \frac{1}{4}\big[-0.5 + 0.5 - 0.5 + 0.5\big] = 0
+$$
+
+### Step 6: Gradient descent update
+
+With learning rate $\eta = 0.5$:
+
+$$
+w_1 \leftarrow 0 - 0.5 \times (-0.875) = +0.4375
+$$
+
+$$
+w_2 \leftarrow 0 - 0.5 \times (-0.25) = +0.125
+$$
+
+$$
+b \leftarrow 0 - 0.5 \times 0 = 0
+$$
+
+Both $w_1$ and $w_2$ became positive, which makes sense: more links and "FREE" in the subject both increase the spam probability.
+
+### Step 7: Second forward pass
+
+Recompute predictions with the updated weights:
+
+| Email | $z_i = 0.4375 x_1 + 0.125 x_2$ | $\hat{p}_i = \sigma(z_i)$ | Label |
+|-------|----------------------------------|---------------------------|-------|
+| A     | $0.4375(3) + 0.125(1) = 1.4375$ | $\approx 0.808$           | 1     |
+| B     | $0.4375(0) + 0.125(0) = 0.000$  | $= 0.500$                 | 0     |
+| C     | $0.4375(5) + 0.125(1) = 2.3125$ | $\approx 0.910$           | 1     |
+| D     | $0.4375(1) + 0.125(0) = 0.4375$ | $\approx 0.607$           | 0     |
+
+The spam emails (A, C) now have probabilities above 0.5. After more gradient descent iterations the model will cleanly separate the classes.
+
+### Step 8: Evaluate with a confusion matrix
+
+After full convergence, predictions at threshold $0.5$:
+
+| | Predicted spam | Predicted not spam |
+|---|---|---|
+| **Actual spam** | TP = 2 | FN = 0 |
+| **Actual not spam** | FP = 0 | TN = 2 |
+
+Derived metrics:
+
+- **Precision** $= \frac{TP}{TP + FP} = \frac{2}{2} = 1.0$
+- **Recall** $= \frac{TP}{TP + FN} = \frac{2}{2} = 1.0$
+- **F1** $= 2 \cdot \frac{1.0 \times 1.0}{1.0 + 1.0} = 1.0$
+
+> **Note - What this walkthrough teaches:** The entire ML pipeline — define features, initialize weights, forward pass, compute loss, compute gradients, update, repeat — is arithmetic. Every deep-learning model, no matter how large, is doing exactly this sequence. The complexity grows but the principle does not change.
+
+---
+
+## Quick self-check (extended)
+
+1. Is every AI system an ML system?
+2. In production, which stage catches drift issues?
+3. What is the difference between API and web service?
+4. Given a business goal, what are the five problem-framing questions you must answer first?
+5. Why can a model with excellent accuracy still be the wrong choice for production?
+6. What does entropy measure, and what is its minimum and maximum value for a binary distribution?
+7. Why is minimizing cross-entropy equivalent to maximizing the likelihood of the training labels?
+8. What is the VC dimension of a linear classifier in two dimensions?
+9. Name two fairness definitions and explain why they cannot all be satisfied simultaneously when base rates differ.
+10. In the spam walkthrough, why did $w_1$ receive a larger gradient update than $w_2$ after the first step?

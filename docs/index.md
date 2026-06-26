@@ -39,6 +39,10 @@ multiple eras based on compute power, data availability, and algorithmic advance
 ## Learning Path
 
 <div class="home-grid">
+	<a class="home-card" href="modules/math-prerequisites/">
+		<h3>Math Prerequisites</h3>
+		<p>Probability, linear algebra, calculus, and statistics foundations needed for all ML math.</p>
+	</a>
 	<a class="home-card" href="modules/introduction/">
 		<h3>Introduction and Lifecycle</h3>
 		<p>AI vs ML vs data science, AI categories, and end-to-end Azure ML lifecycle.</p>
@@ -46,6 +50,10 @@ multiple eras based on compute power, data availability, and algorithmic advance
 	<a class="home-card" href="modules/ml-foundations/">
 		<h3>ML Foundations</h3>
 		<p>Full ML taxonomy: supervised, unsupervised, RL, semi/self-supervised, with formulas and selection guidance.</p>
+	</a>
+	<a class="home-card" href="modules/neural-networks/">
+		<h3>Neural Networks and Deep Learning</h3>
+		<p>Perceptron to Transformers: backpropagation, CNNs, RNNs, attention, and training at scale.</p>
 	</a>
 	<a class="home-card" href="modules/azure-ml-environment/">
 		<h3>Azure ML Environment</h3>

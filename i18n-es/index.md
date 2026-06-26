@@ -38,6 +38,10 @@ múltiples eras según la potencia de cómputo, la disponibilidad de datos y los
 ## Ruta de Aprendizaje
 
 <div class="home-grid">
+	<a class="home-card" href="modules/math-prerequisites/">
+		<h3>Prerrequisitos Matemáticos</h3>
+		<p>Probabilidad, álgebra lineal, cálculo y estadística: las bases matemáticas necesarias para todo el contenido de ML.</p>
+	</a>
 	<a class="home-card" href="modules/introduction/">
 		<h3>Introducción y Ciclo de Vida</h3>
 		<p>IA vs ML vs ciencia de datos, categorías de IA y ciclo de vida integral de Azure ML.</p>
@@ -45,6 +49,10 @@ múltiples eras según la potencia de cómputo, la disponibilidad de datos y los
 	<a class="home-card" href="modules/ml-foundations/">
 		<h3>Fundamentos de ML</h3>
 		<p>Taxonomía completa de ML: supervisado, no supervisado, RL, semi/auto-supervisado, con fórmulas y guía de selección.</p>
+	</a>
+	<a class="home-card" href="modules/neural-networks/">
+		<h3>Redes Neuronales y Deep Learning</h3>
+		<p>Del perceptrón a los Transformers: retropropagación, CNNs, RNNs, atención y entrenamiento a escala.</p>
 	</a>
 	<a class="home-card" href="modules/azure-ml-environment/">
 		<h3>Entorno de Azure ML</h3>

@@ -63,8 +63,10 @@ extra:
 
 nav:
   - Inicio: index.md
+  - Prerrequisitos Matemáticos: modules/math-prerequisites.md
   - Introducción y Ciclo de Vida: modules/introduction.md
   - Fundamentos de ML: modules/ml-foundations.md
+  - Redes Neuronales y Deep Learning: modules/neural-networks.md
   - Entorno de Azure ML: modules/azure-ml-environment.md
   - Configuración del Entorno: modules/environment-setup.md
   - Preparación de Datos: modules/data-preparation.md

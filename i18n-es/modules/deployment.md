@@ -1,35 +1,33 @@
 # Despliegue
 
 Este módulo cubre el camino desde el artefacto del modelo hasta el endpoint de producción, incluyendo
-patrones de despliegue, estrategias de lanzamiento y salvaguardas operativas.
+patrones de despliegue, estrategias de lanzamiento y salvaguardas operacionales.
 
 ![Modelo de entrenamiento vs despliegue](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/training_vs_deployment_model.png)
 
-> **Nota - Qué muestra esto:** El contraste entre el modelo de *entrenamiento* (sin conexión, por lotes, optimizado para la precisión) y el
-> modelo de *despliegue* (en línea, sin estado, optimizado para la latencia). El mismo artefacto sirve a dos contextos de ejecución muy
-> diferentes.
+> **Nota - Qué muestra esto:** El contraste entre el modelo de *entrenamiento* (fuera de línea, por lotes, optimizado para exactitud) y el
+> modelo de *despliegue* (en línea, sin estado, optimizado para latencia). El mismo artefacto sirve a dos contextos de tiempo de ejecución muy diferentes.
 
 ![Flujo de despliegue de ML](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/ml_deployment_flow.png)
 
-> **Nota - Qué muestra esto:** El flujo de despliegue desde el modelo registrado hasta el endpoint activo. Cada etapa : empaquetar, validar
-> localmente, desplegar, enrutar tráfico : es un punto de control donde un lanzamiento puede detectarse antes de que los clientes
+> **Nota - Qué muestra esto:** El flujo de despliegue desde el modelo registrado hasta el endpoint activo. Cada etapa: empaquetar, validar
+> localmente, desplegar, enrutar el tráfico: es un punto de control donde se puede detener un lanzamiento antes de que los clientes
 > se vean afectados.
 
-![Visión general del despliegue](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/deployment_overview.png)
+![Resumen del despliegue](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/deployment_overview.png)
 
-> **Nota - Qué muestra esto:** Una visión general de alto nivel de las opciones de despliegue (endpoints en línea vs por lotes). Elige según *quién está
-> esperando*: un usuario/aplicación en tiempo real → endpoint en línea; una tabla completa puntuada durante la noche → endpoint
-> por lotes.
+> **Nota - Qué muestra esto:** Una visión general de alto nivel de las opciones de despliegue (endpoints en línea vs por lotes). Elija por *quién espera*:
+> un usuario/aplicación en tiempo real → endpoint en línea; una tabla completa puntuada durante la noche → endpoint por lotes.
 
 ## Pasos del despliegue
 
 1. Registrar el modelo
-2. Construir el script de scoring con init y run
+2. Construir el script de puntuación con init y run
 3. Crear el entorno de inferencia
 4. Validar el despliegue local
 5. Desplegar en ACI o AKS
 
-### Estructura del script de scoring (Azure ML SDK v2)
+### Estructura del script de puntuación (Azure ML SDK v2)
 
 ```python
 import json
@@ -53,39 +51,38 @@ def run(raw_data: str) -> str:
     })
 ```
 
-Reglas clave para un script de scoring de nivel de producción:
+Reglas clave para un script de puntuación de calidad de producción:
 
-- `init()` se ejecuta una vez al inicio; carga el modelo aquí, no en `run()`.
-- `run()` se invoca en cada solicitud; mantenlo sin estado.
-- Valida el esquema de entrada dentro de `run()` antes de llamar al modelo.
-- Nunca registres PII en bruto; registra solo IDs hasheados y metadatos de predicción.
+- `init()` se ejecuta una vez al inicio; cargar el modelo aquí, no en `run()`.
+- `run()` se llama para cada solicitud; mantenerlo sin estado.
+- Validar el esquema de entrada dentro de `run()` antes de llamar al modelo.
+- Nunca registrar PII sin procesar; registrar IDs con hash y metadatos de predicción únicamente.
 
-## Tipos de endpoint
+## Tipos de endpoints
 
-| Tipo | Mejor para | Compromiso |
+| Tipo | Mejor para | Trade-off |
 |---|---|---|
 | Endpoint en línea | Predicciones en tiempo real | Requiere operaciones de baja latencia |
-| Endpoint por lotes | Trabajos de scoring sin conexión a gran escala | No es en tiempo real |
+| Endpoint por lotes | Grandes trabajos de puntuación fuera de línea | No es tiempo real |
 
 ## Ejemplo de extremo a extremo: llamar a un modelo desplegado
 
-Esto recorre exactamente cómo se ve un modelo desplegado en la práctica : la API, qué envías,
-cómo llamarla y qué se devuelve : usando el `fraud-endpoint` del script de scoring anterior.
+Esto muestra exactamente cómo se ve un modelo desplegado en la práctica: la API, qué enviar,
+cómo llamarla y qué regresa, usando el `fraud-endpoint` del script de puntuación anterior.
 
-![Llamando a un endpoint de modelo desplegado](../assets/img/endpoint-request-response.svg)
+![Llamar a un endpoint de modelo desplegado](../assets/img/endpoint-request-response.svg)
 
-> **Nota - Cómo leer este diagrama:** El cliente envía un `POST` HTTPS con un cuerpo JSON de filas
-> de características. El endpoint autentica la llamada, valida el esquema y la enruta a una réplica activa.
-> Internamente, `init()` ya ha cargado el modelo registrado una vez, por lo que `run()` solo realiza la
-> predicción rápida y devuelve un cuerpo JSON con la clase predicha y la probabilidad por clase.
+> **Nota - Cómo leer este diagrama:** El cliente envía un `POST` HTTPS con un cuerpo JSON de filas de características. El endpoint autentica la llamada, valida el esquema y la enruta a una réplica activa.
+> Dentro, `init()` ya ha cargado el modelo registrado una vez, por lo que `run()` solo hace la predicción rápida
+> y devuelve un cuerpo JSON con la clase predicha y la probabilidad por clase.
 
 ### 1. Cómo se ve la API
 
-Después del despliegue, Azure ML te da dos cosas:
+Después del despliegue, Azure ML le proporciona dos cosas:
 
-| Elemento | Ejemplo | Dónde obtenerlo |
+| Elemento | Ejemplo | Cómo obtenerlo |
 |---|---|---|
-| URI de scoring | `https://fraud-endpoint.eastus.inference.ml.azure.com/score` | `az ml online-endpoint show -n fraud-endpoint --query scoring_uri` |
+| URI de puntuación | `https://fraud-endpoint.eastus.inference.ml.azure.com/score` | `az ml online-endpoint show -n fraud-endpoint --query scoring_uri` |
 | Clave/token de autenticación | `Bearer <primary-key>` | `az ml online-endpoint get-credentials -n fraud-endpoint` |
 
 El contrato es un simple HTTP POST:
@@ -94,10 +91,10 @@ El contrato es un simple HTTP POST:
 |---|---|
 | Método | `POST` |
 | Ruta | `/score` |
-| Encabezados | `Content-Type: application/json`, `Authorization: Bearer <key>` |
+| Cabeceras | `Content-Type: application/json`, `Authorization: Bearer <key>` |
 | Cuerpo | Objeto JSON: `{"features": [[...], [...]]}` |
 
-### 2. La solicitud que envías
+### 2. La solicitud que envía
 
 ```json
 {
@@ -108,8 +105,8 @@ El contrato es un simple HTTP POST:
 }
 ```
 
-Cada arreglo interno es un registro, con los valores en el **mismo orden exacto de columnas usado durante el entrenamiento**.
-Aquí enviamos dos transacciones en una sola llamada (el procesamiento por lotes reduce la sobrecarga por solicitud).
+Cada arreglo interno es un registro, con valores en el **mismo orden de columnas usado durante el entrenamiento**.
+Aquí enviamos dos transacciones en una sola llamada (agrupar reduce la sobrecarga por solicitud).
 
 ### 3. Cómo llamarla
 
@@ -142,7 +139,7 @@ Aquí enviamos dos transacciones en una sola llamada (el procesamiento por lotes
 
     for i, (label, proba) in enumerate(zip(result["prediction"], result["probability"])):
         confidence = max(proba)
-        print(f"row {i}: class={label} confidence={confidence:.0%}")
+        print(f"fila {i}: clase={label} confianza={confidence:.0%}")
     ```
 
 === "JavaScript"
@@ -165,7 +162,7 @@ Aquí enviamos dos transacciones en una sola llamada (el procesamiento por lotes
     console.log(result.prediction, result.probability);
     ```
 
-### 4. La respuesta que recibes
+### 4. La respuesta que recibe
 
 ```json
 {
@@ -179,47 +176,46 @@ Aquí enviamos dos transacciones en una sola llamada (el procesamiento por lotes
 
 ### 5. Cómo leer el resultado
 
-| Fila | `prediction` | `probability` `[P(class0), P(class1)]` | Significado |
+| Fila | `prediction` | `probability` `[P(clase0), P(clase1)]` | Significado |
 |---|---|---|---|
-| 0 | `1` | `[0.08, 0.92]` | Marcada como **fraude** con un 92% de confianza |
-| 1 | `0` | `[0.86, 0.14]` | Predicha como **legítima** con un 86% de confianza |
+| 0 | `1` | `[0.08, 0.92]` | Marcado como **fraude** con 92% de confianza |
+| 1 | `0` | `[0.86, 0.14]` | Predicho como **legítimo** con 86% de confianza |
 
-- `prediction` es la clase elegida por el modelo por fila (aquí `1 = fraude`, `0 = legítima`).
-- `probability` da la confianza por clase; los valores de cada fila suman `1.0`.
-- Tu aplicación decide el **umbral de acción**: por ejemplo, bloquear automáticamente en `P(fraud) >= 0.90`, enviar a
+- `prediction` es la clase elegida por el modelo por fila (aquí `1 = fraude`, `0 = legítimo`).
+- `probability` da la confianza por clase; los valores en cada fila suman `1.0`.
+- Su aplicación decide el **umbral de acción**: p. ej. bloqueo automático cuando `P(fraude) >= 0.90`, enviar a
   revisión manual entre `0.50` y `0.90`, y permitir por debajo de `0.50`. El modelo devuelve puntuaciones; la
   regla de negocio las convierte en decisiones.
 
-> **Consejo - Maneja los errores en el cliente:** Espera también respuestas distintas de `200` : `401/403` (clave incorrecta o expirada),
-> `400` (desajuste de esquema/forma), `429` (limitación, espera y reintenta) y `503` (réplica
-> en arranque en frío o sobrecarga). Siempre establece un tiempo de espera y un pequeño reintento con retroceso, como se indica en la
-> lista de verificación de fiabilidad a continuación.
+> **Consejo - Manejar errores en el cliente:** Espere también respuestas que no sean `200`: `401/403` (clave incorrecta o caducada),
+> `400` (discrepancia de esquema/forma), `429` (limitación de velocidad, esperar y reintentar), y `503` (arranque en frío de réplica
+> o sobrecarga). Siempre establezca un tiempo de espera y un pequeño reintento con retroceso.
 
 ## Estrategias de lanzamiento
 
-![Estrategias de lanzamiento blue-green, canary y shadow](../assets/img/release-strategies.svg)
+![Estrategias de lanzamiento azul-verde, canary y en la sombra](../assets/img/release-strategies.svg)
 
-> **Consejo - Cómo elegir:** Las tres protegen el modelo activo (v1) mientras validan uno nuevo (v2). **Blue-green** cambia el 100%
-> del tráfico de una vez y revierte volviendo a cambiar : la más simple, pero el radio de impacto es toda la
-> base de usuarios durante el momento del cambio. **Canary** envía una pequeña porción (por ejemplo, 5%) a v2 y aumenta
-> solo mientras las métricas se mantienen saludables : el despliegue progresivo más seguro. **Shadow** refleja el tráfico
-> real hacia v2 pero descarta sus respuestas, por lo que puedes probar con carga de producción sin ningún impacto
-> en el cliente antes de cualquier cambio real.
+> **Consejo - Cómo elegir:** Las tres protegen el modelo activo (v1) mientras validan uno nuevo (v2). **Azul-verde** cambia el 100%
+> del tráfico a la vez y revierte cambiando de vuelta: el más simple, pero el radio de impacto es toda la
+> base de usuarios en el momento del cambio. **Canary** envía una pequeña parte (p. ej. 5%) a v2 y aumenta
+> solo mientras las métricas se mantengan saludables: el despliegue progresivo más seguro. **En la sombra** refleja el tráfico real
+> a v2 pero descarta sus respuestas, para que pueda probarse con carga de producción con cero impacto en el cliente
+> antes de cualquier cambio real.
 
-- Blue/green: cambia el tráfico a una nueva versión completamente preparada.
-- Canary: envía primero un pequeño porcentaje de tráfico a la nueva versión.
-- Shadow: refleja el tráfico para observación sin servir respuestas.
+- Azul/verde: cambiar el tráfico a una nueva versión completamente preparada.
+- Canary: enviar primero un pequeño porcentaje del tráfico a la nueva versión.
+- En la sombra: reflejar el tráfico para observación sin servir respuestas.
 
 ### Cuándo usar cada estrategia
 
 | Estrategia | Usar cuando | Nivel de riesgo |
 |---|---|---|
-| Blue/green | La reversión debe ser instantánea; la nueva versión está bien probada | Bajo (con reversión lista) |
-| Canary | Se necesita validar el nuevo modelo en tráfico real con baja exposición | Medio |
-| Shadow | Se necesita comparar el nuevo modelo sin exposición al cliente | Muy bajo (sin impacto en producción) |
-| Actualización progresiva | Microservicio sin estado sin estado específico del modelo | Bajo |
+| Azul/verde | La reversión debe ser instantánea; la nueva versión está bien probada | Bajo (con reversión lista) |
+| Canary | Necesita validar el nuevo modelo en tráfico real con baja exposición | Medio |
+| En la sombra | Necesita comparar el nuevo modelo con cero exposición del cliente | Muy bajo (sin impacto en producción) |
+| Actualización continua | Microservicio sin estado sin estado específico del modelo | Bajo |
 
-### Configurar la división de tráfico canary (endpoint en línea administrado de Azure ML)
+### Configurar la división de tráfico canary (endpoint en línea gestionado de Azure ML)
 
 ```yaml
 # deployment.yml
@@ -238,36 +234,36 @@ instance_count: 1
 Después de desplegar tanto `blue` como `green`:
 
 ```bash
-# Route 10% traffic to canary (green)
+# Enrutar el 10% del tráfico al canary (green)
 az ml online-endpoint update \
   --name fraud-endpoint \
   --traffic "blue=90 green=10"
 ```
 
-## Lista de verificación de fiabilidad
+## Lista de verificación de confiabilidad
 
-1. Sondas de salud y verificaciones de vivacidad configuradas.
-2. Validación del esquema de solicitud/respuesta en el script de scoring.
-3. Tiempos de espera y reintentos definidos en la capa del cliente y del servicio.
+1. Sondas de salud y comprobaciones de vivacidad configuradas.
+2. Validación del esquema de solicitud/respuesta en el script de puntuación.
+3. Tiempos de espera y reintentos definidos en la capa de cliente y servicio.
 4. Criterios de reversión definidos antes del lanzamiento.
 
 ## Lista de verificación de seguridad
 
-- Aplica claves/tokens de autenticación y rota las credenciales.
-- Restringe la exposición de red (endpoints privados cuando sea posible).
-- Registra el acceso y los metadatos de predicción para auditorías.
+- Aplicar claves/tokens de autenticación y rotar las credenciales.
+- Restringir la exposición de red (endpoints privados cuando sea posible).
+- Registrar el acceso y los metadatos de predicción para auditorías.
 
-## Pipeline de despliegue CI/CD (recomendado)
+## Pipeline de CI/CD para despliegue (recomendado)
 
 ```mermaid
 flowchart LR
-  A[Train + Register Model] --> B[Package Scoring Image]
-  B --> C[Security/Dependency Scan]
-  C --> D[Deploy to Staging Endpoint]
-  D --> E[Functional + Load Tests]
-  E --> F[Approval Gate]
-  F --> G[Canary/Blue-Green to Production]
-  G --> H[Post-Deploy Monitoring]
+  A[Entrenar + Registrar Modelo] --> B[Empaquetar Imagen de Puntuación]
+  B --> C[Análisis de Seguridad/Dependencias]
+  C --> D[Desplegar en Endpoint de Staging]
+  D --> E[Pruebas Funcionales + de Carga]
+  E --> F[Puerta de Aprobación]
+  F --> G[Canary/Azul-Verde a Producción]
+  G --> H[Monitoreo Post-Despliegue]
 ```
 
 ## Conceptos básicos de planificación de capacidad
@@ -282,7 +278,7 @@ donde:
 
 - $QPS$: solicitudes esperadas por segundo
 - $t_{p95}$: tiempo de servicio p95 (segundos)
-- $u$: utilización objetivo por réplica (por ejemplo, 0.6 a 0.8)
+- $u$: utilización objetivo por réplica (p. ej., 0.6 a 0.8)
 
 ## Tabla de SLI/SLO en tiempo de ejecución
 
@@ -295,101 +291,356 @@ donde:
 
 ```mermaid
 flowchart LR
-  A[Register] --> B[Score Script]
-  B --> C[Inference Config]
-  C --> D[Local Test]
-  D --> E[ACI or AKS]
+  A[Registrar] --> B[Script de Puntuación]
+  B --> C[Configuración de Inferencia]
+  C --> D[Prueba Local]
+  D --> E[ACI o AKS]
 ```
 
 ## Autoevaluación rápida
 
-1. ¿Cuándo es mejor un endpoint por lotes que un endpoint en línea?
-2. ¿Por qué ejecutar un paso de validación local antes del despliegue en la nube?
+1. ¿Cuándo es mejor el endpoint por lotes que el endpoint en línea?
+2. ¿Por qué ejecutar una etapa de validación local antes del despliegue en la nube?
 3. ¿Cuál es la ventaja del lanzamiento canary?
 
-## Análisis profundo: cada concepto, explicado
+## Inmersión profunda: cada concepto explicado
 
-Esta sección explica los conceptos de despliegue para que cada elección operativa tenga una justificación clara.
+Esta sección explica los conceptos de despliegue para que cada elección operacional tenga una justificación clara.
 
-### Por qué se separan `init()` y `run()`
+### Por qué `init()` y `run()` están separados
 
-El script de scoring tiene dos funciones por diseño:
+El script de puntuación tiene dos funciones por diseño:
 
-- **`init()`** se ejecuta **una vez** cuando el contenedor arranca. Cargar el modelo (a menudo cientos de MB)
-  es costoso, por lo que hacerlo aquí : en una variable global : significa que ocurre una sola vez, no por solicitud.
+- **`init()`** se ejecuta **una vez** cuando el contenedor se inicia. Cargar el modelo (a menudo cientos de MB)
+  es costoso, por lo que hacerlo aquí, en una variable global, significa que ocurre una única vez, no por solicitud.
 - **`run()`** se ejecuta **por solicitud** y debe ser **sin estado**: sin estado mutable compartido entre
-  llamadas, de modo que las solicitudes concurrentes no puedan corromperse entre sí. La ausencia de estado es también lo que hace que el
-  servicio sea escalable horizontalmente : cualquier réplica puede manejar cualquier solicitud.
+  llamadas, para que las solicitudes concurrentes no puedan corromperse entre sí. La ausencia de estado es también lo que hace
+  que el servicio sea escalable horizontalmente: cualquier réplica puede manejar cualquier solicitud.
 
-Esta separación determina directamente la latencia: la carga del modelo es un costo único de **arranque en frío**;
-`run()` es la ruta **activa** por solicitud que optimizas.
+Esta separación determina directamente la latencia: la carga del modelo es un costo de **arranque en frío** único;
+`run()` es la ruta **en caliente** por solicitud que se optimiza.
 
-### Endpoints en línea vs por lotes : ajustar la forma a la carga de trabajo
+### Endpoints en línea vs por lotes: ajustar la forma a la carga de trabajo
 
 | Dimensión | Endpoint en línea | Endpoint por lotes |
 |---|---|---|
-| Disparador | Solicitud HTTP síncrona | Trabajo programado / bajo demanda |
+| Disparador | Solicitud HTTP síncrona | Trabajo programado/bajo demanda |
 | Objetivo de latencia | Milisegundos por solicitud | Rendimiento sobre millones de filas |
 | Escalado | Mantener réplicas activas | Arrancar, procesar, escalar a cero |
-| Usar cuando | Un usuario/aplicación espera la respuesta | Puntuar una tabla completa durante la noche |
-
-La decisión se trata de *quién está esperando*: una verificación de fraude en el pago necesita un endpoint en línea; puntuar
-todo el registro de transacciones de ayer es más barato y más simple como un trabajo por lotes.
+| Usar cuando | Un usuario/aplicación espera la respuesta | Puntuar toda una tabla durante la noche |
 
 ### Estrategias de lanzamiento y el riesgo que gestionan
 
 Las tres estrategias existen para limitar el radio de impacto de un modelo defectuoso:
 
-- **Blue/green** mantiene la versión antigua (blue) completamente en ejecución mientras se prepara la nueva (green),
-  luego cambia el 100% del tráfico de una vez. La reversión es instantánea : cambiar de vuelta. Mejor cuando confías en la nueva
-  versión y necesitas un cambio sin tiempo de inactividad.
-- **Canary** enruta una porción *pequeña* (por ejemplo, 10%) a la nueva versión y observa las métricas antes de
-  aumentar. Valida sobre **tráfico real** con exposición controlada : la forma más segura de detectar
-  problemas que las pruebas sin conexión pasan por alto.
-- **Shadow** envía una copia del tráfico al nuevo modelo pero descarta sus respuestas, por lo que se
+- **Azul/verde** mantiene la versión antigua (azul) completamente activa mientras se prepara la nueva (verde),
+  luego cambia el 100% del tráfico a la vez. La reversión es instantánea: volver a cambiar. Mejor cuando confía en la nueva
+  versión y necesita un cambio sin tiempo de inactividad.
+- **Canary** enruta una *pequeña* parte (p. ej. 10%) a la nueva versión y observa las métricas antes de aumentar.
+  Valida en **tráfico real** con exposición controlada: la forma más segura de detectar
+  problemas que las pruebas fuera de línea pierden.
+- **En la sombra** envía una copia del tráfico al nuevo modelo pero descarta sus respuestas, por lo que se
   evalúa contra entradas de producción con **cero impacto en el cliente**. Ideal para modelos de alto riesgo
-  donde incluso un 10% de exposición es demasiado riesgoso.
+  donde incluso el 10% de exposición es demasiado arriesgado.
 
 La división de tráfico de Azure (`blue=90 green=10`) es el mecanismo concreto que implementa canary en un
-endpoint en línea administrado.
+endpoint en línea gestionado.
 
-### Planificación de capacidad: de dónde proviene la fórmula de réplicas
+### Planificación de capacidad: de dónde viene la fórmula de réplicas
 
 $R \approx \lceil \tfrac{QPS\cdot t_{p95}}{u}\rceil$ es la **Ley de Little** aplicada al servicio.
-$QPS\cdot t_{p95}$ es el número promedio de solicitudes *en vuelo* en cualquier momento (tasa de llegada por
-tiempo de servicio); dividir por la utilización objetivo $u$ (por ejemplo, 0.7, dejando margen para ráfagas y
+$QPS\cdot t_{p95}$ es el número promedio de solicitudes *en vuelo* en cualquier momento (tasa de llegada por tiempo
+de servicio); dividir por la utilización objetivo $u$ (p. ej. 0.7, dejando espacio para ráfagas y
 latencia de cola) da el conteo de réplicas, redondeado hacia arriba. Usar $t_{p95}$ en lugar de la media dimensiona la
-flota para un tiempo de servicio realista del peor caso, de modo que el SLO se mantenga bajo carga y no solo en
-promedio.
+flota para el tiempo de servicio realista del peor caso, para que el SLO se mantenga bajo carga y no solo en promedio.
 
 ### SLIs, SLOs y por qué la frescura del modelo es uno de ellos
 
-Un **SLI** es una señal medida (disponibilidad, latencia p95, tasa de error); un **SLO** le adjunta un
-objetivo ("p95 ≤ 250 ms"). Incluir la **frescura de la versión del modelo** como un SLO es lo que distingue al
-servicio de ML del servicio web ordinario : un endpoint perfectamente disponible que sirve un modelo obsoleto y con drift
-sigue fallando en su trabajo. Esto conecta la salud del despliegue de vuelta con el monitoreo de drift del
-módulo anterior.
+Un **SLI** es una señal medida (disponibilidad, latencia p95, tasa de error); un **SLO** adjunta un
+objetivo ("p95 ≤ 250 ms"). Incluir la **frescura de la versión del modelo** como SLO es lo que distingue el
+servicio de ML del servicio web ordinario: un endpoint perfectamente disponible que sirve un modelo obsoleto y derivado
+sigue fallando en su trabajo. Esto conecta el estado del despliegue de vuelta a la monitorización de deriva del módulo anterior.
 
 ### Por qué la validación local precede al despliegue en la nube
 
-Validar el contenedor de scoring localmente detecta los fallos baratos y comunes : malas dependencias,
-errores de carga del modelo, desajustes de esquema : en segundos, antes de pagar por el aprovisionamiento en la nube y
-antes de arriesgar un despliegue de producción fallido. Es el análogo de despliegue de ejecutar pruebas unitarias
-antes de fusionar: falla rápido, falla barato.
+Validar el contenedor de puntuación localmente detecta los fallos baratos y comunes: dependencias defectuosas,
+errores de carga del modelo, discrepancias de esquema: en segundos, antes de pagar por el aprovisionamiento en la nube y
+antes de arriesgar un despliegue de producción fallido. Es el análogo del despliegue de ejecutar pruebas unitarias
+antes de fusionar: fallar rápido, fallar barato.
 
 ### Conceptos de seguridad en el servicio
 
-- Las **claves/tokens de autenticación** garantizan que solo los llamantes autorizados lleguen al endpoint; **rotarlos**
+- Las **claves/tokens de autenticación** garantizan que solo las personas autorizadas lleguen al endpoint; **rotarlas**
   limita el daño de una credencial filtrada.
 - Los **endpoints privados** mantienen el tráfico fuera de la internet pública para datos regulados.
-- Registrar **metadatos de predicción pero nunca PII en bruto** (registra IDs hasheados, no campos personales) brinda
-  auditabilidad sin crear una responsabilidad de protección de datos : el mismo principio que aplican las reglas del
-  script de scoring.
+- Registrar **metadatos de predicción pero nunca PII sin procesar** (registrar IDs con hash, no campos personales) da
+  auditabilidad sin crear una responsabilidad de protección de datos.
 
-## Autoevaluación rápida (análisis profundo)
+## Autoevaluación rápida (inmersión profunda)
 
-1. ¿Por qué el modelo se carga en `init()` y no en `run()`?
+1. ¿Por qué se carga el modelo en `init()` y no en `run()`?
 2. ¿Qué propiedad debe tener `run()` para permitir el escalado horizontal, y por qué?
-3. Compara los lanzamientos canary y shadow: ¿cuál expone a los clientes al nuevo modelo y cuál no?
+3. Compare los lanzamientos canary y en la sombra: ¿cuál expone a los clientes al nuevo modelo, y cuál no?
 4. En la fórmula de réplicas $R \approx \lceil QPS \cdot t_{p95} / u \rceil$, ¿por qué usar el tiempo de servicio p95 en lugar de la media?
-5. ¿Por qué la frescura de la versión del modelo se trata como un SLO junto con la latencia y la disponibilidad?
+5. ¿Por qué la frescura de la versión del modelo se trata como SLO junto a la latencia y la disponibilidad?
+
+---
+
+## Endpoints en línea vs por lotes: inmersión profunda
+
+Azure ML ofrece dos familias de endpoints. Elegir la incorrecta al inicio de un proyecto es un error costoso de revertir, por lo que esta sección proporciona los criterios de decisión completos y los detalles de configuración.
+
+### Endpoint en línea gestionado vs endpoint en línea de Kubernetes
+
+| Dimensión | Endpoint en línea gestionado | Endpoint en línea de Kubernetes |
+|---|---|---|
+| Gestión de infraestructura | Gestionada por Azure (completamente sin servidor) | Clúster AKS gestionado por el cliente |
+| División de tráfico | Nativa (porcentaje por despliegue) | Mediante reglas de Service/Ingress de Kubernetes |
+| Red personalizada | Endpoint privado compatible | Integración VNet completa y CNI personalizado |
+| Soporte GPU | Disponible (tipos de instancia A100, V100) | Cualquier grupo de nodos GPU en AKS |
+| Observabilidad | Azure Monitor + métricas integradas | Traer su propio Prometheus/Grafana |
+| Modelo de costo | Pago por hora de instancia + reservado | Costo del grupo de nodos AKS (siempre activo) |
+| Mejor para | Equipos que quieren cero operaciones de clúster | Equipos de plataforma con gobernanza AKS existente |
+
+### Activadores de endpoints por lotes
+
+Los endpoints por lotes procesan grandes volúmenes de datos de forma asíncrona. Admiten dos modos de activación:
+
+- **Invocación bajo demanda** mediante `az ml batch-endpoint invoke` o llamada SDK.
+- **Invocación programada** mediante un trabajo de programación de Azure ML vinculado al endpoint por lotes.
+
+```bash
+# Invocación por lotes bajo demanda
+az ml batch-endpoint invoke \
+  --name fraud-batch-endpoint \
+  --input azureml:transactions-nov:1 \
+  --mini-batch-size 100 \
+  --instance-count 5
+```
+
+### YAML de configuración de despliegue detallado
+
+```yaml
+# deployment_blue.yml
+$schema: https://azuremlschemas.azureedge.net/latest/managedOnlineDeployment.schema.json
+name: blue
+endpoint_name: fraud-endpoint
+model: azureml:fraud-model:5
+code_configuration:
+  code: ./src
+  scoring_script: score.py
+environment: azureml:fraud-infer:3
+instance_type: Standard_DS3_v2
+instance_count: 2
+request_settings:
+  request_timeout_ms: 3000
+  max_concurrent_requests_per_instance: 10
+  max_queue_wait_ms: 500
+liveness_probe:
+  initial_delay: 30
+  period: 10
+  timeout: 2
+  success_threshold: 1
+  failure_threshold: 30
+readiness_probe:
+  initial_delay: 30
+  period: 10
+  timeout: 2
+  success_threshold: 1
+  failure_threshold: 10
+data_collector:
+  collections:
+    request:
+      enabled: true
+    response:
+      enabled: true
+```
+
+---
+
+## Escalado automático y gestión de carga
+
+El escalado automático previene tanto el aprovisionamiento excesivo (desperdicio de dinero) como el insuficiente (causando tiempos de espera). Los endpoints en línea gestionados de Azure ML usan **Escalado Automático de Pod Horizontal (HPA)** respaldado por métricas de Azure Monitor.
+
+### Lógica de activación de escalado
+
+El escalador automático monitorea dos señales primarias:
+
+- **Utilización de CPU**: escalar cuando la CPU promedio entre réplicas supera un porcentaje objetivo.
+- **Profundidad de la cola de solicitudes**: escalar cuando las solicitudes pendientes superan un umbral, incluso antes de que la CPU esté completamente saturada.
+
+La decisión de escalar usa la fórmula:
+
+$$
+N_{\text{objetivo}} = \left\lceil N_{\text{actual}} \times \frac{\text{métrica actual}}{\text{métrica objetivo}} \right\rceil
+$$
+
+Ejemplo: 3 réplicas al 85% de CPU con un objetivo del 60% → objetivo = $\lceil 3 \times 85/60 \rceil = 5$ réplicas.
+
+### YAML de escalado automático para endpoint en línea gestionado de Azure ML
+
+```yaml
+# autoscale_policy.yml — aplicado mediante az ml online-deployment update
+$schema: https://azuremlschemas.azureedge.net/latest/managedOnlineDeployment.schema.json
+name: blue
+endpoint_name: fraud-endpoint
+scale_settings:
+  type: target_utilization
+  min_instances: 2
+  max_instances: 10
+  target_utilization_percentage: 70
+  polling_interval: 30
+  cooldown_period: 120
+```
+
+| Parámetro | Valor recomendado | Justificación |
+|---|---|---|
+| `min_instances` | ≥ 2 | Sobrevivir un fallo de réplica única sin tiempo de inactividad |
+| `max_instances` | Techo de costo / capacidad de ráfaga | Limitar el gasto; establecer según la cuota |
+| `target_utilization_percentage` | 60-75% | Dejar margen para ráfagas de solicitudes y latencia de cola |
+| `cooldown_period` | 120 s | Prevenir la oscilación (reducción de escala demasiado rápida después de una ráfaga breve) |
+
+### Por qué el escalado automático requiere puntuación sin estado
+
+El escalador automático puede añadir o eliminar réplicas en cualquier momento. Si una réplica mantiene estado (conexiones de base de datos abiertas por solicitud, contexto en caché por usuario), enrutar una solicitud a una nueva réplica perdería ese estado. La **ausencia de estado** es el requisito previo arquitectónico que hace que el escalado horizontal sea correcto y seguro.
+
+---
+
+## Optimización del rendimiento del servicio de modelos
+
+La latencia y el rendimiento son problemas de ingeniería con técnicas concretas. Esta sección cubre las cinco optimizaciones más impactantes en orden de esfuerzo de implementación.
+
+### Exportación ONNX para portabilidad entre frameworks
+
+**ONNX (Open Neural Network Exchange)** es un formato de modelo neutral al proveedor. Exportar a ONNX desacopla el tiempo de ejecución del servicio del framework de entrenamiento, habilitando el uso de ONNX Runtime, un motor de inferencia altamente optimizado.
+
+```python
+# Servir con ONNX Runtime en el script de puntuación
+import onnxruntime as rt
+import numpy as np
+
+def init():
+    global session
+    model_path = os.path.join(os.getenv("AZUREML_MODEL_DIR"), "model.onnx")
+    opts = rt.SessionOptions()
+    opts.intra_op_num_threads = 4
+    session = rt.InferenceSession(model_path, opts, providers=["CPUExecutionProvider"])
+
+def run(raw_data: str) -> str:
+    data = json.loads(raw_data)
+    features = np.array(data["features"], dtype=np.float32)
+    input_name = session.get_inputs()[0].name
+    result = session.run(None, {input_name: features})
+    return json.dumps({"prediction": result[0].tolist()})
+```
+
+Mejora típica de latencia al cambiar a ONNX Runtime: **20-60%** en CPU, dependiendo de la complejidad del modelo.
+
+### Cuantización del modelo: INT8
+
+**La cuantización** reduce la precisión de los pesos del modelo de FP32 a INT8, reduciendo el tamaño del modelo en aproximadamente 4× y la latencia de inferencia en 2-3× en hardware compatible, a costa de una pequeña caída de exactitud (típicamente < 1% en modelos bien calibrados).
+
+$$
+x_q = \text{round}\!\left(\frac{x}{s}\right) + z
+$$
+
+donde $s$ es el factor de escala y $z$ es el punto cero, calculados a partir de la distribución de pesos.
+
+```python
+# Cuantización dinámica (no se necesitan datos de calibración)
+from onnxruntime.quantization import quantize_dynamic, QuantType
+
+quantize_dynamic(
+    model_input="model.onnx",
+    model_output="model_int8.onnx",
+    weight_type=QuantType.QInt8
+)
+```
+
+| Formato | Tamaño del modelo | Latencia | Impacto en la exactitud |
+|---|---|---|---|
+| FP32 (original) | 100% | Línea de base | Ninguno |
+| FP16 | ~50% | ~10-20% más rápido | Insignificante |
+| INT8 | ~25% | ~50-70% más rápido | < 1% en la mayoría de los tabulares |
+
+### Agrupación en lotes en el tiempo de inferencia
+
+Agrupar múltiples solicitudes juntas amortiza la sobrecarga fija por llamada en muchas filas.
+
+```yaml
+# Habilitar la micro-agrupación en el despliegue
+request_settings:
+  max_concurrent_requests_per_instance: 20
+  request_timeout_ms: 5000
+```
+
+---
+
+## Endpoints multi-modelo y enrutamiento de modelos
+
+Un único endpoint de puntuación puede servir múltiples modelos, por ejemplo, un modelo por segmento de cliente, geografía o línea de productos.
+
+### Cuándo usar endpoints multi-modelo
+
+| Escenario | Patrón |
+|---|---|
+| 10+ modelos de segmento, mismas características, mismo esquema | Cargar todos los modelos en `init()`; enrutar en `run()` |
+| Los modelos difieren en el esquema de entrada | Endpoints separados (la discrepancia de esquema rompe la agrupación) |
+| Pruebas A/B de dos algoritmos | Multi-modelo con enrutamiento aleatorio + registro |
+| Ruta crítica de latencia | Modelo único (cargar múltiples modelos aumenta el arranque en frío) |
+
+### Lógica de enrutamiento en el script de puntuación
+
+```python
+import joblib
+import json
+import os
+import threading
+import numpy as np
+
+_models = {}
+_lock = threading.Lock()
+
+def init():
+    global _models
+    model_dir = os.getenv("AZUREML_MODEL_DIR")
+    # Cargar todos los modelos de segmento al inicio
+    for segment in ["retail", "corporate", "sme"]:
+        model_path = os.path.join(model_dir, f"fraud_model_{segment}.pkl")
+        if os.path.exists(model_path):
+            _models[segment] = joblib.load(model_path)
+
+def run(raw_data: str) -> str:
+    data = json.loads(raw_data)
+    segment = data.get("segment", "retail")
+
+    with _lock:
+        model = _models.get(segment)
+
+    if model is None:
+        return json.dumps({"error": f"Segmento desconocido: {segment}"}), 400
+
+    features = np.array(data["features"])
+    prediction = model.predict(features)
+    return json.dumps({"prediction": prediction.tolist(), "segment": segment})
+```
+
+> **Nota - Presupuesto de memoria:** Cada modelo cargado en `init()` consume RAM continuamente. Para
+> tipos de instancia con 8 GB de RAM, cargar 20 × 300 MB de modelos causará un OOMKill del contenedor. Perfile
+> el tamaño total del modelo antes de elegir el tipo de instancia, o implemente la expulsión LRU para modelos de segmento raramente usados.
+
+---
+
+## Fortalecimiento de la seguridad del despliegue
+
+La seguridad para los endpoints de ML va más allá de la seguridad de API estándar porque el artefacto del modelo en sí y los datos de entrada/salida conllevan riesgos únicos.
+
+### Aislamiento de red
+
+```yaml
+# Endpoint privado para el endpoint en línea gestionado
+az ml online-endpoint create \
+  --file endpoint.yml \
+  --set public_network_access=disabled \
+  --set egress_public_network_access=disabled
+```
