@@ -48,16 +48,70 @@
 }
 
 .md-typeset a,
-.md-nav__link,
-.md-nav__link--active,
 .md-tabs__link {
   color: #004a99;
 }
 
 .md-typeset a:hover,
-.md-nav__link:hover,
 .md-tabs__link:hover {
   color: #003874;
+}
+
+/* ----------------------------------------------------------------------
+   Softer, more professional sidebar navigation
+   ---------------------------------------------------------------------- */
+.md-nav {
+  font-size: 0.78rem;
+}
+
+/* Sidebar title ("Azure ML Training Hub") */
+.md-nav--primary > .md-nav__title {
+  color: #5b6675;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding-bottom: 0.6rem;
+}
+
+/* Default nav links: calmer slate tone, comfortable spacing */
+.md-nav__link {
+  color: #3f4a5a;
+  border-radius: 8px;
+  padding: 0.34rem 0.6rem;
+  margin: 0.08rem 0.35rem 0.08rem 0;
+  line-height: 1.4;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+/* Hover: soft blue wash with rounded pill */
+.md-nav__link:hover {
+  color: #003874;
+  background-color: rgba(0, 74, 153, 0.07);
+}
+
+/* Active page: gentle filled pill, no harsh bold */
+.md-nav__link--active,
+.md-nav__item--active > .md-nav__link {
+  color: #004a99;
+  background-color: rgba(0, 74, 153, 0.10);
+  font-weight: 600;
+}
+
+/* Section labels (e.g. "Reference"): quiet uppercase eyebrow */
+.md-nav__item--section > .md-nav__link,
+.md-nav--primary .md-nav__item--nested > .md-nav__link {
+  color: #6b7686;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-top: 0.6rem;
+}
+
+/* Slightly indent nested groups for clear hierarchy */
+.md-nav__list .md-nav__list {
+  padding-left: 0.4rem;
 }
 
 @media screen and (min-width: 76.25em) {
