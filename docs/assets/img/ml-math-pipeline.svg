@@ -41,13 +41,13 @@
   <text class="htxt" x="325" y="180" text-anchor="middle">2. Loss</text>
   <text class="btxt" x="325" y="206" text-anchor="middle">defines "wrong"</text>
   <text class="btxt" x="325" y="224" text-anchor="middle">one error number</text>
-  <text class="vtxt" x="325" y="276" text-anchor="middle">Value: encodes</text>
-  <text class="vtxt" x="325" y="292" text-anchor="middle">business priorities</text>
+  <text class="vtxt" x="325" y="276" text-anchor="middle">Value: sets</text>
+  <text class="vtxt" x="325" y="292" text-anchor="middle">what matters most</text>
 
   <!-- Box 3: optimizer -->
   <rect class="box" x="440" y="150" width="170" height="150" rx="12"/>
   <text class="htxt" x="525" y="180" text-anchor="middle">3. Optimizer</text>
-  <text class="btxt" x="525" y="206" text-anchor="middle">gradient descent</text>
+  <text class="btxt" x="525" y="206" text-anchor="middle">steps downhill</text>
   <text class="btxt" x="525" y="224" text-anchor="middle">tunes the weights</text>
   <text class="vtxt" x="525" y="276" text-anchor="middle">Value: makes</text>
   <text class="vtxt" x="525" y="292" text-anchor="middle">learning possible</text>
@@ -55,18 +55,18 @@
   <!-- Box 4: regularization -->
   <rect class="box" x="640" y="150" width="170" height="150" rx="12"/>
   <text class="htxt" x="725" y="180" text-anchor="middle">4. Regularize</text>
-  <text class="btxt" x="725" y="206" text-anchor="middle">penalize complexity</text>
-  <text class="btxt" x="725" y="224" text-anchor="middle">prevent memorizing</text>
+  <text class="btxt" x="725" y="206" text-anchor="middle">keep it simple</text>
+  <text class="btxt" x="725" y="224" text-anchor="middle">stop it memorizing</text>
   <text class="vtxt" x="725" y="276" text-anchor="middle">Value: works on</text>
-  <text class="vtxt" x="725" y="292" text-anchor="middle">unseen data</text>
+  <text class="vtxt" x="725" y="292" text-anchor="middle">new data too</text>
 
   <!-- Box 5: decision -->
   <rect class="boxalt" x="840" y="150" width="170" height="150" rx="12"/>
   <text class="htxt" x="925" y="180" text-anchor="middle">5. Decide</text>
-  <text class="btxt" x="925" y="206" text-anchor="middle">probability + threshold</text>
+  <text class="btxt" x="925" y="206" text-anchor="middle">probability + cut-off</text>
   <text class="btxt" x="925" y="224" text-anchor="middle">score to action</text>
-  <text class="vtxt" x="925" y="276" text-anchor="middle">Value: cost-aware</text>
-  <text class="vtxt" x="925" y="292" text-anchor="middle">decisions</text>
+  <text class="vtxt" x="925" y="276" text-anchor="middle">Value: smarter</text>
+  <text class="vtxt" x="925" y="292" text-anchor="middle">yes/no calls</text>
 
   <!-- flow arrows -->
   <line class="flow" x1="210" y1="225" x2="238" y2="225" marker-end="url(#fa)"/>

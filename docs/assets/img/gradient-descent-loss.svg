@@ -25,7 +25,7 @@
 
   <rect class="bg" x="0" y="0" width="1040" height="560"/>
   <text class="title" x="60" y="52">Gradient descent: how a model learns</text>
-  <text class="subtitle" x="60" y="80">Training repeats: measure error, compute the gradient (slope), step the weights downhill.</text>
+  <text class="subtitle" x="60" y="80">The model keeps checking how wrong it is and takes small steps downhill to get less wrong.</text>
 
   <!-- axes -->
   <line class="axis" x1="120" y1="500" x2="960" y2="500"/>
@@ -39,7 +39,7 @@
   <!-- minimum marker -->
   <line class="opt" x1="540" y1="480" x2="540" y2="120"/>
   <circle class="mindot" cx="540" cy="480" r="8"/>
-  <text class="label" x="556" y="470" font-weight="700" fill="#15803d">Minimum: best weights</text>
+  <text class="label" x="556" y="470" font-weight="700" fill="#15803d">Lowest point = best settings</text>
 
   <!-- descent steps (points along parabola) -->
   <circle class="startdot" cx="210" cy="287" r="9"/>
@@ -54,14 +54,14 @@
   <circle class="dot" cx="525" cy="479" r="7"/>
 
   <!-- step size note -->
-  <text class="note" x="250" y="330">Big steps where the slope</text>
+  <text class="note" x="250" y="330">Big steps where the hill</text>
   <text class="note" x="250" y="348">is steep...</text>
-  <text class="note" x="470" y="520">...tiny steps near the bottom</text>
+  <text class="note" x="470" y="520">...baby steps near the bottom</text>
 
   <!-- learning rate callout -->
-  <text class="note" x="640" y="300">Step size = learning rate (eta).</text>
-  <text class="note" x="640" y="320">Too big: training diverges.</text>
-  <text class="note" x="640" y="340">Too small: training crawls.</text>
-  <text class="note" x="640" y="372" font-weight="700" fill="#004a99">Convex = one bottom,</text>
-  <text class="note" x="640" y="390" font-weight="700" fill="#004a99">so it always finds the best answer.</text>
+  <text class="note" x="640" y="300">Step size = the learning rate.</text>
+  <text class="note" x="640" y="320">Too big: it overshoots and never settles.</text>
+  <text class="note" x="640" y="340">Too small: it takes forever to get there.</text>
+  <text class="note" x="640" y="372" font-weight="700" fill="#004a99">One valley = one bottom,</text>
+  <text class="note" x="640" y="390" font-weight="700" fill="#004a99">so it always reaches the best answer.</text>
 </svg>
