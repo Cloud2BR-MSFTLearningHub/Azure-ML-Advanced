@@ -115,6 +115,24 @@ a.home-card:focus-visible {
 }
 
 /* ----------------------------------------------------------------------
+   Content image sizing: keep diagrams readable without overwhelming text
+   ---------------------------------------------------------------------- */
+.md-typeset p > img {
+  display: block;
+  width: 100%;
+  max-width: 780px;
+  height: auto;
+  margin: 0.9rem auto 1.1rem;
+}
+
+@media (max-width: 48rem) {
+  .md-typeset p > img {
+    max-width: 100%;
+    margin: 0.75rem 0 0.95rem;
+  }
+}
+
+/* ----------------------------------------------------------------------
    Softer, more professional sidebar navigation
    ---------------------------------------------------------------------- */
 .md-nav {
