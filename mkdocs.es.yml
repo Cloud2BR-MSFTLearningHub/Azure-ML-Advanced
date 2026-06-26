@@ -52,6 +52,7 @@ extra_css:
   - assets/css/custom.css
 
 extra:
+  generator: false
   alternate:
     - name: English
       link: /Azure-ML-Advanced/
