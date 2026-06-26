@@ -16,11 +16,16 @@ across training and inference.
 
 ![Azure ML workspace taxonomy](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/azure-machine-learning-taxonomy.png)
 
-> Image explanation: This visual shows azure ml workspace taxonomy. Use it to understand the concept in this section and connect it to practical Azure ML decisions.
+!!! note "What this shows"
+    The workspace taxonomy again, here to emphasize *where environments live*. The environment you
+    build locally becomes a registered, versioned asset inside this structure so remote jobs can
+    reuse it.
 
 ![Azure ML environment taxonomy](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/azure-ml-environment-taxonomy.png)
 
-> Image explanation: This visual shows azure ml environment taxonomy. Use it to understand the concept in this section and connect it to practical Azure ML decisions.
+!!! note "What this shows"
+    How one environment definition flows into both training and inference jobs. Pinning it once and
+    reusing it is the core mechanism behind reproducible runs and deterministic rebuilds.
 
 ## Typical setup (from scratch)
 
@@ -161,11 +166,16 @@ concepts that affect performance decisions.
 
 ![Binary vs decimal data measurements](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/binary_vs_decimal_data_measurements.png)
 
-> Image explanation: This visual shows binary vs decimal data measurements. Use it to understand the concept in this section and connect it to practical Azure ML decisions.
+!!! note "What this shows"
+    The difference between binary (1 KiB = 1024 bytes) and decimal (1 KB = 1000 bytes) measures.
+    It matters when sizing datasets, memory, and compute — a mismatch explains many "why is my data
+    bigger than expected?" surprises.
 
 ![Summary of number systems](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/summary_of_number_system.png)
 
-> Image explanation: This visual shows summary of number systems. Use it to understand the concept in this section and connect it to practical Azure ML decisions.
+!!! note "What this shows"
+    A summary of number systems (binary, decimal, hexadecimal). Useful background when reading
+    memory addresses, byte sizes, and encoded data formats during environment and data debugging.
 
 ## Quick self-check
 

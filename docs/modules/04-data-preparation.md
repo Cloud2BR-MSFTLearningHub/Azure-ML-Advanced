@@ -12,19 +12,30 @@ engineering, and dataset sizing for reliable model training.
 
 ![ML process by stages](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/ml_process_by_stages.png)
 
-> Image explanation: This visual shows ml process by stages. Use it to understand the concept in this section and connect it to practical Azure ML decisions.
+!!! note "What this shows"
+    The data lifecycle by stage — from business framing through collection and feature engineering.
+    Most delivery effort lives in these early stages, and defects here cap the quality any model
+    can reach.
 
 ![Collect data and targets](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/collect_data_init_primary_second_targets.png)
 
-> Image explanation: This visual shows collect data and targets. Use it to understand the concept in this section and connect it to practical Azure ML decisions.
+!!! note "What this shows"
+    How primary and secondary targets are collected alongside features. Defining the target
+    precisely (and when it becomes known) is what later prevents target leakage.
 
 ![Feature engineering while collecting data](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/feature_engineering_collect_data.png)
 
-> Image explanation: This visual shows feature engineering while collecting data. Use it to understand the concept in this section and connect it to practical Azure ML decisions.
+!!! tip "Practical point"
+    Feature engineering should happen *while* you understand the data, but transforms must be fit
+    on the training split only. Designing features and the split strategy together is how you keep
+    preprocessing leakage-free.
 
 ![Microsoft-style dataset size guidance](../assets/img/msft-dataset-size-guidance.svg)
 
-> Image explanation: This visual shows microsoft-style dataset size guidance. Use it to understand the concept in this section and connect it to practical Azure ML decisions.
+!!! tip "How to use this chart"
+    Match your use case to a dataset-size band before committing to a model family. Tabular
+    baselines need far less data than deep learning; foundation-model workloads need orders of
+    magnitude more. Sizing data first avoids choosing a model you cannot feed.
 
 ## Preparation checklist
 
@@ -64,15 +75,21 @@ training, plus a dtype reference to prevent schema and conversion errors.
 
 ![Training/testing data flow](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/training_testing_data_flow.png)
 
-> Image explanation: This visual shows training/testing data flow. Use it to understand the concept in this section and connect it to practical Azure ML decisions.
+!!! note "What this shows"
+    The flow of data through training and testing stages. The test set branches off early and is
+    untouched until final evaluation — the discipline that keeps offline scores honest.
 
 ![Training and test split](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/training_test_split.png)
 
-> Image explanation: This visual shows training and test split. Use it to understand the concept in this section and connect it to practical Azure ML decisions.
+!!! note "What this shows"
+    A train/test split. For class imbalance use a *stratified* split to preserve class ratios; for
+    time series use a *chronological* split so the model never trains on future data.
 
 ![Python dtype overview](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/python_dtype.png)
 
-> Image explanation: This visual shows python dtype overview. Use it to understand the concept in this section and connect it to practical Azure ML decisions.
+!!! note "What this shows"
+    A reference of Python/pandas data types. Validating dtypes against your data contract catches
+    schema drift and silent conversion bugs before they corrupt training.
 
 ## Data leakage warning
 

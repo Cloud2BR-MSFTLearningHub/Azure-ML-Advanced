@@ -6,7 +6,10 @@ excellent on one metric and fail on the real business objective.
 
 ![How to choose a metric](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/How-to-Choose-a-Metric-for-Imbalanced-Classification-latest.png)
 
-> Image explanation: This visual shows how to choose a metric. Use it to understand the concept in this section and connect it to practical Azure ML decisions.
+!!! tip "How to use this chart"
+    Pick the metric from the *cost of errors*, not habit. On imbalanced problems prefer F1, PR-AUC,
+    or MCC over accuracy; weight recall when missed positives are costly, precision when false
+    alarms are costly.
 
 ## Confusion matrix basics
 

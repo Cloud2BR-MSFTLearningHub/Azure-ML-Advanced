@@ -6,15 +6,24 @@ deployment patterns, release strategies, and operational safeguards.
 
 ![Training vs deployment model](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/training_vs_deployment_model.png)
 
-> Image explanation: This visual shows training vs deployment model. Use it to understand the concept in this section and connect it to practical Azure ML decisions.
+!!! note "What this shows"
+    The contrast between the *training* model (offline, batch, optimized for accuracy) and the
+    *deployment* model (online, stateless, optimized for latency). The same artifact serves two very
+    different runtime contexts.
 
 ![ML deployment flow](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/ml_deployment_flow.png)
 
-> Image explanation: This visual shows ml deployment flow. Use it to understand the concept in this section and connect it to practical Azure ML decisions.
+!!! note "What this shows"
+    The deployment flow from registered model to live endpoint. Each stage — package, validate
+    locally, deploy, route traffic — is a checkpoint where a release can be caught before customers
+    are affected.
 
 ![Deployment overview](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/deployment_overview.png)
 
-> Image explanation: This visual shows deployment overview. Use it to understand the concept in this section and connect it to practical Azure ML decisions.
+!!! note "What this shows"
+    A high-level overview of deployment options (online vs batch endpoints). Choose by *who is
+    waiting*: a user/app in real time → online endpoint; a whole table scored overnight → batch
+    endpoint.
 
 ## Deployment steps
 
@@ -63,6 +72,16 @@ Key rules for a production-grade scoring script:
 | Batch endpoint | Large offline scoring jobs | Not real-time |
 
 ## Release strategies
+
+![Blue-green, canary, and shadow release strategies](../assets/img/release-strategies.svg)
+
+!!! tip "How to choose"
+    All three protect the live model (v1) while validating a new one (v2). **Blue-green** flips 100%
+    of traffic at once and rolls back by flipping back — simplest, but the blast radius is the whole
+    user base for the moment of the switch. **Canary** sends a small slice (e.g. 5%) to v2 and ramps
+    up only while metrics stay healthy — the safest progressive rollout. **Shadow** mirrors real
+    traffic to v2 but discards its responses, so you can test on production load with zero customer
+    impact before any real cutover.
 
 - Blue/green: switch traffic to a fully prepared new version.
 - Canary: send a small percentage of traffic to new version first.
