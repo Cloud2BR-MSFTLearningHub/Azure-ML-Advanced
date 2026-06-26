@@ -115,6 +115,13 @@ a.home-card:focus-visible {
 }
 
 /* ----------------------------------------------------------------------
+   Center article content: reduce typography by 15%
+   ---------------------------------------------------------------------- */
+.md-content__inner.md-typeset {
+  font-size: 0.68rem;
+}
+
+/* ----------------------------------------------------------------------
    Content image sizing: keep diagrams readable without overwhelming text
    ---------------------------------------------------------------------- */
 .md-typeset p > img {
