@@ -156,8 +156,8 @@ Production ML requires both software and statistical observability:
 - **Model quality**: precision/recall/F1, calibration, AUC, RMSE.
 - **Data quality**: schema violations, missingness, outliers.
 - **Drift**:
-  - Covariate drift \(P(X)\) changes.
-  - Concept drift \(P(Y|X)\) changes.
+  - Covariate drift: input feature distribution \(P(X)\) changes over time.
+  - Concept drift: target relationship \(P(Y|X)\) changes, so the same inputs map to different outcomes.
 
 Retraining is triggered when business and statistical thresholds are exceeded.
 
