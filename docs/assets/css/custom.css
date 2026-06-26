@@ -143,13 +143,13 @@ a.home-card:focus-visible {
    Softer, more professional sidebar navigation
    ---------------------------------------------------------------------- */
 .md-nav {
-  font-size: 0.62rem;
+  font-size: 0.56rem;
 }
 
 /* Sidebar title ("Azure ML Training Hub") */
 .md-nav--primary > .md-nav__title {
   color: #5b6675;
-  font-size: 0.58rem;
+  font-size: 0.52rem;
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -184,7 +184,7 @@ a.home-card:focus-visible {
 .md-nav__item--section > .md-nav__link,
 .md-nav--primary .md-nav__item--nested > .md-nav__link {
   color: #6b7686;
-  font-size: 0.54rem;
+  font-size: 0.49rem;
   font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;
