@@ -5,6 +5,9 @@ on:
     branches: ["main"]
     paths:
       - "docs/**"
+      - "i18n-es/**"
+      - "mkdocs.yml"
+      - "mkdocs.es.yml"
       - ".github/workflows/deploy-github-pages.yml"
   workflow_dispatch:
 
@@ -40,8 +43,10 @@ jobs:
           python -m pip install --upgrade pip
           pip install mkdocs mkdocs-material mkdocs-mermaid2-plugin pymdown-extensions
 
-      - name: Build with MkDocs
-        run: mkdocs build --strict
+      - name: Build with MkDocs (English + Spanish)
+        run: |
+          mkdocs build --strict
+          mkdocs build --strict --config-file mkdocs.es.yml
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

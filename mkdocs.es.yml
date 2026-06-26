@@ -1,12 +1,15 @@
 site_name: "Azure Machine Learning: Advanced"
-site_description: Azure Machine Learning training from fundamentals to advanced MLOps.
-site_url: https://cloud2br-msftlearninghub.github.io/Azure-ML-Advanced/
+site_description: Capacitación de Azure Machine Learning desde fundamentos hasta MLOps avanzado.
+site_url: https://cloud2br-msftlearninghub.github.io/Azure-ML-Advanced/es/
 repo_url: https://github.com/Cloud2BR-MSFTLearningHub/Azure-ML-Advanced
 repo_name: Cloud2BR-MSFTLearningHub/Azure-ML-Advanced
 
+docs_dir: i18n-es
+site_dir: site/es
+
 theme:
   name: material
-  language: en
+  language: es
   logo: assets/img/org-logo.png
   favicon: assets/img/org-logo.png
   features:
@@ -58,20 +61,20 @@ extra:
       lang: es
 
 nav:
-  - Home: index.md
-  - Introduction and Lifecycle: modules/introduction.md
-  - ML Foundations: modules/ml-foundations.md
-  - Azure ML Environment: modules/azure-ml-environment.md
-  - Environment Setup: modules/environment-setup.md
-  - Data Preparation: modules/data-preparation.md
-  - Model Types: modules/model-types.md
-  - Training and AutoML: modules/training-automl.md
-  - Performance Metrics: modules/performance-metrics.md
-  - Results and Explainability: modules/results-explainability.md
-  - Deployment: modules/deployment.md
-  - Deployment Debugging: modules/deployment-debug-k8s.md
-  - Reference:
-      - Overview: reference/index.md
-      - Mathematical Model Deep Dive: reference/model-math-deep-dive.md
-      - CLI Commands: reference/cli-commands.md
-      - Glossary: reference/glossary.md
+  - Inicio: index.md
+  - Introducción y Ciclo de Vida: modules/introduction.md
+  - Fundamentos de ML: modules/ml-foundations.md
+  - Entorno de Azure ML: modules/azure-ml-environment.md
+  - Configuración del Entorno: modules/environment-setup.md
+  - Preparación de Datos: modules/data-preparation.md
+  - Tipos de Modelos: modules/model-types.md
+  - Entrenamiento y AutoML: modules/training-automl.md
+  - Métricas de Rendimiento: modules/performance-metrics.md
+  - Resultados y Explicabilidad: modules/results-explainability.md
+  - Despliegue: modules/deployment.md
+  - Depuración de Despliegue: modules/deployment-debug-k8s.md
+  - Referencia:
+      - Visión General: reference/index.md
+      - Análisis Matemático Profundo de Modelos: reference/model-math-deep-dive.md
+      - Comandos CLI: reference/cli-commands.md
+      - Glosario: reference/glossary.md
