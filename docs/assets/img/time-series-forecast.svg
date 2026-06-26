@@ -33,5 +33,5 @@
   <path class="band" d="M660,210 Q740,150 820,140 Q900,130 960,120 L960,300 Q900,260 820,250 Q740,250 660,230 Z"/>
   <!-- forecast -->
   <path class="fcast" d="M660,210 Q700,150 740,185 Q780,120 820,160 Q860,100 900,150 Q940,90 960,135"/>
-  <text class="note" x="60" y="500" font-weight="700" fill="#b45309">The band widens with the horizon: confidence drops the further ahead you predict.</text>
+  <text class="note" x="60" y="525" font-weight="700" fill="#b45309">The band widens with the horizon: confidence drops the further ahead you predict.</text>
 </svg>
