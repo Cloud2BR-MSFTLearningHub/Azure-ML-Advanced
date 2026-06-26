@@ -82,15 +82,29 @@ jobs:
             -f per_page=100 \
             --jq 'sort_by(.created_at) | reverse | .[].id')
 
+          echo "Total deployments found: ${#DEPLOYMENT_IDS[@]}"
+
           if [ "${#DEPLOYMENT_IDS[@]}" -le 2 ]; then
-            echo "Nothing to clean. Deployment count: ${#DEPLOYMENT_IDS[@]}"
+            echo "Nothing to clean."
             exit 0
           fi
 
-          echo "Keeping deployments: ${DEPLOYMENT_IDS[0]} (latest), ${DEPLOYMENT_IDS[1]} (previous)"
+          echo "Keeping: ${DEPLOYMENT_IDS[0]} (latest), ${DEPLOYMENT_IDS[1]} (previous)"
 
+          # Pass 1: mark all old deployments inactive
           for OLD_ID in "${DEPLOYMENT_IDS[@]:2}"; do
-            echo "Cleaning deployment: ${OLD_ID}"
-            gh api "repos/${REPO}/deployments/${OLD_ID}/statuses" -f state=inactive >/dev/null 2>&1 || true
+            echo "Marking inactive: ${OLD_ID}"
+            gh api "repos/${REPO}/deployments/${OLD_ID}/statuses" \
+              -f state=inactive >/dev/null 2>&1 || true
+          done
+
+          # Brief pause so GitHub registers the inactive state
+          sleep 5
+
+          # Pass 2: delete them
+          for OLD_ID in "${DEPLOYMENT_IDS[@]:2}"; do
+            echo "Deleting: ${OLD_ID}"
             gh api -X DELETE "repos/${REPO}/deployments/${OLD_ID}" >/dev/null 2>&1 || true
           done
+
+          echo "Cleanup complete."
