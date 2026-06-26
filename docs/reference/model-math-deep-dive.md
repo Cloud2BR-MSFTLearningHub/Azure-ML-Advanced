@@ -86,6 +86,13 @@ delivers to a real project. Read this once and the rest of the page becomes patt
   you never search blindly, you always know which way is downhill. Understanding this explains
   most training failures (loss exploding, loss stuck, loss oscillating).
 
+![Gradient descent stepping downhill on a bowl-shaped loss curve toward the minimum](../assets/img/gradient-descent-loss.svg)
+
+The picture above is the whole idea in one image: the curve is the loss, the dots are successive
+training steps, and the gradient is just the slope under each dot. Steps are large where the
+slope is steep and shrink to nothing at the bottom, which is the model arriving at its best
+weights.
+
 ### Convexity : the guarantee that training "just works"
 
 - **What it is:** a convex loss is bowl-shaped : it has exactly one bottom. Non-convex losses
@@ -119,6 +126,13 @@ delivers to a real project. Read this once and the rest of the page becomes patt
   of getting a bare yes/no. Calibrated probabilities are what make pricing, triage, and
   risk-scoring systems possible.
 
+![Sigmoid curve mapping a model score to a probability, with a threshold splitting predictions into class 0 and class 1](../assets/img/score-to-decision.svg)
+
+This is what "a score becomes a decision" looks like: the S-curve squashes any raw score into a
+probability, and the dashed threshold line is the business rule that turns that probability into
+a concrete Yes or No. Sliding the threshold left or right is how you trade catching more cases
+against raising fewer false alarms.
+
 ### Linear algebra ($X\theta$, $X^TX$, kernels) : why any of this is fast
 
 - **What it is:** stacking data into matrices and expressing predictions as matrix products.
@@ -132,6 +146,12 @@ delivers to a real project. Read this once and the rest of the page becomes patt
 > are chosen by an **optimizer** (gradient descent) to minimize a **loss** (your definition of
 > wrong), kept honest by **regularization** (so it generalizes), and turned into **decisions** via
 > **probabilities and thresholds**. Every section below is a specific choice of those five pieces.
+
+![The five components: function, loss, optimizer, regularization, and decision, connected in a training-to-prediction pipeline](../assets/img/ml-math-pipeline.svg)
+
+Use this diagram as a mental checklist: when you meet any model below, ask which function it
+uses, what loss it minimizes, how it optimizes, how it regularizes, and how it makes the final
+call. Those five answers fully describe it.
 
 ---
 
