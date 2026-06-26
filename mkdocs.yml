@@ -55,5 +55,6 @@ nav:
   - Deployment Debugging: modules/10-deployment-debug-k8s.md
   - Reference:
       - Overview: reference/index.md
+      - Mathematical Model Deep Dive: reference/model-math-deep-dive.md
       - CLI Commands: reference/cli-commands.md
       - Glossary: reference/glossary.md

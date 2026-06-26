@@ -90,6 +90,10 @@ multiple eras based on compute power, data availability, and algorithmic advance
 		<p>Supporting material for implementation and operations.</p>
 	</div>
 	<div class="home-card">
+		<h3><a href="reference/model-math-deep-dive/">Mathematical Model Deep Dive</a></h3>
+		<p>Formula-level explanations, objectives, assumptions, and trade-offs for core ML models.</p>
+	</div>
+	<div class="home-card">
 		<h3><a href="reference/cli-commands/">CLI Commands</a></h3>
 		<p>Command-line references for setup, run, and deployment tasks.</p>
 	</div>
