@@ -19,6 +19,7 @@
       .vhigh { fill: #f8dcff; stroke: #d39be8; stroke-width: 1.5; }
       .chip { fill: #004a99; }
       .chip-text { fill: #ffffff; font-family: Segoe UI, Arial, sans-serif; font-size: 12px; font-weight: 700; }
+      .gb { fill: #004a99; font-family: Segoe UI, Arial, sans-serif; font-size: 12px; font-weight: 700; }
     </style>
   </defs>
 
@@ -39,9 +40,13 @@
 
   <text class="small" x="70" y="564" transform="rotate(-90 70 564)">Dataset size scale (rows/samples)</text>
   <text class="small" x="136" y="582">Small</text>
+  <text class="gb" x="136" y="600">~0.01-0.1 GB</text>
   <text class="small" x="430" y="582">Medium</text>
+  <text class="gb" x="430" y="600">~0.1-5 GB</text>
   <text class="small" x="760" y="582">Large</text>
+  <text class="gb" x="760" y="600">~5-100 GB</text>
   <text class="small" x="1120" y="582">Very large</text>
+  <text class="gb" x="1120" y="600">~100 GB to TBs</text>
 
   <text class="small" x="78" y="503">~1K</text>
   <text class="small" x="70" y="443">~10K</text>
