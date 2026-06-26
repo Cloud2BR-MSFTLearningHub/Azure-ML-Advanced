@@ -16,7 +16,7 @@
     </style>
   </defs>
   <rect class="bg" x="0" y="0" width="1040" height="540"/>
-  <text class="title" x="60" y="52">Pronóstico de series de tiempo: tendencia + estacionalidad + horizonte</text>
+  <text class="title" x="60" y="52" font-size="24px">Pronóstico de series de tiempo: tendencia + estacionalidad + horizonte</text>
   <text class="subtitle" x="60" y="80">Descompone el historial en tendencia y ciclos estacionales repetidos, luego proyecta hacia adelante con incertidumbre creciente.</text>
   <line class="axis" x1="120" y1="460" x2="980" y2="460"/>
   <line class="axis" x1="120" y1="460" x2="120" y2="120"/>
@@ -33,5 +33,5 @@
   <path class="band" d="M660,210 Q740,150 820,140 Q900,130 960,120 L960,300 Q900,260 820,250 Q740,250 660,230 Z"/>
   <!-- forecast -->
   <path class="fcast" d="M660,210 Q700,150 740,185 Q780,120 820,160 Q860,100 900,150 Q940,90 960,135"/>
-  <text class="note" x="60" y="500" font-weight="700" fill="#b45309">La banda se amplía con el horizonte: la confianza cae cuanto más adelante predices.</text>
+  <text class="note" x="60" y="525" font-weight="700" fill="#b45309">La banda se amplía con el horizonte: la confianza cae cuanto más adelante predices.</text>
 </svg>
