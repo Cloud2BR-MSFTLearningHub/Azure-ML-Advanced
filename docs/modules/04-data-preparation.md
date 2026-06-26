@@ -33,6 +33,11 @@ engineering, and dataset sizing for reliable model training.
 > baselines need far less data than deep learning; foundation-model workloads need orders of
 > magnitude more. Sizing data first avoids choosing a model you cannot feed.
 
+> **Note - GB reference:** In dataset planning, vendor storage is typically decimal units:
+> 1 KB = 1,000 bytes, 1 MB = 1,000,000 bytes, 1 GB = 1,000,000,000 bytes.
+> Memory tools may show binary units instead: 1 GiB = 1,073,741,824 bytes,
+> so 1 GB is approximately 0.93 GiB.
+
 ## Preparation checklist
 
 - Remove duplicates and nulls

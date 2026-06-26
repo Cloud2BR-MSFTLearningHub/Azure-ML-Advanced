@@ -68,6 +68,134 @@ Key rules for a production-grade scoring script:
 | Online endpoint | Real-time predictions | Requires low-latency ops |
 | Batch endpoint | Large offline scoring jobs | Not real-time |
 
+## End-to-end example: calling a deployed model
+
+This walks through exactly what a deployed model looks like in practice — the API, what you send,
+how to call it, and what comes back — using the `fraud-endpoint` from the scoring script above.
+
+![Calling a deployed model endpoint](../assets/img/endpoint-request-response.svg)
+
+> **Note - How to read this diagram:** The client sends an HTTPS `POST` with a JSON body of feature
+> rows. The endpoint authenticates the call, validates the schema, and routes it to a warm replica.
+> Inside, `init()` has already loaded the registered model once, so `run()` only does the fast
+> prediction and returns a JSON body with the predicted class and per-class probability.
+
+### 1. What the API looks like
+
+After deployment, Azure ML gives you two things:
+
+| Item | Example | Where to get it |
+|---|---|---|
+| Scoring URI | `https://fraud-endpoint.eastus.inference.ml.azure.com/score` | `az ml online-endpoint show -n fraud-endpoint --query scoring_uri` |
+| Auth key/token | `Bearer <primary-key>` | `az ml online-endpoint get-credentials -n fraud-endpoint` |
+
+The contract is a simple HTTP POST:
+
+| Field | Value |
+|---|---|
+| Method | `POST` |
+| Path | `/score` |
+| Headers | `Content-Type: application/json`, `Authorization: Bearer <key>` |
+| Body | JSON object: `{"features": [[...], [...]]}` |
+
+### 2. The request you send
+
+```json
+{
+  "features": [
+    [0.21, 1.4, 0.0, 7, 1, 0.55],
+    [1.02, 0.3, 2.1, 2, 0, 0.10]
+  ]
+}
+```
+
+Each inner array is one record, with values in the **exact same column order used during training**.
+Here we send two transactions in a single call (batching reduces per-request overhead).
+
+### 3. How to call it
+
+=== "curl"
+
+    ```bash
+    curl -X POST "https://fraud-endpoint.eastus.inference.ml.azure.com/score" \
+      -H "Content-Type: application/json" \
+      -H "Authorization: Bearer $ENDPOINT_KEY" \
+      -d '{"features": [[0.21, 1.4, 0.0, 7, 1, 0.55], [1.02, 0.3, 2.1, 2, 0, 0.10]]}'
+    ```
+
+=== "Python"
+
+    ```python
+    import os
+    import requests
+
+    url = "https://fraud-endpoint.eastus.inference.ml.azure.com/score"
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {os.environ['ENDPOINT_KEY']}",
+    }
+    payload = {"features": [[0.21, 1.4, 0.0, 7, 1, 0.55],
+                            [1.02, 0.3, 2.1, 2, 0, 0.10]]}
+
+    response = requests.post(url, json=payload, headers=headers, timeout=10)
+    response.raise_for_status()
+    result = response.json()
+
+    for i, (label, proba) in enumerate(zip(result["prediction"], result["probability"])):
+        confidence = max(proba)
+        print(f"row {i}: class={label} confidence={confidence:.0%}")
+    ```
+
+=== "JavaScript"
+
+    ```javascript
+    const res = await fetch("https://fraud-endpoint.eastus.inference.ml.azure.com/score", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.ENDPOINT_KEY}`,
+      },
+      body: JSON.stringify({
+        features: [
+          [0.21, 1.4, 0.0, 7, 1, 0.55],
+          [1.02, 0.3, 2.1, 2, 0, 0.10],
+        ],
+      }),
+    });
+    const result = await res.json();
+    console.log(result.prediction, result.probability);
+    ```
+
+### 4. The response you get back
+
+```json
+{
+  "prediction": [1, 0],
+  "probability": [
+    [0.08, 0.92],
+    [0.86, 0.14]
+  ]
+}
+```
+
+### 5. How to read the result
+
+| Row | `prediction` | `probability` `[P(class0), P(class1)]` | Meaning |
+|---|---|---|---|
+| 0 | `1` | `[0.08, 0.92]` | Flagged as **fraud** with 92% confidence |
+| 1 | `0` | `[0.86, 0.14]` | Predicted **legitimate** with 86% confidence |
+
+- `prediction` is the model's chosen class per row (here `1 = fraud`, `0 = legitimate`).
+- `probability` gives the confidence per class; the values in each row sum to `1.0`.
+- Your application decides the **action threshold**: e.g. auto-block at `P(fraud) >= 0.90`, send to
+  manual review between `0.50` and `0.90`, and allow below `0.50`. The model returns scores; the
+  business rule turns them into decisions.
+
+> **Tip - Handle errors in the client:** Expect non-`200` responses too — `401/403` (bad or expired
+> key), `400` (schema/shape mismatch), `429` (throttling, back off and retry), and `503` (replica
+> cold-start or overload). Always set a timeout and a small retry with backoff, as noted in the
+> reliability checklist below.
+
 ## Release strategies
 
 ![Blue-green, canary, and shadow release strategies](../assets/img/release-strategies.svg)
