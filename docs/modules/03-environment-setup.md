@@ -1,9 +1,4 @@
----
-title: 03 Environment Setup
-layout: default
-nav_order: 5
----
-
+﻿
 # Environment Setup
 
 This module helps beginners build a reproducible runtime from zero. Reproducibility is
@@ -21,7 +16,11 @@ across training and inference.
 
 ![Azure ML workspace taxonomy](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/azure-machine-learning-taxonomy.png)
 
+> Image explanation: This visual shows azure ml workspace taxonomy. Use it to understand the concept in this section and connect it to practical Azure ML decisions.
+
 ![Azure ML environment taxonomy](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/azure-ml-environment-taxonomy.png)
+
+> Image explanation: This visual shows azure ml environment taxonomy. Use it to understand the concept in this section and connect it to practical Azure ML decisions.
 
 ## Typical setup (from scratch)
 
@@ -108,10 +107,15 @@ concepts that affect performance decisions.
 
 ![Binary vs decimal data measurements](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/binary_vs_decimal_data_measurements.png)
 
+> Image explanation: This visual shows binary vs decimal data measurements. Use it to understand the concept in this section and connect it to practical Azure ML decisions.
+
 ![Summary of number systems](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/summary_of_number_system.png)
+
+> Image explanation: This visual shows summary of number systems. Use it to understand the concept in this section and connect it to practical Azure ML decisions.
 
 ## Quick self-check
 
 1. Why should train and inference share a pinned environment?
 2. What command shows all conda environments?
 3. When should you register a Jupyter kernel?
+

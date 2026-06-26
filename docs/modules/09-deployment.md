@@ -1,9 +1,4 @@
----
-title: 09 Deployment
-layout: default
-nav_order: 11
----
-
+﻿
 # Deployment
 
 This module covers the path from model artifact to production endpoint, including
@@ -11,9 +6,15 @@ deployment patterns, release strategies, and operational safeguards.
 
 ![Training vs deployment model](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/training_vs_deployment_model.png)
 
+> Image explanation: This visual shows training vs deployment model. Use it to understand the concept in this section and connect it to practical Azure ML decisions.
+
 ![ML deployment flow](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/ml_deployment_flow.png)
 
+> Image explanation: This visual shows ml deployment flow. Use it to understand the concept in this section and connect it to practical Azure ML decisions.
+
 ![Deployment overview](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/deployment_overview.png)
+
+> Image explanation: This visual shows deployment overview. Use it to understand the concept in this section and connect it to practical Azure ML decisions.
 
 ## Deployment steps
 
@@ -163,3 +164,4 @@ flowchart LR
 1. When is batch endpoint better than online endpoint?
 2. Why run a local validation step before cloud deployment?
 3. What is the advantage of canary release?
+

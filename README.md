@@ -18,6 +18,21 @@ Use the structured training navigation at [docs/index.md](docs/index.md).
 GitHub Pages deployment is wired via [deploy-github-pages.yml](.github/workflows/deploy-github-pages.yml).
 In GitHub, set **Settings -> Pages -> Source = GitHub Actions**.
 
+This documentation site now builds with **MkDocs (Material theme)**.
+
+Local preview:
+
+```bash
+pip install mkdocs mkdocs-material mkdocs-mermaid2-plugin pymdown-extensions
+mkdocs serve
+```
+
+Production build:
+
+```bash
+mkdocs build --strict
+```
+
 > Note on math rendering: GitHub Markdown renders inline math with `$...$` and block math with `$$...$$`. All formulas below use that syntax so they display correctly on GitHub.
 
 ## Table of Contents

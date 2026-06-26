@@ -1,9 +1,4 @@
----
-title: 06 Training and AutoML
-layout: default
-nav_order: 8
----
-
+﻿
 # Training and AutoML
 
 This module explains how models are trained in Azure ML, what AutoML does in the backend,
@@ -17,9 +12,15 @@ and how to move from baseline experiments to reliable model selection.
 
 ![AutoML diagram](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/automl_diagram.png)
 
+> Image explanation: This visual shows automl diagram. Use it to understand the concept in this section and connect it to practical Azure ML decisions.
+
 ![AutoML process expectations](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/automl_process_what_to_expect.png)
 
+> Image explanation: This visual shows automl process expectations. Use it to understand the concept in this section and connect it to practical Azure ML decisions.
+
 ![Detailed ML-based time-series forecast steps](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/Detailed-steps-of-ML-based-time-series-forecast.png)
+
+> Image explanation: This visual shows detailed ml-based time-series forecast steps. Use it to understand the concept in this section and connect it to practical Azure ML decisions.
 
 ## AutoML workflow
 
@@ -51,7 +52,7 @@ AutoML typically evaluates some or all of the following:
 | Voting Ensemble | AutoML-specific ensemble of top runs |
 | Stack Ensemble | AutoML-specific meta-model over top runs |
 
-The `VotingEnsemble` or `StackEnsemble` at the end is AutoML's way of squeezing extra performance beyond single models — they are often the final winner.
+The `VotingEnsemble` or `StackEnsemble` at the end is AutoML's way of squeezing extra performance beyond single models â€” they are often the final winner.
 
 ## Compute and performance
 
@@ -173,3 +174,4 @@ where weights $w_i$ reflect business priorities.
 1. Why is primary metric choice critical in AutoML?
 2. What trade-off does max concurrent iterations control?
 3. Why should deployment constraints be considered during model selection?
+

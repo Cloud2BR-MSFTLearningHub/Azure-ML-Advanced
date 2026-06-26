@@ -1,9 +1,4 @@
----
-title: 00 Introduction and Lifecycle
-layout: default
-nav_order: 2
----
-
+﻿
 # Introduction and ML Lifecycle
 
 This course is built for learners starting from scratch and progressing to production
@@ -70,7 +65,7 @@ use supervised ML scoring plus rule-based guardrails.
 - A model can be statistically strong but fail fairness/compliance checks.
 - A model is not a product by itself; the surrounding data and ops system matters.
 - Deep learning is a subset of ML, not a separate thing; it uses neural networks with many layers.
-- "Training" a model means finding parameter values that minimise a loss function on data — not teaching in the human sense.
+- "Training" a model means finding parameter values that minimise a loss function on data â€” not teaching in the human sense.
 
 ## Real-world example: e-commerce recommendation
 
@@ -129,9 +124,15 @@ Note: Stage 1 (problem framing) is often underinvested. The single most common r
 
 ![ML infrastructure tools for production](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/ml-infrastructure-tools-for-production.png)
 
+> Image explanation: This visual shows ml infrastructure tools for production. Use it to understand the concept in this section and connect it to practical Azure ML decisions.
+
 ![ML workflow stages](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/ml_workflow_stages.png)
 
+> Image explanation: This visual shows ml workflow stages. Use it to understand the concept in this section and connect it to practical Azure ML decisions.
+
 ![Overview ML flow](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/Overview_ML_flow.png)
+
+> Image explanation: This visual shows overview ml flow. Use it to understand the concept in this section and connect it to practical Azure ML decisions.
 
 ## Web Service vs API
 
@@ -180,10 +181,15 @@ Key production considerations for this flow:
 
 ![Web service vs API](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/webservice_vs_api.png)
 
+> Image explanation: This visual shows web service vs api. Use it to understand the concept in this section and connect it to practical Azure ML decisions.
+
 ![Web service vs API table](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/table_webservice_vs_api.png)
+
+> Image explanation: This visual shows web service vs api table. Use it to understand the concept in this section and connect it to practical Azure ML decisions.
 
 ## Quick self-check
 
 1. Is every AI system an ML system?
 2. In production, which stage catches drift issues?
 3. What is the difference between API and web service?
+

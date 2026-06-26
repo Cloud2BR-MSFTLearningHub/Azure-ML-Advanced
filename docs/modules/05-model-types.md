@@ -1,12 +1,9 @@
----
-title: 05 Model Types
-layout: default
-nav_order: 7
----
-
+﻿
 # Model Types
 
 ![Model implementation schema](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/logic_schema_model_implementation.png)
+
+> Image explanation: This visual shows model implementation schema. Use it to understand the concept in this section and connect it to practical Azure ML decisions.
 
 This module connects algorithm families to problem types and deployment constraints.
 
@@ -166,3 +163,4 @@ stacker.fit(X_train, y_train)
 1. Why might a linear model be preferred even if score is slightly lower?
 2. What does learning rate $\nu$ control in boosting?
 3. Which family is often strongest on structured tabular data?
+

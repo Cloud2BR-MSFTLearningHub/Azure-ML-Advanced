@@ -39,6 +39,39 @@
   line-height: 1.35;
 }
 
+/* MkDocs Material overrides: darker blue and wider layout usage. */
+[data-md-color-scheme="default"] {
+  --md-primary-fg-color: #004a99;
+  --md-primary-fg-color--light: #0061bf;
+  --md-primary-fg-color--dark: #003874;
+  --md-accent-fg-color: #004a99;
+}
+
+.md-typeset a,
+.md-nav__link,
+.md-nav__link--active,
+.md-tabs__link {
+  color: #004a99;
+}
+
+.md-typeset a:hover,
+.md-nav__link:hover,
+.md-tabs__link:hover {
+  color: #003874;
+}
+
+@media screen and (min-width: 76.25em) {
+  .md-grid {
+    max-width: 96%;
+  }
+}
+
+@media screen and (min-width: 90em) {
+  .md-grid {
+    max-width: 1800px;
+  }
+}
+
 /* Sidebar nav alignment: keep main nav flush to the left edge. */
 .site-nav,
 .site-nav .nav-list,
@@ -54,15 +87,26 @@
 
 /* Use blue accents instead of purple for links/navigation. */
 :root {
-  --link-color: #0969da;
-  --btn-primary-color: #0969da;
+  --link-color: #004a99;
+  --btn-primary-color: #004a99;
 }
 
 a,
 .nav-list .nav-list-item .nav-list-link,
 .site-button,
 .site-title {
-  color: #0969da;
+  color: #004a99;
+}
+
+a:visited,
+.nav-list .nav-list-item .nav-list-link:visited {
+  color: #004a99;
+}
+
+a:hover,
+.nav-list .nav-list-item .nav-list-link:hover,
+.nav-list .nav-list-item .nav-list-link.active {
+  color: #003874;
 }
 
 /* Keep desktop sidebar pinned to the true left edge of the viewport. */
@@ -83,5 +127,22 @@ a,
 
   .main {
     margin-left: 264px;
+    max-width: calc(100vw - 264px);
+  }
+
+  .main-content-wrap,
+  .main-content,
+  .search-input-wrap {
+    max-width: none !important;
+    width: 100%;
+  }
+
+  .main-content-wrap {
+    padding-left: 2rem;
+    padding-right: 3rem;
+  }
+
+  .search-input {
+    max-width: none;
   }
 }

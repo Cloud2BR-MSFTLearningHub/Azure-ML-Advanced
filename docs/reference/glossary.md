@@ -1,10 +1,4 @@
----
-title: Glossary
-layout: default
-parent: Reference
-nav_order: 22
----
-
+﻿
 # Glossary
 
 - Workspace: top-level Azure ML control plane
@@ -12,3 +6,4 @@ nav_order: 22
 - Endpoint: deployed model API
 - Drift: change in data or target relationship over time
 - Featurization: transforms from raw fields to model-ready features
+

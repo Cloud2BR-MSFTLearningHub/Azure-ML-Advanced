@@ -1,15 +1,12 @@
----
-title: 07 Performance Metrics
-layout: default
-nav_order: 9
----
-
+﻿
 # Performance Metrics
 
 Choosing the right metric is one of the most important decisions in ML. A model can look
 excellent on one metric and fail on the real business objective.
 
 ![How to choose a metric](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/How-to-Choose-a-Metric-for-Imbalanced-Classification-latest.png)
+
+> Image explanation: This visual shows how to choose a metric. Use it to understand the concept in this section and connect it to practical Azure ML decisions.
 
 ## Confusion matrix basics
 
@@ -165,3 +162,4 @@ on probability values, not just rank ordering.
 1. Which metric is safer than accuracy for imbalanced data?
 2. Why can RMSE be much larger than MAE?
 3. What does a negative $R^2$ imply?
+

@@ -1,9 +1,4 @@
----
-title: 08 Results and Explainability
-layout: default
-nav_order: 10
----
-
+﻿
 # Results and Explainability
 
 This module teaches how to move from model score reporting to trustworthy model behavior
@@ -81,7 +76,11 @@ Operational guidance:
 
 ![ROC good vs bad](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/roc_good_bad.png)
 
+> Image explanation: This visual shows roc good vs bad. Use it to understand the concept in this section and connect it to practical Azure ML decisions.
+
 ![Precision-recall good vs bad](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/precisionrecall_good_bad.png)
+
+> Image explanation: This visual shows precision-recall good vs bad. Use it to understand the concept in this section and connect it to practical Azure ML decisions.
 
 Use both global and local explanations before production release.
 
@@ -168,3 +167,4 @@ flowchart LR
 4. Alert thresholds set and PagerDuty/Teams webhook attached.
 5. Model quality evaluation job scheduled (weekly or monthly).
 6. Rollback deployment is tagged and accessible.
+

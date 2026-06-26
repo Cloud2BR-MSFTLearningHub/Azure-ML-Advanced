@@ -1,9 +1,4 @@
----
-title: 01 ML Foundations
-layout: default
-nav_order: 3
----
-
+﻿
 # ML Foundations
 
 This module builds the mathematical and conceptual base needed for all later modules.
@@ -29,7 +24,11 @@ What to remember:
 
 ![Machine learning types](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/machine_learning_types.png)
 
+> Image explanation: This visual shows machine learning types. Use it to understand the concept in this section and connect it to practical Azure ML decisions.
+
 ![Types of ML based on objective](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/types_of_ml_based_in_objective.png)
+
+> Image explanation: This visual shows types of ml based on objective. Use it to understand the concept in this section and connect it to practical Azure ML decisions.
 
 ## Problem Types
 
@@ -73,7 +72,7 @@ The same feature set can support both depending on business objective.
 ## Semi-supervised and self-supervised
 
 - Semi-supervised is useful when labels are expensive. Example: you have 1,000 labelled medical images and 50,000 unlabelled ones. A semi-supervised approach trains on both, propagating labels from confident predictions.
-- Self-supervised is common in foundation models (GPT, BERT, CLIP) and pretraining pipelines. The model is trained on a proxy task whose labels come from the data itself — e.g., predict the next word, reconstruct a masked patch.
+- Self-supervised is common in foundation models (GPT, BERT, CLIP) and pretraining pipelines. The model is trained on a proxy task whose labels come from the data itself â€” e.g., predict the next word, reconstruct a masked patch.
 - Both reduce dependence on manual labeling, which is expensive and slow at scale.
 
 | Approach | Label requirement | Common algorithms |
@@ -167,9 +166,9 @@ Practical split sizes (rule of thumb):
 
 | Split | Typical proportion | Purpose |
 |---|---|---|
-| Train | 60–80% | Fit model parameters |
-| Validation | 10–20% | Tune hyperparameters and compare models |
-| Test | 10–20% | Final unbiased evaluation before deployment |
+| Train | 60â€“80% | Fit model parameters |
+| Validation | 10â€“20% | Tune hyperparameters and compare models |
+| Test | 10â€“20% | Final unbiased evaluation before deployment |
 
 The test set must **never** be used during model selection. Using it for selection is a form of data leakage that makes offline scores over-optimistic.
 
@@ -219,3 +218,4 @@ The practical goal is to balance both:
 1. If your target is numeric, which family do you use?
 2. Why can high training accuracy still fail in production?
 3. What does the learning rate $\eta$ control in gradient descent?
+

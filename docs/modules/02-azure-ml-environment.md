@@ -1,9 +1,4 @@
----
-title: 02 Azure ML Environment
-layout: default
-nav_order: 4
----
-
+﻿
 # Azure ML Environment
 
 This module explains Azure ML platform building blocks and how to choose compute and
@@ -29,7 +24,11 @@ serving options based on scale, latency, and cost.
 
 ![Azure ML workspace taxonomy](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/azure-machine-learning-taxonomy.png)
 
+> Image explanation: This visual shows azure ml workspace taxonomy. Use it to understand the concept in this section and connect it to practical Azure ML decisions.
+
 ![Azure ML environment taxonomy](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/azure-ml-environment-taxonomy.png)
+
+> Image explanation: This visual shows azure ml environment taxonomy. Use it to understand the concept in this section and connect it to practical Azure ML decisions.
 
 Key concepts:
 
@@ -44,6 +43,8 @@ Additional key terms:
 - Dataset/Data asset: versioned data reference used by jobs.
 
 ![Azure endpoint concept](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/azure-endpoint-concept.png)
+
+> Image explanation: This visual shows azure endpoint concept. Use it to understand the concept in this section and connect it to practical Azure ML decisions.
 
 ## Compute guidance
 
@@ -122,7 +123,7 @@ Azure ML environments are immutable once published. Recommended versioning appro
 
 1. Pin all packages with exact versions in `conda.yml` or `requirements.txt`.
 2. Use environment name + version (e.g., `fraud-train:3`) as the reference in jobs.
-3. Rebuild the environment when any dependency changes — never mutate existing versions.
+3. Rebuild the environment when any dependency changes â€” never mutate existing versions.
 4. Reuse the **same** environment for training and inference to guarantee compatibility.
 
 ```yaml
@@ -144,6 +145,7 @@ dependencies:
 | Practice | Saves |
 |---|---|
 | Set compute cluster min nodes = 0 | Avoids idle compute charges |
-| Use spot/low-priority VMs for training | 60–80% compute cost reduction |
+| Use spot/low-priority VMs for training | 60â€“80% compute cost reduction |
 | Set auto-shutdown on compute instances | Prevents overnight idle spend |
 | Use ACI for low-QPS endpoints instead of AKS | Eliminates cluster overhead |
+

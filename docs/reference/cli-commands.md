@@ -1,10 +1,4 @@
----
-title: CLI Commands
-layout: default
-parent: Reference
-nav_order: 21
----
-
+﻿
 # CLI Commands
 
 Environment setup:
@@ -22,3 +16,4 @@ kubectl version --client
 kubectl get pods
 kubectl logs <pod-name>
 ```
+

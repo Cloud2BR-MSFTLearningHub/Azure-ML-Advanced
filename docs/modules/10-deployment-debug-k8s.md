@@ -1,9 +1,4 @@
----
-title: 10 Deployment Debugging
-layout: default
-nav_order: 12
----
-
+﻿
 # Deployment Debugging with Kubernetes
 
 This module provides a practical incident-response path for ML endpoints running on
@@ -11,9 +6,15 @@ Kubernetes-backed infrastructure.
 
 ![Confusion matrix quality reference](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/confusion_matrix_good_bad.png)
 
+> Image explanation: This visual shows confusion matrix quality reference. Use it to understand the concept in this section and connect it to practical Azure ML decisions.
+
 ![Lift curve quality reference](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/lift_good_bad.png)
 
+> Image explanation: This visual shows lift curve quality reference. Use it to understand the concept in this section and connect it to practical Azure ML decisions.
+
 ![ROC quality reference](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/roc_good_bad.png)
+
+> Image explanation: This visual shows roc quality reference. Use it to understand the concept in this section and connect it to practical Azure ML decisions.
 
 ## Key tools
 
@@ -122,7 +123,7 @@ flowchart TD
 | Section | Content |
 |---|---|
 | Incident title | One-line description |
-| Date/time | Detection → mitigation → full resolution |
+| Date/time | Detection â†’ mitigation â†’ full resolution |
 | Severity | Sev-1 / 2 / 3 and impact scope |
 | Detection | How was it found (alert, user report, monitoring)? |
 | Root cause | Technical root cause (not blame) |
@@ -150,3 +151,4 @@ Every Sev-1 and Sev-2 incident should produce at least one concrete prevention a
 1. Which command helps diagnose why a pod restarted?
 2. Why should you check `--previous` logs?
 3. What is one sign of model/version mismatch?
+
