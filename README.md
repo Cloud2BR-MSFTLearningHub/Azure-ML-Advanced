@@ -165,6 +165,8 @@ Production ML requires both software and statistical observability:
     P_t(Y|X)\neq P_{t+\Delta}(Y|X)
     \]
 
+These equations indicate distributional change between time windows. In practice, teams detect drift with distance or hypothesis metrics (for example PSI, KL-divergence, or KS tests), then trigger retraining based on thresholds.
+
 Retraining is triggered when business and statistical thresholds are exceeded.
 
 ## 9) Security and Governance Baseline
