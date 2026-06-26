@@ -1,4 +1,4 @@
-site_name: Azure ML Training Hub
+site_name: "Azure Machine Learning: Basics to Advanced"
 site_description: Azure Machine Learning training from fundamentals to advanced MLOps.
 site_url: https://cloud2br-msftlearninghub.github.io/Azure-ML-Advanced/
 repo_url: https://github.com/Cloud2BR-MSFTLearningHub/Azure-ML-Advanced
@@ -7,6 +7,8 @@ repo_name: Cloud2BR-MSFTLearningHub/Azure-ML-Advanced
 theme:
   name: material
   language: en
+  logo: assets/img/org-logo.png
+  favicon: assets/img/org-logo.png
   features:
     - navigation.sections
     - navigation.expand
