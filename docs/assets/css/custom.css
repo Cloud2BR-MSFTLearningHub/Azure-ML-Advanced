@@ -98,9 +98,9 @@ a.home-card:focus-visible {
 
 /* MkDocs Material overrides: darker blue and wider layout usage. */
 [data-md-color-scheme="default"] {
-  --md-primary-fg-color: #004a99;
-  --md-primary-fg-color--light: #0061bf;
-  --md-primary-fg-color--dark: #003874;
+  --md-primary-fg-color: #003366;
+  --md-primary-fg-color--light: #004a99;
+  --md-primary-fg-color--dark: #00264d;
   --md-accent-fg-color: #004a99;
 }
 
