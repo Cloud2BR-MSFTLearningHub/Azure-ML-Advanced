@@ -171,6 +171,17 @@ a.home-card:focus-visible {
   padding-left: 0.4rem;
 }
 
+/* ----------------------------------------------------------------------
+   Table of contents (right sidebar): 20% smaller than base nav
+   ---------------------------------------------------------------------- */
+.md-nav--secondary {
+  font-size: 0.5rem;
+}
+
+.md-nav--secondary .md-nav__title {
+  font-size: 0.46rem;
+}
+
 @media screen and (min-width: 76.25em) {
   .md-grid {
     max-width: 96%;
