@@ -1,0 +1,40 @@
+/* Use more horizontal space on desktop to reduce blank areas. */
+@media (min-width: 66.5rem) {
+  .main-content-wrap {
+    max-width: none;
+    padding-right: 2.5rem;
+  }
+
+  .main-content {
+    max-width: none;
+  }
+}
+
+/* Home page module cards */
+.home-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  margin-top: 0.75rem;
+}
+
+.home-card {
+  border: 1px solid #d0d7de;
+  border-radius: 10px;
+  padding: 0.9rem 1rem;
+  background: #ffffff;
+  box-shadow: 0 1px 2px rgba(31, 35, 40, 0.06);
+}
+
+.home-card h3 {
+  margin-top: 0;
+  margin-bottom: 0.45rem;
+  font-size: 1rem;
+}
+
+.home-card p {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 0.92rem;
+  line-height: 1.35;
+}
