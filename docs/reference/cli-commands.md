@@ -1,4 +1,4 @@
-﻿
+
 # CLI Commands
 
 A reference of the commands used across the course, grouped by stage, with a short note on

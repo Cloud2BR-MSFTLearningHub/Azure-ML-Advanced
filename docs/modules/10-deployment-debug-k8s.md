@@ -7,13 +7,13 @@ Kubernetes-backed infrastructure.
 ![Confusion matrix quality reference](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/confusion_matrix_good_bad.png)
 
 > **Note - How to read it:** A good vs bad confusion matrix. A strong model concentrates mass on the diagonal (correct
-> predictions); off-diagonal mass shows which error type dominates — the first clue when debugging
+> predictions); off-diagonal mass shows which error type dominates : the first clue when debugging
 > a quality regression.
 
 ![Lift curve quality reference](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/lift_good_bad.png)
 
 > **Note - How to read it:** A lift curve shows how much better the model ranks positives than random selection. A curve
-> hugging the top-left captures most positives in the highest-scoring fraction — valuable for
+> hugging the top-left captures most positives in the highest-scoring fraction : valuable for
 > prioritized review queues.
 
 ![ROC quality reference](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/roc_good_bad.png)
@@ -179,19 +179,19 @@ endpoints → pod → container), because a request fails at whichever link is b
 
 A pod moves through phases, and the failing phase points at the cause:
 
-- **Pending** — scheduler cannot place the pod (insufficient CPU/memory quota, no matching node).
-- **ContainerCreating** — image is being pulled or a volume is mounting; a stall here usually
+- **Pending** : scheduler cannot place the pod (insufficient CPU/memory quota, no matching node).
+- **ContainerCreating** : image is being pulled or a volume is mounting; a stall here usually
   means a registry/auth or storage problem.
-- **Running** — containers started; the app may still be unhealthy if probes fail.
-- **CrashLoopBackOff** — the container starts, exits, and Kubernetes restarts it with increasing
+- **Running** : containers started; the app may still be unhealthy if probes fail.
+- **CrashLoopBackOff** : the container starts, exits, and Kubernetes restarts it with increasing
   backoff. For ML this almost always means **`init()` failed**: a missing dependency or a model
-  that won't load. This is why `kubectl logs --previous` is essential — the current container may
+  that won't load. This is why `kubectl logs --previous` is essential : the current container may
   be too young to have logs, so you read the *crashed* container's output.
 
 ### Liveness vs readiness probes
 
 - A **readiness probe** decides whether a pod should receive traffic. Until it passes, the pod is
-  kept out of the Service's **Endpoints** list — which is why a slow model load (long cold start)
+  kept out of the Service's **Endpoints** list : which is why a slow model load (long cold start)
   shows up as empty endpoints and timeouts rather than errors.
 - A **liveness probe** decides whether to *restart* a stuck pod. A deadlocked scoring process with
   no liveness probe will hang forever; with one, Kubernetes recycles it.
@@ -217,11 +217,11 @@ intended one was `v3`. This is why the prevention action is a **version-hash che
 time, and why lineage (from the environment module) matters: it lets you prove which model version
 is actually serving.
 
-### From incident to prevention — the reliability flywheel
+### From incident to prevention : the reliability flywheel
 
 The postmortem template and "incident → prevention" table encode an **SRE** principle: every
 Sev-1/Sev-2 must yield at least one durable safeguard (a probe, a schema check, a version
 assertion, an automated drift alert). Over time this converts painful one-off outages into
-permanent tests and alerts, steadily lowering the rate of repeat incidents — the operational
+permanent tests and alerts, steadily lowering the rate of repeat incidents : the operational
 counterpart to the validation gates and SLOs introduced earlier in the course.
 

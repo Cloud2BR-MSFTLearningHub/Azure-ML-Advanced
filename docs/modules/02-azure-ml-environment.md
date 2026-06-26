@@ -24,14 +24,14 @@ serving options based on scale, latency, and cost.
 
 ![Azure ML workspace taxonomy](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/azure-machine-learning-taxonomy.png)
 
-> **Note - What this shows:** The Azure ML workspace taxonomy — how the workspace contains compute, data assets, models, and
+> **Note - What this shows:** The Azure ML workspace taxonomy : how the workspace contains compute, data assets, models, and
 > endpoints under one governance boundary. Use it to see which asset type owns each artifact you
 > will create in later modules.
 
 ![Azure ML environment taxonomy](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/azure-ml-environment-taxonomy.png)
 
 > **Note - What this shows:** How a versioned *environment* (base image + pinned dependencies) is reused across both training
-> and inference. Sharing one environment is what prevents training/serving skew — the same code
+> and inference. Sharing one environment is what prevents training/serving skew : the same code
 > behaving differently in production than in training.
 
 Key concepts:
@@ -129,13 +129,13 @@ not just what it is called.
 
 A **workspace** is the top-level container that ties together compute, data, models, and
 endpoints under one identity and access boundary. It exists so that everything about a project
-— who can touch it, which runs produced which model, which data version trained it — is
+: who can touch it, which runs produced which model, which data version trained it : is
 recorded in one auditable place. Behind the scenes a workspace provisions associated Azure
 resources: a **storage account** (artifacts, datasets), **Key Vault** (secrets), **Container
 Registry** (environment images), and **Application Insights** (telemetry). Understanding this
 mapping explains most permissions and networking issues you will hit later.
 
-### Control plane vs data plane — why the split matters
+### Control plane vs data plane : why the split matters
 
 - The **control plane** handles *metadata and intent*: "register this dataset", "start this
   job", "who is allowed to deploy". It is lightweight, always-on, and is where governance,
@@ -162,16 +162,16 @@ top cause of surprise cloud bills.
 ### Assets, versioning, and lineage
 
 Every first-class asset (data, environment, model, endpoint deployment) is **versioned**. This
-is not bureaucracy — it is what makes an ML system *reproducible* and *auditable*:
+is not bureaucracy : it is what makes an ML system *reproducible* and *auditable*:
 
-- **Data asset** — a versioned pointer to data in a datastore, so a run records *exactly* which
+- **Data asset** : a versioned pointer to data in a datastore, so a run records *exactly* which
   snapshot it trained on.
-- **Environment** — a pinned runtime (base image + dependency versions). Reusing the same
+- **Environment** : a pinned runtime (base image + dependency versions). Reusing the same
   environment for training and inference prevents the "works in training, breaks in production"
   class of bugs.
-- **Model** — the trained artifact plus metadata linking it back to the run, data, and
+- **Model** : the trained artifact plus metadata linking it back to the run, data, and
   environment that produced it (its **lineage**).
-- **Endpoint deployment** — a revisioned serving configuration, so traffic can be split or
+- **Endpoint deployment** : a revisioned serving configuration, so traffic can be split or
   rolled back between versions.
 
 Lineage is the chain `data v → run → model v → endpoint revision`. When a production prediction
@@ -180,12 +180,12 @@ was produced.
 
 ### Identity and access concepts
 
-- **Managed identity** — an Azure-managed credential attached to a workload (not a person) so
+- **Managed identity** : an Azure-managed credential attached to a workload (not a person) so
   jobs can read data or registries *without embedded secrets*. This is the secure default.
-- **RBAC (role-based access control)** — permissions granted to identities via roles. The
+- **RBAC (role-based access control)** : permissions granted to identities via roles. The
   **least-privilege** principle means giving each identity the minimum role needed (e.g.
   Contributor for engineers, not Owner), limiting blast radius if credentials are compromised.
-- **Private endpoint** — routes traffic to the workspace over a private network path instead of
+- **Private endpoint** : routes traffic to the workspace over a private network path instead of
   the public internet, reducing exposure for regulated workloads.
 
 ### The submit-to-result flow, demystified

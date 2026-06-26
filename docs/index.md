@@ -20,7 +20,7 @@ multiple eras based on compute power, data availability, and algorithmic advance
 > **Note - How to read this timeline:** Each colored band is the *dominant paradigm* of an era, and the dots on the axis are the
 > breakthroughs that triggered the next shift. Read it to see why modern Azure ML must support
 > *both* classic ML (still best for tabular business data) and deep/foundation models (best for
-> unstructured data) — the platform spans the whole history, not just the latest era.
+> unstructured data) : the platform spans the whole history, not just the latest era.
 
 ### Milestone eras
 

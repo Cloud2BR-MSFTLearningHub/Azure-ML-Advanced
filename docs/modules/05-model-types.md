@@ -3,7 +3,7 @@
 
 ![Model implementation schema](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/logic_schema_model_implementation.png)
 
-> **Note - What this shows:** A logical schema for implementing a model — from problem type to algorithm family to deployment
+> **Note - What this shows:** A logical schema for implementing a model : from problem type to algorithm family to deployment
 > constraints. Use it to trace how a business question narrows down to a specific model choice.
 
 This module connects algorithm families to problem types and deployment constraints.
@@ -163,7 +163,7 @@ stacker.fit(X_train, y_train)
 
 This section connects the equations above to the intuition and the engineering trade-offs.
 
-### Linear and logistic models — the interpretable baseline
+### Linear and logistic models : the interpretable baseline
 
 A **linear model** predicts $\hat y = \theta^T x$: each feature contributes a weighted vote, and
 the weight $\theta_j$ is directly readable as "effect of feature $j$". **Logistic regression**
@@ -178,7 +178,7 @@ A classifier outputs a probability; turning it into a yes/no needs a **threshold
 (default 0.5). Moving $\tau$ trades precision against recall: a fraud team that fears missed
 fraud lowers $\tau$ (catch more, accept more false alarms); a team that fears blocking good
 customers raises it. The right $\tau$ is set by the *relative cost* of the two error types, not
-by the algorithm — which is why thresholds are tuned after training, against business cost.
+by the algorithm : which is why thresholds are tuned after training, against business cost.
 
 ### Naive Bayes and the independence assumption
 
@@ -208,21 +208,21 @@ A **decision tree** repeatedly splits the data to make each resulting group more
 - `n_estimators` is *capacity*: more trees fit finer structure but overfit without early
   stopping on a validation set.
 - `learning_rate` ($\nu$) is *caution per step*: lower means each tree corrects less, so the
-  ensemble generalizes better — but needs proportionally more trees.
+  ensemble generalizes better : but needs proportionally more trees.
 - `max_depth` / `num_leaves` is the *main overfit knob*: it caps how complex any single tree can
   get.
 - `subsample` / `colsample_bytree` inject **stochasticity** (row/column sampling) that
   decorrelates trees and reduces variance, much like a random forest does.
 
-### Bagging vs boosting vs stacking — one sentence each
+### Bagging vs boosting vs stacking : one sentence each
 
 - **Bagging** reduces **variance** by averaging independent models (random forest).
 - **Boosting** reduces **bias** by sequentially correcting mistakes (XGBoost/LightGBM).
 - **Stacking** trains a **meta-model** on the out-of-fold predictions of diverse base models to
-  exploit their complementary strengths — usually the highest accuracy, at the cost of complexity
+  exploit their complementary strengths : usually the highest accuracy, at the cost of complexity
   and latency.
 
-### Calibration, fairness, robustness — the production-grade concerns
+### Calibration, fairness, robustness : the production-grade concerns
 
 - **Calibration**: a model is calibrated if, among predictions of "70% probability", about 70%
   are actually positive. Boosted trees are often *mis-calibrated* and benefit from Platt scaling
@@ -237,7 +237,7 @@ A **decision tree** repeatedly splits the data to make each resulting group more
 The latency/footprint table above is a reminder that the "best" model is the one that meets
 *all* constraints. A 1000-tree ensemble that adds 30 ms per call may break a real-time SLA, while
 a single matrix-multiply logistic regression serves in microseconds. Accuracy is necessary but
-never sufficient — cost, latency, interpretability, and maintainability are co-equal selection
+never sufficient : cost, latency, interpretability, and maintainability are co-equal selection
 criteria.
 
 ## Quick self-check

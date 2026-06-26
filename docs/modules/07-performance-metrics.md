@@ -175,25 +175,25 @@ All classification metrics are ratios of the four cells $TP, FP, TN, FN$. Memori
 is enough to reconstruct any metric:
 
 - **Precision** $\tfrac{TP}{TP+FP}$ answers "when the model says positive, how often is it right?"
-  — it is the metric you care about when **false positives are expensive** (blocking good
+  : it is the metric you care about when **false positives are expensive** (blocking good
   customers, flagging healthy patients).
-- **Recall / TPR** $\tfrac{TP}{TP+FN}$ answers "of all real positives, how many did we catch?" —
+- **Recall / TPR** $\tfrac{TP}{TP+FN}$ answers "of all real positives, how many did we catch?" :
   the metric when **false negatives are expensive** (missed fraud, missed disease).
 - **F1** $2\tfrac{PR}{P+R}$ is the **harmonic mean** of the two. The harmonic mean (not the
-  ordinary average) is used because it stays low unless *both* precision and recall are high — it
+  ordinary average) is used because it stays low unless *both* precision and recall are high : it
   refuses to reward a model that sacrifices one for the other.
 
 ### Why accuracy fails on imbalanced data
 
 Accuracy $\tfrac{TP+TN}{\text{all}}$ weights every example equally, so when 99% of cases are
 negative, predicting "always negative" scores 99% while catching zero positives. This is why the
-course repeatedly steers toward **F1, PR-AUC, MCC, or balanced accuracy** for skewed problems —
+course repeatedly steers toward **F1, PR-AUC, MCC, or balanced accuracy** for skewed problems :
 they all, in different ways, stop the majority class from dominating the score.
 
 ### ROC-AUC vs PR-AUC, and what "threshold-free" means
 
 - **AUC** is the area under the ROC curve (TPR vs FPR as the threshold sweeps from 1 to 0). It
-  equals the probability that the model ranks a random positive above a random negative — a pure
+  equals the probability that the model ranks a random positive above a random negative : a pure
   measure of **ranking quality**, independent of any chosen threshold.
 - On heavy imbalance, ROC-AUC can look deceptively high because the huge negative count keeps FPR
   low. **PR-AUC** (precision vs recall) focuses on the positive class and is the more honest
@@ -206,20 +206,20 @@ they all, in different ways, stop the majority class from dominating the score.
 A model outputs probabilities; the **threshold** $\tau$ converts them to decisions. Because false
 positives and false negatives usually have *different* costs, the optimal threshold minimizes
 expected cost $\mathbb{E}[\text{Cost}(\tau)] = C_{FP}\cdot FP(\tau) + C_{FN}\cdot FN(\tau)$ rather
-than maximizing accuracy. Concretely: if a missed fraud costs 20× a false alarm, you lower $\tau$
+than maximizing accuracy. Concretely: if a missed fraud costs 20�: a false alarm, you lower $\tau$
 to trade many false positives for fewer false negatives. The default 0.5 is almost never optimal
 in production.
 
 ### Regression metrics: MAE vs RMSE vs $R^2$
 
-- **MAE** averages absolute errors — it is in the target's units and treats all errors linearly,
+- **MAE** averages absolute errors : it is in the target's units and treats all errors linearly,
   so it is **robust to outliers** and easy to explain ("off by \$5 on average").
 - **RMSE** averages *squared* errors then square-roots, so large errors are penalized
   disproportionately. RMSE ≥ MAE always; a *large gap* between them signals a few big misses
   (heavy-tailed errors) worth investigating.
 - $R^2 = 1 - \tfrac{SS_{res}}{SS_{tot}}$ compares the model against the trivial "predict the mean"
   baseline. $R^2=1$ is perfect, $0$ means no better than the mean, and **negative $R^2$ means the
-  model is *worse* than predicting the mean** — a clear signal something is broken.
+  model is *worse* than predicting the mean** : a clear signal something is broken.
 
 ### Forecasting metrics and the zero-denominator trap
 
@@ -242,11 +242,11 @@ decisions use the probability *value* (expected-loss calculations, pricing, tria
 - **Platt scaling** (fit a logistic on the scores) and **isotonic regression** (fit a monotonic
   step function) are the standard post-hoc fixes.
 
-### From metrics to SLIs/SLOs — closing the loop to operations
+### From metrics to SLIs/SLOs : closing the loop to operations
 
 An offline metric becomes a production **SLI** (service level indicator) when it is measured
 continuously, and an **SLO** (objective) when a threshold is attached (e.g. "weekly macro-F1 ≥
 0.82"). This is how model quality joins latency and availability as a monitored, alertable
-property — the bridge from this module to drift monitoring and deployment SLOs later in the
+property : the bridge from this module to drift monitoring and deployment SLOs later in the
 course.
 

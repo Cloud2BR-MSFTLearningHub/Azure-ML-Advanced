@@ -31,7 +31,7 @@ What to remember:
 ![Types of ML based on objective](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/types_of_ml_based_in_objective.png)
 
 > **Note - What this shows:** ML tasks organized by *objective* (predict a class, predict a number, group records, reduce
-> dimensions). Map your business question to one of these objectives before picking an algorithm —
+> dimensions). Map your business question to one of these objectives before picking an algorithm :
 > the objective constrains both the model family and the evaluation metric.
 
 ## Problem Types
@@ -183,7 +183,7 @@ Cross-validation: when data is limited, k-fold CV uses all data for both trainin
 ![Bias-variance trade-off](../assets/img/bias-variance-tradeoff.svg)
 
 > **Note - How to read this chart:** As complexity grows, **bias squared** falls (the model can fit more) while **variance** rises
-> (the model reacts more to the particular training sample). Their sum — total error — is a U-shape
+> (the model reacts more to the particular training sample). Their sum : total error : is a U-shape
 > minimized at an intermediate complexity. Left of the minimum you underfit; right of it you
 > overfit. The floor of the curve never reaches zero because of irreducible noise $\sigma^2$.
 
@@ -247,11 +247,11 @@ rate, regularization strength) is a **hyperparameter**, tuned on validation data
 The objective $\min_\theta \frac{1}{N}\sum_i \mathcal{L}(f_\theta(x_i), y_i)$ says:  
 "choose parameters that make the average mistake on the training data as small as possible."
 
-- $\mathcal{L}$ is the **loss function** — it scores how wrong a single prediction is.
+- $\mathcal{L}$ is the **loss function** : it scores how wrong a single prediction is.
 - The $\frac{1}{N}\sum$ turns per-example losses into an **average** (the *empirical risk*),  
 which is our computable stand-in for the true expected risk over $P(X,Y)$.
 - ERM only works if the training sample resembles production data. When it does not, low  
-training risk does not imply low real-world risk — this is exactly why we hold out test data.
+training risk does not imply low real-world risk : this is exactly why we hold out test data.
 
 ### Why each loss function has the shape it does
 
@@ -294,15 +294,15 @@ less variance. It is tuned on validation data, never on the test set.
 $\mathbb{E}[(y-\hat f(x))^2] = \text{Bias}^2 + \text{Variance} + \sigma^2$ splits a model's  
 expected error into three sources:
 
-- **Bias** — error from wrong assumptions (model too simple to capture the pattern). High bias  
+- **Bias** : error from wrong assumptions (model too simple to capture the pattern). High bias  
 shows as *both* low train and low test accuracy (underfitting).
-- **Variance** — error from sensitivity to the particular training sample. High variance shows  
+- **Variance** : error from sensitivity to the particular training sample. High variance shows  
 as a large gap between high train accuracy and lower test accuracy (overfitting).
-- $\sigma^2$ — **irreducible noise** in the labels themselves. No model can beat this floor; it  
+- $\sigma^2$ : **irreducible noise** in the labels themselves. No model can beat this floor; it  
 is set by data quality, not algorithm choice.
 
-The art of modeling is moving along this trade-off — adding capacity to cut bias, adding data  
-or regularization to cut variance — until the *sum* is minimized.
+The art of modeling is moving along this trade-off : adding capacity to cut bias, adding data  
+or regularization to cut variance : until the *sum* is minimized.
 
 ### Cross-validation and why the test set is sacred
 

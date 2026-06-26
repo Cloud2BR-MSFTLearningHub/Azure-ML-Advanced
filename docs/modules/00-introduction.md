@@ -126,7 +126,7 @@ Note: Stage 1 (problem framing) is often underinvested. The single most common r
 
 > **Note - What this shows:** The production ML stack is far larger than the model itself: ingestion, feature storage,
 > training orchestration, serving, and monitoring are all distinct tools. The takeaway for Azure
-> ML learners is that choosing a model is one box among many — most reliability work happens in
+> ML learners is that choosing a model is one box among many : most reliability work happens in
 > the surrounding infrastructure.
 
 ![ML workflow stages](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/ml_workflow_stages.png)
@@ -165,7 +165,7 @@ $$
 
 Because $P$ is unknown, we minimize the **empirical risk** on a finite sample instead
 (the training set). The entire discipline of ML is about making that approximation
-trustworthy — which is why data quality, validation, and monitoring matter as much as the
+trustworthy : which is why data quality, validation, and monitoring matter as much as the
 algorithm.
 
 ### AI, ML, deep learning, and GenAI as nested sets
@@ -181,17 +181,17 @@ The mental model: each is a strict subset of the one before it. A logistic regre
 ML but not deep learning; a CNN is deep learning; a diffusion model or LLM is deep learning
 *and* generative AI.
 
-### Supervised, unsupervised, and reinforcement — the signal that drives learning
+### Supervised, unsupervised, and reinforcement : the signal that drives learning
 
 The families differ only in **what feedback signal is available**:
 
 - **Supervised**: every example carries a correct answer $y$. The loss directly measures the
   gap between prediction and truth, so the gradient "knows" which direction to move.
 - **Unsupervised**: there is no $y$. The objective instead rewards structure the model
-  discovers itself — minimizing reconstruction error, maximizing cluster compactness, or
+  discovers itself : minimizing reconstruction error, maximizing cluster compactness, or
   maximizing likelihood of the data under a density model.
 - **Reinforcement**: feedback is a delayed, scalar **reward** earned by interacting with an
-  environment. The hard part is *credit assignment* — deciding which earlier actions caused
+  environment. The hard part is *credit assignment* : deciding which earlier actions caused
   a later reward.
 - **Self-supervised** is the bridge that powers foundation models: it manufactures a
   supervised signal *from the data itself* (predict the masked word, the next token, the
@@ -210,15 +210,15 @@ deployments as versioned, testable, observable assets rather than one-off artifa
 
 Two operational terms appear throughout the course:
 
-- **Latency** — time to serve a single request (often measured at the p95 or p99
+- **Latency** : time to serve a single request (often measured at the p95 or p99
   percentile, not the average, because tail latency is what users feel).
-- **Throughput** — requests served per second (QPS) at acceptable latency.
+- **Throughput** : requests served per second (QPS) at acceptable latency.
 
 A model that scores 0.99 AUC but needs 800 ms per call may be useless for a checkout flow
 with a 100 ms budget. Model selection is therefore always a *joint* optimization over
-accuracy, latency, cost, and governance constraints — a theme repeated in every later module.
+accuracy, latency, cost, and governance constraints : a theme repeated in every later module.
 
-### REST API, endpoint, and web service — the same idea at different layers
+### REST API, endpoint, and web service : the same idea at different layers
 
 - A **REST API** is an HTTP contract: a client sends a request (usually JSON) to a URL and
   gets a structured response. "REST" means it uses standard HTTP verbs and is stateless.
@@ -270,13 +270,13 @@ Key production considerations for this flow:
 ![Web service vs API](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/webservice_vs_api.png)
 
 > **Tip - Mental model:** A *web service* is the running deployment; the *API* is the contract clients use to call it.
-> In Azure ML a model is wrapped behind a REST endpoint — clients send JSON and receive a
+> In Azure ML a model is wrapped behind a REST endpoint : clients send JSON and receive a
 > prediction, without knowing which model or framework runs underneath.
 
 ![Web service vs API table](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/table_webservice_vs_api.png)
 
 > **Note - Quick comparison:** The table contrasts the informal term *web service* with the technical term *API*. They
-> describe the same deployed scoring interface from two angles — the running process versus the
+> describe the same deployed scoring interface from two angles : the running process versus the
 > HTTP contract it exposes.
 
 ## Quick self-check

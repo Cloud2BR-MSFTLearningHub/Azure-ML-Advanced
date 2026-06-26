@@ -131,7 +131,7 @@ machine.
 install into the wrong one. `python -m pip` runs pip *as a module of the exact interpreter you
 invoked*, guaranteeing the package lands in the environment you think it does. The same logic
 applies to `python -m ipykernel install`, which registers *this* interpreter as a notebook
-kernel — preventing the common "notebook uses the wrong environment" bug.
+kernel : preventing the common "notebook uses the wrong environment" bug.
 
 ### Pinning, lockfiles, and determinism
 
@@ -148,7 +148,7 @@ kernel — preventing the common "notebook uses the wrong environment" bug.
 your spec and stores it as a *versioned* asset in the workspace. The benefit: the **same image**
 is reused across remote training jobs and the inference deployment, eliminating training/serving
 skew. Referencing it by `name` + `version` in `ScriptRunConfig` makes the run fully reproducible
-— the run record then points at an immutable environment version, not a mutable local machine.
+: the run record then points at an immutable environment version, not a mutable local machine.
 
 ## Conda vs pip vs Docker: when to use each
 
@@ -165,7 +165,7 @@ concepts that affect performance decisions.
 ![Binary vs decimal data measurements](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/binary_vs_decimal_data_measurements.png)
 
 > **Note - What this shows:** The difference between binary (1 KiB = 1024 bytes) and decimal (1 KB = 1000 bytes) measures.
-> It matters when sizing datasets, memory, and compute — a mismatch explains many "why is my data
+> It matters when sizing datasets, memory, and compute : a mismatch explains many "why is my data
 > bigger than expected?" surprises.
 
 ![Summary of number systems](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/summary_of_number_system.png)

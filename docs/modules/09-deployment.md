@@ -12,8 +12,8 @@ deployment patterns, release strategies, and operational safeguards.
 
 ![ML deployment flow](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/ml_deployment_flow.png)
 
-> **Note - What this shows:** The deployment flow from registered model to live endpoint. Each stage — package, validate
-> locally, deploy, route traffic — is a checkpoint where a release can be caught before customers
+> **Note - What this shows:** The deployment flow from registered model to live endpoint. Each stage : package, validate
+> locally, deploy, route traffic : is a checkpoint where a release can be caught before customers
 > are affected.
 
 ![Deployment overview](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/deployment_overview.png)
@@ -70,8 +70,8 @@ Key rules for a production-grade scoring script:
 
 ## End-to-end example: calling a deployed model
 
-This walks through exactly what a deployed model looks like in practice — the API, what you send,
-how to call it, and what comes back — using the `fraud-endpoint` from the scoring script above.
+This walks through exactly what a deployed model looks like in practice : the API, what you send,
+how to call it, and what comes back : using the `fraud-endpoint` from the scoring script above.
 
 ![Calling a deployed model endpoint](../assets/img/endpoint-request-response.svg)
 
@@ -191,7 +191,7 @@ Here we send two transactions in a single call (batching reduces per-request ove
   manual review between `0.50` and `0.90`, and allow below `0.50`. The model returns scores; the
   business rule turns them into decisions.
 
-> **Tip - Handle errors in the client:** Expect non-`200` responses too — `401/403` (bad or expired
+> **Tip - Handle errors in the client:** Expect non-`200` responses too : `401/403` (bad or expired
 > key), `400` (schema/shape mismatch), `429` (throttling, back off and retry), and `503` (replica
 > cold-start or overload). Always set a timeout and a small retry with backoff, as noted in the
 > reliability checklist below.
@@ -201,9 +201,9 @@ Here we send two transactions in a single call (batching reduces per-request ove
 ![Blue-green, canary, and shadow release strategies](../assets/img/release-strategies.svg)
 
 > **Tip - How to choose:** All three protect the live model (v1) while validating a new one (v2). **Blue-green** flips 100%
-> of traffic at once and rolls back by flipping back — simplest, but the blast radius is the whole
+> of traffic at once and rolls back by flipping back : simplest, but the blast radius is the whole
 > user base for the moment of the switch. **Canary** sends a small slice (e.g. 5%) to v2 and ramps
-> up only while metrics stay healthy — the safest progressive rollout. **Shadow** mirrors real
+> up only while metrics stay healthy : the safest progressive rollout. **Shadow** mirrors real
 > traffic to v2 but discards its responses, so you can test on production load with zero customer
 > impact before any real cutover.
 
@@ -317,15 +317,15 @@ This section explains the deployment concepts so each operational choice has a c
 The scoring script has two functions by design:
 
 - **`init()`** runs **once** when the container starts. Loading the model (often hundreds of MB)
-  is expensive, so doing it here — into a global — means it happens a single time, not per request.
+  is expensive, so doing it here : into a global : means it happens a single time, not per request.
 - **`run()`** executes **per request** and must be **stateless**: no shared mutable state between
   calls, so concurrent requests cannot corrupt each other. Statelessness is also what makes the
-  service horizontally scalable — any replica can handle any request.
+  service horizontally scalable : any replica can handle any request.
 
 This separation directly determines latency: model load is a one-time **cold-start** cost;
 `run()` is the **warm** per-request path you optimize.
 
-### Online vs batch endpoints — matching shape to workload
+### Online vs batch endpoints : matching shape to workload
 
 | Dimension | Online endpoint | Batch endpoint |
 |---|---|---|
@@ -342,10 +342,10 @@ yesterday's entire transaction log is cheaper and simpler as a batch job.
 All three strategies exist to limit the blast radius of a bad model:
 
 - **Blue/green** keeps the old version (blue) fully running while the new (green) is prepared,
-  then flips 100% of traffic at once. Rollback is instant — flip back. Best when you trust the new
+  then flips 100% of traffic at once. Rollback is instant : flip back. Best when you trust the new
   version and need zero-downtime cutover.
 - **Canary** routes a *small* slice (e.g. 10%) to the new version and watches metrics before
-  ramping up. It validates on **real traffic** at controlled exposure — the safest way to catch
+  ramping up. It validates on **real traffic** at controlled exposure : the safest way to catch
   problems that offline tests miss.
 - **Shadow** sends a copy of traffic to the new model but discards its responses, so it is
   evaluated against production inputs with **zero customer impact**. Ideal for high-stakes models
@@ -357,7 +357,7 @@ managed online endpoint.
 ### Capacity planning: where the replica formula comes from
 
 $R \approx \lceil \tfrac{QPS\cdot t_{p95}}{u}\rceil$ is **Little's Law** applied to serving.
-$QPS\cdot t_{p95}$ is the average number of requests *in flight* at any moment (arrival rate ×
+$QPS\cdot t_{p95}$ is the average number of requests *in flight* at any moment (arrival rate �:
 service time); dividing by target utilization $u$ (e.g. 0.7, leaving headroom for bursts and
 tail latency) gives the replica count, rounded up. Using $t_{p95}$ rather than the mean sizes the
 fleet for realistic worst-case service time, so the SLO holds under load rather than only on
@@ -367,14 +367,14 @@ average.
 
 An **SLI** is a measured signal (availability, p95 latency, error rate); an **SLO** attaches a
 target ("p95 ≤ 250 ms"). Including **model-version freshness** as an SLO is what distinguishes ML
-serving from ordinary web serving — a perfectly available endpoint serving a stale, drifted model
+serving from ordinary web serving : a perfectly available endpoint serving a stale, drifted model
 is still failing its job. This connects deployment health back to the drift monitoring from the
 previous module.
 
 ### Why local validation precedes cloud deployment
 
-Validating the scoring container locally catches the cheap, common failures — bad dependencies,
-model-load errors, schema mismatches — in seconds, before paying for cloud provisioning and
+Validating the scoring container locally catches the cheap, common failures : bad dependencies,
+model-load errors, schema mismatches : in seconds, before paying for cloud provisioning and
 before risking a failed production rollout. It is the deployment analog of running unit tests
 before merging: fail fast, fail cheap.
 
@@ -384,6 +384,6 @@ before merging: fail fast, fail cheap.
   limits damage from a leaked credential.
 - **Private endpoints** keep traffic off the public internet for regulated data.
 - Logging **prediction metadata but never raw PII** (log hashed IDs, not personal fields) gives
-  auditability without creating a data-protection liability — the same principle the scoring-script
+  auditability without creating a data-protection liability : the same principle the scoring-script
   rules enforce.
 

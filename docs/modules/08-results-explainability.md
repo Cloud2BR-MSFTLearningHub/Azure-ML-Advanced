@@ -82,7 +82,7 @@ Operational guidance:
 
 ![Precision-recall good vs bad](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/precisionrecall_good_bad.png)
 
-> **Note - How to read it:** Good vs bad precision-recall curves. On imbalanced data PR curves are more honest than ROC — a
+> **Note - How to read it:** Good vs bad precision-recall curves. On imbalanced data PR curves are more honest than ROC : a
 > curve staying high as recall increases means the model holds precision while catching more
 > positives.
 
@@ -183,7 +183,7 @@ A model that cannot be explained cannot be debugged, audited, or legally defende
 serves three distinct audiences: **data scientists** verifying the model learned real signal (not
 a leakage artifact), **business stakeholders** trusting and adopting it, and **regulators/affected
 users** who have a right to know why a decision was made. This is why the module separates global
-from local explanations — they answer different questions for different people.
+from local explanations : they answer different questions for different people.
 
 ### Global vs local, precisely
 
@@ -213,12 +213,12 @@ Why SHAP is preferred for tabular models:
   ($O(TLD^2)$ for $T$ trees, $L$ leaves, depth $D$), making it fast enough for production.
 - For non-tree models, **KernelSHAP** approximates the same values model-agnostically (slower).
 
-### LIME and permutation importance — the complementary tools
+### LIME and permutation importance : the complementary tools
 
 - **LIME** (Local Interpretable Model-agnostic Explanations) explains one prediction by sampling
   perturbed points around it and fitting a simple **surrogate** (usually linear) model locally.
   It works on any black box but, because it relies on random sampling, its explanations can vary
-  between runs — the consistency weakness noted in the comparison table.
+  between runs : the consistency weakness noted in the comparison table.
 - **Permutation importance** is a global, model-agnostic signal: shuffle one feature's values and
   measure how much accuracy drops. A large drop means the model relied on that feature. It is
   cheap and intuitive but can be misled by correlated features (shuffling one when its correlate
@@ -228,10 +228,10 @@ Why SHAP is preferred for tabular models:
 
 Production failure usually traces to a distribution changing out from under the model:
 
-- **Covariate (data) drift** — the inputs change: $P_t(X) \neq P_{t+\Delta}(X)$. Example: a new
+- **Covariate (data) drift** : the inputs change: $P_t(X) \neq P_{t+\Delta}(X)$. Example: a new
   customer segment with different spending patterns. The mapping may still be valid, but the model
   sees inputs unlike its training data.
-- **Concept drift** — the *relationship* changes: $P_t(Y\mid X) \neq P_{t+\Delta}(Y\mid X)$.
+- **Concept drift** : the *relationship* changes: $P_t(Y\mid X) \neq P_{t+\Delta}(Y\mid X)$.
   Example: fraud tactics evolve, so the same features now imply a different risk. This is more
   dangerous because the learned function is now simply wrong.
 
@@ -249,8 +249,8 @@ relative-entropy measure, which is why it pairs naturally with KS-tests in drift
 
 ### Why retraining is threshold-and-persistence based, not reflexive
 
-The operational guidance — alert on persistent drift, validate against business KPIs, shadow-test
-before switching — exists because retraining is costly and risky. A single drift spike may be a
+The operational guidance : alert on persistent drift, validate against business KPIs, shadow-test
+before switching : exists because retraining is costly and risky. A single drift spike may be a
 logging glitch; reacting to it churns models needlessly. The discipline is: confirm the signal is
 real *and* sustained *and* tied to a KPI movement, then retrain into a **shadow** or **canary**
 deployment before promoting. This ties explainability/monitoring back to the deployment module's

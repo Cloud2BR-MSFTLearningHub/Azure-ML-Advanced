@@ -13,7 +13,7 @@ and how to move from baseline experiments to reliable model selection.
 ![AutoML diagram](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/automl_diagram.png)
 
 > **Note - What this shows:** The AutoML loop: try algorithm + hyperparameter combinations, score each with cross-validation,
-> and rank by the primary metric. AutoML does not invent algorithms — it allocates a fixed search
+> and rank by the primary metric. AutoML does not invent algorithms : it allocates a fixed search
 > budget across known ones.
 
 ![AutoML process expectations](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/automl_process_what_to_expect.png)
@@ -194,7 +194,7 @@ $$
 \min_{a \in \text{algorithms},\; h \in \text{hyperparams}(a)}\; \text{ValidationLoss}(a, h)
 $$
 
-It does not invent new algorithms — it intelligently *allocates a fixed budget* of trials across
+It does not invent new algorithms : it intelligently *allocates a fixed budget* of trials across
 known ones, using results so far to decide what to try next. This is why "search-space design"
 matters more than raw iteration count: a good space contains the winning region; a bad one never
 does.
@@ -202,7 +202,7 @@ does.
 ### Featurization, demystified
 
 When enabled, AutoML automatically handles missing-value imputation, categorical encoding,
-text vectorization, and feature scaling — the same steps from the data-preparation module, applied
+text vectorization, and feature scaling : the same steps from the data-preparation module, applied
 consistently inside cross-validation folds so they do not leak. The benefit is leakage-safe,
 reproducible preprocessing; the cost is less manual control, which is why `featurization` settings
 are explicit and logged for reproducibility.
@@ -227,12 +227,12 @@ structure.
 
 After trying individual models, AutoML builds two meta-models:
 
-- **Voting ensemble** — averages the predictions of the top runs. Diverse models make
+- **Voting ensemble** : averages the predictions of the top runs. Diverse models make
   *uncorrelated* errors, so the average is more accurate and stable than any single member.
-- **Stack ensemble** — trains a small meta-model on the base models' out-of-fold predictions to
+- **Stack ensemble** : trains a small meta-model on the base models' out-of-fold predictions to
   learn *how* to combine them.
 
-These usually win because combining diverse learners reduces variance — the same bagging/stacking
+These usually win because combining diverse learners reduces variance : the same bagging/stacking
 principle from the model-types module, applied automatically.
 
 ### Concurrency, budget, and the cost/time trade-off
@@ -240,14 +240,14 @@ principle from the model-types module, applied automatically.
 `max_concurrent_trials` controls how many candidates train in parallel; setting it to the
 cluster's node count keeps compute busy and shortens wall-clock time, but does **not** reduce
 total compute cost (you pay for the same number of trials, just faster). `timeout_minutes` and
-iteration caps bound the search **budget** — the central knob trading off thoroughness against
+iteration caps bound the search **budget** : the central knob trading off thoroughness against
 time and money.
 
 ### The multi-objective selection score, explained
 
 The candidate score $\text{Score}_{deploy}=w_1\text{Quality}-w_2\text{Latency}-w_3\text{Cost}+w_4\text{Stability}$
 formalizes a real-world truth: the deployable model maximizes quality *and* stability while being
-penalized for latency and cost. The weights $w_i$ encode business priorities — a real-time API
+penalized for latency and cost. The weights $w_i$ encode business priorities : a real-time API
 weights latency heavily; a nightly batch job weights it near zero. AutoML ranks by the primary
 metric, but the *human* promotion decision should use this fuller objective, which is exactly why
 the **promotion gates** check latency-under-SLO, security, and fairness, not just offline score.
@@ -257,6 +257,6 @@ the **promotion gates** check latency-under-SLO, security, and fairness, not jus
 The list of fields to persist (run ID, data version, environment version, feature hash,
 hyperparameters, per-split metrics, model URI) is what makes a result **reproducible** and
 **auditable**. If you cannot answer "which data, code, and environment produced this model?", you
-cannot debug a regression, pass an audit, or safely retrain — so this metadata is the backbone of
+cannot debug a regression, pass an audit, or safely retrain : so this metadata is the backbone of
 MLOps, not optional bookkeeping.
 

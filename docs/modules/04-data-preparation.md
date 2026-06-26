@@ -12,7 +12,7 @@ engineering, and dataset sizing for reliable model training.
 
 ![ML process by stages](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/ml_process_by_stages.png)
 
-> **Note - What this shows:** The data lifecycle by stage — from business framing through collection and feature engineering.
+> **Note - What this shows:** The data lifecycle by stage : from business framing through collection and feature engineering.
 > Most delivery effort lives in these early stages, and defects here cap the quality any model
 > can reach.
 
@@ -77,7 +77,7 @@ training, plus a dtype reference to prevent schema and conversion errors.
 ![Training/testing data flow](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/training_testing_data_flow.png)
 
 > **Note - What this shows:** The flow of data through training and testing stages. The test set branches off early and is
-> untouched until final evaluation — the discipline that keeps offline scores honest.
+> untouched until final evaluation : the discipline that keeps offline scores honest.
 
 ![Training and test split](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/training_test_split.png)
 
@@ -161,8 +161,8 @@ principles you can apply to new datasets.
 
 ### Why data preparation dominates the effort
 
-A model can only learn the signal that survives in the data. Every defect — a mislabeled row,
-a leaked feature, an inconsistent unit — sets a hard ceiling on achievable quality that no
+A model can only learn the signal that survives in the data. Every defect : a mislabeled row,
+a leaked feature, an inconsistent unit : sets a hard ceiling on achievable quality that no
 algorithm can break through. This is the practical meaning of "garbage in, garbage out", and
 it is why teams spend most of their time here.
 
@@ -179,7 +179,7 @@ encodes an assumption about *why* the value is missing:
 | "Missing" indicator | Missingness itself is informative | Adds dimensionality |
 
 Crucially, the imputer must be **fit on the training split only**, then applied to validation
-and test — otherwise statistics from held-out data leak into training.
+and test : otherwise statistics from held-out data leak into training.
 
 ### Encoding categorical features
 
@@ -190,7 +190,7 @@ Models operate on numbers, so categories must be converted:
 - **Ordinal encoding** maps categories to integers. Only valid when categories have a true
   order (e.g. small/medium/large), otherwise it invents a fake ranking.
 - **Target/mean encoding** replaces a category with the mean target for that category. Powerful
-  for high cardinality but a *prime leakage source* — it must be computed within cross-validation
+  for high cardinality but a *prime leakage source* : it must be computed within cross-validation
   folds, never on the full dataset.
 
 Tree-based models (and CatBoost natively) tolerate raw categoricals better than linear models,
@@ -202,7 +202,7 @@ which is part of why they dominate tabular problems.
 features on comparable ranges. It matters for distance- and gradient-based models (kNN, SVM,
 linear models, neural nets) where a large-magnitude feature would otherwise dominate; tree
 models are scale-invariant and do not need it. The scaler's mean and standard deviation are
-*learned parameters* — fitting them on the full dataset before splitting lets test-set
+*learned parameters* : fitting them on the full dataset before splitting lets test-set
 statistics influence the training transform, the leakage shown in the WRONG example above.
 
 ### Data leakage, formalized
@@ -210,12 +210,12 @@ statistics influence the training transform, the leakage shown in the WRONG exam
 **Leakage** is any situation where information unavailable at prediction time enters training.
 It inflates offline metrics and collapses in production. Three mechanisms recur:
 
-1. **Preprocessing leakage** — fitting scalers/imputers/encoders on data that includes the test
+1. **Preprocessing leakage** : fitting scalers/imputers/encoders on data that includes the test
    split. Fixed by fitting transforms inside a `Pipeline` *after* the split.
-2. **Target leakage** — a feature that is a proxy for, or computed from, the outcome (e.g.
+2. **Target leakage** : a feature that is a proxy for, or computed from, the outcome (e.g.
    "account_closed_date" when predicting churn). Fixed by auditing each feature's availability
    timing relative to the prediction moment.
-3. **Temporal leakage** — randomly shuffling time-ordered data so the model "sees the future".
+3. **Temporal leakage** : randomly shuffling time-ordered data so the model "sees the future".
    Fixed by chronological splits.
 
 The `Pipeline` pattern is the structural defense: because `fit` only ever sees training data and
@@ -235,7 +235,7 @@ impossible by construction.
 The **data contract** (schema, types, nullability, ranges) turns implicit assumptions into an
 enforceable agreement between data producers and the training pipeline. The four **validation
 gates** (schema, quality, drift, leakage) are automated checks that *block* a bad dataset from
-ever reaching training — the data-engineering equivalent of unit tests. This shifts failures
+ever reaching training : the data-engineering equivalent of unit tests. This shifts failures
 left, where they are cheap to fix, instead of discovering them as degraded production
 predictions weeks later.
 | Entity-correlated data (users/devices) | Group split by entity key | Prevents entity bleed-through |
