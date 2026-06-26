@@ -50,17 +50,17 @@ extra_css:
 
 nav:
   - Home: index.md
-  - Introduction and Lifecycle: modules/00-introduction.md
-  - ML Foundations: modules/01-ml-foundations.md
-  - Azure ML Environment: modules/02-azure-ml-environment.md
-  - Environment Setup: modules/03-environment-setup.md
-  - Data Preparation: modules/04-data-preparation.md
-  - Model Types: modules/05-model-types.md
-  - Training and AutoML: modules/06-training-automl.md
-  - Performance Metrics: modules/07-performance-metrics.md
-  - Results and Explainability: modules/08-results-explainability.md
-  - Deployment: modules/09-deployment.md
-  - Deployment Debugging: modules/10-deployment-debug-k8s.md
+  - Introduction and Lifecycle: modules/introduction.md
+  - ML Foundations: modules/ml-foundations.md
+  - Azure ML Environment: modules/azure-ml-environment.md
+  - Environment Setup: modules/environment-setup.md
+  - Data Preparation: modules/data-preparation.md
+  - Model Types: modules/model-types.md
+  - Training and AutoML: modules/training-automl.md
+  - Performance Metrics: modules/performance-metrics.md
+  - Results and Explainability: modules/results-explainability.md
+  - Deployment: modules/deployment.md
+  - Deployment Debugging: modules/deployment-debug-k8s.md
   - Reference:
       - Overview: reference/index.md
       - Mathematical Model Deep Dive: reference/model-math-deep-dive.md

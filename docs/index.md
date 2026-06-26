@@ -39,47 +39,47 @@ multiple eras based on compute power, data availability, and algorithmic advance
 ## Learning Path
 
 <div class="home-grid">
-	<a class="home-card" href="modules/00-introduction/">
+	<a class="home-card" href="modules/introduction/">
 		<h3>Introduction and Lifecycle</h3>
 		<p>AI vs ML vs data science, AI categories, and end-to-end Azure ML lifecycle.</p>
 	</a>
-	<a class="home-card" href="modules/01-ml-foundations/">
+	<a class="home-card" href="modules/ml-foundations/">
 		<h3>ML Foundations</h3>
 		<p>Full ML taxonomy: supervised, unsupervised, RL, semi/self-supervised, with formulas and selection guidance.</p>
 	</a>
-	<a class="home-card" href="modules/02-azure-ml-environment/">
+	<a class="home-card" href="modules/azure-ml-environment/">
 		<h3>Azure ML Environment</h3>
 		<p>Workspace taxonomy, compute types, model registry, and endpoints.</p>
 	</a>
-	<a class="home-card" href="modules/03-environment-setup/">
+	<a class="home-card" href="modules/environment-setup/">
 		<h3>Environment Setup</h3>
 		<p>Conda/pip setup, package validation, and runtime consistency.</p>
 	</a>
-	<a class="home-card" href="modules/04-data-preparation/">
+	<a class="home-card" href="modules/data-preparation/">
 		<h3>Data Preparation</h3>
 		<p>Data collection, cleaning, schema handling, and split strategy.</p>
 	</a>
-	<a class="home-card" href="modules/05-model-types/">
+	<a class="home-card" href="modules/model-types/">
 		<h3>Model Types</h3>
 		<p>Algorithm families with representative mathematical formulations.</p>
 	</a>
-	<a class="home-card" href="modules/06-training-automl/">
+	<a class="home-card" href="modules/training-automl/">
 		<h3>Training and AutoML</h3>
 		<p>AutoML search flow, compute choices, and practical training pipeline.</p>
 	</a>
-	<a class="home-card" href="modules/07-performance-metrics/">
+	<a class="home-card" href="modules/performance-metrics/">
 		<h3>Performance Metrics</h3>
 		<p>Classification and regression metrics, formulas, and interpretation.</p>
 	</a>
-	<a class="home-card" href="modules/08-results-explainability/">
+	<a class="home-card" href="modules/results-explainability/">
 		<h3>Results and Explainability</h3>
 		<p>Result analysis, drift detection, and explainability methods.</p>
 	</a>
-	<a class="home-card" href="modules/09-deployment/">
+	<a class="home-card" href="modules/deployment/">
 		<h3>Deployment</h3>
 		<p>Registration, scoring, endpoint deployment, and serving patterns.</p>
 	</a>
-	<a class="home-card" href="modules/10-deployment-debug-k8s/">
+	<a class="home-card" href="modules/deployment-debug-k8s/">
 		<h3>Deployment Debugging</h3>
 		<p>Kubernetes-focused troubleshooting for production endpoint issues.</p>
 	</a>
