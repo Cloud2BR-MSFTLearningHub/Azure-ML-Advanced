@@ -1,8 +1,7 @@
 site_name: "Azure Machine Learning: Advanced"
 site_description: Azure Machine Learning training from fundamentals to advanced MLOps.
 site_url: https://cloud2br-msftlearninghub.github.io/Azure-ML-Advanced/
-repo_url: https://github.com/Cloud2BR-MSFTLearningHub/Azure-ML-Advanced
-repo_name: Cloud2BR-MSFTLearningHub/Azure-ML-Advanced
+copyright: Copyright &copy; 2026 <a href="https://github.com/Cloud2BR-MSFTLearningHub" target="_blank" rel="noopener">Cloud2BR MSFT Learning Hub</a>
 
 theme:
   name: material
@@ -44,6 +43,7 @@ markdown_extensions:
 
 extra_javascript:
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+  - assets/js/org-link.js
 
 extra_css:
   - assets/css/custom.css
