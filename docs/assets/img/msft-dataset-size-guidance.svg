@@ -57,7 +57,7 @@
   <text class="t" x="182" y="502">LogReg / Trees</text>
   <text class="t" x="182" y="522">Typical: 1K-50K</text>
 
-  <rect class="mid" x="380" y="410" width="220" height="130" rx="10"/>
+  <rect class="mid" x="380" y="410" width="248" height="130" rx="10"/>
   <text class="h" x="394" y="437">Classic ML at Scale</text>
   <text class="t" x="394" y="459">Boosting / RandomForest</text>
   <text class="t" x="394" y="479">Typical: 10K-500K</text>
