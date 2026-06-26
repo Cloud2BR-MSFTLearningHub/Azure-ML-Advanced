@@ -51,3 +51,37 @@
 .site-nav .nav-list .nav-list {
   padding-left: 0.75rem;
 }
+
+/* Use blue accents instead of purple for links/navigation. */
+:root {
+  --link-color: #0969da;
+  --btn-primary-color: #0969da;
+}
+
+a,
+.nav-list .nav-list-item .nav-list-link,
+.site-button,
+.site-title {
+  color: #0969da;
+}
+
+/* Keep desktop sidebar pinned to the true left edge of the viewport. */
+@media (min-width: 66.5rem) {
+  .site-wrap {
+    max-width: none;
+    margin-left: 0;
+  }
+
+  .side-bar {
+    left: 0;
+    width: 264px;
+  }
+
+  .site-header {
+    width: 264px;
+  }
+
+  .main {
+    margin-left: 264px;
+  }
+}
