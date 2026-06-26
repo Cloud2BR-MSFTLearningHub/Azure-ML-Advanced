@@ -18,25 +18,82 @@
   margin-top: 0.75rem;
 }
 
-.home-card {
-  border: 1px solid #d0d7de;
-  border-radius: 10px;
-  padding: 0.9rem 1rem;
-  background: #ffffff;
+/* Whole card is a clickable link (not just the title). */
+a.home-card,
+a.home-card:visited {
+  display: block;
+  position: relative;
+  border: 1px solid #e2e8f0;
+  border-left: 4px solid var(--card-accent, #004a99);
+  border-radius: 12px;
+  padding: 0.95rem 1.1rem;
+  background:
+    linear-gradient(180deg, var(--card-tint, rgba(0, 74, 153, 0.04)) 0%, #ffffff 70%);
   box-shadow: 0 1px 2px rgba(31, 35, 40, 0.06);
+  color: inherit;
+  text-decoration: none;
+  transition: transform 0.15s ease, box-shadow 0.15s ease,
+    border-color 0.15s ease, background 0.15s ease;
+}
+
+a.home-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--card-accent, #004a99);
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.12);
+  background:
+    linear-gradient(180deg, var(--card-tint-strong, rgba(0, 74, 153, 0.10)) 0%, #ffffff 80%);
+}
+
+a.home-card:focus-visible {
+  outline: 2px solid var(--card-accent, #004a99);
+  outline-offset: 2px;
 }
 
 .home-card h3 {
   margin-top: 0;
-  margin-bottom: 0.45rem;
+  margin-bottom: 0.4rem;
   font-size: 1rem;
+  color: var(--card-accent, #004a99);
 }
 
 .home-card p {
   margin-top: 0;
   margin-bottom: 0;
-  font-size: 0.92rem;
-  line-height: 1.35;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: #475569;
+}
+
+/* Soft, professional rotating accent palette across the cards. */
+.home-grid a.home-card:nth-child(6n + 1) {
+  --card-accent: #004a99; /* blue */
+  --card-tint: rgba(0, 74, 153, 0.05);
+  --card-tint-strong: rgba(0, 74, 153, 0.11);
+}
+.home-grid a.home-card:nth-child(6n + 2) {
+  --card-accent: #0e7490; /* teal */
+  --card-tint: rgba(14, 116, 144, 0.05);
+  --card-tint-strong: rgba(14, 116, 144, 0.11);
+}
+.home-grid a.home-card:nth-child(6n + 3) {
+  --card-accent: #4f46e5; /* indigo */
+  --card-tint: rgba(79, 70, 229, 0.05);
+  --card-tint-strong: rgba(79, 70, 229, 0.11);
+}
+.home-grid a.home-card:nth-child(6n + 4) {
+  --card-accent: #0f766e; /* deep teal-green */
+  --card-tint: rgba(15, 118, 110, 0.05);
+  --card-tint-strong: rgba(15, 118, 110, 0.11);
+}
+.home-grid a.home-card:nth-child(6n + 5) {
+  --card-accent: #2563eb; /* bright blue */
+  --card-tint: rgba(37, 99, 235, 0.05);
+  --card-tint-strong: rgba(37, 99, 235, 0.11);
+}
+.home-grid a.home-card:nth-child(6n + 6) {
+  --card-accent: #7c3aed; /* violet */
+  --card-tint: rgba(124, 58, 237, 0.05);
+  --card-tint-strong: rgba(124, 58, 237, 0.11);
 }
 
 /* MkDocs Material overrides: darker blue and wider layout usage. */

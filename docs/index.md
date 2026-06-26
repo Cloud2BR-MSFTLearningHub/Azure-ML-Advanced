@@ -36,70 +36,70 @@ multiple eras based on compute power, data availability, and algorithmic advance
 ## Learning Path
 
 <div class="home-grid">
-	<div class="home-card">
-		<h3><a href="modules/00-introduction/">Introduction and Lifecycle</a></h3>
+	<a class="home-card" href="modules/00-introduction/">
+		<h3>Introduction and Lifecycle</h3>
 		<p>AI vs ML vs data science, AI categories, and end-to-end Azure ML lifecycle.</p>
-	</div>
-	<div class="home-card">
-		<h3><a href="modules/01-ml-foundations/">ML Foundations</a></h3>
+	</a>
+	<a class="home-card" href="modules/01-ml-foundations/">
+		<h3>ML Foundations</h3>
 		<p>Full ML taxonomy: supervised, unsupervised, RL, semi/self-supervised, with formulas and selection guidance.</p>
-	</div>
-	<div class="home-card">
-		<h3><a href="modules/02-azure-ml-environment/">Azure ML Environment</a></h3>
+	</a>
+	<a class="home-card" href="modules/02-azure-ml-environment/">
+		<h3>Azure ML Environment</h3>
 		<p>Workspace taxonomy, compute types, model registry, and endpoints.</p>
-	</div>
-	<div class="home-card">
-		<h3><a href="modules/03-environment-setup/">Environment Setup</a></h3>
+	</a>
+	<a class="home-card" href="modules/03-environment-setup/">
+		<h3>Environment Setup</h3>
 		<p>Conda/pip setup, package validation, and runtime consistency.</p>
-	</div>
-	<div class="home-card">
-		<h3><a href="modules/04-data-preparation/">Data Preparation</a></h3>
+	</a>
+	<a class="home-card" href="modules/04-data-preparation/">
+		<h3>Data Preparation</h3>
 		<p>Data collection, cleaning, schema handling, and split strategy.</p>
-	</div>
-	<div class="home-card">
-		<h3><a href="modules/05-model-types/">Model Types</a></h3>
+	</a>
+	<a class="home-card" href="modules/05-model-types/">
+		<h3>Model Types</h3>
 		<p>Algorithm families with representative mathematical formulations.</p>
-	</div>
-	<div class="home-card">
-		<h3><a href="modules/06-training-automl/">Training and AutoML</a></h3>
+	</a>
+	<a class="home-card" href="modules/06-training-automl/">
+		<h3>Training and AutoML</h3>
 		<p>AutoML search flow, compute choices, and practical training pipeline.</p>
-	</div>
-	<div class="home-card">
-		<h3><a href="modules/07-performance-metrics/">Performance Metrics</a></h3>
+	</a>
+	<a class="home-card" href="modules/07-performance-metrics/">
+		<h3>Performance Metrics</h3>
 		<p>Classification and regression metrics, formulas, and interpretation.</p>
-	</div>
-	<div class="home-card">
-		<h3><a href="modules/08-results-explainability/">Results and Explainability</a></h3>
+	</a>
+	<a class="home-card" href="modules/08-results-explainability/">
+		<h3>Results and Explainability</h3>
 		<p>Result analysis, drift detection, and explainability methods.</p>
-	</div>
-	<div class="home-card">
-		<h3><a href="modules/09-deployment/">Deployment</a></h3>
+	</a>
+	<a class="home-card" href="modules/09-deployment/">
+		<h3>Deployment</h3>
 		<p>Registration, scoring, endpoint deployment, and serving patterns.</p>
-	</div>
-	<div class="home-card">
-		<h3><a href="modules/10-deployment-debug-k8s/">Deployment Debugging</a></h3>
+	</a>
+	<a class="home-card" href="modules/10-deployment-debug-k8s/">
+		<h3>Deployment Debugging</h3>
 		<p>Kubernetes-focused troubleshooting for production endpoint issues.</p>
-	</div>
+	</a>
 </div>
 
 ## Reference
 
 <div class="home-grid">
-	<div class="home-card">
-		<h3><a href="reference/">Reference Home</a></h3>
+	<a class="home-card" href="reference/">
+		<h3>Reference Home</h3>
 		<p>Supporting material for implementation and operations.</p>
-	</div>
-	<div class="home-card">
-		<h3><a href="reference/model-math-deep-dive/">Mathematical Model Deep Dive</a></h3>
+	</a>
+	<a class="home-card" href="reference/model-math-deep-dive/">
+		<h3>Mathematical Model Deep Dive</h3>
 		<p>Formula-level explanations, objectives, assumptions, and trade-offs for core ML models.</p>
-	</div>
-	<div class="home-card">
-		<h3><a href="reference/cli-commands/">CLI Commands</a></h3>
+	</a>
+	<a class="home-card" href="reference/cli-commands/">
+		<h3>CLI Commands</h3>
 		<p>Command-line references for setup, run, and deployment tasks.</p>
-	</div>
-	<div class="home-card">
-		<h3><a href="reference/glossary/">Glossary</a></h3>
+	</a>
+	<a class="home-card" href="reference/glossary/">
+		<h3>Glossary</h3>
 		<p>Core Azure ML and MLOps terms used throughout this training.</p>
-	</div>
+	</a>
 </div>
 
