@@ -13,35 +13,44 @@
 /* Home page module cards */
 .home-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1rem;
-  margin-top: 0.75rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.1rem;
+  margin-top: 1rem;
+}
+
+@media (max-width: 72rem) {
+  .home-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 44rem) {
+  .home-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* Whole card is a clickable link (not just the title). */
 a.home-card,
 a.home-card:visited {
-  display: block;
+  display: flex;
+  flex-direction: column;
   position: relative;
-  border: 1px solid #e2e8f0;
-  border-left: 4px solid var(--card-accent, #004a99);
-  border-radius: 12px;
-  padding: 0.81rem 0.94rem;
-  background:
-    linear-gradient(180deg, var(--card-tint, rgba(0, 74, 153, 0.04)) 0%, #ffffff 70%);
-  box-shadow: 0 1px 2px rgba(31, 35, 40, 0.06);
+  border: 1px solid #dde3ed;
+  border-top: 3px solid var(--card-accent, #004a99);
+  border-radius: 8px;
+  padding: 1rem 1.05rem 0.9rem;
+  background: #ffffff;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.07);
   color: inherit;
   text-decoration: none;
-  transition: transform 0.15s ease, box-shadow 0.15s ease,
-    border-color 0.15s ease, background 0.15s ease;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
 }
 
 a.home-card:hover {
-  transform: translateY(-3px);
-  border-color: var(--card-accent, #004a99);
-  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.12);
-  background:
-    linear-gradient(180deg, var(--card-tint-strong, rgba(0, 74, 153, 0.10)) 0%, #ffffff 80%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.11);
+  border-top-color: var(--card-accent, #004a99);
 }
 
 a.home-card:focus-visible {
@@ -49,19 +58,37 @@ a.home-card:focus-visible {
   outline-offset: 2px;
 }
 
+/* Module number badge */
+.card-badge {
+  display: inline-block;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--card-accent, #004a99);
+  background: var(--card-tint, rgba(0, 74, 153, 0.07));
+  border-radius: 4px;
+  padding: 0.18em 0.55em;
+  margin-bottom: 0.5rem;
+  width: fit-content;
+}
+
 .home-card h3 {
   margin-top: 0;
-  margin-bottom: 0.4rem;
-  font-size: 0.85rem;
-  color: var(--card-accent, #004a99);
+  margin-bottom: 0.35rem;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1.3;
 }
 
 .home-card p {
   margin-top: 0;
   margin-bottom: 0;
   font-size: 0.77rem;
-  line-height: 1.4;
-  color: #475569;
+  line-height: 1.45;
+  color: #64748b;
+  flex: 1;
 }
 
 /* Soft, professional rotating accent palette across the cards. */
