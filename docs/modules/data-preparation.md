@@ -27,7 +27,7 @@ engineering, and dataset sizing for reliable model training.
 > on the training split only. Designing features and the split strategy together is how you keep
 > preprocessing leakage-free.
 
-![Microsoft-style dataset size guidance](../assets/img/msft-dataset-size-guidance.svg)
+![Dataset size guidance](../assets/img/msft-dataset-size-guidance.svg)
 
 > **Tip - How to use this chart:** Match your use case to a dataset-size band before committing to a model family. Tabular
 > baselines need far less data than deep learning; foundation-model workloads need orders of

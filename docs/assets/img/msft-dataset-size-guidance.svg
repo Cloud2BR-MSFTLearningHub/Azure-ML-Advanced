@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1400" height="720" viewBox="0 0 1400 720" role="img" aria-labelledby="title desc">
-  <title id="title">Microsoft-style Dataset Size Guidance</title>
+  <title id="title">Dataset Size Guidance</title>
   <desc id="desc">Guidance chart mapping project complexity and model type to recommended dataset size ranges.</desc>
 
   <defs>
@@ -27,7 +27,7 @@
   <rect class="panel" x="30" y="24" width="1340" height="672" rx="16"/>
 
   <text class="title" x="60" y="78">Dataset Size Guidance by Use Case</text>
-  <text class="sub" x="60" y="108">Microsoft-style reference for planning data volume before training and model selection</text>
+  <text class="sub" x="60" y="108">Reference for planning data volume before training and model selection</text>
 
   <line class="axis" x1="130" y1="560" x2="1240" y2="560"/>
   <line class="axis" x1="130" y1="560" x2="130" y2="200"/>
