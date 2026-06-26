@@ -162,6 +162,12 @@ everything else: it predicts a continuous target as a **weighted sum of features
 the model you reach for first because it is fast, interpretable, and gives a baseline that
 more complex models must beat to justify their cost.
 
+![Scatter of points with a straight best-fit line and dashed vertical residuals showing prediction error](../assets/img/linear-regression-fit.svg)
+
+The line is the model and the dashed segments are the residuals : least squares simply picks the
+line whose squared residuals add up to the smallest total. The slope is each feature's effect and
+the intercept is the baseline value when every feature is zero.
+
 Model form:
 
 $$
@@ -229,6 +235,12 @@ score as linear regression and squashes it through the sigmoid function to produ
 probability between 0 and 1. It is the default first model for binary classification because
 its outputs are calibrated, interpretable, and cheap to compute.
 
+![Two classes of points separated by a straight p equals 0.5 boundary, with a shaded band marking the least-confident region](../assets/img/logistic-regression-boundary.svg)
+
+The boundary is the line where the predicted probability equals 0.5; points get more confidently
+classified the further they sit from it. The shaded band is the uncertain zone where small feature
+changes flip the prediction, which is exactly where threshold tuning matters most.
+
 Binary probability:
 
 $$
@@ -290,6 +302,12 @@ Naive Bayes is a **probabilistic classifier** built directly from Bayes' theorem
 simplifying assumption : that features are conditionally independent given the class : makes it
 extremely fast and surprisingly effective on high-dimensional sparse data such as text.
 
+![Bayes rule shown as a class prior multiplied by per-feature likelihoods to give a score, with arg max selecting the winning class](../assets/img/naive-bayes.svg)
+
+The picture is the whole model: multiply the class prior by one likelihood per feature, do that
+for every class, and take the largest. The independence assumption is what lets those per-feature
+terms simply multiply, and working in log-space turns the product into a safe sum.
+
 Bayes rule with conditional independence:
 
 $$
@@ -344,6 +362,12 @@ An SVM finds the decision boundary that **maximizes the margin** : the distance 
 boundary and the nearest points of each class. The intuition is that the widest possible
 "street" between classes generalizes best. Only the points on the edge of that street (the
 **support vectors**) determine the boundary; everything else is irrelevant.
+
+![Two classes separated by a boundary with a wide dashed margin street; the circled points on the margin edges are the support vectors](../assets/img/svm-margin.svg)
+
+The solid line is the boundary and the dashed lines mark the edges of the widest "street" that
+still separates the classes. Only the circled support vectors touch those edges and define the
+fit; the parameter $C$ decides how many points are allowed to sit inside the street.
 
 Hard-margin formulation:
 
@@ -404,6 +428,13 @@ A decision tree splits the data into ever-smaller regions by asking a sequence o
 questions on features, producing a flowchart that a human can read directly. It is the building
 block of the most powerful tabular models (forests and boosting), so understanding it is key.
 
+![A decision tree as a flowchart of yes/no feature questions branching down to leaf nodes that give a predicted class](../assets/img/decision-tree.svg)
+
+Each internal box is a yes/no question on one feature and each leaf is a prediction; following a
+row's answers from root to leaf is the entire inference process. The tree greedily picks the
+question that most reduces impurity at every node, which is why deeper trees fit more detail but
+risk memorizing noise.
+
 Split criterion examples:
 
 $$
@@ -458,6 +489,12 @@ A random forest is an **ensemble of decision trees** combined by averaging (regr
 voting (classification). It directly attacks the single tree's high-variance weakness: many
 decorrelated trees, each slightly wrong in a different way, average out to a stable prediction.
 
+![Training data feeding many trees built on different random samples, whose predictions combine through a majority vote into a final class](../assets/img/random-forest.svg)
+
+Each tree trains on its own random sample of rows and features, so they make different mistakes;
+the vote (or average) cancels those mistakes out. This is bagging : it lowers variance without
+increasing bias, which is why a forest is far more stable than any single tree.
+
 Ensemble prediction (regression):
 
 $$
@@ -509,6 +546,12 @@ current ensemble still makes. Where a random forest builds independent trees in 
 averages them, boosting builds dependent trees in series and adds them : this is the difference
 between reducing variance (forests) and reducing bias (boosting), and it is why boosting tends
 to win accuracy contests on tabular data.
+
+![A sequence of trees where each new tree is trained on the residual errors of the previous ones, and all tree outputs are summed into the final prediction](../assets/img/gradient-boosting.svg)
+
+Unlike a forest's parallel vote, boosting adds trees in sequence: every new tree predicts the
+leftover error of the running sum, scaled down by the learning rate. Summing these corrections
+drives bias down step by step, while shrinkage and regularization keep it from chasing noise.
 
 Additive stage-wise model:
 
@@ -565,6 +608,13 @@ A neural network stacks layers of linear transforms followed by nonlinear activa
 it approximate almost any function given enough capacity and data (the universal approximation
 property). The multilayer perceptron (MLP) is the simplest form and the foundation for deep
 learning architectures.
+
+![A multilayer perceptron with an input layer, two fully connected hidden layers, and an output layer](../assets/img/neural-network.svg)
+
+Every connection carries a weight and every node computes a weighted sum followed by a nonlinear
+activation; stacking these simple steps is what lets the network represent complex functions. More
+width and depth add capacity, which is powerful but demands more data and makes the model harder
+to interpret and operate.
 
 Layer mapping (forward pass):
 
@@ -624,6 +674,12 @@ Operational note:
 Time-series models predict future values from a sequence ordered in time. The defining
 difference from every other model on this page is that **observations are not independent** :
 today depends on yesterday, so order matters and the usual random train/test split is invalid.
+
+![A historical series with an upward trend and seasonal waves extended into a future forecast with a widening uncertainty band](../assets/img/time-series-forecast.svg)
+
+Forecasting decomposes the past into a trend plus repeating seasonal cycles, then projects them
+forward. The widening band past "now" is the key message : uncertainty grows with the horizon, so
+longer-range forecasts must report intervals, not just a single line.
 
 Autoregressive family (AR):
 

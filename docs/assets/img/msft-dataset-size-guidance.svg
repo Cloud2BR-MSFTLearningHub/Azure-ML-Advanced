@@ -28,9 +28,6 @@
   <text class="title" x="60" y="78">Dataset Size Guidance by Use Case</text>
   <text class="sub" x="60" y="108">Microsoft-style reference for planning data volume before training and model selection</text>
 
-  <rect class="chip" x="60" y="128" width="138" height="28" rx="14"/>
-  <text class="chip-text" x="82" y="147">MSFT STYLE</text>
-
   <line class="axis" x1="130" y1="560" x2="1240" y2="560"/>
   <line class="axis" x1="130" y1="560" x2="130" y2="200"/>
 
