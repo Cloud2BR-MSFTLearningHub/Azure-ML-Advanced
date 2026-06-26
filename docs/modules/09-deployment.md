@@ -165,3 +165,82 @@ flowchart LR
 2. Why run a local validation step before cloud deployment?
 3. What is the advantage of canary release?
 
+## Deep dive: every concept, explained
+
+This section explains the deployment concepts so each operational choice has a clear rationale.
+
+### Why `init()` and `run()` are split
+
+The scoring script has two functions by design:
+
+- **`init()`** runs **once** when the container starts. Loading the model (often hundreds of MB)
+  is expensive, so doing it here — into a global — means it happens a single time, not per request.
+- **`run()`** executes **per request** and must be **stateless**: no shared mutable state between
+  calls, so concurrent requests cannot corrupt each other. Statelessness is also what makes the
+  service horizontally scalable — any replica can handle any request.
+
+This separation directly determines latency: model load is a one-time **cold-start** cost;
+`run()` is the **warm** per-request path you optimize.
+
+### Online vs batch endpoints — matching shape to workload
+
+| Dimension | Online endpoint | Batch endpoint |
+|---|---|---|
+| Trigger | Synchronous HTTP request | Scheduled / on-demand job |
+| Latency goal | Milliseconds per request | Throughput over millions of rows |
+| Scaling | Keep replicas warm | Spin up, process, scale to zero |
+| Use when | A user/app waits for the answer | Scoring a whole table overnight |
+
+The decision is about *who is waiting*: a checkout fraud check needs an online endpoint; scoring
+yesterday's entire transaction log is cheaper and simpler as a batch job.
+
+### Release strategies and the risk they manage
+
+All three strategies exist to limit the blast radius of a bad model:
+
+- **Blue/green** keeps the old version (blue) fully running while the new (green) is prepared,
+  then flips 100% of traffic at once. Rollback is instant — flip back. Best when you trust the new
+  version and need zero-downtime cutover.
+- **Canary** routes a *small* slice (e.g. 10%) to the new version and watches metrics before
+  ramping up. It validates on **real traffic** at controlled exposure — the safest way to catch
+  problems that offline tests miss.
+- **Shadow** sends a copy of traffic to the new model but discards its responses, so it is
+  evaluated against production inputs with **zero customer impact**. Ideal for high-stakes models
+  where even 10% exposure is too risky.
+
+The Azure traffic-split (`blue=90 green=10`) is the concrete mechanism that implements canary on a
+managed online endpoint.
+
+### Capacity planning: where the replica formula comes from
+
+$R \approx \lceil \tfrac{QPS\cdot t_{p95}}{u}\rceil$ is **Little's Law** applied to serving.
+$QPS\cdot t_{p95}$ is the average number of requests *in flight* at any moment (arrival rate ×
+service time); dividing by target utilization $u$ (e.g. 0.7, leaving headroom for bursts and
+tail latency) gives the replica count, rounded up. Using $t_{p95}$ rather than the mean sizes the
+fleet for realistic worst-case service time, so the SLO holds under load rather than only on
+average.
+
+### SLIs, SLOs, and why model freshness is one of them
+
+An **SLI** is a measured signal (availability, p95 latency, error rate); an **SLO** attaches a
+target ("p95 ≤ 250 ms"). Including **model-version freshness** as an SLO is what distinguishes ML
+serving from ordinary web serving — a perfectly available endpoint serving a stale, drifted model
+is still failing its job. This connects deployment health back to the drift monitoring from the
+previous module.
+
+### Why local validation precedes cloud deployment
+
+Validating the scoring container locally catches the cheap, common failures — bad dependencies,
+model-load errors, schema mismatches — in seconds, before paying for cloud provisioning and
+before risking a failed production rollout. It is the deployment analog of running unit tests
+before merging: fail fast, fail cheap.
+
+### Security concepts in serving
+
+- **Auth keys/tokens** ensure only authorized callers reach the endpoint; **rotating** them
+  limits damage from a leaked credential.
+- **Private endpoints** keep traffic off the public internet for regulated data.
+- Logging **prediction metadata but never raw PII** (log hashed IDs, not personal fields) gives
+  auditability without creating a data-protection liability — the same principle the scoring-script
+  rules enforce.
+

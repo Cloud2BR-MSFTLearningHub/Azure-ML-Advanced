@@ -139,6 +139,87 @@ Note: Stage 1 (problem framing) is often underinvested. The single most common r
 - A deployed Azure ML model is typically exposed as a REST API endpoint.
 - In practice, teams often say "web service" for the deployed scoring interface.
 
+## Deep dive: every concept, explained
+
+This section expands the terms used above so that no concept is left as a black box.
+
+### What "learning from data" actually means
+
+A classical program is a fixed function written by a human: `output = program(input)`.
+Machine learning **inverts** this. You provide examples of inputs and desired outputs, and
+an optimization procedure searches for a function that reproduces them and, crucially,
+*generalizes* to unseen inputs. Formally, ML assumes the data is drawn from an unknown
+joint distribution $P(X, Y)$, and the goal is to learn a function $f$ that minimizes the
+**expected risk** over that distribution:
+
+$$
+R(f) = \mathbb{E}_{(x,y)\sim P}\big[\mathcal{L}(f(x), y)\big]
+$$
+
+Because $P$ is unknown, we minimize the **empirical risk** on a finite sample instead
+(the training set). The entire discipline of ML is about making that approximation
+trustworthy — which is why data quality, validation, and monitoring matter as much as the
+algorithm.
+
+### AI, ML, deep learning, and GenAI as nested sets
+
+| Term | Precise scope | What distinguishes it |
+|---|---|---|
+| Artificial Intelligence | Any system exhibiting goal-directed "intelligent" behavior | Includes hand-written logic, search, and learning |
+| Machine Learning | AI systems that improve from data | Parameters are *fit*, not hand-coded |
+| Deep Learning | ML using multi-layer neural networks | Learns hierarchical feature representations automatically |
+| Generative AI | Models that learn $P(X)$ (or $P(X\mid \text{prompt})$) to synthesize new data | Produces content rather than only labels/scores |
+
+The mental model: each is a strict subset of the one before it. A logistic regression is
+ML but not deep learning; a CNN is deep learning; a diffusion model or LLM is deep learning
+*and* generative AI.
+
+### Supervised, unsupervised, and reinforcement — the signal that drives learning
+
+The families differ only in **what feedback signal is available**:
+
+- **Supervised**: every example carries a correct answer $y$. The loss directly measures the
+  gap between prediction and truth, so the gradient "knows" which direction to move.
+- **Unsupervised**: there is no $y$. The objective instead rewards structure the model
+  discovers itself — minimizing reconstruction error, maximizing cluster compactness, or
+  maximizing likelihood of the data under a density model.
+- **Reinforcement**: feedback is a delayed, scalar **reward** earned by interacting with an
+  environment. The hard part is *credit assignment* — deciding which earlier actions caused
+  a later reward.
+- **Self-supervised** is the bridge that powers foundation models: it manufactures a
+  supervised signal *from the data itself* (predict the masked word, the next token, the
+  missing image patch), giving the scale benefits of supervised learning without manual labels.
+
+### Why "the pipeline matters more than the model"
+
+The lifecycle diagram is a closed loop on purpose. In production the dominant failure mode is
+not a weak algorithm but a **distribution shift**: the data the model sees in production
+drifts away from the data it was trained on (`P_train(X) ≠ P_prod(X)`), so a model that was
+accurate at launch silently degrades. The monitoring → training feedback edge exists to
+detect this and retrain. This is the core idea of **MLOps**: treating data, models, and
+deployments as versioned, testable, observable assets rather than one-off artifacts.
+
+### Latency, throughput, and why a "good" model can be unusable
+
+Two operational terms appear throughout the course:
+
+- **Latency** — time to serve a single request (often measured at the p95 or p99
+  percentile, not the average, because tail latency is what users feel).
+- **Throughput** — requests served per second (QPS) at acceptable latency.
+
+A model that scores 0.99 AUC but needs 800 ms per call may be useless for a checkout flow
+with a 100 ms budget. Model selection is therefore always a *joint* optimization over
+accuracy, latency, cost, and governance constraints — a theme repeated in every later module.
+
+### REST API, endpoint, and web service — the same idea at different layers
+
+- A **REST API** is an HTTP contract: a client sends a request (usually JSON) to a URL and
+  gets a structured response. "REST" means it uses standard HTTP verbs and is stateless.
+- An **endpoint** in Azure ML is the concrete, addressable deployment of that API, with
+  authentication, scaling, and traffic-routing attached.
+- "**Web service**" is the informal name teams give the running endpoint. All three describe
+  the same thing seen from the contract, the platform, and the team's vocabulary respectively.
+
 Practical distinction:
 
 - **API** describes the contract (request/response schema, authentication, versioning).

@@ -158,9 +158,85 @@ stacker.fit(X_train, y_train)
 | LightGBM (1000 trees) | Low-medium | Medium | Leaf-wise, well optimised |
 | Deep neural network | High (ms-s on CPU) | Large | Batch inference preferred |
 
+## Deep dive: every concept, explained
+
+This section connects the equations above to the intuition and the engineering trade-offs.
+
+### Linear and logistic models — the interpretable baseline
+
+A **linear model** predicts $\hat y = \theta^T x$: each feature contributes a weighted vote, and
+the weight $\theta_j$ is directly readable as "effect of feature $j$". **Logistic regression**
+wraps this in the **sigmoid** $\sigma(z) = \tfrac{1}{1+e^{-z}}$, which squashes any real number
+into $(0,1)$ so the output is a valid probability. The model is linear in *log-odds*: a unit
+change in $x_j$ multiplies the odds by $e^{\theta_j}$. This transparency is why linear models
+remain the default baseline and the choice when regulators require explainable decisions.
+
+### The decision threshold $\tau$ is a business lever, not a constant
+
+A classifier outputs a probability; turning it into a yes/no needs a **threshold** $\tau$
+(default 0.5). Moving $\tau$ trades precision against recall: a fraud team that fears missed
+fraud lowers $\tau$ (catch more, accept more false alarms); a team that fears blocking good
+customers raises it. The right $\tau$ is set by the *relative cost* of the two error types, not
+by the algorithm — which is why thresholds are tuned after training, against business cost.
+
+### Naive Bayes and the independence assumption
+
+$P(y\mid x) \propto P(y)\prod_i P(x_i\mid y)$ comes straight from Bayes' rule, with one
+simplifying ("naive") assumption: features are **conditionally independent given the class**.
+This is almost never literally true, yet the model works surprisingly well for text/spam because
+it needs very little data and training is just counting frequencies. Knowing the assumption tells
+you its failure mode: strongly correlated features get their evidence double-counted.
+
+### Trees, impurity, and why ensembles beat single trees
+
+A **decision tree** repeatedly splits the data to make each resulting group more "pure":
+
+- **Gini impurity** $1-\sum_k p_k^2$ and **entropy** $-\sum_k p_k\log_2 p_k$ both measure how
+  mixed a node's labels are; a split is chosen to reduce this the most (**information gain**).
+- A single deep tree memorizes the training data → **high variance / overfitting**.
+- **Random forests** fix this by **bagging**: train many trees on bootstrap samples with random
+  feature subsets and average them. Averaging decorrelated trees cancels their individual errors,
+  cutting variance with little added bias.
+- **Gradient boosting** takes the opposite route: build trees **sequentially**, each one fitted
+  to the *residual errors* (the gradient of the loss) of the current ensemble. The update
+  $F_m(x) = F_{m-1}(x) + \nu\,h_m(x)$ adds each new weak learner scaled by the **shrinkage**
+  $\nu$. Small $\nu$ with many trees is the well-known recipe for top tabular accuracy.
+
+### The boosting hyperparameters, and what they really control
+
+- `n_estimators` is *capacity*: more trees fit finer structure but overfit without early
+  stopping on a validation set.
+- `learning_rate` ($\nu$) is *caution per step*: lower means each tree corrects less, so the
+  ensemble generalizes better — but needs proportionally more trees.
+- `max_depth` / `num_leaves` is the *main overfit knob*: it caps how complex any single tree can
+  get.
+- `subsample` / `colsample_bytree` inject **stochasticity** (row/column sampling) that
+  decorrelates trees and reduces variance, much like a random forest does.
+
+### Bagging vs boosting vs stacking — one sentence each
+
+- **Bagging** reduces **variance** by averaging independent models (random forest).
+- **Boosting** reduces **bias** by sequentially correcting mistakes (XGBoost/LightGBM).
+- **Stacking** trains a **meta-model** on the out-of-fold predictions of diverse base models to
+  exploit their complementary strengths — usually the highest accuracy, at the cost of complexity
+  and latency.
+
+### Calibration, fairness, robustness — the production-grade concerns
+
+- **Calibration**: a model is calibrated if, among predictions of "70% probability", about 70%
+  are actually positive. Boosted trees are often *mis-calibrated* and benefit from Platt scaling
+  or isotonic regression before probabilities are used in decisions.
+- **Fairness**: aggregate accuracy can hide that a model performs worse for a subgroup. Always
+  evaluate metrics *per segment*, not just globally.
+- **Robustness**: production data is noisier than training data; test the model under injected
+  noise, missing fields, and shifted distributions before trusting it.
+
+### Why latency and memory belong in model selection
+
+The latency/footprint table above is a reminder that the "best" model is the one that meets
+*all* constraints. A 1000-tree ensemble that adds 30 ms per call may break a real-time SLA, while
+a single matrix-multiply logistic regression serves in microseconds. Accuracy is necessary but
+never sufficient — cost, latency, interpretability, and maintainability are co-equal selection
+criteria.
+
 ## Quick self-check
-
-1. Why might a linear model be preferred even if score is slightly lower?
-2. What does learning rate $\nu$ control in boosting?
-3. Which family is often strongest on structured tabular data?
-

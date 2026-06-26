@@ -152,3 +152,71 @@ Every Sev-1 and Sev-2 incident should produce at least one concrete prevention a
 2. Why should you check `--previous` logs?
 3. What is one sign of model/version mismatch?
 
+## Deep dive: every concept, explained
+
+This section explains the Kubernetes primitives and failure modes behind the commands so the
+runbook becomes understandable rather than memorized.
+
+### The Kubernetes objects you are actually debugging
+
+| Object | What it is | Why it matters for ML serving |
+|---|---|---|
+| **Pod** | Smallest deployable unit; one or more containers sharing network/storage | Your scoring container runs here; pod health = endpoint health |
+| **Deployment** | Controller that maintains N pod replicas | Handles rolling updates and self-healing |
+| **Service** | Stable virtual IP/DNS load-balancing across pods | Clients hit the Service, not individual pods |
+| **Endpoints** | The list of *ready* pod IPs behind a Service | Empty endpoints = traffic has nowhere to go (a common "503") |
+| **Ingress** | HTTP routing from outside the cluster to Services | Where external URL → internal Service mapping lives |
+
+The triage sequence in this module walks *outside-in* along this chain (ingress → service →
+endpoints → pod → container), because a request fails at whichever link is broken.
+
+### Pod lifecycle and what the states mean
+
+A pod moves through phases, and the failing phase points at the cause:
+
+- **Pending** — scheduler cannot place the pod (insufficient CPU/memory quota, no matching node).
+- **ContainerCreating** — image is being pulled or a volume is mounting; a stall here usually
+  means a registry/auth or storage problem.
+- **Running** — containers started; the app may still be unhealthy if probes fail.
+- **CrashLoopBackOff** — the container starts, exits, and Kubernetes restarts it with increasing
+  backoff. For ML this almost always means **`init()` failed**: a missing dependency or a model
+  that won't load. This is why `kubectl logs --previous` is essential — the current container may
+  be too young to have logs, so you read the *crashed* container's output.
+
+### Liveness vs readiness probes
+
+- A **readiness probe** decides whether a pod should receive traffic. Until it passes, the pod is
+  kept out of the Service's **Endpoints** list — which is why a slow model load (long cold start)
+  shows up as empty endpoints and timeouts rather than errors.
+- A **liveness probe** decides whether to *restart* a stuck pod. A deadlocked scoring process with
+  no liveness probe will hang forever; with one, Kubernetes recycles it.
+
+Missing probes is a recurring root cause in the prevention table precisely because without them
+Kubernetes cannot tell a warming-up pod from a broken one.
+
+### Mapping the common failures to their mechanism
+
+| Symptom | Underlying mechanism | Why the listed check works |
+|---|---|---|
+| `CrashLoopBackOff` | `init()` raised (bad dep / model load) | `--previous` logs show the exception from the dead container |
+| 5xx from endpoint | `run()` raised on a request | Container logs + payload schema reveal the bad input or bug |
+| Timeouts | Resource pressure or cold start | CPU/memory + readiness probe state show saturation or slow start |
+| Wrong predictions after release | Image tag points at the wrong model version | Compare deployed image tag against the model-registry version |
+
+### Why model/version mismatch is uniquely an ML failure
+
+In ordinary microservices, "the code is the artifact". In ML, the **model is a separate versioned
+artifact** baked into (or mounted by) the image. A deploy can succeed, the service can be healthy,
+and predictions can still be silently wrong because the image references model `v2` while the
+intended one was `v3`. This is why the prevention action is a **version-hash check** at deploy
+time, and why lineage (from the environment module) matters: it lets you prove which model version
+is actually serving.
+
+### From incident to prevention — the reliability flywheel
+
+The postmortem template and "incident → prevention" table encode an **SRE** principle: every
+Sev-1/Sev-2 must yield at least one durable safeguard (a probe, a schema check, a version
+assertion, an automated drift alert). Over time this converts painful one-off outages into
+permanent tests and alerts, steadily lowering the rate of repeat incidents — the operational
+counterpart to the validation gates and SLOs introduced earlier in the course.
+

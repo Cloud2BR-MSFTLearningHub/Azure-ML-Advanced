@@ -168,3 +168,87 @@ flowchart LR
 5. Model quality evaluation job scheduled (weekly or monthly).
 6. Rollback deployment is tagged and accessible.
 
+## Deep dive: every concept, explained
+
+This section explains the theory behind the explainability and drift tools so you can trust
+and defend their outputs.
+
+### Why explainability is a requirement, not a nicety
+
+A model that cannot be explained cannot be debugged, audited, or legally defended. Explainability
+serves three distinct audiences: **data scientists** verifying the model learned real signal (not
+a leakage artifact), **business stakeholders** trusting and adopting it, and **regulators/affected
+users** who have a right to know why a decision was made. This is why the module separates global
+from local explanations — they answer different questions for different people.
+
+### Global vs local, precisely
+
+- **Global** explanations describe the model's *overall* behavior: which features matter across
+  all predictions. They answer "what did the model learn?"
+- **Local** explanations describe *one* prediction: why this customer was scored high-risk. They
+  answer "why this decision?" and are what an appeals or audit process needs.
+
+A model can have sensible global behavior yet a wrong local explanation for an edge case, so both
+views are required before release.
+
+### SHAP: a fair division of credit
+
+**SHAP (SHapley Additive exPlanations)** borrows the **Shapley value** from cooperative game
+theory. The idea: treat each feature as a "player" and the prediction as the "payout", then
+fairly distribute the payout among features by averaging each feature's marginal contribution
+over *all possible orderings* of the others. This yields the **additivity property** the module
+notes: the SHAP values for one example sum to (model output − expected output). Concretely, a
+positive SHAP value pushed the prediction up; a negative one pushed it down; their total explains
+the entire gap from the baseline.
+
+Why SHAP is preferred for tabular models:
+
+- It is **consistent and locally accurate** (grounded in axioms), so explanations do not change
+  arbitrarily.
+- **TreeSHAP** computes exact Shapley values for tree ensembles in polynomial time
+  ($O(TLD^2)$ for $T$ trees, $L$ leaves, depth $D$), making it fast enough for production.
+- For non-tree models, **KernelSHAP** approximates the same values model-agnostically (slower).
+
+### LIME and permutation importance — the complementary tools
+
+- **LIME** (Local Interpretable Model-agnostic Explanations) explains one prediction by sampling
+  perturbed points around it and fitting a simple **surrogate** (usually linear) model locally.
+  It works on any black box but, because it relies on random sampling, its explanations can vary
+  between runs — the consistency weakness noted in the comparison table.
+- **Permutation importance** is a global, model-agnostic signal: shuffle one feature's values and
+  measure how much accuracy drops. A large drop means the model relied on that feature. It is
+  cheap and intuitive but can be misled by correlated features (shuffling one when its correlate
+  remains intact understates importance).
+
+### Drift: the two distributions that can shift
+
+Production failure usually traces to a distribution changing out from under the model:
+
+- **Covariate (data) drift** — the inputs change: $P_t(X) \neq P_{t+\Delta}(X)$. Example: a new
+  customer segment with different spending patterns. The mapping may still be valid, but the model
+  sees inputs unlike its training data.
+- **Concept drift** — the *relationship* changes: $P_t(Y\mid X) \neq P_{t+\Delta}(Y\mid X)$.
+  Example: fraud tactics evolve, so the same features now imply a different risk. This is more
+  dangerous because the learned function is now simply wrong.
+
+Distinguishing them matters: covariate drift may be fixed by re-weighting or collecting new data;
+concept drift generally requires retraining on fresh labels.
+
+### PSI, intuitively
+
+The **Population Stability Index** $\text{PSI}=\sum_b (a_b-e_b)\ln\tfrac{a_b}{e_b}$ compares a
+feature's *current* binned distribution ($a_b$) against a *baseline* ($e_b$). Each term grows when
+a bin's share moves away from its baseline share, so PSI is a single number measuring "how much
+has this distribution moved?" Common thresholds: **< 0.1** no meaningful shift, **0.1–0.2**
+moderate (investigate), **> 0.2** significant (likely retrain). It is essentially a symmetrized
+relative-entropy measure, which is why it pairs naturally with KS-tests in drift monitors.
+
+### Why retraining is threshold-and-persistence based, not reflexive
+
+The operational guidance — alert on persistent drift, validate against business KPIs, shadow-test
+before switching — exists because retraining is costly and risky. A single drift spike may be a
+logging glitch; reacting to it churns models needlessly. The discipline is: confirm the signal is
+real *and* sustained *and* tied to a KPI movement, then retrain into a **shadow** or **canary**
+deployment before promoting. This ties explainability/monitoring back to the deployment module's
+release strategies.
+

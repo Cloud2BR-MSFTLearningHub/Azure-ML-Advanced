@@ -93,6 +93,60 @@ config = ScriptRunConfig(
 )
 ```
 
+## Deep dive: every concept, explained
+
+This section explains the moving parts of a reproducible environment and why each one can
+silently change model behavior.
+
+### What "environment" actually contains
+
+An ML environment is a stack of layers, and a mismatch in *any* layer can change results:
+
+| Layer | Example | Failure if it drifts |
+|---|---|---|
+| OS / system libraries | glibc, CUDA, BLAS | Numeric differences, GPU ops fail |
+| Language runtime | Python 3.10 vs 3.11 | Syntax/ABI breaks, pickled models won't load |
+| Packages | scikit-learn 1.3 vs 1.4 | Different defaults → different predictions |
+| Random seeds | NumPy/PyTorch seed | Non-deterministic training runs |
+
+Reproducibility means pinning *all* of these, which is why Azure ML packages them into a single
+**versioned environment** (a container image) rather than relying on whatever is installed on a
+machine.
+
+### conda vs pip vs the environment files
+
+- **conda** manages *both* Python and non-Python system dependencies (CUDA, MKL, compilers),
+  which is why it is preferred for the base environment in data science.
+- **pip** installs Python packages from PyPI; it does not manage system libraries.
+- `environment.yml` declares the conda environment (channels + packages); `requirements.txt`
+  pins pip packages installed *into* that environment. Using both lets conda handle the heavy
+  system layer and pip handle pure-Python packages.
+
+### Why `python -m pip` instead of bare `pip`
+
+`pip` is just a script that points at *some* Python. If multiple Pythons exist, bare `pip` can
+install into the wrong one. `python -m pip` runs pip *as a module of the exact interpreter you
+invoked*, guaranteeing the package lands in the environment you think it does. The same logic
+applies to `python -m ipykernel install`, which registers *this* interpreter as a notebook
+kernel — preventing the common "notebook uses the wrong environment" bug.
+
+### Pinning, lockfiles, and determinism
+
+- **Pinning** means specifying exact versions (`scikit-learn==1.3.2`) instead of ranges
+  (`scikit-learn>=1.3`). Ranges let a rebuild silently pull a newer package whose changed
+  defaults alter predictions.
+- A **lockfile** captures the *entire resolved dependency tree* (including transitive
+  dependencies) so a rebuild is byte-for-byte reproducible. This is what auditors and incident
+  responders rely on to recreate a past model exactly.
+
+### Registering an environment to Azure ML
+
+`Environment.from_conda_specification(...).register(workspace=ws)` builds a container image from
+your spec and stores it as a *versioned* asset in the workspace. The benefit: the **same image**
+is reused across remote training jobs and the inference deployment, eliminating training/serving
+skew. Referencing it by `name` + `version` in `ScriptRunConfig` makes the run fully reproducible
+— the run record then points at an immutable environment version, not a mutable local machine.
+
 ## Conda vs pip vs Docker: when to use each
 
 | Tool | Best for | Avoid when |
