@@ -1,4 +1,4 @@
-﻿# ML Foundations
+# ML Foundations
 
 This module builds the mathematical and conceptual base needed for all later modules.  
 It starts from first principles and then moves into model families and selection logic.
@@ -23,18 +23,16 @@ What to remember:
 
 ![Machine learning types](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/machine_learning_types.png)
 
-!!! note "What this shows"
-    The major learning families side by side. The distinguishing axis is the *feedback signal*:
-    labeled answers (supervised), structure-only (unsupervised), or reward from interaction
-    (reinforcement). Identifying which signal your data provides is the first step in choosing an
-    approach.
+> **Note - What this shows:** The major learning families side by side. The distinguishing axis is the *feedback signal*:
+> labeled answers (supervised), structure-only (unsupervised), or reward from interaction
+> (reinforcement). Identifying which signal your data provides is the first step in choosing an
+> approach.
 
 ![Types of ML based on objective](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/types_of_ml_based_in_objective.png)
 
-!!! note "What this shows"
-    ML tasks organized by *objective* (predict a class, predict a number, group records, reduce
-    dimensions). Map your business question to one of these objectives before picking an algorithm —
-    the objective constrains both the model family and the evaluation metric.
+> **Note - What this shows:** ML tasks organized by *objective* (predict a class, predict a number, group records, reduce
+> dimensions). Map your business question to one of these objectives before picking an algorithm —
+> the objective constrains both the model family and the evaluation metric.
 
 ## Problem Types
 
@@ -184,11 +182,10 @@ Cross-validation: when data is limited, k-fold CV uses all data for both trainin
 
 ![Bias-variance trade-off](../assets/img/bias-variance-tradeoff.svg)
 
-!!! note "How to read this chart"
-    As complexity grows, **bias squared** falls (the model can fit more) while **variance** rises
-    (the model reacts more to the particular training sample). Their sum — total error — is a U-shape
-    minimized at an intermediate complexity. Left of the minimum you underfit; right of it you
-    overfit. The floor of the curve never reaches zero because of irreducible noise $\sigma^2$.
+> **Note - How to read this chart:** As complexity grows, **bias squared** falls (the model can fit more) while **variance** rises
+> (the model reacts more to the particular training sample). Their sum — total error — is a U-shape
+> minimized at an intermediate complexity. Left of the minimum you underfit; right of it you
+> overfit. The floor of the curve never reaches zero because of irreducible noise $\sigma^2$.
 
 - High bias: model too simple, underfits. Symptom: low training accuracy and low test accuracy.
 - High variance: model too complex, overfits. Symptom: high training accuracy, much lower test accuracy.

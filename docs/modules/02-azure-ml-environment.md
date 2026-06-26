@@ -1,4 +1,4 @@
-﻿
+
 # Azure ML Environment
 
 This module explains Azure ML platform building blocks and how to choose compute and
@@ -24,17 +24,15 @@ serving options based on scale, latency, and cost.
 
 ![Azure ML workspace taxonomy](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/azure-machine-learning-taxonomy.png)
 
-!!! note "What this shows"
-    The Azure ML workspace taxonomy — how the workspace contains compute, data assets, models, and
-    endpoints under one governance boundary. Use it to see which asset type owns each artifact you
-    will create in later modules.
+> **Note - What this shows:** The Azure ML workspace taxonomy — how the workspace contains compute, data assets, models, and
+> endpoints under one governance boundary. Use it to see which asset type owns each artifact you
+> will create in later modules.
 
 ![Azure ML environment taxonomy](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/azure-ml-environment-taxonomy.png)
 
-!!! note "What this shows"
-    How a versioned *environment* (base image + pinned dependencies) is reused across both training
-    and inference. Sharing one environment is what prevents training/serving skew — the same code
-    behaving differently in production than in training.
+> **Note - What this shows:** How a versioned *environment* (base image + pinned dependencies) is reused across both training
+> and inference. Sharing one environment is what prevents training/serving skew — the same code
+> behaving differently in production than in training.
 
 Key concepts:
 
@@ -50,10 +48,9 @@ Additional key terms:
 
 ![Azure endpoint concept](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/azure-endpoint-concept.png)
 
-!!! note "What this shows"
-    The anatomy of an Azure ML endpoint: the deployment surface that receives scoring requests,
-    applies authentication, and routes traffic to one or more model versions. This is the object
-    consumers actually call.
+> **Note - What this shows:** The anatomy of an Azure ML endpoint: the deployment surface that receives scoring requests,
+> applies authentication, and routes traffic to one or more model versions. This is the object
+> consumers actually call.
 
 ## Compute guidance
 

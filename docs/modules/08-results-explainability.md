@@ -1,4 +1,4 @@
-﻿
+
 # Results and Explainability
 
 This module teaches how to move from model score reporting to trustworthy model behavior
@@ -76,17 +76,15 @@ Operational guidance:
 
 ![ROC good vs bad](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/roc_good_bad.png)
 
-!!! note "How to read it"
-    Good vs bad ROC curves. A model whose curve bows toward the top-left separates classes well
-    (high AUC); one near the diagonal is little better than random. Compare candidates on the same
-    validation split.
+> **Note - How to read it:** Good vs bad ROC curves. A model whose curve bows toward the top-left separates classes well
+> (high AUC); one near the diagonal is little better than random. Compare candidates on the same
+> validation split.
 
 ![Precision-recall good vs bad](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/precisionrecall_good_bad.png)
 
-!!! note "How to read it"
-    Good vs bad precision-recall curves. On imbalanced data PR curves are more honest than ROC — a
-    curve staying high as recall increases means the model holds precision while catching more
-    positives.
+> **Note - How to read it:** Good vs bad precision-recall curves. On imbalanced data PR curves are more honest than ROC — a
+> curve staying high as recall increases means the model holds precision while catching more
+> positives.
 
 Use both global and local explanations before production release.
 
