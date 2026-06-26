@@ -1,4 +1,4 @@
-# Azure Machine Learning: Basics to Advanced
+# Azure Machine Learning: Advanced
 
 Atlanta, USA
 

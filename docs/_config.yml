@@ -1,5 +1,5 @@
 title: Azure ML Training Hub
-description: Azure Machine Learning training from basics to advanced
+description: Azure Machine Learning advanced training
 remote_theme: just-the-docs/just-the-docs
 plugins:
   - jekyll-remote-theme
