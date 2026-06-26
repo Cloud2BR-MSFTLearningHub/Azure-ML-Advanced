@@ -11,6 +11,17 @@ Last updated: 2026-06-26
 
 This repository provides a structured Azure Machine Learning (Azure ML) overview from foundational concepts to advanced MLOps and production operations. It covers the **conceptual model**, the **mathematics**, **what happens in the backend**, the **minimum lifecycle stages**, and **how each piece looks** in practice.
 
+It is organized to answer the most common questions first:
+
+- **Workspace**: the main Azure ML container where data, code, jobs, models, and endpoints live.
+- **Job**: a single executable ML task, such as training, evaluation, or data preparation.
+- **Environment**: the runtime definition that keeps dependencies, packages, and base images reproducible.
+- **Model**: the trained artifact that captures learned patterns from data.
+- **Endpoint**: the serving interface that exposes a model for online or batch predictions.
+- **MLOps**: the operational practices that connect training, deployment, monitoring, and governance.
+
+These definitions are used throughout the guide so the training path stays consistent from the first concept to the deployment examples.
+
 ## Training Site
 
 Use the structured training navigation at [docs/index.md](docs/index.md).
