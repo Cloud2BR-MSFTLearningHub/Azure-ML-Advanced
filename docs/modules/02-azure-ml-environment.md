@@ -119,6 +119,9 @@ sequenceDiagram
 |---|---|---|
 | Owner | Platform team leads | Full control including role assignments |
 | Contributor | ML engineers | Create/manage all assets, no role changes |
+| AzureML Data Scientist | Data scientists | Run experiments, register models, deploy |
+| AzureML Compute Operator | Ops team | Start/stop compute, view runs |
+| Reader | Stakeholders | View assets and run history only |
 
 ## Deep dive: every concept, explained
 
@@ -195,9 +198,6 @@ compute, resolves the environment image (pulling or building the container), mou
 referenced data version, runs your command, streams logs/metrics/artifacts back to storage, and
 records lineage. Knowing this sequence is what lets you debug a stuck run: each arrow in the
 sequence diagram above is a place a job can fail (quota, image build, data mount, code error).
-| AzureML Data Scientist | Data scientists | Run experiments, register models, deploy |
-| AzureML Compute Operator | Ops team | Start/stop compute, view runs |
-| Reader | Stakeholders | View assets and run history only |
 
 ## Environment versioning strategy
 
@@ -205,7 +205,7 @@ Azure ML environments are immutable once published. Recommended versioning appro
 
 1. Pin all packages with exact versions in `conda.yml` or `requirements.txt`.
 2. Use environment name + version (e.g., `fraud-train:3`) as the reference in jobs.
-3. Rebuild the environment when any dependency changes â€” never mutate existing versions.
+3. Rebuild the environment when any dependency changes, never mutate existing versions.
 4. Reuse the **same** environment for training and inference to guarantee compatibility.
 
 ```yaml
@@ -227,7 +227,48 @@ dependencies:
 | Practice | Saves |
 |---|---|
 | Set compute cluster min nodes = 0 | Avoids idle compute charges |
-| Use spot/low-priority VMs for training | 60â€“80% compute cost reduction |
+| Use spot/low-priority VMs for training | 60-80% compute cost reduction |
 | Set auto-shutdown on compute instances | Prevents overnight idle spend |
 | Use ACI for low-QPS endpoints instead of AKS | Eliminates cluster overhead |
+
+## Choosing compute: a decision flow
+
+Picking compute is mostly a function of two questions: is the work *interactive or batch*, and
+is it *latency-sensitive or throughput-oriented*. This flow captures the common path.
+
+```mermaid
+flowchart TD
+  A[What are you doing?] --> B{Interactive dev<br/>or a job?}
+  B -->|Interactive| C[Compute Instance<br/>auto-shutdown on]
+  B -->|Job| D{Training/HPO<br/>or serving?}
+  D -->|Training or sweep| E[Compute Cluster<br/>min nodes = 0, spot VMs]
+  D -->|Serving| F{Steady high QPS<br/>or low/spiky QPS?}
+  F -->|High QPS, low latency| G[Managed online / AKS<br/>autoscale, health probes]
+  F -->|Low or spiky QPS| H[ACI or managed endpoint<br/>scale-to-low]
+```
+
+## Common environment and compute pitfalls
+
+These are the issues that most often block a first Azure ML deployment. Recognizing the symptom
+saves hours of debugging.
+
+| Symptom | Likely cause | Fix |
+|---|---|---|
+| Job stuck in "Queued" for a long time | Cluster at max nodes or quota exhausted | Raise quota, increase max nodes, or use a smaller VM SKU |
+| "Image build failed" before training starts | Unpinned or conflicting dependencies in the environment | Pin exact versions; build and test the environment image once, then reuse it |
+| Model works in a notebook but fails at the endpoint | Training/serving environment skew | Reuse the *same* registered environment for training and inference |
+| Endpoint returns 401/403 | Missing key or token, or RBAC too restrictive | Use the endpoint key/token; grant the caller the right role |
+| Surprise monthly bill | Compute instance left running, or AKS over-provisioned | Enable auto-shutdown; set cluster min nodes to 0; right-size serving |
+
+> **Tip - Reproducibility checklist:** Before you call a result "done", confirm three versions are
+> pinned and recorded: the **data** version, the **environment** version, and the **code** commit.
+> With those three, any run on this workspace can be reproduced exactly, which is the whole point
+> of the asset model.
+
+## Quick self-check
+
+1. What is the difference between the control plane and the data plane, and which one determines cost?
+2. Why should a training compute cluster scale to zero but a serving cluster stay warm?
+3. What three versioned things must be recorded to reproduce a training run?
+4. Why does reusing one environment for training and inference prevent a whole class of bugs?
 

@@ -256,3 +256,11 @@ real *and* sustained *and* tied to a KPI movement, then retrain into a **shadow*
 deployment before promoting. This ties explainability/monitoring back to the deployment module's
 release strategies.
 
+## Quick self-check
+
+1. What different question does a *local* explanation answer compared to a *global* one?
+2. Why do SHAP values for a single prediction sum to "model output minus expected value"?
+3. When would you choose LIME over TreeSHAP, and what is LIME's main weakness?
+4. What is the difference between covariate drift and concept drift, and which usually forces retraining?
+5. A key feature shows PSI = 0.27: what does that indicate and what should you do before retraining?
+

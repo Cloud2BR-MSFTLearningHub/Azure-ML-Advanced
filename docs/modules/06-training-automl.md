@@ -57,7 +57,22 @@ AutoML typically evaluates some or all of the following:
 | Voting Ensemble | AutoML-specific ensemble of top runs |
 | Stack Ensemble | AutoML-specific meta-model over top runs |
 
-The `VotingEnsemble` or `StackEnsemble` at the end is AutoML's way of squeezing extra performance beyond single models â€” they are often the final winner.
+The `VotingEnsemble` or `StackEnsemble` at the end is AutoML's way of squeezing extra performance beyond single models, they are often the final winner.
+
+## AutoML vs manual training: when to use which
+
+AutoML is a powerful default, but it is not always the right tool. The choice is about how much
+domain control you need versus how much search you want automated.
+
+| Use AutoML when | Prefer manual training when |
+|---|---|
+| You need a strong baseline fast | You have a specific architecture in mind (e.g. a custom neural net) |
+| The problem is standard tabular/forecasting | You need full control of the training loop or loss |
+| You want leakage-safe featurization handled for you | You require bespoke feature engineering or custom CV logic |
+| You want many algorithms compared objectively | Compute budget is tight and the model family is already decided |
+
+In practice many teams use both: AutoML to discover a strong candidate and validate the
+achievable accuracy, then a hand-built pipeline to refine, optimize latency, and productionize it.
 
 ## Compute and performance
 
@@ -66,7 +81,6 @@ Performance relation:
 $$
 \text{Performance}=\frac{1}{\text{Execution Time}}
 $$
-
 Execution time is affected by:
 
 - Data volume and feature dimensionality
@@ -161,7 +175,7 @@ Minimum metadata for reproducibility:
 Select deployment candidate using multi-objective criteria:
 
 $$
-	ext{Score}_{deploy}=w_1\cdot\text{Quality}-w_2\cdot\text{Latency}-w_3\cdot\text{Cost}+w_4\cdot\text{Stability}
+\text{Score}_{deploy}=w_1\cdot\text{Quality}-w_2\cdot\text{Latency}-w_3\cdot\text{Cost}+w_4\cdot\text{Stability}
 $$
 
 where weights $w_i$ reflect business priorities.

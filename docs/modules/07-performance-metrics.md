@@ -206,7 +206,7 @@ they all, in different ways, stop the majority class from dominating the score.
 A model outputs probabilities; the **threshold** $\tau$ converts them to decisions. Because false
 positives and false negatives usually have *different* costs, the optimal threshold minimizes
 expected cost $\mathbb{E}[\text{Cost}(\tau)] = C_{FP}\cdot FP(\tau) + C_{FN}\cdot FN(\tau)$ rather
-than maximizing accuracy. Concretely: if a missed fraud costs 20�: a false alarm, you lower $\tau$
+than maximizing accuracy. Concretely: if a missed fraud costs 20 times as much as a false alarm, you lower $\tau$
 to trade many false positives for fewer false negatives. The default 0.5 is almost never optimal
 in production.
 
@@ -249,4 +249,12 @@ continuously, and an **SLO** (objective) when a threshold is attached (e.g. "wee
 0.82"). This is how model quality joins latency and availability as a monitored, alertable
 property : the bridge from this module to drift monitoring and deployment SLOs later in the
 course.
+
+## Quick self-check (deep dive)
+
+1. Why is F1 the harmonic mean of precision and recall rather than the ordinary average?
+2. On a 99%-negative dataset, why can ROC-AUC look great while PR-AUC is poor?
+3. What does a negative $R^2$ tell you about the model?
+4. Why is the default 0.5 threshold almost never optimal in production?
+5. A model has high AUC but its "90%" predictions are right only 70% of the time: what is the problem and which fixes apply?
 

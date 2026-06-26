@@ -240,4 +240,42 @@ a single matrix-multiply logistic regression serves in microseconds. Accuracy is
 never sufficient : cost, latency, interpretability, and maintainability are co-equal selection
 criteria.
 
+## A model-selection flowchart
+
+Most tabular model choices collapse to a few questions about data type, size, and constraints.
+This flow is a fast first pass; always confirm with a validated baseline.
+
+```mermaid
+flowchart TD
+  A[What is the data?] --> B{Structured<br/>tabular?}
+  B -->|No: images/text/audio| C[Neural networks<br/>CNN / Transformer]
+  B -->|Yes| D{Hard constraint:<br/>explainability or<br/>microsecond latency?}
+  D -->|Yes| E[Linear / logistic<br/>or shallow tree]
+  D -->|No| F{Enough data and<br/>accuracy is priority?}
+  F -->|Yes| G[Gradient boosting<br/>LightGBM / XGBoost / CatBoost]
+  F -->|Limited data| H[Regularized linear<br/>or small random forest]
+```
+
+> **Tip - Start simple, escalate with evidence:** Always fit a cheap baseline (logistic
+> regression or a small tree) first. Only move to boosting or deep learning when the baseline's
+> error is genuinely the bottleneck and the extra accuracy is worth the added cost and latency.
+
+## When to actually reach for deep learning
+
+Deep learning is not a default for tabular data; gradient boosting usually matches or beats it
+there at a fraction of the cost. Reach for neural networks when one of these holds:
+
+| Situation | Why neural nets win |
+|---|---|
+| Unstructured input (images, audio, raw text) | They learn the feature representation automatically |
+| Very large datasets (millions+ examples) | Capacity scales with data; boosting plateaus |
+| Complex feature interactions hand-engineering can't capture | Deep layers compose features hierarchically |
+| Transfer learning from a pretrained model is available | Fine-tuning beats training from scratch on small data |
+
 ## Quick self-check
+
+1. Why is logistic regression still the default baseline despite its simplicity?
+2. What does the shrinkage parameter $\nu$ (learning_rate) trade off in gradient boosting?
+3. In one sentence each, how do bagging, boosting, and stacking differ?
+4. A boosted model outputs "0.7" but only 50% of such cases are positive: what is wrong and how do you fix it?
+5. Name two reasons to choose a neural network over gradient boosting.

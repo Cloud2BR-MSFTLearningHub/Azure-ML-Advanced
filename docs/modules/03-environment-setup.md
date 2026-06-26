@@ -173,9 +173,78 @@ concepts that affect performance decisions.
 > **Note - What this shows:** A summary of number systems (binary, decimal, hexadecimal). Useful background when reading
 > memory addresses, byte sizes, and encoded data formats during environment and data debugging.
 
+## The modern SDK v2 equivalent
+
+The registration snippets above use the v1 SDK (`azureml.core`). New projects should prefer the
+v2 SDK (`azure-ai-ml`), which models the environment as a declarative object and is the basis of
+the CLI v2 and YAML workflows used across this hub. The concepts are identical: pin dependencies,
+build a versioned image, reuse it everywhere.
+
+```python
+from azure.ai.ml import MLClient
+from azure.ai.ml.entities import Environment
+from azure.identity import DefaultAzureCredential
+
+ml_client = MLClient.from_config(DefaultAzureCredential())
+
+env = Environment(
+    name="fraud-train",
+    description="Pinned training/inference environment",
+    conda_file="./environment.yml",
+    image="mcr.microsoft.com/azureml/openmpi4.1.0-ubuntu20.04:latest",
+)
+ml_client.environments.create_or_update(env)
+```
+
+The same environment can be declared as YAML and version-controlled alongside your code, which
+is the recommended pattern for auditable, GitOps-style pipelines:
+
+```yaml
+# environment.yml (Azure ML CLI v2 asset)
+$schema: https://azuremlschemas.azureedge.net/latest/environment.schema.json
+name: fraud-train
+image: mcr.microsoft.com/azureml/openmpi4.1.0-ubuntu20.04:latest
+conda_file: ./conda.yml
+description: Pinned training/inference environment
+```
+
+> **Tip - v1 vs v2:** If you see `from azureml.core import ...` you are on the v1 SDK; if you see
+> `from azure.ai.ml import ...` you are on v2. Pick one per project and stay consistent. v2 is the
+> forward-looking choice and aligns with the CLI/YAML examples in the deployment modules.
+
+## End-to-end verification script
+
+Run this short script after building an environment to fail fast on the most common problems:
+wrong Python version, missing libraries, and non-deterministic seeds. Catching these locally is
+far cheaper than discovering them inside a remote job.
+
+```python
+import sys, importlib
+
+# 1) Python version must match what the project pins
+assert sys.version_info[:2] == (3, 10), f"Expected Python 3.10, got {sys.version}"
+
+# 2) Critical libraries must import at the pinned versions
+expected = {"sklearn": "1.3.0", "pandas": "2.0.3", "lightgbm": "4.0.0"}
+for mod, want in expected.items():
+    got = importlib.import_module(mod).__version__
+    assert got == want, f"{mod}: expected {want}, got {got}"
+
+# 3) Seeds must make a run reproducible
+import numpy as np
+np.random.seed(42)
+first = np.random.rand(3)
+np.random.seed(42)
+assert np.allclose(first, np.random.rand(3)), "Seeding is not deterministic"
+
+print("Environment verification passed.")
+```
+
 ## Quick self-check
 
 1. Why should train and inference share a pinned environment?
 2. What command shows all conda environments?
 3. When should you register a Jupyter kernel?
+4. How do you tell whether a code sample uses SDK v1 or v2?
+5. Which dependency layers (OS, runtime, packages, seeds) must be pinned for full reproducibility?
 

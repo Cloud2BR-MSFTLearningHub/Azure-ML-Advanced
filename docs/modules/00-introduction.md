@@ -1,8 +1,7 @@
-
 # Introduction and ML Lifecycle
 
-This course is built for learners starting from scratch and progressing to production
-MLOps thinking. The goal is not only to define terms, but to build intuition for how
+This course is built for learners starting from scratch and progressing to production  
+MLOps thinking. The goal is not only to define terms, but to build intuition for how  
 real ML systems are designed, shipped, and operated.
 
 ## Who this is for
@@ -22,42 +21,42 @@ By the end of this module, you should be able to:
 
 ## AI vs ML vs Data Science
 
-| Topic | What it is | Goal | Typical output |
-|---|---|---|---|
-| AI (Artificial Intelligence) | Broad field of building systems that perform tasks requiring human-like intelligence | Reason, plan, perceive, generate, decide | Intelligent behavior |
-| ML (Machine Learning) | Subset of AI where systems learn patterns from data | Predict/estimate outcomes from examples | Trained model |
-| Data Science | Interdisciplinary practice of extracting insight from data | Understand data and support decisions | Analysis, dashboards, models |
+| Topic                        | What it is                                                                           | Goal                                     | Typical output               |
+| ---------------------------- | ------------------------------------------------------------------------------------ | ---------------------------------------- | ---------------------------- |
+| AI (Artificial Intelligence) | Broad field of building systems that perform tasks requiring human-like intelligence | Reason, plan, perceive, generate, decide | Intelligent behavior         |
+| ML (Machine Learning)        | Subset of AI where systems learn patterns from data                                  | Predict/estimate outcomes from examples  | Trained model                |
+| Data Science                 | Interdisciplinary practice of extracting insight from data                           | Understand data and support decisions    | Analysis, dashboards, models |
 
 Key relationship for beginners:
 
 - **AI** is the umbrella.
 - **ML** is one major way to build AI systems.
-- **Data science** uses statistics, ML, and domain knowledge to solve business problems
-  and communicate insights.
+- **Data science** uses statistics, ML, and domain knowledge to solve business problems  
+and communicate insights.
 
 In short: AI is the mission, ML is one method, and data science is the broader practice.
 
 ## Major AI categories
 
-| Category | Description | Real-world examples |
-|---|---|---|
-| Symbolic / Rule-based AI | Explicit rules and logic created by humans | Expert systems, business rule engines |
-| Machine Learning AI | Learns from data instead of hard-coded rules | Fraud scoring, demand forecasting |
-| Generative AI | Learns to generate new content | Text generation, image generation, code assistants |
-| Classical Search/Planning | Finds actions to optimize a goal | Route planning, scheduling |
+| Category                  | Description                                  | Real-world examples                                |
+| ------------------------- | -------------------------------------------- | -------------------------------------------------- |
+| Symbolic / Rule-based AI  | Explicit rules and logic created by humans   | Expert systems, business rule engines              |
+| Machine Learning AI       | Learns from data instead of hard-coded rules | Fraud scoring, demand forecasting                  |
+| Generative AI             | Learns to generate new content               | Text generation, image generation, code assistants |
+| Classical Search/Planning | Finds actions to optimize a goal             | Route planning, scheduling                         |
 
-Practical note: many enterprise solutions combine categories. Example: a fraud system can
+Practical note: many enterprise solutions combine categories. Example: a fraud system can  
 use supervised ML scoring plus rule-based guardrails.
 
 ## Types of ML at a glance
 
-| Type | Data requirement | Typical task |
-|---|---|---|
-| Supervised learning | Labeled data $(X, y)$ | Classification, regression |
-| Unsupervised learning | Unlabeled data $X$ | Clustering, anomaly detection |
-| Reinforcement learning | Environment + reward signal | Sequential decision/control |
-| Semi-supervised learning | Small labeled + large unlabeled | Classification with sparse labels |
-| Self-supervised learning | Labels generated from data itself | Representation learning (NLP/CV) |
+| Type                     | Data requirement                  | Typical task                      |
+| ------------------------ | --------------------------------- | --------------------------------- |
+| Supervised learning      | Labeled data $(X, y)$             | Classification, regression        |
+| Unsupervised learning    | Unlabeled data $X$                | Clustering, anomaly detection     |
+| Reinforcement learning   | Environment + reward signal       | Sequential decision/control       |
+| Semi-supervised learning | Small labeled + large unlabeled   | Classification with sparse labels |
+| Self-supervised learning | Labels generated from data itself | Representation learning (NLP/CV)  |
 
 ## Common confusion points
 
@@ -65,26 +64,26 @@ use supervised ML scoring plus rule-based guardrails.
 - A model can be statistically strong but fail fairness/compliance checks.
 - A model is not a product by itself; the surrounding data and ops system matters.
 - Deep learning is a subset of ML, not a separate thing; it uses neural networks with many layers.
-- "Training" a model means finding parameter values that minimise a loss function on data â€” not teaching in the human sense.
+- "Training" a model means finding parameter values that minimise a loss function on data, not teaching in the human sense.
 
 ## Real-world example: e-commerce recommendation
 
 To make this concrete, here is how the full technology stack maps to a product:
 
-| Concern | Technology choice | ML lifecycle stage |
-|---|---|---|
-| Collect user events | Event streaming (Kafka, Event Hub) | Data ingestion |
-| Store features | Feature store or Azure Data Lake | Data preparation |
-| Train model | Azure ML training job | Training |
-| Serve recommendations | Online endpoint (AKS) | Deployment |
-| Detect stale model | Azure ML data drift monitor | Monitoring |
+| Concern               | Technology choice                  | ML lifecycle stage |
+| --------------------- | ---------------------------------- | ------------------ |
+| Collect user events   | Event streaming (Kafka, Event Hub) | Data ingestion     |
+| Store features        | Feature store or Azure Data Lake   | Data preparation   |
+| Train model           | Azure ML training job              | Training           |
+| Serve recommendations | Online endpoint (AKS)              | Deployment         |
+| Detect stale model    | Azure ML data drift monitor        | Monitoring         |
 
 The model is one component. The pipeline around it is what makes it reliable.
 
 ## Why Azure ML matters
 
-Azure Machine Learning gives you the managed platform to run the full lifecycle with
-reproducibility and governance: versioned data/model assets, tracked runs, deployment
+Azure Machine Learning gives you the managed platform to run the full lifecycle with  
+reproducibility and governance: versioned data/model assets, tracked runs, deployment  
 endpoints, and monitoring.
 
 Azure Machine Learning organizes the end-to-end lifecycle:
@@ -96,7 +95,7 @@ Azure Machine Learning organizes the end-to-end lifecycle:
 5. Deployment
 6. Monitoring and retraining
 
-This is not a linear path. Production systems continuously loop from monitoring back to
+This is not a linear path. Production systems continuously loop from monitoring back to  
 data and training when model quality or data distributions change.
 
 ```mermaid
@@ -111,34 +110,34 @@ flowchart LR
 
 ### What each stage does
 
-| Stage | Main question | Key output |
-|---|---|---|
-| Problem framing | What decision are we trying to improve? | Business KPI definition, success criteria |
-| Data preparation | Do we trust the data and labels? | Validated, versioned dataset |
-| Training | Which model learns the signal best? | Candidate models with tracked metrics |
-| Registration | Is the artifact versioned and reproducible? | Registered model with lineage |
-| Deployment | Can consumers call this model safely? | Live endpoint with auth and monitoring |
-| Monitoring | Is quality stable over time in production? | Drift and quality alerts, retraining signals |
+| Stage            | Main question                               | Key output                                   |
+| ---------------- | ------------------------------------------- | -------------------------------------------- |
+| Problem framing  | What decision are we trying to improve?     | Business KPI definition, success criteria    |
+| Data preparation | Do we trust the data and labels?            | Validated, versioned dataset                 |
+| Training         | Which model learns the signal best?         | Candidate models with tracked metrics        |
+| Registration     | Is the artifact versioned and reproducible? | Registered model with lineage                |
+| Deployment       | Can consumers call this model safely?       | Live endpoint with auth and monitoring       |
+| Monitoring       | Is quality stable over time in production?  | Drift and quality alerts, retraining signals |
 
 Note: Stage 1 (problem framing) is often underinvested. The single most common reason ML projects fail is a poorly defined business objective, not a weak model.
 
 ![ML infrastructure tools for production](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/ml-infrastructure-tools-for-production.png)
 
-> **Note - What this shows:** The production ML stack is far larger than the model itself: ingestion, feature storage,
-> training orchestration, serving, and monitoring are all distinct tools. The takeaway for Azure
-> ML learners is that choosing a model is one box among many : most reliability work happens in
+> **Note - What this shows:** The production ML stack is far larger than the model itself: ingestion, feature storage,  
+> training orchestration, serving, and monitoring are all distinct tools. The takeaway for Azure  
+> ML learners is that choosing a model is one box among many : most reliability work happens in  
 > the surrounding infrastructure.
 
 ![ML workflow stages](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/ml_workflow_stages.png)
 
-> **Note - What this shows:** The workflow stages map one-to-one onto the Azure ML lifecycle (problem framing → data →
-> training → registration → deployment → monitoring). Notice the loop back from monitoring to
+> **Note - What this shows:** The workflow stages map one-to-one onto the Azure ML lifecycle (problem framing → data →  
+> training → registration → deployment → monitoring). Notice the loop back from monitoring to  
 > data/training: production ML is iterative, not a one-way pipeline.
 
 ![Overview ML flow](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/Overview_ML_flow.png)
 
-> **Note - What this shows:** An end-to-end view of how raw data becomes a served prediction. Use it to locate where each
-> later module fits: data preparation, model training, deployment, and monitoring are all stages
+> **Note - What this shows:** An end-to-end view of how raw data becomes a served prediction. Use it to locate where each  
+> later module fits: data preparation, model training, deployment, and monitoring are all stages  
 > on this single flow.
 
 ## Web Service vs API
@@ -152,87 +151,127 @@ This section expands the terms used above so that no concept is left as a black 
 
 ### What "learning from data" actually means
 
-A classical program is a fixed function written by a human: `output = program(input)`.
-Machine learning **inverts** this. You provide examples of inputs and desired outputs, and
-an optimization procedure searches for a function that reproduces them and, crucially,
-*generalizes* to unseen inputs. Formally, ML assumes the data is drawn from an unknown
-joint distribution $P(X, Y)$, and the goal is to learn a function $f$ that minimizes the
+A classical program is a fixed function written by a human: `output = program(input)`.  
+Machine learning **inverts** this. You provide examples of inputs and desired outputs, and  
+an optimization procedure searches for a function that reproduces them and, crucially,  
+*generalizes* to unseen inputs. Formally, ML assumes the data is drawn from an unknown  
+joint distribution $P(X, Y)$, and the goal is to learn a function $f$ that minimizes the  
 **expected risk** over that distribution:
 
-$$
-R(f) = \mathbb{E}_{(x,y)\sim P}\big[\mathcal{L}(f(x), y)\big]
+$$  
+R(f) = \mathbb{E}_{(x,y)\sim P}\big[\mathcal{L}(f(x), y)\big]  
 $$
 
-Because $P$ is unknown, we minimize the **empirical risk** on a finite sample instead
-(the training set). The entire discipline of ML is about making that approximation
-trustworthy : which is why data quality, validation, and monitoring matter as much as the
+Because $P$ is unknown, we minimize the **empirical risk** on a finite sample instead  
+(the training set). The entire discipline of ML is about making that approximation  
+trustworthy : which is why data quality, validation, and monitoring matter as much as the  
 algorithm.
 
 ### AI, ML, deep learning, and GenAI as nested sets
 
-| Term | Precise scope | What distinguishes it |
-|---|---|---|
-| Artificial Intelligence | Any system exhibiting goal-directed "intelligent" behavior | Includes hand-written logic, search, and learning |
-| Machine Learning | AI systems that improve from data | Parameters are *fit*, not hand-coded |
-| Deep Learning | ML using multi-layer neural networks | Learns hierarchical feature representations automatically |
-| Generative AI | Models that learn $P(X)$ (or $P(X\mid \text{prompt})$) to synthesize new data | Produces content rather than only labels/scores |
+| Term                    | Precise scope                                                                 | What distinguishes it                                     |
+| ----------------------- | ----------------------------------------------------------------------------- | --------------------------------------------------------- |
+| Artificial Intelligence | Any system exhibiting goal-directed "intelligent" behavior                    | Includes hand-written logic, search, and learning         |
+| Machine Learning        | AI systems that improve from data                                             | Parameters are *fit*, not hand-coded                      |
+| Deep Learning           | ML using multi-layer neural networks                                          | Learns hierarchical feature representations automatically |
+| Generative AI           | Models that learn $P(X)$ (or $P(X\mid \text{prompt})$) to synthesize new data | Produces content rather than only labels/scores           |
 
-The mental model: each is a strict subset of the one before it. A logistic regression is
-ML but not deep learning; a CNN is deep learning; a diffusion model or LLM is deep learning
+The mental model: each is a strict subset of the one before it. A logistic regression is  
+ML but not deep learning; a CNN is deep learning; a diffusion model or LLM is deep learning  
 *and* generative AI.
 
 ### Supervised, unsupervised, and reinforcement : the signal that drives learning
 
 The families differ only in **what feedback signal is available**:
 
-- **Supervised**: every example carries a correct answer $y$. The loss directly measures the
-  gap between prediction and truth, so the gradient "knows" which direction to move.
-- **Unsupervised**: there is no $y$. The objective instead rewards structure the model
-  discovers itself : minimizing reconstruction error, maximizing cluster compactness, or
-  maximizing likelihood of the data under a density model.
-- **Reinforcement**: feedback is a delayed, scalar **reward** earned by interacting with an
-  environment. The hard part is *credit assignment* : deciding which earlier actions caused
-  a later reward.
-- **Self-supervised** is the bridge that powers foundation models: it manufactures a
-  supervised signal *from the data itself* (predict the masked word, the next token, the
-  missing image patch), giving the scale benefits of supervised learning without manual labels.
+- **Supervised**: every example carries a correct answer $y$. The loss directly measures the  
+gap between prediction and truth, so the gradient "knows" which direction to move.
+- **Unsupervised**: there is no $y$. The objective instead rewards structure the model  
+discovers itself : minimizing reconstruction error, maximizing cluster compactness, or  
+maximizing likelihood of the data under a density model.
+- **Reinforcement**: feedback is a delayed, scalar **reward** earned by interacting with an  
+environment. The hard part is *credit assignment* : deciding which earlier actions caused  
+a later reward.
+- **Self-supervised** is the bridge that powers foundation models: it manufactures a  
+supervised signal *from the data itself* (predict the masked word, the next token, the  
+missing image patch), giving the scale benefits of supervised learning without manual labels.
 
 ### Why "the pipeline matters more than the model"
 
-The lifecycle diagram is a closed loop on purpose. In production the dominant failure mode is
-not a weak algorithm but a **distribution shift**: the data the model sees in production
-drifts away from the data it was trained on (`P_train(X) ≠ P_prod(X)`), so a model that was
-accurate at launch silently degrades. The monitoring → training feedback edge exists to
-detect this and retrain. This is the core idea of **MLOps**: treating data, models, and
+The lifecycle diagram is a closed loop on purpose. In production the dominant failure mode is  
+not a weak algorithm but a **distribution shift**: the data the model sees in production  
+drifts away from the data it was trained on (`P_train(X) ≠ P_prod(X)`), so a model that was  
+accurate at launch silently degrades. The monitoring → training feedback edge exists to  
+detect this and retrain. This is the core idea of **MLOps**: treating data, models, and  
 deployments as versioned, testable, observable assets rather than one-off artifacts.
 
 ### Latency, throughput, and why a "good" model can be unusable
 
 Two operational terms appear throughout the course:
 
-- **Latency** : time to serve a single request (often measured at the p95 or p99
-  percentile, not the average, because tail latency is what users feel).
+- **Latency** : time to serve a single request (often measured at the p95 or p99  
+percentile, not the average, because tail latency is what users feel).
 - **Throughput** : requests served per second (QPS) at acceptable latency.
 
-A model that scores 0.99 AUC but needs 800 ms per call may be useless for a checkout flow
-with a 100 ms budget. Model selection is therefore always a *joint* optimization over
+A model that scores 0.99 AUC but needs 800 ms per call may be useless for a checkout flow  
+with a 100 ms budget. Model selection is therefore always a *joint* optimization over  
 accuracy, latency, cost, and governance constraints : a theme repeated in every later module.
+
+### Problem framing in practice: turning a business goal into an ML task
+
+Problem framing is the stage where most projects are silently won or lost, so it deserves a  
+concrete checklist. The job is to translate a vague business wish ("reduce churn") into a  
+precise, measurable learning task. Five questions force that translation:
+
+1. **What decision changes because of the prediction?** If no human or system will act
+  differently, the model has no value. "Predict churn" is only useful if it triggers a  
+   retention offer. The decision defines the whole project.
+2. **What is the unit of prediction?** One row per customer? Per customer per month? Per
+  session? This fixes the granularity of your data and labels.
+3. **What exactly is the label?** "Churn" must become a rule: for example, "no purchase in
+  the next 60 days". Ambiguous labels produce models that learn the wrong thing.
+4. **What does success look like as a number?** Tie the model to a business KPI (retained
+  revenue, fraud caught, cost avoided), not just accuracy. This is the metric the project is  
+   judged on.
+5. **What is the cost of each error type?** A false positive (flagging a loyal customer) and
+  a false negative (missing a leaver) rarely cost the same. This asymmetry drives the loss  
+   function and the decision threshold in later modules.
+
+> **Note - The framing trap:** A technically excellent model built on a poorly framed problem  
+> is worse than useless: it produces confident, well-validated answers to the wrong question.  
+> Spend real time here before touching data or algorithms.
+
+### A concrete numeric walk-through
+
+To demystify "the model is just math", here is the smallest possible end-to-end example. Suppose  
+we predict whether an email is spam from one feature, the number of suspicious links $x$. A  
+logistic-regression model learns two numbers, a weight $w$ and a bias $b$, and computes:
+
+$$  
+\hat{p} = \frac{1}{1 + e^{-(wx + b)}}  
+$$
+
+Say training settles on $w = 1.2$ and $b = -2.0$. For an email with $x = 3$ links, the score is  
+$wx + b = 1.6$, and $\hat{p} = 1/(1 + e^{-1.6}) \approx 0.83$. With a decision threshold of  
+$0.5$, the email is flagged as spam. Every model in this course is a richer version of exactly  
+this: learn parameters from examples, combine them with the input to get a score, then apply a  
+threshold to make a decision.
 
 ### REST API, endpoint, and web service : the same idea at different layers
 
-- A **REST API** is an HTTP contract: a client sends a request (usually JSON) to a URL and
-  gets a structured response. "REST" means it uses standard HTTP verbs and is stateless.
-- An **endpoint** in Azure ML is the concrete, addressable deployment of that API, with
-  authentication, scaling, and traffic-routing attached.
-- "**Web service**" is the informal name teams give the running endpoint. All three describe
-  the same thing seen from the contract, the platform, and the team's vocabulary respectively.
+- A **REST API** is an HTTP contract: a client sends a request (usually JSON) to a URL and  
+gets a structured response. "REST" means it uses standard HTTP verbs and is stateless.
+- An **endpoint** in Azure ML is the concrete, addressable deployment of that API, with  
+authentication, scaling, and traffic-routing attached.
+- "**Web service**" is the informal name teams give the running endpoint. All three describe  
+the same thing seen from the contract, the platform, and the team's vocabulary respectively.
 
 Practical distinction:
 
 - **API** describes the contract (request/response schema, authentication, versioning).
 - **Web service** is the hosted implementation of that API.
-- In Azure ML online endpoints, you design the API contract through the scoring payload
-  and endpoint auth, and Azure hosts the service.
+- In Azure ML online endpoints, you design the API contract through the scoring payload  
+and endpoint auth, and Azure hosts the service.
 
 ### Inference request flow (simple)
 
@@ -269,19 +308,40 @@ Key production considerations for this flow:
 
 ![Web service vs API](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/webservice_vs_api.png)
 
-> **Tip - Mental model:** A *web service* is the running deployment; the *API* is the contract clients use to call it.
-> In Azure ML a model is wrapped behind a REST endpoint : clients send JSON and receive a
+> **Tip - Mental model:** A *web service* is the running deployment; the *API* is the contract clients use to call it.  
+> In Azure ML a model is wrapped behind a REST endpoint : clients send JSON and receive a  
 > prediction, without knowing which model or framework runs underneath.
 
 ![Web service vs API table](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/table_webservice_vs_api.png)
 
-> **Note - Quick comparison:** The table contrasts the informal term *web service* with the technical term *API*. They
-> describe the same deployed scoring interface from two angles : the running process versus the
+> **Note - Quick comparison:** The table contrasts the informal term *web service* with the technical term *API*. They  
+> describe the same deployed scoring interface from two angles : the running process versus the  
 > HTTP contract it exposes.
+
+## Key terms glossary
+
+This glossary collects the vocabulary introduced above in one place so later modules can assume  
+it. Each term is defined in one plain sentence.
+
+| Term                | Meaning                                                                                |
+| ------------------- | -------------------------------------------------------------------------------------- |
+| Model               | A function with learned numbers (parameters) that turns inputs into predictions.       |
+| Parameter / weight  | One of the numbers the training process adjusts; together they store what was learned. |
+| Feature             | A single input column (a measurable property) the model reads.                         |
+| Label / target      | The correct answer attached to each training example in supervised learning.           |
+| Loss function       | A single number measuring how wrong the model is; training tries to make it small.     |
+| Training            | The optimization process that searches for parameters that minimize the loss.          |
+| Generalization      | How well the model performs on data it never saw during training.                      |
+| Overfitting         | Memorizing training noise so accuracy drops on new data.                               |
+| Inference / scoring | Using a trained model to make predictions on new inputs.                               |
+| Endpoint            | The deployed, addressable service that serves a model over HTTP.                       |
+| Drift               | A change in production data distribution that degrades model quality over time.        |
+| MLOps               | Treating data, models, and deployments as versioned, tested, monitored assets.         |
 
 ## Quick self-check
 
 1. Is every AI system an ML system?
 2. In production, which stage catches drift issues?
 3. What is the difference between API and web service?
-
+4. Given a business goal, what are the five problem-framing questions you must answer first?
+5. Why can a model with excellent accuracy still be the wrong choice for production?

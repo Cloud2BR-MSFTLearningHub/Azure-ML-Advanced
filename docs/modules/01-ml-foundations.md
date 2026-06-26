@@ -76,7 +76,7 @@ The same feature set can support both depending on business objective.
 ## Semi-supervised and self-supervised
 
 - Semi-supervised is useful when labels are expensive. Example: you have 1,000 labelled medical images and 50,000 unlabelled ones. A semi-supervised approach trains on both, propagating labels from confident predictions.
-- Self-supervised is common in foundation models (GPT, BERT, CLIP) and pretraining pipelines. The model is trained on a proxy task whose labels come from the data itself â€” e.g., predict the next word, reconstruct a masked patch.
+- Self-supervised is common in foundation models (GPT, BERT, CLIP) and pretraining pipelines. The model is trained on a proxy task whose labels come from the data itself, for example predict the next word or reconstruct a masked patch.
 - Both reduce dependence on manual labeling, which is expensive and slow at scale.
 
 | Approach        | Label requirement       | Common algorithms                         |
@@ -170,9 +170,9 @@ Practical split sizes (rule of thumb):
 
 | Split      | Typical proportion | Purpose                                     |
 | ---------- | ------------------ | ------------------------------------------- |
-| Train      | 60â€“80%           | Fit model parameters                        |
-| Validation | 10â€“20%           | Tune hyperparameters and compare models     |
-| Test       | 10â€“20%           | Final unbiased evaluation before deployment |
+| Train      | 60-80%             | Fit model parameters                        |
+| Validation | 10-20%             | Tune hyperparameters and compare models     |
+| Test       | 10-20%             | Final unbiased evaluation before deployment |
 
 The test set must **never** be used during model selection. Using it for selection is a form of data leakage that makes offline scores over-optimistic.
 
@@ -313,4 +313,43 @@ generalization than a single split, essential when data is scarce.
 threshold, hyperparameter) influenced by test performance leaks information and makes the  
 reported score optimistically biased, a subtle but common form of **data leakage**.
 
+### Putting it together: diagnosing underfitting vs overfitting
+
+The theory becomes actionable when you can read a learning curve. Plot training and validation
+error as you increase model capacity (or training time), and the gap between the two curves
+tells you exactly what to do next:
+
+| What you observe | Diagnosis | What to do |
+|---|---|---|
+| Train error high, validation error high (close together) | Underfitting (high bias) | Add capacity: richer model, more features, less regularization, train longer |
+| Train error low, validation error much higher (big gap) | Overfitting (high variance) | Reduce variance: more data, stronger regularization, simpler model, early stopping |
+| Train and validation error both low and close | Good fit | Stop; this is the sweet spot of the bias-variance curve |
+| Both errors stuck above an acceptable floor | Irreducible noise or label problems | Improve data/label quality; no algorithm can pass the $\sigma^2$ floor |
+
+> **Tip - Read the gap, not the absolute number:** The *distance* between training and validation
+> error diagnoses the problem. A small gap means a bias problem (add capacity); a large gap means
+> a variance problem (add data or regularization). This single habit guides most model debugging.
+
+### A concrete bias-variance example
+
+Imagine fitting a curve to noisy points sampled from a gentle wave:
+
+- A **straight line** (degree-1 polynomial) cannot bend to follow the wave: it is wrong in the
+  same way no matter which sample you draw. That is **high bias, low variance**.
+- A **degree-15 polynomial** wiggles through every point, including the noise. Draw a new sample
+  and it wiggles completely differently. That is **low bias, high variance**.
+- A **degree-3 polynomial** captures the wave's shape while ignoring the noise. It is stable
+  across samples and accurate: the minimum of the total-error curve.
+
+Regularization, more data, and ensembling are simply tools that let you use a flexible model
+(low bias) while taming its wiggle (controlling variance).
+
 ## Quick self-check
+
+1. Given a feature vector $x_i \in \mathbb{R}^d$ and label $y_i$, how do you tell whether the
+   task is classification, regression, or forecasting?
+2. Why does binary cross-entropy punish a confident wrong prediction so heavily?
+3. What is the practical difference between L1 and L2 regularization on the learned weights?
+4. You see 99% train accuracy and 74% validation accuracy. Which part of the bias-variance
+   trade-off is the problem, and what are two fixes?
+5. Why must the test set be used only once, and what is it called when you violate this?

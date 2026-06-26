@@ -153,6 +153,8 @@ Define a contract before training so all producers/consumers align:
 |---|---|---|
 | IID tabular classification/regression | Random train/val/test split | Use stratified split if class imbalance exists |
 | Time series | Chronological split (rolling/expanding windows) | Random shuffle destroys temporal order |
+| Entity-correlated data (users/devices) | Group split by entity key | Prevents entity bleed-through |
+| Rare event detection | Stratified random split | Ensures minority class in each fold |
 
 ## Deep dive: every concept, explained
 
@@ -238,8 +240,23 @@ gates** (schema, quality, drift, leakage) are automated checks that *block* a ba
 ever reaching training : the data-engineering equivalent of unit tests. This shifts failures
 left, where they are cheap to fix, instead of discovering them as degraded production
 predictions weeks later.
-| Entity-correlated data (users/devices) | Group split by entity key | Prevents entity bleed-through |
-| Rare event detection | Stratified random split | Ensures minority class in each fold |
+
+### Handling imbalanced data
+
+Many high-value problems (fraud, churn, defects) have a rare positive class. A naive model can
+score 99% accuracy by always predicting "negative" while catching zero positives, so imbalance
+must be handled deliberately:
+
+| Technique | How it works | Watch out for |
+|---|---|---|
+| Class weights | Penalize errors on the rare class more in the loss | Simplest, no data change; tune the weight |
+| Oversampling (e.g. SMOTE) | Synthesize more minority examples | Fit only on the training split, never before the split |
+| Undersampling | Drop majority examples | Throws away data; use when majority is huge |
+| Threshold tuning | Move the decision cutoff after training | Decouples the model from the business cutoff |
+
+> **Note - Resample after splitting:** Any resampling (SMOTE, under/oversampling) must happen
+> *inside* the training fold only. Resampling before the split leaks synthetic neighbors of test
+> rows into training and produces over-optimistic offline scores.
 
 ### Stratified split example
 
@@ -300,4 +317,6 @@ X_encoded = enc.fit_transform(X_train[["category"]], y_train)
 1. Why is random split wrong for most forecasting tasks?
 2. Which quality dimension is impacted by schema mismatch?
 3. What is one common source of data leakage?
+4. Why must a scaler or imputer be fit on the training split only?
+5. Where in the pipeline must SMOTE/oversampling happen, and why?
 

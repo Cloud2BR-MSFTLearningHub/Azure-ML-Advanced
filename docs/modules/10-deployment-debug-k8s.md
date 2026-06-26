@@ -128,7 +128,7 @@ flowchart TD
 | Section | Content |
 |---|---|
 | Incident title | One-line description |
-| Date/time | Detection â†’ mitigation â†’ full resolution |
+| Date/time | Detection → mitigation → full resolution |
 | Severity | Sev-1 / 2 / 3 and impact scope |
 | Detection | How was it found (alert, user report, monitoring)? |
 | Root cause | Technical root cause (not blame) |
@@ -224,4 +224,12 @@ Sev-1/Sev-2 must yield at least one durable safeguard (a probe, a schema check, 
 assertion, an automated drift alert). Over time this converts painful one-off outages into
 permanent tests and alerts, steadily lowering the rate of repeat incidents : the operational
 counterpart to the validation gates and SLOs introduced earlier in the course.
+
+## Quick self-check (deep dive)
+
+1. The triage sequence moves "outside-in" along ingress → service → endpoints → pod → container. Why is that order more efficient than starting at the pod?
+2. A Service returns 503 but every pod shows `Running`. Which object would you inspect next, and what would empty contents tell you?
+3. Why does `CrashLoopBackOff` for an ML container almost always point at `init()` rather than `run()`?
+4. Explain the difference between a readiness probe and a liveness probe, and which one a slow model load affects first.
+5. Why can a deployment be "healthy" yet still serve wrong predictions, and what single deploy-time check prevents it?
 

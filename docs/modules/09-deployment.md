@@ -357,7 +357,7 @@ managed online endpoint.
 ### Capacity planning: where the replica formula comes from
 
 $R \approx \lceil \tfrac{QPS\cdot t_{p95}}{u}\rceil$ is **Little's Law** applied to serving.
-$QPS\cdot t_{p95}$ is the average number of requests *in flight* at any moment (arrival rate �:
+$QPS\cdot t_{p95}$ is the average number of requests *in flight* at any moment (arrival rate times
 service time); dividing by target utilization $u$ (e.g. 0.7, leaving headroom for bursts and
 tail latency) gives the replica count, rounded up. Using $t_{p95}$ rather than the mean sizes the
 fleet for realistic worst-case service time, so the SLO holds under load rather than only on
@@ -386,4 +386,12 @@ before merging: fail fast, fail cheap.
 - Logging **prediction metadata but never raw PII** (log hashed IDs, not personal fields) gives
   auditability without creating a data-protection liability : the same principle the scoring-script
   rules enforce.
+
+## Quick self-check (deep dive)
+
+1. Why is the model loaded in `init()` and not in `run()`?
+2. What property must `run()` have to allow horizontal scaling, and why?
+3. Compare canary and shadow releases: which exposes customers to the new model, and which does not?
+4. In the replica formula $R \approx \lceil QPS \cdot t_{p95} / u \rceil$, why use p95 service time instead of the mean?
+5. Why is model-version freshness treated as an SLO alongside latency and availability?
 
