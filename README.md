@@ -310,8 +310,6 @@ This repository is positioned as an Azure ML learning hub covering:
 - Azure ML backend/runtime behavior.
 - Minimum and advanced operational stages for real deployments.
 
-Use this as a baseline to add notebooks, pipeline examples, deployment templates, and monitoring playbooks in future increments.
-
 <div align="center">
 
 ![Total views](https://img.shields.io/badge/Total%20views-40-limegreen)
