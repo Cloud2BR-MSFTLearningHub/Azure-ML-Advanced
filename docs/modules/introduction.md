@@ -340,11 +340,13 @@ it. Each term is defined in one plain sentence.
 
 ## Quick self-check
 
-1. Is every AI system an ML system?
-2. In production, which stage catches drift issues?
-3. What is the difference between API and web service?
-4. Given a business goal, what are the five problem-framing questions you must answer first?
-5. Why can a model with excellent accuracy still be the wrong choice for production?
+| # | Question | Answer |
+|---|----------|--------|
+| 1 | Is every AI system an ML system? | No. ML is a subset of AI; rule-based and symbolic AI systems make decisions without learning from data. |
+| 2 | In production, which stage catches drift issues? | The monitoring stage, which watches the live data distribution and model quality and flags drift over time. |
+| 3 | What is the difference between API and web service? | The API is the contract (request/response schema, authentication, versioning); the web service is the hosted, running implementation of that API (the endpoint). |
+| 4 | Given a business goal, what are the five problem-framing questions you must answer first? | (1) What decision changes because of the prediction? (2) What is the unit of prediction? (3) What exactly is the label? (4) What does success look like as a number (business KPI)? (5) What is the cost of each error type? |
+| 5 | Why can a model with excellent accuracy still be the wrong choice for production? | Accuracy ignores error costs, class imbalance, fairness, latency, and the business KPI; a high-accuracy model can still miss rare positives or be too slow, costly, or unfair to deploy. |
 
 ---
 
@@ -783,13 +785,15 @@ Derived metrics:
 
 ## Quick self-check (extended)
 
-1. Is every AI system an ML system?
-2. In production, which stage catches drift issues?
-3. What is the difference between API and web service?
-4. Given a business goal, what are the five problem-framing questions you must answer first?
-5. Why can a model with excellent accuracy still be the wrong choice for production?
-6. What does entropy measure, and what is its minimum and maximum value for a binary distribution?
-7. Why is minimizing cross-entropy equivalent to maximizing the likelihood of the training labels?
-8. What is the VC dimension of a linear classifier in two dimensions?
-9. Name two fairness definitions and explain why they cannot all be satisfied simultaneously when base rates differ.
-10. In the spam walkthrough, why did $w_1$ receive a larger gradient update than $w_2$ after the first step?
+| # | Question | Answer |
+|---|----------|--------|
+| 1 | Is every AI system an ML system? | No. ML is a subset of AI; rule-based and symbolic AI systems make decisions without learning from data. |
+| 2 | In production, which stage catches drift issues? | The monitoring stage, which watches the live data distribution and model quality and flags drift over time. |
+| 3 | What is the difference between API and web service? | The API is the contract (request/response schema, authentication, versioning); the web service is the hosted, running implementation of that API (the endpoint). |
+| 4 | Given a business goal, what are the five problem-framing questions you must answer first? | (1) What decision changes because of the prediction? (2) What is the unit of prediction? (3) What exactly is the label? (4) What does success look like as a number (business KPI)? (5) What is the cost of each error type? |
+| 5 | Why can a model with excellent accuracy still be the wrong choice for production? | Accuracy ignores error costs, class imbalance, fairness, latency, and the business KPI; a high-accuracy model can still miss rare positives or be too slow, costly, or unfair to deploy. |
+| 6 | What does entropy measure, and what is its minimum and maximum value for a binary distribution? | It measures the average uncertainty (surprise) of a distribution; for a binary distribution it is minimized at 0 bits (one outcome certain) and maximized at 1 bit (when $p = 0.5$). |
+| 7 | Why is minimizing cross-entropy equivalent to maximizing the likelihood of the training labels? | For the true class the cross-entropy reduces to $-\log q_c$, the negative log-likelihood of the correct label, so minimizing it maximizes the probability the model assigns to the true labels. |
+| 8 | What is the VC dimension of a linear classifier in two dimensions? | 3 — any 3 non-collinear points can be shattered, but no set of 4 can. |
+| 9 | Name two fairness definitions and explain why they cannot all be satisfied simultaneously when base rates differ. | Demographic parity and equalized odds (and calibration). When base rates differ across groups the impossibility theorem (Chouldechova; Kleinberg et al.) shows they cannot all hold at once, so choosing one is a value judgment. |
+| 10 | In the spam walkthrough, why did $w_1$ receive a larger gradient update than $w_2$ after the first step? | Because $x_1$ (number of links) has larger feature values than $x_2$, so the gradient $\frac{1}{N}\sum_i(\hat{p}_i - y_i)x_{ij}$ was bigger in magnitude for $w_1$ ($-0.875$ vs $-0.25$). |

@@ -1035,30 +1035,14 @@ las redes prácticas operan en el régimen de aprendizaje de características.
 Pon a prueba tu comprensión con las siguientes preguntas. Cada una tiene una respuesta
 definitiva y derivable.
 
-1. **Límite del perceptrón.** ¿Por qué un único perceptrón no puede aprender XOR, pero un MLP
-   de 2 capas sí puede? ¿Cuál es la arquitectura mínima (neuronas por capa) necesaria?
-
-2. **Paso hacia adelante.** Dado un MLP de 3 capas con activaciones ReLU en las capas ocultas
-   y softmax en la salida, escribe las ecuaciones completas del paso hacia adelante en forma
-   matricial-vectorial.
-
-3. **Retropropagación.** Deriva $\delta^{(L)}$ (la señal de error de la capa de salida) para la
-   pérdida de entropía cruzada categórica combinada con una salida softmax. Muestra que
-   $\delta^{(L)} = \hat{\mathbf{y}} - \mathbf{y}$.
-
-4. **Gradientes que desaparecen.** Una red sigmoide tiene 20 capas ocultas. Estima el orden de
-   magnitud del gradiente que llega a la capa 1, dado que las derivadas de la sigmoide son como
-   máximo 0.25.
-
-5. **Normalización por lotes.** Explica por qué la normalización por lotes permite una tasa de
-   aprendizaje más alta. ¿Qué cambia si el tamaño del lote es 1?
-
-6. **Atención.** Calcula la salida de atención para una única cabeza con
-   $Q = K = V = I_3$ (la matriz identidad $3\times3$) y $d_k = 3$. ¿Cómo se ven los pesos
-   de atención y qué implica esto sobre la salida?
-
-7. **Aprendizaje por transferencia.** Tienes un conjunto de datos de 2.000 imágenes médicas y
-   un ResNet-50 preentrenado en ImageNet. Describe la estrategia de entrenamiento que usarías
-   y justifica cada paso.
+| # | Pregunta | Respuesta |
+|---|----------|-----------|
+| 1 | Límite del perceptrón: ¿por qué un único perceptrón no puede aprender XOR pero un MLP de 2 capas sí, y cuál es la arquitectura mínima? | XOR no es linealmente separable, así que la única frontera recta del perceptrón siempre clasifica mal un punto; un MLP de 2 capas compone fronteras para delimitar una región no lineal. Arquitectura mínima: 2 entradas, 2 neuronas ocultas, 1 salida (2-2-1). |
+| 2 | Paso hacia adelante: escribe las ecuaciones completas del paso hacia adelante para un MLP de 3 capas con ReLU oculta y softmax de salida. | $\mathbf{h}^{(1)}=\text{ReLU}(W^{(1)}\mathbf{x}+\mathbf{b}^{(1)})$, luego $\mathbf{h}^{(2)}=\text{ReLU}(W^{(2)}\mathbf{h}^{(1)}+\mathbf{b}^{(2)})$, y $\hat{\mathbf{y}}=\text{softmax}(W^{(3)}\mathbf{h}^{(2)}+\mathbf{b}^{(3)})$. |
+| 3 | Retropropagación: deriva la señal de error de la capa de salida $\delta^{(L)}$ para softmax con entropía cruzada categórica. | El jacobiano de softmax y la derivada de la entropía cruzada se cancelan, dejando $\delta^{(L)}=\hat{\mathbf{y}}-\mathbf{y}$ (probabilidades predichas menos verdaderas). |
+| 4 | Gradientes que desaparecen: estima la magnitud del gradiente que llega a la capa 1 de una red sigmoide de 20 capas (derivada $\le 0.25$). | Aproximadamente $0.25^{20}\approx 9\times10^{-13}$, es decir, orden $10^{-12}$ — prácticamente nulo, por lo que la capa 1 casi no aprende. |
+| 5 | Normalización por lotes: ¿por qué permite una tasa de aprendizaje más alta y qué cambia si el tamaño del lote es 1? | Normaliza las entradas de cada capa, reduciendo el desplazamiento de covariables interno y suavizando la superficie de pérdida, de modo que pasos mayores siguen siendo estables. Con tamaño de lote 1 las estadísticas del lote no están definidas, así que BatchNorm falla — usa LayerNorm/GroupNorm. |
+| 6 | Atención: calcula la salida de una cabeza con $Q = K = V = I_3$ y $d_k = 3$. | Las puntuaciones son $QK^\top/\sqrt{d_k}=I_3/\sqrt{3}$; el softmax de cada fila $[0.577,0,0]$ da $\approx[0.47,0.26,0.26]$. Como $V=I_3$, la salida es esa matriz de pesos — un promedio casi uniforme que solo favorece levemente la posición coincidente. |
+| 7 | Aprendizaje por transferencia: ¿qué estrategia para 2.000 imágenes médicas con un ResNet-50 preentrenado en ImageNet? | Reemplaza la capa de clasificación final, congela las capas convolucionales tempranas y genéricas, entrena primero la nueva cabeza y luego ajusta finamente los últimos bloques con una tasa de aprendizaje baja usando aumento intensivo. Reutilizar las características preentrenadas evita el sobreajuste con un conjunto pequeño. |
 
 ---

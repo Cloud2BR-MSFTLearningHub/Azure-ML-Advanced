@@ -304,9 +304,11 @@ flowchart LR
 
 ## Quick self-check
 
-1. When is batch endpoint better than online endpoint?
-2. Why run a local validation step before cloud deployment?
-3. What is the advantage of canary release?
+| # | Question | Answer |
+|---|----------|--------|
+| 1 | When is a batch endpoint better than an online endpoint? | When no user is waiting on the response: high-throughput, offline scoring of large datasets (e.g., scoring an entire table overnight). |
+| 2 | Why run a local validation step before cloud deployment? | It catches cheap, common failures (bad dependencies, model-load errors, schema mismatches) in seconds, before paying for cloud provisioning or risking a failed production rollout. |
+| 3 | What is the advantage of a canary release? | It routes a small slice of real traffic to the new version and watches metrics before ramping up, limiting blast radius and catching problems offline tests miss. |
 
 ## Deep dive: every concept, explained
 
@@ -389,11 +391,13 @@ before merging: fail fast, fail cheap.
 
 ## Quick self-check (deep dive)
 
-1. Why is the model loaded in `init()` and not in `run()`?
-2. What property must `run()` have to allow horizontal scaling, and why?
-3. Compare canary and shadow releases: which exposes customers to the new model, and which does not?
-4. In the replica formula $R \approx \lceil QPS \cdot t_{p95} / u \rceil$, why use p95 service time instead of the mean?
-5. Why is model-version freshness treated as an SLO alongside latency and availability?
+| # | Question | Answer |
+|---|----------|--------|
+| 1 | Why is the model loaded in `init()` and not in `run()`? | `init()` runs once at container startup, so the expensive model load happens a single time instead of on every request. |
+| 2 | What property must `run()` have to allow horizontal scaling, and why? | It must be stateless (no shared mutable state), so any replica can handle any request and concurrent requests cannot corrupt each other. |
+| 3 | Compare canary and shadow releases: which exposes customers to the new model, and which does not? | Canary exposes customers (a small slice of real traffic hits the new model); shadow does not, because its responses are discarded for zero customer impact. |
+| 4 | In the replica formula $R \approx \lceil QPS \cdot t_{p95} / u \rceil$, why use p95 service time instead of the mean? | p95 sizes the fleet for realistic worst-case service time, so the SLO holds under load rather than only on average. |
+| 5 | Why is model-version freshness treated as an SLO alongside latency and availability? | A perfectly available endpoint serving a stale, drifted model is still failing its job, so freshness is a quality target just like latency and availability. |
 
 ---
 
@@ -1071,9 +1075,11 @@ def monitor_canary(endpoint, duration_s, fail_on_degradation):
 
 ## Quick self-check (advanced deployment)
 
-1. You need to serve 15 segment-specific models from a single endpoint. What is the maximum instance type memory you must budget for, and what is the thread-safety risk to address?
-2. A managed online endpoint is returning 429 errors during a traffic spike. The autoscaler has not yet added replicas. Which two autoscaler parameters control the responsiveness, and how would you tune them?
-3. The CI/CD pipeline deploys to staging and all functional tests pass, but the load test reports p95 = 380 ms. What are the three most likely causes and which ONNX/batching technique addresses each?
-4. Explain why `public_network_access=disabled` alone is insufficient for full network isolation and what additional resource must be configured.
-5. The canary rollback script catches `auc_delta < -0.03`. Why is monitoring the AUC delta during canary the right signal, and what would be wrong with monitoring accuracy instead?
+| # | Question | Answer |
+|---|----------|--------|
+| 1 | You need to serve 15 segment-specific models from a single endpoint. What instance memory must you budget for, and what is the thread-safety risk to address? | Budget RAM at least equal to all 15 models resident simultaneously (15 × per-model size) to avoid an OOMKill; the thread-safety risk is the mutable `_models` dict under lazy-loading, which must be guarded with a lock. |
+| 2 | A managed online endpoint returns 429 errors during a traffic spike before the autoscaler adds replicas. Which two autoscaler parameters control responsiveness, and how would you tune them? | `polling_interval` (how often the autoscaler checks) and `cooldown_period` (delay before further scaling): lower both so it detects and reacts to the spike faster, and lower `target_utilization_percentage` to leave more headroom. |
+| 3 | Staging functional tests pass but the load test reports p95 = 380 ms. What are the three most likely causes and which ONNX/batching technique addresses each? | Slow model predict → export to ONNX Runtime; large FP32 weights/compute → INT8 quantization; fixed per-request overhead → micro-batching (vectorized batch scoring). |
+| 4 | Why is `public_network_access=disabled` alone insufficient for full network isolation, and what additional resource is required? | It only blocks public inbound access; full isolation also needs a private endpoint in the VNet (plus NSG rules and `egress_public_network_access=disabled`) so traffic stays on the private network. |
+| 5 | Why is monitoring the AUC delta during canary the right signal, and what would be wrong with monitoring accuracy instead? | AUC measures ranking quality independent of threshold and class balance; accuracy is misleading on imbalanced fraud data, where predicting all-negative scores high accuracy yet is useless. |
 

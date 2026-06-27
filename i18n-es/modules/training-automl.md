@@ -189,9 +189,11 @@ donde los pesos $w_i$ reflejan las prioridades del negocio.
 
 ## Autoevaluación rápida
 
-1. ¿Por qué es crítica la elección de la métrica primaria en AutoML?
-2. ¿Qué trade-off controla el máximo de iteraciones concurrentes?
-3. ¿Por qué deben considerarse las restricciones de despliegue durante la selección del modelo?
+| # | Pregunta | Respuesta |
+|---|----------|-----------|
+| 1 | ¿Por qué es crítica la elección de la métrica primaria en AutoML? | Define el objetivo que AutoML optimiza; una métrica equivocada (p. ej. la exactitud con datos desbalanceados) hace que AutoML seleccione el modelo incorrecto. |
+| 2 | ¿Qué trade-off controla el máximo de iteraciones concurrentes? | Paralelismo frente a costo y calidad de búsqueda: más concurrencia termina antes pero usa más cómputo y deja al optimizador menos resultados previos de los que aprender. |
+| 3 | ¿Por qué deben considerarse las restricciones de despliegue durante la selección del modelo? | El modelo debe cumplir los límites de latencia, tamaño e interpretabilidad en producción; el modelo más preciso es inútil si no puede desplegarse dentro de esas restricciones. |
 
 ## Inmersión profunda: cada concepto explicado
 

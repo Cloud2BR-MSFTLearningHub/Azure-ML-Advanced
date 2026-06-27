@@ -1030,8 +1030,10 @@ saves hours of debugging.
 
 ## Quick self-check
 
-1. What is the difference between the control plane and the data plane, and which one determines cost?
-2. Why should a training compute cluster scale to zero but a serving cluster stay warm?
-3. What three versioned things must be recorded to reproduce a training run?
-4. Why does reusing one environment for training and inference prevent a whole class of bugs?
+| # | Question | Answer |
+|---|----------|--------|
+| 1 | What is the difference between the control plane and the data plane, and which one determines cost? | The control plane handles asset metadata, run history, permissions, and governance; the data plane performs the actual compute execution, inference, and data movement. The data plane (compute) determines cost. |
+| 2 | Why should a training compute cluster scale to zero but a serving cluster stay warm? | Training is bursty/batch, so scaling to zero when idle avoids paying for unused compute; serving must stay warm to meet low-latency requirements and avoid cold-start delays. |
+| 3 | What three versioned things must be recorded to reproduce a training run? | The data version, the environment version, and the code commit. |
+| 4 | Why does reusing one environment for training and inference prevent a whole class of bugs? | Identical pinned library versions at train and serve time eliminate train/serve skew caused by version mismatches. |
 

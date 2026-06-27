@@ -251,11 +251,13 @@ antes de promover. Esto vincula la explicabilidad/monitoreo de vuelta a las estr
 
 ## Autoevaluación rápida
 
-1. ¿Qué pregunta diferente responde una explicación *local* en comparación con una *global*?
-2. ¿Por qué los valores SHAP para una sola predicción suman "salida del modelo menos valor esperado"?
-3. ¿Cuándo elegiría LIME sobre TreeSHAP, y cuál es la principal debilidad de LIME?
-4. ¿Cuál es la diferencia entre la deriva de covariables y la deriva de concepto, y cuál generalmente fuerza el reentrenamiento?
-5. Una característica clave muestra PSI = 0.27: ¿qué indica eso y qué debe hacer antes de reentrenar?
+| # | Pregunta | Respuesta |
+|---|----------|-----------|
+| 1 | ¿Qué pregunta diferente responde una explicación *local* en comparación con una *global*? | Una explicación local responde "¿por qué esta decisión?" para una sola predicción; una global responde "¿qué aprendió el modelo?" a través de todas las predicciones. |
+| 2 | ¿Por qué los valores SHAP para una sola predicción suman "salida del modelo menos valor esperado"? | SHAP reparte de forma justa la predicción (el pago) entre las características mediante valores de Shapley, y su axioma de aditividad garantiza que las contribuciones sumen la diferencia entre la salida y el valor esperado de referencia. |
+| 3 | ¿Cuándo elegiría LIME sobre TreeSHAP, y cuál es la principal debilidad de LIME? | Use LIME para una explicación local rápida y agnóstica al modelo de una caja negra no basada en árboles; su principal debilidad es la inestabilidad: el muestreo aleatorio hace que las explicaciones varíen entre ejecuciones. |
+| 4 | ¿Cuál es la diferencia entre la deriva de covariables y la deriva de concepto, y cuál generalmente fuerza el reentrenamiento? | La deriva de covariables es un cambio en las entradas $P(X)$; la deriva de concepto es un cambio en la relación $P(Y \mid X)$. La deriva de concepto suele forzar el reentrenamiento porque la función aprendida ya es incorrecta. |
+| 5 | Una característica clave muestra PSI = 0.27: ¿qué indica eso y qué debe hacer antes de reentrenar? | PSI > 0.2 indica un cambio de distribución significativo; antes de reentrenar, confirme que la señal es real y sostenida (no un fallo de registro) y está ligada a un movimiento del KPI, luego pruebe el nuevo modelo en sombra o canary. |
 
 ---
 

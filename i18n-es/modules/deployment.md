@@ -299,9 +299,11 @@ flowchart LR
 
 ## Autoevaluación rápida
 
-1. ¿Cuándo es mejor el endpoint por lotes que el endpoint en línea?
-2. ¿Por qué ejecutar una etapa de validación local antes del despliegue en la nube?
-3. ¿Cuál es la ventaja del lanzamiento canary?
+| # | Pregunta | Respuesta |
+|---|----------|-----------|
+| 1 | ¿Cuándo es mejor el endpoint por lotes que el endpoint en línea? | Cuando ningún usuario espera la respuesta: puntuación masiva y sin conexión de grandes conjuntos de datos (p. ej., puntuar una tabla entera durante la noche). |
+| 2 | ¿Por qué ejecutar una etapa de validación local antes del despliegue en la nube? | Detecta los fallos baratos y comunes (dependencias defectuosas, errores de carga del modelo, discrepancias de esquema) en segundos, antes de pagar el aprovisionamiento en la nube o arriesgar un despliegue de producción fallido. |
+| 3 | ¿Cuál es la ventaja del lanzamiento canary? | Enruta una pequeña parte del tráfico real a la nueva versión y observa las métricas antes de aumentar, limitando el radio de impacto y detectando problemas que las pruebas fuera de línea pierden. |
 
 ## Inmersión profunda: cada concepto explicado
 
@@ -378,11 +380,13 @@ antes de fusionar: fallar rápido, fallar barato.
 
 ## Autoevaluación rápida (inmersión profunda)
 
-1. ¿Por qué se carga el modelo en `init()` y no en `run()`?
-2. ¿Qué propiedad debe tener `run()` para permitir el escalado horizontal, y por qué?
-3. Compare los lanzamientos canary y en la sombra: ¿cuál expone a los clientes al nuevo modelo, y cuál no?
-4. En la fórmula de réplicas $R \approx \lceil QPS \cdot t_{p95} / u \rceil$, ¿por qué usar el tiempo de servicio p95 en lugar de la media?
-5. ¿Por qué la frescura de la versión del modelo se trata como SLO junto a la latencia y la disponibilidad?
+| # | Pregunta | Respuesta |
+|---|----------|-----------|
+| 1 | ¿Por qué se carga el modelo en `init()` y no en `run()`? | `init()` se ejecuta una sola vez al iniciar el contenedor, por lo que la costosa carga del modelo ocurre una única vez en lugar de en cada solicitud. |
+| 2 | ¿Qué propiedad debe tener `run()` para permitir el escalado horizontal, y por qué? | Debe ser sin estado (sin estado mutable compartido), para que cualquier réplica pueda manejar cualquier solicitud y las solicitudes concurrentes no se corrompan entre sí. |
+| 3 | Compare los lanzamientos canary y en la sombra: ¿cuál expone a los clientes al nuevo modelo, y cuál no? | Canary expone a los clientes (una pequeña parte del tráfico real llega al nuevo modelo); en la sombra no, porque sus respuestas se descartan, con cero impacto en el cliente. |
+| 4 | En la fórmula de réplicas $R \approx \lceil QPS \cdot t_{p95} / u \rceil$, ¿por qué usar el tiempo de servicio p95 en lugar de la media? | El p95 dimensiona la flota para el tiempo de servicio realista del peor caso, de modo que el SLO se mantenga bajo carga y no solo en promedio. |
+| 5 | ¿Por qué la frescura de la versión del modelo se trata como SLO junto a la latencia y la disponibilidad? | Un endpoint perfectamente disponible que sirve un modelo obsoleto y derivado sigue fallando en su trabajo, por lo que la frescura es un objetivo de calidad igual que la latencia y la disponibilidad. |
 
 ---
 

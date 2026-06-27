@@ -1022,57 +1022,14 @@ La siguiente tabla consolida todos los símbolos utilizados en este curso:
 
 ## Autoevaluación Rápida
 
-Pon a prueba tu comprensión antes de pasar al siguiente módulo. Trabaja cada problema; las
-respuestas y pistas siguen a cada pregunta.
+Pon a prueba tu comprensión antes de pasar al siguiente módulo.
 
-**1. Probabilidad**
-
-Un conjunto de datos tiene 1 000 muestras. 200 son clase A, 800 son clase B. Un modelo predice
-la clase A con probabilidad 0.6 para una muestra dada. ¿Cuál es la pérdida de entropía cruzada
-para esa muestra si la etiqueta verdadera es clase A?
-
-> **Pista:** La entropía cruzada para una sola muestra con clase verdadera $k$ es $-\log \hat{p}_k$.
-> Respuesta: $-\log(0.6) \approx 0.511$.
-
-**2. Teorema de Bayes**
-
-En una línea de fabricación, el 5 % de las piezas son defectuosas. Una prueba de sensor
-identifica correctamente el 90 % de las piezas defectuosas (sensibilidad) y libera correctamente
-el 95 % de las piezas buenas (especificidad). Una pieza falla la prueba. ¿Cuál es la
-probabilidad de que sea realmente defectuosa?
-
-> **Pista:** $P(\text{defectuosa} \mid \text{falla}) = \frac{0.90 \times 0.05}{0.90 \times 0.05 + 0.05 \times 0.95}$.
-> Respuesta: $\frac{0.045}{0.045 + 0.0475} \approx 0.486$. Solo ~49 % — de nuevo la tasa base domina.
-
-**3. Álgebra lineal**
-
-Calcula el producto punto $\mathbf{w}^\top \mathbf{x}$ para $\mathbf{w} = (2, -1, 3)^\top$ y $\mathbf{x} = (1, 4, 2)^\top$. ¿Cuál es la norma L2 de $\mathbf{w}$?
-
-> Respuesta: $2 \cdot 1 + (-1) \cdot 4 + 3 \cdot 2 = 2 - 4 + 6 = 4$. $\|\mathbf{w}\|_2 = \sqrt{4+1+9} = \sqrt{14} \approx 3.742$.
-
-**4. Cálculo — gradiente**
-
-Para la pérdida $\mathcal{L}(w) = (3 - 2w)^2$, calcula $\frac{d\mathcal{L}}{dw}$. ¿En qué valor de $w$ es el gradiente cero? ¿Cuál es la pérdida en ese punto?
-
-> Respuesta: $\frac{d\mathcal{L}}{dw} = 2(3 - 2w)(-2) = -4(3 - 2w)$. Igualando a cero: $3 - 2w = 0 \Rightarrow w = 1.5$. $\mathcal{L}(1.5) = 0$.
-
-**5. Paso de descenso de gradiente**
-
-Comenzando desde $w_0 = 0$, $\eta = 0.1$, y pérdida $\mathcal{L}(w) = (3-2w)^2$ (gradiente del problema 4), calcula $w_1$ después de un paso.
-
-> Respuesta: $\nabla \mathcal{L}(0) = -4(3-0) = -12$. $w_1 = 0 - 0.1 \times (-12) = 1.2$.
-
-**6. MLE y regularización**
-
-Estás entrenando un modelo de regresión logística. Describe en una oración cada uno qué cambia
-matemáticamente cuando cambias de sin regularización, a regularización L2, a regularización L1.
-
-> Respuesta: Sin regularización = MLE pura (maximizar log-verosimilitud). L2 = MAP con prior Gaussiano (añade $-\frac{\lambda}{2}\|w\|_2^2$ al log-posterior, contrae todos los pesos hacia cero). L1 = MAP con prior de Laplace (añade $-\lambda\|w\|_1$, contrae muchos pesos exactamente a cero).
-
-**7. Teoría de la información**
-
-Un clasificador de 3 clases produce probabilidades $[0.7, 0.2, 0.1]$ para una muestra cuya
-clase verdadera es la clase 1 (índice 0). Calcula la pérdida de entropía cruzada.
-
-> Respuesta: $-\log(0.7) \approx 0.357$. Solo la probabilidad asignada a la clase verdadera
-> entra en la pérdida de entropía cruzada para una etiqueta one-hot.
+| # | Pregunta | Respuesta |
+|---|----------|-----------|
+| 1 | **Probabilidad** — Un conjunto de datos tiene 1 000 muestras; 200 son clase A y 800 son clase B. Un modelo predice la clase A con probabilidad 0.6 para una muestra dada. ¿Cuál es la pérdida de entropía cruzada si la etiqueta verdadera es clase A? | La entropía cruzada para una sola muestra con clase verdadera $k$ es $-\log \hat{p}_k$, así que $-\log(0.6) \approx 0.511$. |
+| 2 | **Teorema de Bayes** — El 5% de las piezas son defectuosas; una prueba de sensor tiene 90% de sensibilidad y 95% de especificidad. Una pieza falla la prueba: ¿cuál es la probabilidad de que sea realmente defectuosa? | $P(\text{defectuosa} \mid \text{falla}) = \frac{0.90 \times 0.05}{0.90 \times 0.05 + 0.05 \times 0.95} = \frac{0.045}{0.045 + 0.0475} \approx 0.486$ — solo ~49%, porque la baja tasa base domina. |
+| 3 | **Álgebra lineal** — Calcula el producto punto $\mathbf{w}^\top \mathbf{x}$ para $\mathbf{w} = (2, -1, 3)^\top$ y $\mathbf{x} = (1, 4, 2)^\top$, y la norma L2 de $\mathbf{w}$. | $\mathbf{w}^\top \mathbf{x} = 2 - 4 + 6 = 4$; $\lVert\mathbf{w}\rVert_2 = \sqrt{4+1+9} = \sqrt{14} \approx 3.742$. |
+| 4 | **Cálculo — gradiente** — Para $\mathcal{L}(w) = (3 - 2w)^2$, calcula $\frac{d\mathcal{L}}{dw}$; ¿en qué $w$ es el gradiente cero y cuál es la pérdida ahí? | $\frac{d\mathcal{L}}{dw} = -4(3 - 2w)$; es cero en $w = 1.5$, donde $\mathcal{L}(1.5) = 0$. |
+| 5 | **Paso de descenso de gradiente** — Comenzando desde $w_0 = 0$, $\eta = 0.1$ y $\mathcal{L}(w) = (3-2w)^2$, calcula $w_1$ después de un paso. | $\nabla \mathcal{L}(0) = -12$, así que $w_1 = 0 - 0.1 \times (-12) = 1.2$. |
+| 6 | **MLE y regularización** — Para regresión logística, ¿qué cambia matemáticamente al pasar de sin regularización, a L2, a L1? | Sin regularización = MLE pura (maximizar log-verosimilitud); L2 = MAP con prior Gaussiano (añade $-\frac{\lambda}{2}\lVert w\rVert_2^2$, contrae todos los pesos hacia cero); L1 = MAP con prior de Laplace (añade $-\lambda\lVert w\rVert_1$, contrae muchos pesos exactamente a cero). |
+| 7 | **Teoría de la información** — Un clasificador de 3 clases produce $[0.7, 0.2, 0.1]$ para una muestra cuya clase verdadera es el índice 0. Calcula la pérdida de entropía cruzada. | $-\log(0.7) \approx 0.357$; solo la probabilidad asignada a la clase verdadera entra en la entropía cruzada para una etiqueta one-hot. |

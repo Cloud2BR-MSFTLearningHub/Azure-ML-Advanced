@@ -153,9 +153,11 @@ Every Sev-1 and Sev-2 incident should produce at least one concrete prevention a
 
 ## Quick self-check
 
-1. Which command helps diagnose why a pod restarted?
-2. Why should you check `--previous` logs?
-3. What is one sign of model/version mismatch?
+| # | Question | Answer |
+|---|----------|--------|
+| 1 | Which command helps diagnose why a pod restarted? | `kubectl describe pod <name>` (events and last state) together with `kubectl logs --previous` to read the crashed container's output. |
+| 2 | Why should you check `--previous` logs? | A restarted container may be too young to have logs; `--previous` shows the output of the crashed instance, which contains the actual failure (e.g., an `init()` exception). |
+| 3 | What is one sign of a model/version mismatch? | Correct, healthy infrastructure but wrong predictions after a release – the deployed image tag points at a different model version than intended. |
 
 ## Deep dive: every concept, explained
 
@@ -227,11 +229,13 @@ counterpart to the validation gates and SLOs introduced earlier in the course.
 
 ## Quick self-check (deep dive)
 
-1. The triage sequence moves "outside-in" along ingress → service → endpoints → pod → container. Why is that order more efficient than starting at the pod?
-2. A Service returns 503 but every pod shows `Running`. Which object would you inspect next, and what would empty contents tell you?
-3. Why does `CrashLoopBackOff` for an ML container almost always point at `init()` rather than `run()`?
-4. Explain the difference between a readiness probe and a liveness probe, and which one a slow model load affects first.
-5. Why can a deployment be "healthy" yet still serve wrong predictions, and what single deploy-time check prevents it?
+| # | Question | Answer |
+|---|----------|--------|
+| 1 | Why is the "outside-in" triage order (ingress → service → endpoints → pod → container) more efficient than starting at the pod? | A request fails at whichever link is broken, so following the chain from the outside isolates the broken link directly instead of guessing at the deepest layer first. |
+| 2 | A Service returns 503 but every pod shows `Running`. Which object would you inspect next, and what would empty contents tell you? | Inspect the Service's `Endpoints`; an empty list means no pod is `Ready` (failing readiness probe / slow model load), so traffic has nowhere to go. |
+| 3 | Why does `CrashLoopBackOff` for an ML container almost always point at `init()` rather than `run()`? | `init()` runs at container start and loads the model/dependencies; a missing dependency or unloadable model makes the container exit immediately and restart in a loop. |
+| 4 | What is the difference between a readiness probe and a liveness probe, and which does a slow model load affect first? | Readiness decides whether a pod receives traffic; liveness decides whether to restart a stuck pod. A slow model load affects readiness first (pod stays out of Endpoints until it passes). |
+| 5 | Why can a deployment be "healthy" yet still serve wrong predictions, and what single deploy-time check prevents it? | The model is a separate versioned artifact, so a healthy service can reference the wrong model version; a version-hash check at deploy time prevents it. |
 
 ---
 
@@ -956,9 +960,11 @@ echo "[RUNBOOK] Rollback complete. Monitor for 15 minutes before closing inciden
 
 ## Quick self-check (SRE and chaos)
 
-1. A pod is in `Pending` state. `kubectl describe` shows "0/6 nodes available: 6 Insufficient memory." The namespace ResourceQuota is not exhausted. What is the next command to run and what are you looking for?
-2. The Grafana panel for "prediction class distribution" shows the `fraud` class dropping to 0 at 14:32 UTC. What three things would you check first, in order?
-3. Your error budget is 75% consumed with 10 days remaining in the month. A product team wants to deploy a new model version via canary. Should you approve? What condition would change your answer?
-4. A game day reveals that the on-call engineer took 22 minutes to find the rollback runbook. What are two concrete improvements to the runbook process that would reduce this?
-5. Explain why "human error" is not an acceptable root cause in a blameless postmortem, and give an example of how you would reframe a human error as a system contributing factor.
+| # | Question | Answer |
+|---|----------|--------|
+| 1 | A pod is `Pending` with "0/6 nodes available: 6 Insufficient memory" but the namespace ResourceQuota is not exhausted. What command do you run next and what do you look for? | Run `kubectl describe nodes` (or check node allocatable vs requests) to see actual node memory pressure; the cluster lacks a node with enough free memory, so you scale the node pool or lower the pod's memory request. |
+| 2 | A Grafana panel shows the `fraud` prediction class dropping to 0 at 14:32 UTC. What three things would you check first, in order? | Upstream feature/data pipeline health (nulls or schema change), a recent deployment or model-version change around 14:32, and input drift on key features feeding that class. |
+| 3 | Your error budget is 75% consumed with 10 days left and a team wants to canary a new model. Should you approve, and what would change your answer? | Be cautious: with only 25% budget left a risky deploy can exhaust it; approve only if the change is low-risk behind a tight canary with auto-rollback, or wait until the budget recovers. |
+| 4 | A game day shows the on-call engineer took 22 minutes to find the rollback runbook. Name two concrete improvements to the runbook process. | Make runbooks discoverable and linked directly from the alert, and convert manual steps into an executable, owned script that is tested regularly (e.g., during game days). |
+| 5 | Why is "human error" not an acceptable root cause in a blameless postmortem, and how would you reframe it? | Systems make predictable mistakes easy, so blame hides the real cause; reframe "engineer ran the wrong command" as "the tool allowed an unguarded destructive command" – a missing confirmation/guardrail. |
 

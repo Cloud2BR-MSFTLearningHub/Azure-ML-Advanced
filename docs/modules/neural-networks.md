@@ -987,27 +987,15 @@ explain generalisation, but practical networks operate in the feature learning r
 
 Test your understanding with the following questions. Each has a definite, derivable answer.
 
-1. **Perceptron limit.** Why can a single perceptron not learn XOR, but a 2-layer MLP can?
-   What is the minimum architecture (neurons per layer) needed?
-
-2. **Forward pass.** Given a 3-layer MLP with ReLU activations in hidden layers and softmax
-   at the output, write out the complete forward-pass equations in matrix-vector form.
-
-3. **Backprop.** Derive $\delta^{(L)}$ (the output-layer error signal) for categorical
-   cross-entropy loss combined with a softmax output. Show that $\delta^{(L)} = \hat{\mathbf{y}} - \mathbf{y}$.
-
-4. **Vanishing gradients.** A sigmoid network has 20 hidden layers. Estimate the order of
-   magnitude of the gradient reaching layer 1, given that sigmoid derivatives are at most 0.25.
-
-5. **Batch normalisation.** Explain why batch normalisation allows a higher learning rate.
-   What changes if the batch size is 1?
-
-6. **Attention.** Compute the attention output for a single head with
-   $Q = K = V = I_3$ (the $3\times3$ identity matrix) and $d_k = 3$. What do the attention
-   weights look like, and what does this imply about the output?
-
-7. **Transfer learning.** You have a dataset of 2,000 medical images and a ResNet-50
-   pretrained on ImageNet. Describe the training strategy you would use and justify each step.
+| # | Question | Answer |
+|---|----------|--------|
+| 1 | Perceptron limit: why can a single perceptron not learn XOR but a 2-layer MLP can, and what is the minimum architecture? | XOR is not linearly separable, so a single perceptron's one straight boundary always misclassifies a point; a 2-layer MLP composes boundaries to carve a non-linear region. Minimum architecture: 2 inputs, 2 hidden neurons, 1 output (2-2-1). |
+| 2 | Forward pass: write the complete forward-pass equations for a 3-layer MLP with ReLU hidden layers and softmax output. | $\mathbf{h}^{(1)}=\text{ReLU}(W^{(1)}\mathbf{x}+\mathbf{b}^{(1)})$, then $\mathbf{h}^{(2)}=\text{ReLU}(W^{(2)}\mathbf{h}^{(1)}+\mathbf{b}^{(2)})$, then $\hat{\mathbf{y}}=\text{softmax}(W^{(3)}\mathbf{h}^{(2)}+\mathbf{b}^{(3)})$. |
+| 3 | Backprop: derive the output-layer error $\delta^{(L)}$ for softmax combined with categorical cross-entropy. | The softmax Jacobian and the cross-entropy derivative cancel, leaving $\delta^{(L)}=\hat{\mathbf{y}}-\mathbf{y}$ (predicted minus true probabilities). |
+| 4 | Vanishing gradients: estimate the gradient magnitude reaching layer 1 of a 20-layer sigmoid network (derivative $\le 0.25$). | About $0.25^{20}\approx 9\times10^{-13}$, i.e. order $10^{-12}$ — effectively vanished, so layer 1 barely learns. |
+| 5 | Batch normalisation: why does it allow a higher learning rate, and what changes if the batch size is 1? | It normalises layer inputs, reducing internal covariate shift and smoothing the loss surface so larger steps stay stable. With batch size 1 the batch statistics are undefined, so BatchNorm breaks — use LayerNorm/GroupNorm instead. |
+| 6 | Attention: compute the output for one head with $Q = K = V = I_3$ and $d_k = 3$. | Scores are $QK^\top/\sqrt{d_k}=I_3/\sqrt{3}$; the softmax of each row $[0.577,0,0]$ gives $\approx[0.47,0.26,0.26]$. Since $V=I_3$, the output equals this weight matrix — a near-uniform average that only mildly favours the matching position. |
+| 7 | Transfer learning: what strategy for 2,000 medical images with an ImageNet-pretrained ResNet-50? | Replace the final classification head, freeze the early generic conv layers, train the new head first, then fine-tune the last block(s) with a low learning rate while using heavy augmentation. Reusing pretrained features avoids overfitting on the small dataset. |
 
 ---
 

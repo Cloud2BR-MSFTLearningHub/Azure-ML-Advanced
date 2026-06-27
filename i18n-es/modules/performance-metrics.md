@@ -159,9 +159,11 @@ de los valores de probabilidad, no solo del orden de clasificación.
 
 ## Autoevaluación rápida
 
-1. ¿Qué métrica es más segura que la exactitud para datos desbalanceados?
-2. ¿Por qué puede ser RMSE mucho mayor que MAE?
-3. ¿Qué implica un $R^2$ negativo?
+| # | Pregunta | Respuesta |
+|---|----------|-----------|
+| 1 | ¿Qué métrica es más segura que la exactitud para datos desbalanceados? | F1 (o PR-AUC, MCC o exactitud balanceada), que evitan que la clase mayoritaria domine la puntuación. |
+| 2 | ¿Por qué puede ser RMSE mucho mayor que MAE? | RMSE eleva al cuadrado los errores, así que unos pocos errores grandes se penalizan desproporcionadamente; una gran brecha RMSE–MAE indica errores de cola pesada o atípicos. |
+| 3 | ¿Qué implica un $R^2$ negativo? | Que el modelo es peor que simplemente predecir la media: una señal clara de que algo está roto. |
 
 ## Inmersión profunda: cada concepto explicado
 
@@ -242,11 +244,13 @@ continuamente, y en un **SLO** (objetivo) cuando se adjunta un umbral (p. ej. "m
 
 ## Autoevaluación rápida (inmersión profunda)
 
-1. ¿Por qué F1 es la media armónica de la precisión y el recall en lugar del promedio ordinario?
-2. En un conjunto de datos con 99% negativos, ¿por qué puede parecer excelente el ROC-AUC mientras que el PR-AUC es deficiente?
-3. ¿Qué le dice sobre el modelo un $R^2$ negativo?
-4. ¿Por qué el umbral predeterminado 0.5 casi nunca es óptimo en producción?
-5. Un modelo tiene alta AUC pero sus predicciones del "90%" son correctas solo el 70% de las veces: ¿cuál es el problema y qué correcciones se aplican?
+| # | Pregunta | Respuesta |
+|---|----------|-----------|
+| 1 | ¿Por qué F1 es la media armónica de la precisión y el recall en lugar del promedio ordinario? | La media armónica se mantiene baja a menos que tanto la precisión como el recall sean altos, por lo que se niega a recompensar a un modelo que sacrifica uno por el otro. |
+| 2 | En un conjunto de datos con 99% negativos, ¿por qué puede parecer excelente el ROC-AUC mientras que el PR-AUC es deficiente? | El enorme conteo de negativos mantiene el FPR bajo, así que el ROC-AUC se ve alto, mientras que el PR-AUC se centra en la clase positiva rara y revela el débil desempeño en ella. |
+| 3 | ¿Qué le dice sobre el modelo un $R^2$ negativo? | Que rinde peor que el predictor trivial de la media: una señal clara de que algo está roto. |
+| 4 | ¿Por qué el umbral predeterminado 0.5 casi nunca es óptimo en producción? | Porque los falsos positivos y los falsos negativos tienen costos diferentes; el umbral óptimo minimiza el costo esperado, no la exactitud. |
+| 5 | Un modelo tiene alta AUC pero sus predicciones del "90%" son correctas solo el 70% de las veces: ¿cuál es el problema y qué correcciones se aplican? | Clasifica bien pero está mal calibrado; se corrige con escala de Platt o regresión isotónica. |
 
 ## Métricas multiclase y multietiqueta en profundidad
 

@@ -150,9 +150,11 @@ Cada incidente Sev-1 y Sev-2 debe producir al menos una acción concreta de prev
 
 ## Autoevaluación rápida
 
-1. ¿Qué comando ayuda a diagnosticar por qué se reinició un pod?
-2. ¿Por qué debería verificar los registros `--previous`?
-3. ¿Cuál es una señal de discrepancia de modelo/versión?
+| # | Pregunta | Respuesta |
+|---|----------|-----------|
+| 1 | ¿Qué comando ayuda a diagnosticar por qué se reinició un pod? | `kubectl describe pod <nombre>` (eventos y último estado) junto con `kubectl logs --previous` para leer la salida del contenedor bloqueado. |
+| 2 | ¿Por qué debería verificar los registros `--previous`? | Un contenedor reiniciado puede ser demasiado joven para tener registros; `--previous` muestra la salida de la instancia bloqueada, que contiene el fallo real (p. ej., una excepción de `init()`). |
+| 3 | ¿Cuál es una señal de discrepancia de modelo/versión? | Infraestructura correcta y en buen estado pero predicciones incorrectas tras un lanzamiento: la etiqueta de imagen desplegada apunta a una versión del modelo distinta de la prevista. |
 
 ## Inmersión profunda: cada concepto explicado
 
@@ -222,11 +224,13 @@ pruebas y alertas permanentes, reduciendo de manera constante la tasa de inciden
 
 ## Autoevaluación rápida (inmersión profunda)
 
-1. La secuencia de clasificación se mueve "de afuera hacia adentro" a lo largo de ingress → service → endpoints → pod → contenedor. ¿Por qué ese orden es más eficiente que empezar por el pod?
-2. Un Service devuelve 503 pero todos los pods muestran `Running`. ¿Qué objeto inspeccionaría a continuación, y qué le diría si estuviera vacío?
-3. ¿Por qué `CrashLoopBackOff` para un contenedor de ML casi siempre apunta a `init()` en lugar de a `run()`?
-4. Explique la diferencia entre una sonda de preparación y una sonda de vivacidad, y cuál afecta primero una carga lenta del modelo.
-5. ¿Por qué puede un despliegue estar "en buen estado" y aún así servir predicciones incorrectas, y qué comprobación única en el momento del despliegue lo previene?
+| # | Pregunta | Respuesta |
+|---|----------|-----------|
+| 1 | La secuencia de clasificación se mueve "de afuera hacia adentro" (ingress → service → endpoints → pod → contenedor). ¿Por qué ese orden es más eficiente que empezar por el pod? | Una solicitud falla en el eslabón que esté roto, así que recorrer la cadena desde afuera aísla directamente el eslabón roto en lugar de adivinar primero en la capa más profunda. |
+| 2 | Un Service devuelve 503 pero todos los pods muestran `Running`. ¿Qué objeto inspeccionaría a continuación y qué le diría si estuviera vacío? | Inspeccione los `Endpoints` del Service; una lista vacía significa que ningún pod está `Ready` (sonda de preparación fallida o carga lenta del modelo), por lo que el tráfico no tiene adónde ir. |
+| 3 | ¿Por qué `CrashLoopBackOff` para un contenedor de ML casi siempre apunta a `init()` en lugar de a `run()`? | `init()` se ejecuta al iniciar el contenedor y carga el modelo y las dependencias; una dependencia faltante o un modelo que no se carga hace que el contenedor se cierre de inmediato y se reinicie en bucle. |
+| 4 | Explique la diferencia entre una sonda de preparación y una sonda de vivacidad, y cuál afecta primero una carga lenta del modelo. | La preparación decide si un pod recibe tráfico; la vivacidad decide si reiniciar un pod bloqueado. Una carga lenta del modelo afecta primero a la preparación (el pod queda fuera de Endpoints hasta que pase). |
+| 5 | ¿Por qué puede un despliegue estar "en buen estado" y aún así servir predicciones incorrectas, y qué comprobación única en el momento del despliegue lo previene? | El modelo es un artefacto versionado separado, por lo que un servicio sano puede referenciar la versión equivocada; una comprobación de hash de versión en el momento del despliegue lo previene. |
 
 ---
 

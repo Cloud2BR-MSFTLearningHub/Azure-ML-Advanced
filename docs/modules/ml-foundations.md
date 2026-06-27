@@ -346,13 +346,13 @@ Regularization, more data, and ensembling are simply tools that let you use a fl
 
 ## Quick self-check
 
-1. Given a feature vector $x_i \in \mathbb{R}^d$ and label $y_i$, how do you tell whether the
-   task is classification, regression, or forecasting?
-2. Why does binary cross-entropy punish a confident wrong prediction so heavily?
-3. What is the practical difference between L1 and L2 regularization on the learned weights?
-4. You see 99% train accuracy and 74% validation accuracy. Which part of the bias-variance
-   trade-off is the problem, and what are two fixes?
-5. Why must the test set be used only once, and what is it called when you violate this?
+| # | Question | Answer |
+|---|----------|--------|
+| 1 | Given a feature vector $x_i \in \mathbb{R}^d$ and label $y_i$, how do you tell whether the task is classification, regression, or forecasting? | Look at the target: a discrete categorical label means classification, a continuous real value means regression, and a value indexed by future time (a time-ordered series) means forecasting. |
+| 2 | Why does binary cross-entropy punish a confident wrong prediction so heavily? | The loss for the true class is $-\log \hat{p}$; as the probability assigned to the correct class approaches 0, $-\log \hat{p} \to \infty$, so a confident wrong prediction incurs an unbounded penalty. |
+| 3 | What is the practical difference between L1 and L2 regularization on the learned weights? | L1 ($\lVert\theta\rVert_1$) drives many weights exactly to zero, giving sparsity and feature selection; L2 ($\lVert\theta\rVert_2^2$) shrinks all weights smoothly toward zero for stability without making them exactly zero. |
+| 4 | You see 99% train accuracy and 74% validation accuracy. Which part of the bias-variance trade-off is the problem, and what are two fixes? | The large gap signals high variance (overfitting); fixes include adding regularization or reducing model complexity, and collecting more training data (also early stopping or dropout). |
+| 5 | Why must the test set be used only once, and what is it called when you violate this? | Reusing it for model selection leaks information and makes scores optimistically biased; this is data leakage (overfitting to the test set). |
 
 ---
 
@@ -774,13 +774,15 @@ $$
 
 ## Quick self-check (extended)
 
-1. Given a feature vector $x_i \in \mathbb{R}^d$ and label $y_i$, how do you tell whether the task is classification, regression, or forecasting?
-2. Why does binary cross-entropy punish a confident wrong prediction so heavily?
-3. What is the practical difference between L1 and L2 regularization on the learned weights?
-4. You see 99% train accuracy and 74% validation accuracy. Which part of the bias-variance trade-off is the problem, and what are two fixes?
-5. Why must the test set be used only once, and what is it called when you violate this?
-6. What is the formal definition of regret in online learning, and what does sublinear regret mean?
-7. Explain the epsilon-greedy exploration policy. What is the main weakness of a fixed $\epsilon$?
-8. In the bias-variance decomposition derivation, why does the cross-term $\mathbb{E}_D[\bar{f}(x) - \hat{f}(x)]$ equal zero?
-9. State the No Free Lunch theorem in your own words. Does it mean there is no point in comparing algorithms? Why or why not?
-10. A $k$-NN model with $N = 10^6$ and $d = 256$ is deployed for real-time scoring. Estimate the number of floating-point operations per query and explain why this is a problem.
+| # | Question | Answer |
+|---|----------|--------|
+| 1 | Given a feature vector $x_i \in \mathbb{R}^d$ and label $y_i$, how do you tell whether the task is classification, regression, or forecasting? | Look at the target: a discrete categorical label means classification, a continuous real value means regression, and a value indexed by future time (a time-ordered series) means forecasting. |
+| 2 | Why does binary cross-entropy punish a confident wrong prediction so heavily? | The loss for the true class is $-\log \hat{p}$; as the probability assigned to the correct class approaches 0, $-\log \hat{p} \to \infty$, so a confident wrong prediction incurs an unbounded penalty. |
+| 3 | What is the practical difference between L1 and L2 regularization on the learned weights? | L1 ($\lVert\theta\rVert_1$) drives many weights exactly to zero, giving sparsity and feature selection; L2 ($\lVert\theta\rVert_2^2$) shrinks all weights smoothly toward zero for stability without making them exactly zero. |
+| 4 | You see 99% train accuracy and 74% validation accuracy. Which part of the bias-variance trade-off is the problem, and what are two fixes? | The large gap signals high variance (overfitting); fixes include adding regularization or reducing model complexity, and collecting more training data (also early stopping or dropout). |
+| 5 | Why must the test set be used only once, and what is it called when you violate this? | Reusing it for model selection leaks information and makes scores optimistically biased; this is data leakage (overfitting to the test set). |
+| 6 | What is the formal definition of regret in online learning, and what does sublinear regret mean? | Regret is the learner's cumulative loss over $T$ rounds minus the loss of the best fixed model in hindsight; sublinear regret, $\text{Regret}(T) = o(T)$, means the average regret per round goes to zero, so it converges to that best fixed model. |
+| 7 | Explain the epsilon-greedy exploration policy. What is the main weakness of a fixed $\epsilon$? | With probability $\epsilon$ it picks a random arm (explore) and with probability $1-\epsilon$ the best known arm (exploit); a fixed $\epsilon$ keeps exploring at a constant rate forever, wasting pulls on inferior arms, so $\epsilon$ should be decayed over time. |
+| 8 | In the bias-variance decomposition derivation, why does the cross-term $\mathbb{E}_D[\bar{f}(x) - \hat{f}(x)]$ equal zero? | Because $\bar{f}(x) = \mathbb{E}_D[\hat{f}(x)]$ by definition, so $\mathbb{E}_D[\bar{f}(x) - \hat{f}(x)] = \bar{f}(x) - \bar{f}(x) = 0$. |
+| 9 | State the No Free Lunch theorem in your own words. Does it mean there is no point in comparing algorithms? Why or why not? | Averaged over all possible problems, every algorithm performs equally well. It does not make comparison pointless: real problems are a structured, non-uniform subset, so matching a model's inductive bias to the problem still matters. |
+| 10 | A $k$-NN model with $N = 10^6$ and $d = 256$ is deployed for real-time scoring. Estimate the number of floating-point operations per query and explain why this is a problem. | About $N \cdot d \approx 2.56 \times 10^8$ FLOPs per query, since every training point is scanned at prediction time; this latency is far too high for real-time serving without approximate nearest-neighbor indexing. |

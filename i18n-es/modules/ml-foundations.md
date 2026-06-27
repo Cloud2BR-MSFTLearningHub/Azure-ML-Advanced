@@ -335,13 +335,13 @@ La regularización, más datos y los métodos de ensamble son simplemente herram
 
 ## Verificación rápida
 
-1. Dado un vector de características $x_i \in \mathbb{R}^d$ y etiqueta $y_i$, ¿cómo determinas si la  
-   tarea es clasificación, regresión o pronóstico?
-2. ¿Por qué la entropía cruzada binaria penaliza tan fuertemente una predicción incorrecta con confianza?
-3. ¿Cuál es la diferencia práctica entre la regularización L1 y L2 sobre los pesos aprendidos?
-4. Ves 99% de exactitud de entrenamiento y 74% de exactitud de validación. ¿Qué parte del compromiso sesgo-varianza  
-   es el problema, y cuáles son dos soluciones?
-5. ¿Por qué el conjunto de prueba debe usarse solo una vez, y cómo se llama cuando se viola esto?
+| # | Pregunta | Respuesta |
+|---|----------|-----------|
+| 1 | Dado un vector de características $x_i \in \mathbb{R}^d$ y etiqueta $y_i$, ¿cómo determinas si la tarea es clasificación, regresión o pronóstico? | Observa el objetivo: una etiqueta categórica discreta indica clasificación, un valor real continuo indica regresión, y un valor indexado por tiempo futuro (una serie ordenada en el tiempo) indica pronóstico. |
+| 2 | ¿Por qué la entropía cruzada binaria penaliza tan fuertemente una predicción incorrecta con confianza? | La pérdida para la clase verdadera es $-\log \hat{p}$; cuando la probabilidad asignada a la clase correcta tiende a 0, $-\log \hat{p} \to \infty$, por lo que una predicción incorrecta con alta confianza incurre en una penalización no acotada. |
+| 3 | ¿Cuál es la diferencia práctica entre la regularización L1 y L2 sobre los pesos aprendidos? | L1 ($\lVert\theta\rVert_1$) lleva muchos pesos exactamente a cero, dando dispersión y selección de características; L2 ($\lVert\theta\rVert_2^2$) contrae todos los pesos suavemente hacia cero para dar estabilidad sin volverlos exactamente cero. |
+| 4 | Ves 99% de exactitud de entrenamiento y 74% de exactitud de validación. ¿Qué parte del compromiso sesgo-varianza es el problema, y cuáles son dos soluciones? | La gran brecha indica alta varianza (sobreajuste); las soluciones incluyen añadir regularización o reducir la complejidad del modelo, y recolectar más datos de entrenamiento (también detención temprana o dropout). |
+| 5 | ¿Por qué el conjunto de prueba debe usarse solo una vez, y cómo se llama cuando se viola esto? | Reutilizarlo para la selección de modelos filtra información y sesga las puntuaciones de forma optimista; esto es fuga de datos (data leakage), un sobreajuste al conjunto de prueba. |
 
 ---
 
@@ -757,13 +757,15 @@ $$
 
 ## Verificación rápida (ampliada)
 
-1. Dado un vector de características $x_i \in \mathbb{R}^d$ y etiqueta $y_i$, ¿cómo determinas si la tarea es clasificación, regresión o pronóstico?
-2. ¿Por qué la entropía cruzada binaria penaliza tan fuertemente una predicción incorrecta con confianza?
-3. ¿Cuál es la diferencia práctica entre la regularización L1 y L2 sobre los pesos aprendidos?
-4. Ves 99% de exactitud de entrenamiento y 74% de exactitud de validación. ¿Qué parte del compromiso sesgo-varianza es el problema, y cuáles son dos soluciones?
-5. ¿Por qué el conjunto de prueba debe usarse solo una vez, y cómo se llama cuando se viola esto?
-6. ¿Cuál es la definición formal del arrepentimiento en el aprendizaje en línea, y qué significa arrepentimiento sublineal?
-7. Explica la política de exploración epsilon-codicioso. ¿Cuál es la principal debilidad de un $\epsilon$ fijo?
-8. En la derivación de la descomposición sesgo-varianza, ¿por qué el término cruzado $\mathbb{E}_D[\bar{f}(x) - \hat{f}(x)]$ es igual a cero?
-9. Enuncia el teorema No Free Lunch con tus propias palabras. ¿Significa que no tiene sentido comparar algoritmos? ¿Por qué o por qué no?
-10. Un modelo $k$-NN con $N = 10^6$ y $d = 256$ está desplegado para puntuación en tiempo real. Estima el número de operaciones de punto flotante por consulta y explica por qué esto es un problema.
+| # | Pregunta | Respuesta |
+|---|----------|-----------|
+| 1 | Dado un vector de características $x_i \in \mathbb{R}^d$ y etiqueta $y_i$, ¿cómo determinas si la tarea es clasificación, regresión o pronóstico? | Observa el objetivo: una etiqueta categórica discreta indica clasificación, un valor real continuo indica regresión, y un valor indexado por tiempo futuro (una serie ordenada en el tiempo) indica pronóstico. |
+| 2 | ¿Por qué la entropía cruzada binaria penaliza tan fuertemente una predicción incorrecta con confianza? | La pérdida para la clase verdadera es $-\log \hat{p}$; cuando la probabilidad asignada a la clase correcta tiende a 0, $-\log \hat{p} \to \infty$, por lo que una predicción incorrecta con alta confianza incurre en una penalización no acotada. |
+| 3 | ¿Cuál es la diferencia práctica entre la regularización L1 y L2 sobre los pesos aprendidos? | L1 ($\lVert\theta\rVert_1$) lleva muchos pesos exactamente a cero, dando dispersión y selección de características; L2 ($\lVert\theta\rVert_2^2$) contrae todos los pesos suavemente hacia cero para dar estabilidad sin volverlos exactamente cero. |
+| 4 | Ves 99% de exactitud de entrenamiento y 74% de exactitud de validación. ¿Qué parte del compromiso sesgo-varianza es el problema, y cuáles son dos soluciones? | La gran brecha indica alta varianza (sobreajuste); las soluciones incluyen añadir regularización o reducir la complejidad del modelo, y recolectar más datos de entrenamiento (también detención temprana o dropout). |
+| 5 | ¿Por qué el conjunto de prueba debe usarse solo una vez, y cómo se llama cuando se viola esto? | Reutilizarlo para la selección de modelos filtra información y sesga las puntuaciones de forma optimista; esto es fuga de datos (data leakage), un sobreajuste al conjunto de prueba. |
+| 6 | ¿Cuál es la definición formal del arrepentimiento en el aprendizaje en línea, y qué significa arrepentimiento sublineal? | El arrepentimiento es la pérdida acumulada del aprendiz en $T$ rondas menos la pérdida del mejor modelo fijo en retrospectiva; el arrepentimiento sublineal, $\text{Regret}(T) = o(T)$, significa que el arrepentimiento promedio por ronda tiende a cero, por lo que converge a ese mejor modelo fijo. |
+| 7 | Explica la política de exploración epsilon-codicioso. ¿Cuál es la principal debilidad de un $\epsilon$ fijo? | Con probabilidad $\epsilon$ elige un brazo aleatorio (explorar) y con probabilidad $1-\epsilon$ el mejor brazo conocido (explotar); un $\epsilon$ fijo sigue explorando a una tasa constante para siempre, desperdiciando tiradas en brazos inferiores, por lo que $\epsilon$ debería decaer con el tiempo. |
+| 8 | En la derivación de la descomposición sesgo-varianza, ¿por qué el término cruzado $\mathbb{E}_D[\bar{f}(x) - \hat{f}(x)]$ es igual a cero? | Porque $\bar{f}(x) = \mathbb{E}_D[\hat{f}(x)]$ por definición, así que $\mathbb{E}_D[\bar{f}(x) - \hat{f}(x)] = \bar{f}(x) - \bar{f}(x) = 0$. |
+| 9 | Enuncia el teorema No Free Lunch con tus propias palabras. ¿Significa que no tiene sentido comparar algoritmos? ¿Por qué o por qué no? | Promediado sobre todos los problemas posibles, todo algoritmo rinde igual de bien. No hace inútil la comparación: los problemas reales son un subconjunto estructurado y no uniforme, así que ajustar el sesgo inductivo del modelo al problema sigue importando. |
+| 10 | Un modelo $k$-NN con $N = 10^6$ y $d = 256$ está desplegado para puntuación en tiempo real. Estima el número de operaciones de punto flotante por consulta y explica por qué esto es un problema. | Alrededor de $N \cdot d \approx 2.56 \times 10^8$ FLOPs por consulta, ya que cada punto de entrenamiento se recorre en el momento de la predicción; esta latencia es demasiado alta para servir en tiempo real sin indexación aproximada de vecinos más cercanos. |

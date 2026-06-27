@@ -270,11 +270,13 @@ allí a una fracción del costo. Optar por redes neuronales cuando se cumple una
 
 ## Autoevaluación rápida
 
-1. ¿Por qué la regresión logística sigue siendo la línea de base predeterminada a pesar de su simplicidad?
-2. ¿Qué intercambia el parámetro de reducción $\nu$ (learning_rate) en el gradient boosting?
-3. ¿En qué se diferencian el bagging, el boosting y el stacking, en una oración cada uno?
-4. Un modelo boosteado produce "0.7" pero solo el 50% de esos casos son positivos: ¿cuál es el problema y cómo se corrige?
-5. Nombre dos razones para elegir una red neuronal sobre el gradient boosting.
+| # | Pregunta | Respuesta |
+|---|----------|-----------|
+| 1 | ¿Por qué la regresión logística sigue siendo la línea de base predeterminada a pesar de su simplicidad? | Es rápida, interpretable y bien calibrada, y establece una referencia sólida que los modelos más complejos deben superar. |
+| 2 | ¿Qué intercambia el parámetro de reducción $\nu$ (learning_rate) en el gradient boosting? | Velocidad de aprendizaje frente a precisión/sobreajuste: un $\nu$ más pequeño requiere más árboles pero generaliza mejor. |
+| 3 | ¿En qué se diferencian el bagging, el boosting y el stacking, en una oración cada uno? | El bagging entrena modelos independientes en paralelo sobre bootstraps y los promedia para reducir la varianza; el boosting entrena modelos en secuencia, cada uno corrigiendo los errores del anterior para reducir el sesgo; el stacking entrena un metamodelo sobre las predicciones de los modelos base. |
+| 4 | Un modelo boosteado produce "0.7" pero solo el 50% de esos casos son positivos: ¿cuál es el problema y cómo se corrige? | El modelo está mal calibrado; aplica escala de Platt o regresión isotónica para corregir sus probabilidades. |
+| 5 | Nombre dos razones para elegir una red neuronal sobre el gradient boosting. | Datos no estructurados como imágenes, texto o audio, y conjuntos de datos muy grandes donde ayuda el aprendizaje de representaciones/transferencia. |
 
 ---
 

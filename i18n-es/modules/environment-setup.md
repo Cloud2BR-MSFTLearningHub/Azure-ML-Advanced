@@ -241,11 +241,13 @@ print("Environment verification passed.")
 
 ## Verificación rápida
 
-1. ¿Por qué el entrenamiento y la inferencia deben compartir un entorno fijado?
-2. ¿Qué comando muestra todos los entornos de conda?
-3. ¿Cuándo deberías registrar un kernel de Jupyter?
-4. ¿Cómo determinas si un fragmento de código usa el SDK v1 o v2?
-5. ¿Qué capas de dependencias (SO, tiempo de ejecución, paquetes, semillas) deben fijarse para la reproducibilidad completa?
+| # | Pregunta | Respuesta |
+|---|----------|-----------|
+| 1 | ¿Por qué el entrenamiento y la inferencia deben compartir un entorno fijado? | Para que las versiones exactas de las bibliotecas usadas en el entrenamiento se reproduzcan en el servicio, eliminando el desajuste entrenamiento/servicio y toda una clase de errores por incompatibilidad de versiones. |
+| 2 | ¿Qué comando muestra todos los entornos de conda? | `conda env list` (equivalente a `conda info --envs`). |
+| 3 | ¿Cuándo deberías registrar un kernel de Jupyter? | Cuando quieras que un entorno conda/virtual concreto sea seleccionable como kernel de notebook, con `python -m ipykernel install --user --name ...`, evitando el error de "el notebook usa el entorno equivocado". |
+| 4 | ¿Cómo determinas si un fragmento de código usa el SDK v1 o v2? | Por los imports: `from azureml.core import ...` es v1, mientras que `from azure.ai.ml import ...` (con `MLClient`) es v2. |
+| 5 | ¿Qué capas de dependencias (SO, tiempo de ejecución, paquetes, semillas) deben fijarse para la reproducibilidad completa? | Todas: el SO/imagen base, el tiempo de ejecución del lenguaje (versión de Python), los paquetes (versiones exactas) y las semillas aleatorias. |
 
 ---
 

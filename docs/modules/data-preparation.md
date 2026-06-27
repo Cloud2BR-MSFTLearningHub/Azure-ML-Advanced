@@ -314,11 +314,13 @@ X_encoded = enc.fit_transform(X_train[["category"]], y_train)
 
 ## Quick self-check
 
-1. Why is random split wrong for most forecasting tasks?
-2. Which quality dimension is impacted by schema mismatch?
-3. What is one common source of data leakage?
-4. Why must a scaler or imputer be fit on the training split only?
-5. Where in the pipeline must SMOTE/oversampling happen, and why?
+| # | Question | Answer |
+|---|----------|--------|
+| 1 | Why is random split wrong for most forecasting tasks? | Forecasting data is time-ordered, so a random split leaks future information into training; you must split chronologically. |
+| 2 | Which quality dimension is impacted by schema mismatch? | Validity — the data no longer conforms to the expected types/schema. |
+| 3 | What is one common source of data leakage? | Fitting transforms (or using target/future information) on the full dataset before splitting train and test. |
+| 4 | Why must a scaler or imputer be fit on the training split only? | Fitting on all data leaks test statistics into training, giving an optimistically biased evaluation; fit on train and apply to validation/test. |
+| 5 | Where in the pipeline must SMOTE/oversampling happen, and why? | Only on the training fold after splitting (inside cross-validation), so synthetic samples never leak into validation/test. |
 
 ---
 

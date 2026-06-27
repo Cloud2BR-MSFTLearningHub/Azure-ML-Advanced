@@ -161,9 +161,11 @@ on probability values, not just rank ordering.
 
 ## Quick self-check
 
-1. Which metric is safer than accuracy for imbalanced data?
-2. Why can RMSE be much larger than MAE?
-3. What does a negative $R^2$ imply?
+| # | Question | Answer |
+|---|----------|--------|
+| 1 | Which metric is safer than accuracy for imbalanced data? | F1 (or PR-AUC, MCC, or balanced accuracy), which stop the majority class from dominating the score. |
+| 2 | Why can RMSE be much larger than MAE? | RMSE squares errors, so a few large errors are penalized disproportionately; a big RMSE–MAE gap signals heavy-tailed/outlier errors. |
+| 3 | What does a negative $R^2$ imply? | The model is worse than simply predicting the mean — a clear sign something is broken. |
 
 ## Deep dive: every concept, explained
 
@@ -252,11 +254,13 @@ course.
 
 ## Quick self-check (deep dive)
 
-1. Why is F1 the harmonic mean of precision and recall rather than the ordinary average?
-2. On a 99%-negative dataset, why can ROC-AUC look great while PR-AUC is poor?
-3. What does a negative $R^2$ tell you about the model?
-4. Why is the default 0.5 threshold almost never optimal in production?
-5. A model has high AUC but its "90%" predictions are right only 70% of the time: what is the problem and which fixes apply?
+| # | Question | Answer |
+|---|----------|--------|
+| 1 | Why is F1 the harmonic mean of precision and recall rather than the ordinary average? | The harmonic mean stays low unless both precision and recall are high, so it refuses to reward a model that sacrifices one for the other. |
+| 2 | On a 99%-negative dataset, why can ROC-AUC look great while PR-AUC is poor? | The huge negative count keeps FPR low so ROC-AUC stays high, while PR-AUC focuses on the rare positive class and exposes weak positive-class performance. |
+| 3 | What does a negative $R^2$ tell you about the model? | It performs worse than the trivial mean predictor — a clear signal something is broken. |
+| 4 | Why is the default 0.5 threshold almost never optimal in production? | Because false positives and false negatives have different costs; the optimal threshold minimizes expected cost, not accuracy. |
+| 5 | A model has high AUC but its "90%" predictions are right only 70% of the time: what is the problem and which fixes apply? | It ranks well but is miscalibrated; fix it with Platt scaling or isotonic regression. |
 
 ## Multi-class and multi-label metrics in depth
 

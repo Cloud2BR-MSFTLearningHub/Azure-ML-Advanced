@@ -258,11 +258,13 @@ release strategies.
 
 ## Quick self-check
 
-1. What different question does a *local* explanation answer compared to a *global* one?
-2. Why do SHAP values for a single prediction sum to "model output minus expected value"?
-3. When would you choose LIME over TreeSHAP, and what is LIME's main weakness?
-4. What is the difference between covariate drift and concept drift, and which usually forces retraining?
-5. A key feature shows PSI = 0.27: what does that indicate and what should you do before retraining?
+| # | Question | Answer |
+|---|----------|--------|
+| 1 | What different question does a *local* explanation answer compared to a *global* one? | A local explanation answers "why this decision?" for one prediction; a global explanation answers "what did the model learn?" across all predictions. |
+| 2 | Why do SHAP values for a single prediction sum to "model output minus expected value"? | SHAP fairly distributes the prediction (the payout) among features via Shapley values, and its additivity axiom guarantees the contributions add up to the gap between the output and the baseline expected value. |
+| 3 | When would you choose LIME over TreeSHAP, and what is LIME's main weakness? | Use LIME for a quick, model-agnostic local explanation of a non-tree black box; its main weakness is instability – random sampling makes explanations vary between runs. |
+| 4 | What is the difference between covariate drift and concept drift, and which usually forces retraining? | Covariate drift is a change in the inputs $P(X)$; concept drift is a change in the relationship $P(Y \mid X)$. Concept drift usually forces retraining because the learned function is now wrong. |
+| 5 | A key feature shows PSI = 0.27: what does that indicate and what should you do before retraining? | PSI > 0.2 signals a significant distribution shift; before retraining, confirm the signal is real and sustained (not a logging glitch) and tied to a KPI movement, then shadow/canary the new model. |
 
 ---
 
@@ -850,9 +852,11 @@ jobs:
 
 ## Quick self-check (advanced)
 
-1. Given IG formula $\text{IG}_i(x) = (x_i - x'_i) \int_0^1 \frac{\partial F}{\partial x_i} d\alpha$, explain in plain language what the integral term measures and why multiplying by $(x_i - x'_i)$ is necessary.
-2. A counterfactual explanation changes only two features to flip a loan denial. The fairness team objects that one of those features is a proxy for a protected attribute. What should you do?
-3. A model satisfies demographic parity but not equalized odds. Give a concrete scenario where this matters and which criterion should take precedence.
-4. Error analysis reveals the model has 35% error on users aged 65+, versus 8% overall. What are the three next steps?
-5. The KS test gives $p < 0.001$ but the Wasserstein distance is small. How do you interpret this, and does it warrant triggering retraining?
+| # | Question | Answer |
+|---|----------|--------|
+| 1 | In $\text{IG}_i(x) = (x_i - x'_i) \int_0^1 \frac{\partial F}{\partial x_i} d\alpha$, what does the integral term measure and why multiply by $(x_i - x'_i)$? | The integral accumulates the feature's gradient along the straight path from baseline to input (its average sensitivity); multiplying by $(x_i - x'_i)$ scales that sensitivity by how far the feature actually moved, so attributions satisfy completeness and sum to $F(x)-F(x')$. |
+| 2 | A counterfactual flips a loan denial by changing two features, but the fairness team flags one as a proxy for a protected attribute. What should you do? | Drop that feature from the recourse and regenerate a counterfactual using only actionable, non-proxy features; offering recourse via a protected-attribute proxy is unfair and not actionable for the applicant. |
+| 3 | A model satisfies demographic parity but not equalized odds. Give a scenario where this matters and which criterion should take precedence. | If qualified applicants in one group are approved at the same overall rate but with a higher false-negative rate, demographic parity hides unequal error rates; equalized odds should take precedence because it is label-aware. |
+| 4 | Error analysis shows 35% error on users aged 65+ versus 8% overall. What are the three next steps? | Slice and quantify the gap to confirm it is significant, diagnose the cause (under-representation in training data or missing/leaky features for that group), then mitigate by collecting/re-weighting data or adjusting the model and re-audit. |
+| 5 | The KS test gives $p < 0.001$ but the Wasserstein distance is small. How do you interpret this, and does it warrant retraining? | With large samples KS becomes hypersensitive and flags a statistically significant but tiny shift; the small Wasserstein distance shows it is not practically meaningful, so it does not by itself warrant retraining. |
 

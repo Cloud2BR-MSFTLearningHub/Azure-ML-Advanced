@@ -242,11 +242,13 @@ print("Environment verification passed.")
 
 ## Quick self-check
 
-1. Why should train and inference share a pinned environment?
-2. What command shows all conda environments?
-3. When should you register a Jupyter kernel?
-4. How do you tell whether a code sample uses SDK v1 or v2?
-5. Which dependency layers (OS, runtime, packages, seeds) must be pinned for full reproducibility?
+| # | Question | Answer |
+|---|----------|--------|
+| 1 | Why should train and inference share a pinned environment? | So the exact library versions used in training are reproduced at serving, eliminating train/serve skew and a whole class of version-mismatch bugs. |
+| 2 | What command shows all conda environments? | `conda env list` (equivalently `conda info --envs`). |
+| 3 | When should you register a Jupyter kernel? | When you want a specific conda/virtual environment to be selectable as a notebook kernel, via `python -m ipykernel install --user --name ...`, preventing the "notebook uses the wrong environment" bug. |
+| 4 | How do you tell whether a code sample uses SDK v1 or v2? | By the imports: `from azureml.core import ...` is v1, while `from azure.ai.ml import ...` (with `MLClient`) is v2. |
+| 5 | Which dependency layers (OS, runtime, packages, seeds) must be pinned for full reproducibility? | All of them: the OS/base image, the language runtime (Python version), the packages (exact versions), and the random seeds. |
 
 ---
 

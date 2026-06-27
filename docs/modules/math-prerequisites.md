@@ -999,53 +999,14 @@ The following table consolidates all symbols used across this course:
 
 ## Quick Self-Check
 
-Test your understanding before moving on to the next module. Work through each problem; answers
-and hints follow each question.
+Test your understanding before moving on to the next module.
 
-**1. Probability**
-
-A dataset has 1 000 samples. 200 are class A, 800 are class B. A model predicts class A with
-probability 0.6 for a given sample. What is the cross-entropy loss for that sample if the true
-label is class A?
-
-> **Hint:** Cross-entropy for a single sample with true class $k$ is $-\log \hat{p}_k$.
-> Answer: $-\log(0.6) \approx 0.511$.
-
-**2. Bayes' theorem**
-
-In a manufacturing line, 5 % of parts are defective. A sensor test correctly identifies 90 %
-of defective parts (sensitivity) and correctly clears 95 % of good parts (specificity). A part
-fails the test. What is the probability it is actually defective?
-
-> **Hint:** $P(\text{defective} \mid \text{fail}) = \frac{0.90 \times 0.05}{0.90 \times 0.05 + 0.05 \times 0.95}$.
-> Answer: $\frac{0.045}{0.045 + 0.0475} \approx 0.486$. Only ~49 % — again the base rate dominates.
-
-**3. Linear algebra**
-
-Compute the dot product $\mathbf{w}^\top \mathbf{x}$ for $\mathbf{w} = (2, -1, 3)^\top$ and $\mathbf{x} = (1, 4, 2)^\top$. What is the L2 norm of $\mathbf{w}$?
-
-> Answer: $2 \cdot 1 + (-1) \cdot 4 + 3 \cdot 2 = 2 - 4 + 6 = 4$. $\|\mathbf{w}\|_2 = \sqrt{4+1+9} = \sqrt{14} \approx 3.742$.
-
-**4. Calculus — gradient**
-
-For the loss $\mathcal{L}(w) = (3 - 2w)^2$, compute $\frac{d\mathcal{L}}{dw}$. At what value of $w$ is the gradient zero? What is the loss at that point?
-
-> Answer: $\frac{d\mathcal{L}}{dw} = 2(3 - 2w)(-2) = -4(3 - 2w)$. Setting to zero: $3 - 2w = 0 \Rightarrow w = 1.5$. $\mathcal{L}(1.5) = 0$.
-
-**5. Gradient descent step**
-
-Starting from $w_0 = 0$, $\eta = 0.1$, and loss $\mathcal{L}(w) = (3-2w)^2$ (gradient from Q4), compute $w_1$ after one step.
-
-> Answer: $\nabla \mathcal{L}(0) = -4(3-0) = -12$. $w_1 = 0 - 0.1 \times (-12) = 1.2$.
-
-**6. MLE and regularization**
-
-You are training a logistic regression model. Describe in one sentence each what changes mathematically when you switch from no regularization, to L2 regularization, to L1 regularization.
-
-> Answer: No regularization = pure MLE (maximize log-likelihood). L2 = MAP with Gaussian prior (adds $-\frac{\lambda}{2}\|w\|_2^2$ to log-posterior, shrinks all weights toward zero). L1 = MAP with Laplace prior (adds $-\lambda\|w\|_1$, shrinks many weights exactly to zero).
-
-**7. Information theory**
-
-A 3-class classifier outputs probabilities $[0.7, 0.2, 0.1]$ for a sample whose true class is class 1 (index 0). Compute the cross-entropy loss.
-
-> Answer: $-\log(0.7) \approx 0.357$. Only the probability assigned to the true class enters the cross-entropy loss for a one-hot label.
+| # | Question | Answer |
+|---|----------|--------|
+| 1 | **Probability** — A dataset has 1 000 samples; 200 are class A, 800 are class B. A model predicts class A with probability 0.6 for a given sample. What is the cross-entropy loss for that sample if the true label is class A? | Cross-entropy for a single sample with true class $k$ is $-\log \hat{p}_k$, so $-\log(0.6) \approx 0.511$. |
+| 2 | **Bayes' theorem** — 5% of parts are defective; a sensor test has 90% sensitivity and 95% specificity. A part fails the test — what is the probability it is actually defective? | $P(\text{defective} \mid \text{fail}) = \frac{0.90 \times 0.05}{0.90 \times 0.05 + 0.05 \times 0.95} = \frac{0.045}{0.045 + 0.0475} \approx 0.486$ — only ~49%, because the low base rate dominates. |
+| 3 | **Linear algebra** — Compute the dot product $\mathbf{w}^\top \mathbf{x}$ for $\mathbf{w} = (2, -1, 3)^\top$ and $\mathbf{x} = (1, 4, 2)^\top$, and the L2 norm of $\mathbf{w}$. | $\mathbf{w}^\top \mathbf{x} = 2 - 4 + 6 = 4$; $\lVert\mathbf{w}\rVert_2 = \sqrt{4+1+9} = \sqrt{14} \approx 3.742$. |
+| 4 | **Calculus — gradient** — For $\mathcal{L}(w) = (3 - 2w)^2$, compute $\frac{d\mathcal{L}}{dw}$; at what $w$ is the gradient zero, and what is the loss there? | $\frac{d\mathcal{L}}{dw} = -4(3 - 2w)$; it is zero at $w = 1.5$, where $\mathcal{L}(1.5) = 0$. |
+| 5 | **Gradient descent step** — Starting from $w_0 = 0$, $\eta = 0.1$, and $\mathcal{L}(w) = (3-2w)^2$, compute $w_1$ after one step. | $\nabla \mathcal{L}(0) = -12$, so $w_1 = 0 - 0.1 \times (-12) = 1.2$. |
+| 6 | **MLE and regularization** — For logistic regression, what changes mathematically going from no regularization, to L2, to L1? | No regularization = pure MLE (maximize log-likelihood); L2 = MAP with a Gaussian prior (adds $-\frac{\lambda}{2}\lVert w\rVert_2^2$, shrinks all weights toward zero); L1 = MAP with a Laplace prior (adds $-\lambda\lVert w\rVert_1$, shrinks many weights exactly to zero). |
+| 7 | **Information theory** — A 3-class classifier outputs $[0.7, 0.2, 0.1]$ for a sample whose true class is index 0. Compute the cross-entropy loss. | $-\log(0.7) \approx 0.357$; only the probability assigned to the true class enters the cross-entropy for a one-hot label. |

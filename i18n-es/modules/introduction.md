@@ -340,11 +340,13 @@ Cada término se define en una frase sencilla.
 
 ## Verificación rápida
 
-1. ¿Todo sistema de IA es un sistema de ML?
-2. En producción, ¿qué etapa detecta los problemas de drift?
-3. ¿Cuál es la diferencia entre API y servicio web?
-4. Dado un objetivo de negocio, ¿cuáles son las cinco preguntas de planteamiento del problema que debes responder primero?
-5. ¿Por qué un modelo con excelente exactitud puede ser de todas formas la elección incorrecta para producción?
+| # | Pregunta | Respuesta |
+|---|----------|-----------|
+| 1 | ¿Todo sistema de IA es un sistema de ML? | No. El ML es un subconjunto de la IA; los sistemas de IA basados en reglas o simbólicos toman decisiones sin aprender de los datos. |
+| 2 | En producción, ¿qué etapa detecta los problemas de drift? | La etapa de monitoreo, que vigila la distribución de los datos en vivo y la calidad del modelo y detecta el drift con el tiempo. |
+| 3 | ¿Cuál es la diferencia entre API y servicio web? | La API es el contrato (esquema de petición/respuesta, autenticación, versionado); el servicio web es la implementación alojada y en ejecución de esa API (el endpoint). |
+| 4 | Dado un objetivo de negocio, ¿cuáles son las cinco preguntas de planteamiento del problema que debes responder primero? | (1) ¿Qué decisión cambia gracias a la predicción? (2) ¿Cuál es la unidad de predicción? (3) ¿Qué es exactamente la etiqueta? (4) ¿Cómo se ve el éxito como número (KPI de negocio)? (5) ¿Cuál es el costo de cada tipo de error? |
+| 5 | ¿Por qué un modelo con excelente exactitud puede ser de todas formas la elección incorrecta para producción? | La exactitud ignora los costos de error, el desbalance de clases, la equidad, la latencia y el KPI de negocio; un modelo muy exacto puede no detectar los positivos raros o ser demasiado lento, costoso o injusto para desplegar. |
 
 ---
 
@@ -783,13 +785,15 @@ Métricas derivadas:
 
 ## Verificación rápida (ampliada)
 
-1. ¿Todo sistema de IA es un sistema de ML?
-2. En producción, ¿qué etapa detecta los problemas de drift?
-3. ¿Cuál es la diferencia entre API y servicio web?
-4. Dado un objetivo de negocio, ¿cuáles son las cinco preguntas de planteamiento del problema que debes responder primero?
-5. ¿Por qué un modelo con excelente exactitud puede ser de todas formas la elección incorrecta para producción?
-6. ¿Qué mide la entropía y cuáles son su valor mínimo y máximo para una distribución binaria?
-7. ¿Por qué minimizar la entropía cruzada equivale a maximizar la verosimilitud de las etiquetas de entrenamiento?
-8. ¿Cuál es la dimensión VC de un clasificador lineal en dos dimensiones?
-9. Nombra dos definiciones de equidad y explica por qué no pueden satisfacerse todas simultáneamente cuando las tasas base difieren.
-10. En el recorrido del spam, ¿por qué $w_1$ recibió una actualización de gradiente mayor que $w_2$ después del primer paso?
+| # | Pregunta | Respuesta |
+|---|----------|-----------|
+| 1 | ¿Todo sistema de IA es un sistema de ML? | No. El ML es un subconjunto de la IA; los sistemas de IA basados en reglas o simbólicos toman decisiones sin aprender de los datos. |
+| 2 | En producción, ¿qué etapa detecta los problemas de drift? | La etapa de monitoreo, que vigila la distribución de los datos en vivo y la calidad del modelo y detecta el drift con el tiempo. |
+| 3 | ¿Cuál es la diferencia entre API y servicio web? | La API es el contrato (esquema de petición/respuesta, autenticación, versionado); el servicio web es la implementación alojada y en ejecución de esa API (el endpoint). |
+| 4 | Dado un objetivo de negocio, ¿cuáles son las cinco preguntas de planteamiento del problema que debes responder primero? | (1) ¿Qué decisión cambia gracias a la predicción? (2) ¿Cuál es la unidad de predicción? (3) ¿Qué es exactamente la etiqueta? (4) ¿Cómo se ve el éxito como número (KPI de negocio)? (5) ¿Cuál es el costo de cada tipo de error? |
+| 5 | ¿Por qué un modelo con excelente exactitud puede ser de todas formas la elección incorrecta para producción? | La exactitud ignora los costos de error, el desbalance de clases, la equidad, la latencia y el KPI de negocio; un modelo muy exacto puede no detectar los positivos raros o ser demasiado lento, costoso o injusto para desplegar. |
+| 6 | ¿Qué mide la entropía y cuáles son su valor mínimo y máximo para una distribución binaria? | Mide la incertidumbre (sorpresa) promedio de una distribución; para una distribución binaria se minimiza en 0 bits (un resultado seguro) y se maximiza en 1 bit (cuando $p = 0.5$). |
+| 7 | ¿Por qué minimizar la entropía cruzada equivale a maximizar la verosimilitud de las etiquetas de entrenamiento? | Para la clase verdadera la entropía cruzada se reduce a $-\log q_c$, la log-verosimilitud negativa de la etiqueta correcta, así que minimizarla maximiza la probabilidad que el modelo asigna a las etiquetas verdaderas. |
+| 8 | ¿Cuál es la dimensión VC de un clasificador lineal en dos dimensiones? | 3 — cualquier conjunto de 3 puntos no colineales puede fragmentarse (shatter), pero ningún conjunto de 4 puede. |
+| 9 | Nombra dos definiciones de equidad y explica por qué no pueden satisfacerse todas simultáneamente cuando las tasas base difieren. | La paridad demográfica y las probabilidades igualadas (y la calibración). Cuando las tasas base difieren entre grupos, el teorema de imposibilidad (Chouldechova; Kleinberg et al.) muestra que no pueden cumplirse todas a la vez, por lo que elegir una es un juicio de valor. |
+| 10 | En el recorrido del spam, ¿por qué $w_1$ recibió una actualización de gradiente mayor que $w_2$ después del primer paso? | Porque $x_1$ (número de enlaces) tiene valores de característica mayores que $x_2$, así que el gradiente $\frac{1}{N}\sum_i(\hat{p}_i - y_i)x_{ij}$ fue mayor en magnitud para $w_1$ ($-0.875$ frente a $-0.25$). |

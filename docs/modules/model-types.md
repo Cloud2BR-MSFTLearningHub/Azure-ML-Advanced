@@ -274,11 +274,13 @@ there at a fraction of the cost. Reach for neural networks when one of these hol
 
 ## Quick self-check
 
-1. Why is logistic regression still the default baseline despite its simplicity?
-2. What does the shrinkage parameter $\nu$ (learning_rate) trade off in gradient boosting?
-3. In one sentence each, how do bagging, boosting, and stacking differ?
-4. A boosted model outputs "0.7" but only 50% of such cases are positive: what is wrong and how do you fix it?
-5. Name two reasons to choose a neural network over gradient boosting.
+| # | Question | Answer |
+|---|----------|--------|
+| 1 | Why is logistic regression still the default baseline despite its simplicity? | It is fast, interpretable, and well-calibrated, setting a strong reference that more complex models must beat. |
+| 2 | What does the shrinkage parameter $\nu$ (learning_rate) trade off in gradient boosting? | Learning speed vs accuracy/overfitting: a smaller $\nu$ needs more trees but generalizes better. |
+| 3 | In one sentence each, how do bagging, boosting, and stacking differ? | Bagging trains independent models in parallel on bootstraps and averages them to cut variance; boosting trains models sequentially, each correcting the previous one's errors to cut bias; stacking trains a meta-model on base learners' predictions. |
+| 4 | A boosted model outputs "0.7" but only 50% of such cases are positive: what is wrong and how do you fix it? | The model is miscalibrated; apply Platt scaling or isotonic regression to correct its probabilities. |
+| 5 | Name two reasons to choose a neural network over gradient boosting. | Unstructured data such as images, text, or audio, and very large datasets where representation/transfer learning helps. |
 
 ---
 

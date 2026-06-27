@@ -190,9 +190,11 @@ where weights $w_i$ reflect business priorities.
 
 ## Quick self-check
 
-1. Why is primary metric choice critical in AutoML?
-2. What trade-off does max concurrent iterations control?
-3. Why should deployment constraints be considered during model selection?
+| # | Question | Answer |
+|---|----------|--------|
+| 1 | Why is primary metric choice critical in AutoML? | It defines the objective AutoML optimizes; the wrong metric (e.g. accuracy on imbalanced data) makes AutoML select the wrong model. |
+| 2 | What trade-off does max concurrent iterations control? | Parallelism vs cost and search quality: more concurrency finishes faster but uses more compute and gives the optimizer fewer prior results to learn from. |
+| 3 | Why should deployment constraints be considered during model selection? | The model must meet production latency, size, and interpretability limits; the most accurate model is useless if it cannot be deployed within those constraints. |
 
 ## Deep dive: every concept, explained
 

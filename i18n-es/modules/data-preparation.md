@@ -312,11 +312,13 @@ X_encoded = enc.fit_transform(X_train[["category"]], y_train)
 
 ## Autoevaluación rápida
 
-1. ¿Por qué la división aleatoria es incorrecta para la mayoría de las tareas de predicción?
-2. ¿Qué dimensión de calidad se ve afectada por una discrepancia de esquema?
-3. ¿Cuál es una fuente común de fuga de datos?
-4. ¿Por qué un escalador o imputador debe ajustarse solo en la partición de entrenamiento?
-5. ¿Dónde en el pipeline debe ocurrir SMOTE/sobremuestreo, y por qué?
+| # | Pregunta | Respuesta |
+|---|----------|-----------|
+| 1 | ¿Por qué la división aleatoria es incorrecta para la mayoría de las tareas de predicción? | Los datos de predicción están ordenados en el tiempo, así que una división aleatoria filtra información futura al entrenamiento; hay que dividir cronológicamente. |
+| 2 | ¿Qué dimensión de calidad se ve afectada por una discrepancia de esquema? | La validez: los datos dejan de ajustarse a los tipos/esquema esperados. |
+| 3 | ¿Cuál es una fuente común de fuga de datos? | Ajustar transformaciones (o usar información del objetivo/futura) sobre todo el conjunto antes de separar entrenamiento y prueba. |
+| 4 | ¿Por qué un escalador o imputador debe ajustarse solo en la partición de entrenamiento? | Ajustarlo con todos los datos filtra estadísticas de prueba al entrenamiento y produce una evaluación optimista sesgada; ajústalo en entrenamiento y aplícalo a validación/prueba. |
+| 5 | ¿Dónde en el pipeline debe ocurrir SMOTE/sobremuestreo, y por qué? | Solo en el pliegue de entrenamiento después de dividir (dentro de la validación cruzada), para que las muestras sintéticas nunca se filtren a validación/prueba. |
 
 ---
 
