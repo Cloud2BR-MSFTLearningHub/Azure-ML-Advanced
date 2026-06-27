@@ -22,13 +22,13 @@ serving options based on scale, latency, and cost.
 
 ## Workspace Taxonomy
 
-![Azure ML workspace taxonomy](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/azure-machine-learning-taxonomy.png)
+![Azure ML workspace taxonomy](../assets/img/azure-machine-learning-taxonomy.svg)
 
 > **Note - What this shows:** The Azure ML workspace taxonomy : how the workspace contains compute, data assets, models, and
 > endpoints under one governance boundary. Use it to see which asset type owns each artifact you
 > will create in later modules.
 
-![Azure ML environment taxonomy](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/azure-ml-environment-taxonomy.png)
+![Azure ML environment taxonomy](../assets/img/azure-ml-environment-taxonomy.svg)
 
 > **Note - What this shows:** How a versioned *environment* (base image + pinned dependencies) is reused across both training
 > and inference. Sharing one environment is what prevents training/serving skew : the same code
@@ -46,7 +46,7 @@ Additional key terms:
 - Datastore: registered storage connection.
 - Dataset/Data asset: versioned data reference used by jobs.
 
-![Azure endpoint concept](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/azure-endpoint-concept.png)
+![Azure endpoint concept](../assets/img/azure-endpoint-concept.svg)
 
 > **Note - What this shows:** The anatomy of an Azure ML endpoint: the deployment surface that receives scoring requests,
 > applies authentication, and routes traffic to one or more model versions. This is the object

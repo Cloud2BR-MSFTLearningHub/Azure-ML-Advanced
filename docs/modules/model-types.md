@@ -1,7 +1,7 @@
 
 # Model Types
 
-![Model implementation schema](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/logic_schema_model_implementation.png)
+![Model implementation schema](../assets/img/logic_schema_model_implementation.svg)
 
 > **Note - What this shows:** A logical schema for implementing a model : from problem type to algorithm family to deployment
 > constraints. Use it to trace how a business question narrows down to a specific model choice.

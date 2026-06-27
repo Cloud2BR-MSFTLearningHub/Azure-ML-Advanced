@@ -73,13 +73,13 @@ Orientación operacional:
 - Alertar tanto sobre las métricas de deriva como sobre los cambios en los KPI del negocio.
 - Activar el reentrenamiento solo cuando los umbrales persisten, no por picos únicos.
 
-![ROC buena vs mala](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/roc_good_bad.png)
+![ROC buena vs mala](../assets/img/roc_good_bad.svg)
 
 > **Nota - Cómo leerla:** Curvas ROC buenas vs malas. Un modelo cuya curva se curva hacia la parte superior izquierda separa bien las clases
 > (alta AUC); una cerca de la diagonal es poco mejor que aleatoria. Comparar candidatos en la misma
 > partición de validación.
 
-![Precisión-recall buena vs mala](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/precisionrecall_good_bad.png)
+![Precisión-recall buena vs mala](../assets/img/precisionrecall_good_bad.svg)
 
 > **Nota - Cómo leerla:** Curvas de precisión-recall buenas vs malas. En datos desbalanceados las curvas PR son más honestas que las ROC: una
 > curva que se mantiene alta a medida que aumenta el recall significa que el modelo mantiene la precisión mientras captura más

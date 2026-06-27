@@ -4,19 +4,19 @@
 This module provides a practical incident-response path for ML endpoints running on
 Kubernetes-backed infrastructure.
 
-![Confusion matrix quality reference](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/confusion_matrix_good_bad.png)
+![Confusion matrix quality reference](../assets/img/confusion_matrix_good_bad.svg)
 
 > **Note - How to read it:** A good vs bad confusion matrix. A strong model concentrates mass on the diagonal (correct
 > predictions); off-diagonal mass shows which error type dominates : the first clue when debugging
 > a quality regression.
 
-![Lift curve quality reference](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/lift_good_bad.png)
+![Lift curve quality reference](../assets/img/lift_good_bad.svg)
 
 > **Note - How to read it:** A lift curve shows how much better the model ranks positives than random selection. A curve
 > hugging the top-left captures most positives in the highest-scoring fraction : valuable for
 > prioritized review queues.
 
-![ROC quality reference](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/roc_good_bad.png)
+![ROC quality reference](../assets/img/roc_good_bad.svg)
 
 > **Note - How to read it:** The ROC curve plots true-positive vs false-positive rate across thresholds. A curve bowing
 > toward the top-left (higher AUC) ranks better; the diagonal is random guessing.

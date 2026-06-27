@@ -121,20 +121,20 @@ flowchart LR
 
 Note: Stage 1 (problem framing) is often underinvested. The single most common reason ML projects fail is a poorly defined business objective, not a weak model.
 
-![ML infrastructure tools for production](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/ml-infrastructure-tools-for-production.png)
+![ML infrastructure tools for production](../assets/img/ml-infrastructure-tools-for-production.svg)
 
 > **Note - What this shows:** The production ML stack is far larger than the model itself: ingestion, feature storage,  
 > training orchestration, serving, and monitoring are all distinct tools. The takeaway for Azure  
 > ML learners is that choosing a model is one box among many : most reliability work happens in  
 > the surrounding infrastructure.
 
-![ML workflow stages](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/ml_workflow_stages.png)
+![ML workflow stages](../assets/img/ml_workflow_stages.svg)
 
 > **Note - What this shows:** The workflow stages map one-to-one onto the Azure ML lifecycle (problem framing → data →  
 > training → registration → deployment → monitoring). Notice the loop back from monitoring to  
 > data/training: production ML is iterative, not a one-way pipeline.
 
-![Overview ML flow](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/Overview_ML_flow.png)
+![Overview ML flow](../assets/img/Overview_ML_flow.svg)
 
 > **Note - What this shows:** An end-to-end view of how raw data becomes a served prediction. Use it to locate where each  
 > later module fits: data preparation, model training, deployment, and monitoring are all stages  
@@ -306,13 +306,13 @@ Key production considerations for this flow:
 - **Logging input hashes** (not raw PII) enables later drift analysis and auditing.
 - **Timeouts and retries** must be defined at both the gateway and client layers to avoid silent failures.
 
-![Web service vs API](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/webservice_vs_api.png)
+![Web service vs API](../assets/img/webservice_vs_api.svg)
 
 > **Tip - Mental model:** A *web service* is the running deployment; the *API* is the contract clients use to call it.  
 > In Azure ML a model is wrapped behind a REST endpoint : clients send JSON and receive a  
 > prediction, without knowing which model or framework runs underneath.
 
-![Web service vs API table](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/table_webservice_vs_api.png)
+![Web service vs API table](../assets/img/table_webservice_vs_api.svg)
 
 > **Note - Quick comparison:** The table contrasts the informal term *web service* with the technical term *API*. They  
 > describe the same deployed scoring interface from two angles : the running process versus the  

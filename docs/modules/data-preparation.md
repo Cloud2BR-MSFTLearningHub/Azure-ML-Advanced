@@ -10,18 +10,18 @@ leakage prevention.
 This sequence illustrates the lifecycle: business framing, data collection, feature
 engineering, and dataset sizing for reliable model training.
 
-![ML process by stages](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/ml_process_by_stages.png)
+![ML process by stages](../assets/img/ml_process_by_stages.svg)
 
 > **Note - What this shows:** The data lifecycle by stage : from business framing through collection and feature engineering.
 > Most delivery effort lives in these early stages, and defects here cap the quality any model
 > can reach.
 
-![Collect data and targets](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/collect_data_init_primary_second_targets.png)
+![Collect data and targets](../assets/img/collect_data_init_primary_second_targets.svg)
 
 > **Note - What this shows:** How primary and secondary targets are collected alongside features. Defining the target
 > precisely (and when it becomes known) is what later prevents target leakage.
 
-![Feature engineering while collecting data](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/feature_engineering_collect_data.png)
+![Feature engineering while collecting data](../assets/img/feature_engineering_collect_data.svg)
 
 > **Tip - Practical point:** Feature engineering should happen *while* you understand the data, but transforms must be fit
 > on the training split only. Designing features and the split strategy together is how you keep
@@ -74,17 +74,17 @@ For time-series forecasting, use chronological splits (never random shuffle acro
 The next visuals reinforce how supervised datasets are split and validated before
 training, plus a dtype reference to prevent schema and conversion errors.
 
-![Training/testing data flow](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/training_testing_data_flow.png)
+![Training/testing data flow](../assets/img/training_testing_data_flow.svg)
 
 > **Note - What this shows:** The flow of data through training and testing stages. The test set branches off early and is
 > untouched until final evaluation : the discipline that keeps offline scores honest.
 
-![Training and test split](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/training_test_split.png)
+![Training and test split](../assets/img/training_test_split.svg)
 
 > **Note - What this shows:** A train/test split. For class imbalance use a *stratified* split to preserve class ratios; for
 > time series use a *chronological* split so the model never trains on future data.
 
-![Python dtype overview](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/python_dtype.png)
+![Python dtype overview](../assets/img/python_dtype.svg)
 
 > **Note - What this shows:** A reference of Python/pandas data types. Validating dtypes against your data contract catches
 > schema drift and silent conversion bugs before they corrupt training.

@@ -13,13 +13,13 @@ de ejecución de Python.
 Los diagramas siguientes muestran cómo se organizan los activos de Azure ML y cómo se reutilizan
 los entornos en el entrenamiento y la inferencia.
 
-![Taxonomía del área de trabajo de Azure ML](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/azure-machine-learning-taxonomy.png)
+![Taxonomía del área de trabajo de Azure ML](../assets/img/azure-machine-learning-taxonomy.svg)
 
 > **Nota - Qué muestra esto:** Nuevamente la taxonomía del área de trabajo, aquí para enfatizar *dónde viven los entornos*. El entorno que
 > construyes localmente se convierte en un activo registrado y versionado dentro de esta estructura para que los trabajos remotos puedan
 > reutilizarlo.
 
-![Taxonomía del entorno de Azure ML](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/azure-ml-environment-taxonomy.png)
+![Taxonomía del entorno de Azure ML](../assets/img/azure-ml-environment-taxonomy.svg)
 
 > **Nota - Qué muestra esto:** Cómo una definición de entorno fluye tanto hacia los trabajos de entrenamiento como de inferencia. Fijarla una vez y
 > reutilizarla es el mecanismo central detrás de las ejecuciones reproducibles y las reconstrucciones deterministas.
@@ -161,13 +161,13 @@ el registro de la ejecución apunta entonces a una versión de entorno inmutable
 Estas referencias ayudan al dimensionar el cómputo y al comprender los conceptos de memoria/representación
 numérica que afectan las decisiones de rendimiento.
 
-![Mediciones de datos binarias vs decimales](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/binary_vs_decimal_data_measurements.png)
+![Mediciones de datos binarias vs decimales](../assets/img/binary_vs_decimal_data_measurements.svg)
 
 > **Nota - Qué muestra esto:** La diferencia entre medidas binarias (1 KiB = 1024 bytes) y decimales (1 KB = 1000 bytes).
 > Importa al dimensionar conjuntos de datos, memoria y cómputo: una discrepancia explica muchas sorpresas del tipo "¿por qué mis datos
 > son más grandes de lo esperado?".
 
-![Resumen de los sistemas numéricos](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/summary_of_number_system.png)
+![Resumen de los sistemas numéricos](../assets/img/summary_of_number_system.svg)
 
 > **Nota - Qué muestra esto:** Un resumen de los sistemas numéricos (binario, decimal, hexadecimal). Conocimiento de fondo útil al leer
 > direcciones de memoria, tamaños de bytes y formatos de datos codificados durante la depuración del entorno y los datos.

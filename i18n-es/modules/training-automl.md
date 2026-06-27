@@ -9,19 +9,19 @@ y cómo pasar de experimentos de línea de base a una selección de modelos conf
 2. Configurar una ejecución de AutoML con restricciones útiles.
 3. Interpretar las salidas de ejecución y elegir un candidato de producción.
 
-![Diagrama de AutoML](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/automl_diagram.png)
+![Diagrama de AutoML](../assets/img/automl_diagram.svg)
 
 > **Nota - Qué muestra esto:** El ciclo de AutoML: probar combinaciones de algoritmo + hiperparámetro, puntuar cada una con validación cruzada,
 > y clasificar por la métrica primaria. AutoML no inventa algoritmos: asigna un presupuesto de búsqueda fijo
 > entre los conocidos.
 
-![Expectativas del proceso de AutoML](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/automl_process_what_to_expect.png)
+![Expectativas del proceso de AutoML](../assets/img/automl_process_what_to_expect.svg)
 
 > **Consejo - Qué esperar:** Los primeros ensayos son líneas de base débiles; la calidad sube a medida que la búsqueda explora, y el ganador final es
 > a menudo un ensemble de votación/stacking de las mejores ejecuciones. Presupueste suficientes iteraciones antes de confiar en el
 > marcador.
 
-![Pasos detallados de la predicción de series temporales basada en ML](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/Detailed-steps-of-ML-based-time-series-forecast.png)
+![Pasos detallados de la predicción de series temporales basada en ML](../assets/img/Detailed-steps-of-ML-based-time-series-forecast.svg)
 
 > **Nota - Qué muestra esto:** Los pasos detallados de una predicción de series temporales basada en ML. Tenga en cuenta la validación de *origen deslizante*:
 > el k-fold simple filtraría valores futuros, por lo que los datos temporales se validan avanzando en el tiempo.

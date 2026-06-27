@@ -3,7 +3,7 @@
 Elegir la métrica correcta es una de las decisiones más importantes en ML. Un modelo puede parecer
 excelente en una métrica y fallar en el objetivo real del negocio.
 
-![Cómo elegir una métrica](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/How-to-Choose-a-Metric-for-Imbalanced-Classification-latest.png)
+![Cómo elegir una métrica](../assets/img/How-to-Choose-a-Metric-for-Imbalanced-Classification-latest.svg)
 
 > **Consejo - Cómo usar este gráfico:** Elija la métrica a partir del *costo de los errores*, no del hábito. En problemas desbalanceados, prefiera F1, PR-AUC,
 > o MCC sobre la exactitud; pese el recall cuando los positivos perdidos son costosos, la precisión cuando las falsas alarmas son costosas.

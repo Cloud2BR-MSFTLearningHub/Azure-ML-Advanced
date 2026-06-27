@@ -3,17 +3,17 @@
 Este módulo proporciona una ruta práctica de respuesta a incidentes para los endpoints de ML que se ejecutan en
 infraestructura respaldada por Kubernetes.
 
-![Referencia de calidad de la matriz de confusión](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/confusion_matrix_good_bad.png)
+![Referencia de calidad de la matriz de confusión](../assets/img/confusion_matrix_good_bad.svg)
 
 > **Nota - Cómo leerla:** Una matriz de confusión buena vs mala. Un modelo sólido concentra la masa en la diagonal (predicciones correctas); la masa fuera de la diagonal muestra qué tipo de error domina: la primera pista al depurar una regresión de calidad.
 
-![Referencia de calidad de la curva de lift](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/lift_good_bad.png)
+![Referencia de calidad de la curva de lift](../assets/img/lift_good_bad.svg)
 
 > **Nota - Cómo leerla:** Una curva de lift muestra cuánto mejor clasifica el modelo los positivos que la selección aleatoria. Una curva
 > que se acerca a la parte superior izquierda captura la mayoría de los positivos en la fracción de mayor puntuación: valiosa para
 > colas de revisión priorizadas.
 
-![Referencia de calidad de la curva ROC](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/roc_good_bad.png)
+![Referencia de calidad de la curva ROC](../assets/img/roc_good_bad.svg)
 
 > **Nota - Cómo leerla:** La curva ROC traza la tasa de verdaderos positivos vs la de falsos positivos a través de los umbrales. Una curva que se curva
 > hacia la parte superior izquierda (mayor AUC) clasifica mejor; la diagonal es la suposición aleatoria.

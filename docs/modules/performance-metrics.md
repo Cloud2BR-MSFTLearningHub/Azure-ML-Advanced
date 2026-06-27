@@ -4,7 +4,7 @@
 Choosing the right metric is one of the most important decisions in ML. A model can look
 excellent on one metric and fail on the real business objective.
 
-![How to choose a metric](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/How-to-Choose-a-Metric-for-Imbalanced-Classification-latest.png)
+![How to choose a metric](../assets/img/How-to-Choose-a-Metric-for-Imbalanced-Classification-latest.svg)
 
 > **Tip - How to use this chart:** Pick the metric from the *cost of errors*, not habit. On imbalanced problems prefer F1, PR-AUC,
 > or MCC over accuracy; weight recall when missed positives are costly, precision when false

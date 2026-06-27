@@ -1,6 +1,6 @@
 # Tipos de Modelos
 
-![Esquema de implementación del modelo](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/logic_schema_model_implementation.png)
+![Esquema de implementación del modelo](../assets/img/logic_schema_model_implementation.svg)
 
 > **Nota - Qué muestra esto:** Un esquema lógico para implementar un modelo: desde el tipo de problema hasta la familia de algoritmos y las restricciones de despliegue.
 > Úselo para rastrear cómo una pregunta de negocio se reduce a una elección de modelo específica.

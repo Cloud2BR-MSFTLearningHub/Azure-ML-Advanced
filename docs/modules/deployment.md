@@ -4,19 +4,19 @@
 This module covers the path from model artifact to production endpoint, including
 deployment patterns, release strategies, and operational safeguards.
 
-![Training vs deployment model](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/training_vs_deployment_model.png)
+![Training vs deployment model](../assets/img/training_vs_deployment_model.svg)
 
 > **Note - What this shows:** The contrast between the *training* model (offline, batch, optimized for accuracy) and the
 > *deployment* model (online, stateless, optimized for latency). The same artifact serves two very
 > different runtime contexts.
 
-![ML deployment flow](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/ml_deployment_flow.png)
+![ML deployment flow](../assets/img/ml_deployment_flow.svg)
 
 > **Note - What this shows:** The deployment flow from registered model to live endpoint. Each stage : package, validate
 > locally, deploy, route traffic : is a checkpoint where a release can be caught before customers
 > are affected.
 
-![Deployment overview](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/deployment_overview.png)
+![Deployment overview](../assets/img/deployment_overview.svg)
 
 > **Note - What this shows:** A high-level overview of deployment options (online vs batch endpoints). Choose by *who is
 > waiting*: a user/app in real time → online endpoint; a whole table scored overnight → batch

@@ -21,13 +21,13 @@ de servicio según la escala, la latencia y el costo.
 
 ## Taxonomía del área de trabajo
 
-![Taxonomía del área de trabajo de Azure ML](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/azure-machine-learning-taxonomy.png)
+![Taxonomía del área de trabajo de Azure ML](../assets/img/azure-machine-learning-taxonomy.svg)
 
 > **Nota - Qué muestra esto:** La taxonomía del área de trabajo de Azure ML: cómo el área de trabajo contiene cómputo, activos de datos, modelos y
 > endpoints bajo un mismo límite de gobernanza. Úsala para ver qué tipo de activo posee cada artefacto que
 > crearás en los módulos posteriores.
 
-![Taxonomía del entorno de Azure ML](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/azure-ml-environment-taxonomy.png)
+![Taxonomía del entorno de Azure ML](../assets/img/azure-ml-environment-taxonomy.svg)
 
 > **Nota - Qué muestra esto:** Cómo un *entorno* versionado (imagen base + dependencias fijadas) se reutiliza tanto en el entrenamiento
 > como en la inferencia. Compartir un mismo entorno es lo que evita el sesgo entre entrenamiento y servicio: el mismo código
@@ -45,7 +45,7 @@ Términos clave adicionales:
 - Almacén de datos (datastore): conexión de almacenamiento registrada.
 - Conjunto de datos/activo de datos: referencia de datos versionada usada por los trabajos.
 
-![Concepto de endpoint de Azure](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/azure-endpoint-concept.png)
+![Concepto de endpoint de Azure](../assets/img/azure-endpoint-concept.svg)
 
 > **Nota - Qué muestra esto:** La anatomía de un endpoint de Azure ML: la superficie de despliegue que recibe las solicitudes de scoring,
 > aplica la autenticación y enruta el tráfico a una o más versiones del modelo. Este es el objeto

@@ -9,17 +9,17 @@ prevención de fuga de datos.
 Esta secuencia ilustra el ciclo de vida: definición del problema de negocio, recolección de datos, ingeniería
 de características y dimensionamiento del conjunto de datos para un entrenamiento de modelo confiable.
 
-![Proceso de ML por etapas](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/ml_process_by_stages.png)
+![Proceso de ML por etapas](../assets/img/ml_process_by_stages.svg)
 
 > **Nota - Qué muestra esto:** El ciclo de vida de los datos por etapa: desde la definición del problema de negocio hasta la recolección y la ingeniería de características.
 > La mayor parte del esfuerzo de entrega reside en estas etapas tempranas, y los defectos aquí limitan la calidad que cualquier modelo puede alcanzar.
 
-![Recolección de datos y objetivos](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/collect_data_init_primary_second_targets.png)
+![Recolección de datos y objetivos](../assets/img/collect_data_init_primary_second_targets.svg)
 
 > **Nota - Qué muestra esto:** Cómo se recopilan los objetivos primarios y secundarios junto con las características. Definir el objetivo
 > con precisión (y cuándo se conoce) es lo que más adelante previene la fuga del objetivo.
 
-![Ingeniería de características durante la recolección de datos](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/feature_engineering_collect_data.png)
+![Ingeniería de características durante la recolección de datos](../assets/img/feature_engineering_collect_data.svg)
 
 > **Consejo - Punto práctico:** La ingeniería de características debe ocurrir *mientras* se comprenden los datos, pero las transformaciones deben ajustarse
 > solo en la partición de entrenamiento. Diseñar las características y la estrategia de partición juntas es cómo se mantiene
@@ -72,17 +72,17 @@ Para la predicción de series temporales, use divisiones cronológicas (nunca me
 Los siguientes elementos visuales refuerzan cómo los conjuntos de datos supervisados se dividen y validan antes del
 entrenamiento, además de una referencia de tipos de datos para prevenir errores de esquema y conversión.
 
-![Flujo de datos de entrenamiento/prueba](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/training_testing_data_flow.png)
+![Flujo de datos de entrenamiento/prueba](../assets/img/training_testing_data_flow.svg)
 
 > **Nota - Qué muestra esto:** El flujo de datos a través de las etapas de entrenamiento y prueba. El conjunto de prueba se separa al principio y no
 > se toca hasta la evaluación final: la disciplina que mantiene honestos los puntajes fuera de línea.
 
-![División de entrenamiento y prueba](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/training_test_split.png)
+![División de entrenamiento y prueba](../assets/img/training_test_split.svg)
 
 > **Nota - Qué muestra esto:** Una división de entrenamiento/prueba. Para el desequilibrio de clases use una división *estratificada* para preservar las proporciones de clase; para
 > series temporales use una división *cronológica* para que el modelo nunca entrene con datos futuros.
 
-![Resumen de tipos de datos de Python](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/python_dtype.png)
+![Resumen de tipos de datos de Python](../assets/img/python_dtype.svg)
 
 > **Nota - Qué muestra esto:** Una referencia de tipos de datos de Python/pandas. Validar los tipos de datos contra su contrato de datos detecta
 > la deriva del esquema y errores de conversión silenciosos antes de que corrompan el entrenamiento.

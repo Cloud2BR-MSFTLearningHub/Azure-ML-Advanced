@@ -3,18 +3,18 @@
 Este módulo cubre el camino desde el artefacto del modelo hasta el endpoint de producción, incluyendo
 patrones de despliegue, estrategias de lanzamiento y salvaguardas operacionales.
 
-![Modelo de entrenamiento vs despliegue](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/training_vs_deployment_model.png)
+![Modelo de entrenamiento vs despliegue](../assets/img/training_vs_deployment_model.svg)
 
 > **Nota - Qué muestra esto:** El contraste entre el modelo de *entrenamiento* (fuera de línea, por lotes, optimizado para exactitud) y el
 > modelo de *despliegue* (en línea, sin estado, optimizado para latencia). El mismo artefacto sirve a dos contextos de tiempo de ejecución muy diferentes.
 
-![Flujo de despliegue de ML](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/ml_deployment_flow.png)
+![Flujo de despliegue de ML](../assets/img/ml_deployment_flow.svg)
 
 > **Nota - Qué muestra esto:** El flujo de despliegue desde el modelo registrado hasta el endpoint activo. Cada etapa: empaquetar, validar
 > localmente, desplegar, enrutar el tráfico: es un punto de control donde se puede detener un lanzamiento antes de que los clientes
 > se vean afectados.
 
-![Resumen del despliegue](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/deployment_overview.png)
+![Resumen del despliegue](../assets/img/deployment_overview.svg)
 
 > **Nota - Qué muestra esto:** Una visión general de alto nivel de las opciones de despliegue (endpoints en línea vs por lotes). Elija por *quién espera*:
 > un usuario/aplicación en tiempo real → endpoint en línea; una tabla completa puntuada durante la noche → endpoint por lotes.

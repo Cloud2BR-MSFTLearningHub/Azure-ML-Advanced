@@ -121,20 +121,20 @@ flowchart LR
 
 Nota: la etapa 1 (planteamiento del problema) a menudo recibe poca inversión. La razón más común por la que los proyectos de ML fallan es un objetivo de negocio mal definido, no un modelo débil.
 
-![Herramientas de infraestructura de ML para producción](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/ml-infrastructure-tools-for-production.png)
+![Herramientas de infraestructura de ML para producción](../assets/img/ml-infrastructure-tools-for-production.svg)
 
 > **Nota - Qué muestra esto:** La pila de ML de producción es mucho más grande que el modelo en sí: la ingesta, el almacenamiento de características,  
 > la orquestación del entrenamiento, el servicio y el monitoreo son todas herramientas distintas. La conclusión para quienes aprenden Azure  
 > ML es que elegir un modelo es una casilla entre muchas: la mayor parte del trabajo de confiabilidad ocurre en  
 > la infraestructura circundante.
 
-![Etapas del flujo de trabajo de ML](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/ml_workflow_stages.png)
+![Etapas del flujo de trabajo de ML](../assets/img/ml_workflow_stages.svg)
 
 > **Nota - Qué muestra esto:** Las etapas del flujo de trabajo se asignan una a una al ciclo de vida de Azure ML (planteamiento del problema → datos →  
 > entrenamiento → registro → despliegue → monitoreo). Observa el bucle de regreso del monitoreo a  
 > los datos/entrenamiento: el ML de producción es iterativo, no un pipeline unidireccional.
 
-![Visión general del flujo de ML](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/Overview_ML_flow.png)
+![Visión general del flujo de ML](../assets/img/Overview_ML_flow.svg)
 
 > **Nota - Qué muestra esto:** Una vista de extremo a extremo de cómo los datos en bruto se convierten en una predicción servida. Úsala para ubicar dónde encaja cada  
 > módulo posterior: la preparación de datos, el entrenamiento del modelo, el despliegue y el monitoreo son todas etapas  
@@ -306,13 +306,13 @@ Consideraciones clave de producción para este flujo:
 - **El registro de hashes de entrada** (no PII en crudo) permite el análisis de drift y la auditoría posteriores.
 - **Los tiempos de espera y los reintentos** deben definirse tanto en la capa de gateway como en la del cliente para evitar fallos silenciosos.
 
-![Servicio web vs API](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/webservice_vs_api.png)
+![Servicio web vs API](../assets/img/webservice_vs_api.svg)
 
 > **Consejo - Modelo mental:** Un *servicio web* es el despliegue en ejecución; la *API* es el contrato que usan los clientes para llamarlo.  
 > En Azure ML un modelo se envuelve detrás de un endpoint REST: los clientes envían JSON y reciben una  
 > predicción, sin saber qué modelo o framework se ejecuta por debajo.
 
-![Tabla de servicio web vs API](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/table_webservice_vs_api.png)
+![Tabla de servicio web vs API](../assets/img/table_webservice_vs_api.svg)
 
 > **Nota - Comparación rápida:** La tabla contrasta el término informal *servicio web* con el término técnico *API*. Describen  
 > la misma interfaz de scoring desplegada desde dos ángulos: el proceso en ejecución frente al  

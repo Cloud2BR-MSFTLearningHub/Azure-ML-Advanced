@@ -10,19 +10,19 @@ and how to move from baseline experiments to reliable model selection.
 2. Configure an AutoML run with useful constraints.
 3. Interpret run outputs and choose a production candidate.
 
-![AutoML diagram](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/automl_diagram.png)
+![AutoML diagram](../assets/img/automl_diagram.svg)
 
 > **Note - What this shows:** The AutoML loop: try algorithm + hyperparameter combinations, score each with cross-validation,
 > and rank by the primary metric. AutoML does not invent algorithms : it allocates a fixed search
 > budget across known ones.
 
-![AutoML process expectations](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/automl_process_what_to_expect.png)
+![AutoML process expectations](../assets/img/automl_process_what_to_expect.svg)
 
 > **Tip - What to expect:** Early trials are weak baselines; quality climbs as the search explores, and the final winner is
 > often a voting/stack ensemble of the best runs. Budget enough iterations before trusting the
 > leaderboard.
 
-![Detailed ML-based time-series forecast steps](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/Detailed-steps-of-ML-based-time-series-forecast.png)
+![Detailed ML-based time-series forecast steps](../assets/img/Detailed-steps-of-ML-based-time-series-forecast.svg)
 
 > **Note - What this shows:** The detailed steps of an ML-based time-series forecast. Note the *rolling-origin* validation:
 > plain k-fold would leak future values, so temporal data is validated by advancing through time.

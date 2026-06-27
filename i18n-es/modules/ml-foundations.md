@@ -21,14 +21,14 @@ Qué recordar:
 - El no supervisado descubre estructura sin etiquetas.
 - El de refuerzo aprende a través de la interacción y la recompensa.
 
-![Tipos de aprendizaje automático](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/machine_learning_types.png)
+![Tipos de aprendizaje automático](../assets/img/machine_learning_types.svg)
 
 > **Nota - Qué muestra esto:** Las principales familias de aprendizaje una al lado de la otra. El eje distintivo es la *señal de retroalimentación*:
 > respuestas etiquetadas (supervisado), solo estructura (no supervisado) o recompensa por interacción
 > (refuerzo). Identificar qué señal proporcionan tus datos es el primer paso para elegir un
 > enfoque.
 
-![Tipos de ML según el objetivo](https://raw.githubusercontent.com/brown9804/ML_DS_path/main/_docs/img/types_of_ml_based_in_objective.png)
+![Tipos de ML según el objetivo](../assets/img/types_of_ml_based_in_objective.svg)
 
 > **Nota - Qué muestra esto:** Las tareas de ML organizadas por *objetivo* (predecir una clase, predecir un número, agrupar registros, reducir
 > dimensiones). Asigna tu pregunta de negocio a uno de estos objetivos antes de elegir un algoritmo:
