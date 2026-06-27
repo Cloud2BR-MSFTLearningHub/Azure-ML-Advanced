@@ -39,67 +39,67 @@ multiple eras based on compute power, data availability, and algorithmic advance
 ## Learning Path
 
 <div class="home-grid">
-	<a class="home-card" href="modules/math-prerequisites/">
+	<a class="home-card" href="modules/01-math-prerequisites/">
 		<span class="card-badge">Module 01</span>
 		<h3>Math Prerequisites</h3>
 		<p>Probability, linear algebra, calculus, and statistics foundations needed for all ML math.</p>
 	</a>
-	<a class="home-card" href="modules/introduction/">
+	<a class="home-card" href="modules/02-introduction/">
 		<span class="card-badge">Module 02</span>
 		<h3>Introduction and Lifecycle</h3>
 		<p>AI vs ML vs data science, AI categories, and end-to-end Azure ML lifecycle.</p>
 	</a>
-	<a class="home-card" href="modules/ml-foundations/">
+	<a class="home-card" href="modules/03-ml-foundations/">
 		<span class="card-badge">Module 03</span>
 		<h3>ML Foundations</h3>
 		<p>Full ML taxonomy: supervised, unsupervised, RL, semi/self-supervised, with formulas and selection guidance.</p>
 	</a>
-	<a class="home-card" href="modules/neural-networks/">
+	<a class="home-card" href="modules/04-neural-networks/">
 		<span class="card-badge">Module 04</span>
 		<h3>Neural Networks and Deep Learning</h3>
 		<p>Perceptron to Transformers: backpropagation, CNNs, RNNs, attention, and training at scale.</p>
 	</a>
-	<a class="home-card" href="modules/azure-ml-environment/">
+	<a class="home-card" href="modules/05-azure-ml-environment/">
 		<span class="card-badge">Module 05</span>
 		<h3>Azure ML Environment</h3>
 		<p>Workspace taxonomy, compute types, model registry, and endpoints.</p>
 	</a>
-	<a class="home-card" href="modules/environment-setup/">
+	<a class="home-card" href="modules/06-environment-setup/">
 		<span class="card-badge">Module 06</span>
 		<h3>Environment Setup</h3>
 		<p>Conda/pip setup, package validation, and runtime consistency.</p>
 	</a>
-	<a class="home-card" href="modules/data-preparation/">
+	<a class="home-card" href="modules/07-data-preparation/">
 		<span class="card-badge">Module 07</span>
 		<h3>Data Preparation</h3>
 		<p>Data collection, cleaning, schema handling, and split strategy.</p>
 	</a>
-	<a class="home-card" href="modules/model-types/">
+	<a class="home-card" href="modules/08-model-types/">
 		<span class="card-badge">Module 08</span>
 		<h3>Model Types</h3>
 		<p>Algorithm families with representative mathematical formulations.</p>
 	</a>
-	<a class="home-card" href="modules/training-automl/">
+	<a class="home-card" href="modules/09-training-automl/">
 		<span class="card-badge">Module 09</span>
 		<h3>Training and AutoML</h3>
 		<p>AutoML search flow, compute choices, and practical training pipeline.</p>
 	</a>
-	<a class="home-card" href="modules/performance-metrics/">
+	<a class="home-card" href="modules/10-performance-metrics/">
 		<span class="card-badge">Module 10</span>
 		<h3>Performance Metrics</h3>
 		<p>Classification and regression metrics, formulas, and interpretation.</p>
 	</a>
-	<a class="home-card" href="modules/results-explainability/">
+	<a class="home-card" href="modules/11-results-explainability/">
 		<span class="card-badge">Module 11</span>
 		<h3>Results and Explainability</h3>
 		<p>Result analysis, drift detection, and explainability methods.</p>
 	</a>
-	<a class="home-card" href="modules/deployment/">
+	<a class="home-card" href="modules/12-deployment/">
 		<span class="card-badge">Module 12</span>
 		<h3>Deployment</h3>
 		<p>Registration, scoring, endpoint deployment, and serving patterns.</p>
 	</a>
-	<a class="home-card" href="modules/deployment-debug-k8s/">
+	<a class="home-card" href="modules/13-deployment-debug-k8s/">
 		<span class="card-badge">Module 13</span>
 		<h3>Deployment Debugging</h3>
 		<p>Kubernetes-focused troubleshooting for production endpoint issues.</p>
