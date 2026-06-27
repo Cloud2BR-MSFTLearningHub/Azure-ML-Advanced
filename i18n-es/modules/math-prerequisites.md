@@ -98,6 +98,10 @@ $$F(x) = P(X \leq x)$$
 
 Para una variable continua, $F(x) = \int_{-\infty}^{x} f(t)\, dt$.
 
+![PMF discreta frente a PDF y CDF continuas](../assets/img/probability-distributions.svg)
+
+> **Nota - Tres vistas de una distribución:** La FMP coloca probabilidad en puntos discretos, la FDP la reparte como área bajo una curva, y la FDA acumula esa probabilidad de 0 a 1.
+
 **Distribuciones clave:**
 
 | Distribución           | Tipo       | Parámetros         | FMP / FDP                                                                      | Uso en ML                                        |
@@ -108,6 +112,10 @@ Para una variable continua, $F(x) = \int_{-\infty}^{x} f(t)\, dt$.
 | Uniforme               | Continua   | $a, b$             | $\frac{1}{b-a}$ en $[a,b]$                                                     | Inicialización de pesos, búsqueda aleatoria      |
 | Poisson                | Discreta   | $\lambda > 0$      | $\frac{\lambda^k e^{-\lambda}}{k!}$                                            | Datos de conteo, tasas de llegada, conteos en NLP|
 | Categórica             | Discreta   | $p_1,\dots,p_K$    | $P(X=k) = p_k$                                                                 | Salida de clasificación multiclase               |
+
+![La distribución gaussiana y la regla empírica](../assets/img/gaussian-distribution.svg)
+
+> **Nota - La regla empírica:** Para cualquier gaussiana, ~68% de los valores está dentro de ±1σ de la media μ, ~95% dentro de ±2σ y ~99.7% dentro de ±3σ.
 
 **Esperanza** — el valor promedio a largo plazo de una variable aleatoria:
 
@@ -211,6 +219,10 @@ $$P(D \mid +) = \frac{0.99 \times 0.01}{0.99 \times 0.01 + 0.01 \times 0.99} = \
 ¡Solo el 50 %! La baja tasa base ($P(D) = 0.01$) domina. Por eso las pruebas de cribado en
 condiciones raras generan muchos falsos positivos — una perspectiva crítica para ML con
 conjuntos de datos desbalanceados.
+
+![Teorema de Bayes con el ejemplo de la prueba médica](../assets/img/bayes-theorem.svg)
+
+> **Nota - Por qué el posterior es solo del 50%:** Entre ~20 pruebas positivas, cerca de 10 provienen de las 10 personas realmente enfermas y cerca de 10 son falsos positivos de las 990 personas sanas, así que un positivo es como lanzar una moneda.
 
 **MLE vs MAP:**
 

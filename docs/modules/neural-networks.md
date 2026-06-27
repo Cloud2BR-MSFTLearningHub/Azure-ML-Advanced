@@ -47,6 +47,10 @@ The vector $\mathbf{x} \in \mathbb{R}^d$ is the input, $\mathbf{w} \in \mathbb{R
 bias, and $\phi$ the activation function. Everything in deep learning is built from repeated
 application of this pattern.
 
+![Anatomy of an artificial neuron](../assets/img/neuron-anatomy.svg)
+
+> **Note - Reading the neuron:** Inputs flow left to right — each is scaled by a weight, summed into Σ, shifted by the bias b to form z, then passed through φ to produce ŷ.
+
 > **Note - Why the analogy is imperfect:** Real neurons communicate via spike timing, not continuous values;
 > they have thousands of dendritic compartments; and Hebbian plasticity is far more complex than
 > gradient descent. The biological metaphor is motivational, not mechanistic. Focus on the math.
@@ -73,6 +77,11 @@ where a single hyperplane $\mathbf{w}^\top \mathbf{x} + b = 0$ separates the two
 | 1     | 1     | 0   |
 
 No single line in 2-D can separate the two 1-outputs from the two 0-outputs.
+
+![XOR is not linearly separable](../assets/img/xor-not-separable.svg)
+
+> **Note - Why XOR breaks the perceptron:** The two classes sit on opposite diagonals, so any single straight boundary misclassifies at least one point.
+
 This limitation, highlighted by Minsky and Papert in 1969, temporarily stalled neural network
 research until multi-layer networks with non-linear activations were studied in the 1980s.
 
@@ -155,6 +164,10 @@ Non-linearity is what grants the Universal Approximation Theorem its force.
 | Leaky ReLU | $\max(\alpha z, z),\;\alpha \ll 1$ | $(-\infty,\infty)$ | Fixes dead neurons |
 | GELU | $z \,\Phi(z)$ where $\Phi$ is the Normal CDF | $\approx(-0.17,\infty)$ | Used in BERT, GPT |
 | Softmax | $\sigma(\mathbf{z})_k = \frac{e^{z_k}}{\sum_j e^{z_j}}$ | $(0,1)$, sums to 1 | Output layer, multiclass |
+
+![Common activation functions](../assets/img/activation-functions.svg)
+
+> **Note - Shape matters:** Sigmoid and Tanh saturate at the extremes (vanishing gradients), while ReLU and Leaky ReLU stay linear for positive z, keeping gradients alive.
 
 **Why ReLU dominates.** For $z > 0$, $\frac{d}{dz}\text{ReLU}(z) = 1$, so the gradient does not
 saturate for positive pre-activations. This makes training deep networks dramatically faster.

@@ -96,6 +96,10 @@ $$F(x) = P(X \leq x)$$
 
 For a continuous variable, $F(x) = \int_{-\infty}^{x} f(t)\, dt$.
 
+![Discrete PMF vs continuous PDF and CDF](../assets/img/probability-distributions.svg)
+
+> **Note - Three views of a distribution:** The PMF places probability on discrete points, the PDF spreads it as area under a curve, and the CDF accumulates that probability from 0 to 1.
+
 **Key distributions:**
 
 | Distribution           | Type       | Parameters         | PMF / PDF                                                                      | ML use                                        |
@@ -106,6 +110,10 @@ For a continuous variable, $F(x) = \int_{-\infty}^{x} f(t)\, dt$.
 | Uniform                | Continuous | $a, b$             | $\frac{1}{b-a}$ on $[a,b]$                                                     | Weight initialization, random search          |
 | Poisson                | Discrete   | $\lambda > 0$      | $\frac{\lambda^k e^{-\lambda}}{k!}$                                            | Count data, arrival rates, NLP token counts   |
 | Categorical            | Discrete   | $p_1,\dots,p_K$    | $P(X=k) = p_k$                                                                 | Multiclass classification output              |
+
+![The Gaussian distribution and empirical rule](../assets/img/gaussian-distribution.svg)
+
+> **Note - The empirical rule:** For any Gaussian, ~68% of values lie within ±1σ of the mean μ, ~95% within ±2σ, and ~99.7% within ±3σ.
 
 **Expectation** — the long-run average value of a random variable:
 
@@ -205,6 +213,10 @@ $$P(D \mid +) = \frac{0.99 \times 0.01}{0.99 \times 0.01 + 0.01 \times 0.99} = \
 
 Only 50 %! The low base rate ($P(D) = 0.01$) dominates. This is why screening tests on rare
 conditions generate many false positives — a critical insight for ML on imbalanced datasets.
+
+![Bayes' theorem with the medical test example](../assets/img/bayes-theorem.svg)
+
+> **Note - Why the posterior is only 50%:** Among ~20 positive tests, about 10 come from the 10 truly diseased people and about 10 are false positives from the 990 healthy people, so a positive result is a coin flip.
 
 **MLE vs MAP:**
 

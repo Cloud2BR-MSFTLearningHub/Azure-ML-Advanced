@@ -49,6 +49,10 @@ El vector $\mathbf{x} \in \mathbb{R}^d$ es la entrada, $\mathbf{w} \in \mathbb{R
 sesgo, y $\phi$ la función de activación. Todo en el aprendizaje profundo está construido sobre
 la aplicación repetida de este patrón.
 
+![Anatomía de una neurona artificial](../assets/img/neuron-anatomy.svg)
+
+> **Nota - Cómo leer la neurona:** Las entradas fluyen de izquierda a derecha — cada una se escala por un peso, se suma en Σ, se desplaza con el sesgo b para formar z, y luego pasa por φ para producir ŷ.
+
 > **Nota - Por qué la analogía es imperfecta:** Las neuronas reales se comunican mediante
 > temporización de disparos, no valores continuos; tienen miles de compartimentos dendríticos;
 > y la plasticidad hebbiana es mucho más compleja que el descenso de gradiente. La metáfora
@@ -77,6 +81,11 @@ en el espacio de entrada.
 | 1     | 1     | 0   |
 
 Ninguna línea única en 2D puede separar las dos salidas de 1 de las dos salidas de 0.
+
+![XOR no es linealmente separable](../assets/img/xor-not-separable.svg)
+
+> **Nota - Por qué XOR rompe el perceptrón:** Las dos clases se ubican en diagonales opuestas, así que cualquier frontera recta única clasifica mal al menos un punto.
+
 Esta limitación, señalada por Minsky y Papert en 1969, detuvo temporalmente la investigación
 en redes neuronales hasta que las redes multicapa con activaciones no lineales fueron estudiadas
 en los años 1980.
@@ -163,6 +172,10 @@ La no linealidad es lo que le otorga fuerza al Teorema de Aproximación Universa
 | Leaky ReLU | $\max(\alpha z, z),\;\alpha \ll 1$ | $(-\infty,\infty)$ | Corrige neuronas muertas |
 | GELU | $z \,\Phi(z)$ donde $\Phi$ es la FDA Normal | $\approx(-0.17,\infty)$ | Usado en BERT, GPT |
 | Softmax | $\sigma(\mathbf{z})_k = \frac{e^{z_k}}{\sum_j e^{z_j}}$ | $(0,1)$, suma 1 | Capa de salida, multiclase |
+
+![Funciones de activación comunes](../assets/img/activation-functions.svg)
+
+> **Nota - La forma importa:** Sigmoide y Tanh se saturan en los extremos (gradientes que desaparecen), mientras que ReLU y Leaky ReLU permanecen lineales para z positivo, manteniendo vivos los gradientes.
 
 **Por qué domina ReLU.** Para $z > 0$, $\frac{d}{dz}\text{ReLU}(z) = 1$, por lo que el gradiente
 no se satura para pre-activaciones positivas. Esto hace que el entrenamiento de redes profundas
