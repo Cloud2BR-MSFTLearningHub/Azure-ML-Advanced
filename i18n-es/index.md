@@ -43,63 +43,68 @@ múltiples eras según la potencia de cómputo, la disponibilidad de datos y los
 		<h3>Prerrequisitos Matemáticos</h3>
 		<p>Probabilidad, álgebra lineal, cálculo y estadística: las bases matemáticas necesarias para todo el contenido de ML.</p>
 	</a>
-	<a class="home-card" href="modules/02-introduction/">
+	<a class="home-card" href="modules/02-e2e-overview/">
 		<span class="card-badge">Módulo 02</span>
+		<h3>Visión General de Extremo a Extremo</h3>
+		<p>Un mapa de todo el flujo de ML y cómo se conecta cada etapa, desde plantear el problema hasta monitorear en producción.</p>
+	</a>
+	<a class="home-card" href="modules/03-introduction/">
+		<span class="card-badge">Módulo 03</span>
 		<h3>Introducción y Ciclo de Vida</h3>
 		<p>IA vs ML vs ciencia de datos, categorías de IA y ciclo de vida integral de Azure ML.</p>
 	</a>
-	<a class="home-card" href="modules/03-ml-foundations/">
-		<span class="card-badge">Módulo 03</span>
+	<a class="home-card" href="modules/04-ml-foundations/">
+		<span class="card-badge">Módulo 04</span>
 		<h3>Fundamentos de ML</h3>
 		<p>Taxonomía completa de ML: supervisado, no supervisado, RL, semi/auto-supervisado, con fórmulas y guía de selección.</p>
 	</a>
-	<a class="home-card" href="modules/04-neural-networks/">
-		<span class="card-badge">Módulo 04</span>
+	<a class="home-card" href="modules/05-neural-networks/">
+		<span class="card-badge">Módulo 05</span>
 		<h3>Redes Neuronales y Deep Learning</h3>
 		<p>Del perceptrón a los Transformers: retropropagación, CNNs, RNNs, atención y entrenamiento a escala.</p>
 	</a>
-	<a class="home-card" href="modules/05-azure-ml-environment/">
-		<span class="card-badge">Módulo 05</span>
+	<a class="home-card" href="modules/06-azure-ml-environment/">
+		<span class="card-badge">Módulo 06</span>
 		<h3>Entorno de Azure ML</h3>
 		<p>Taxonomía del área de trabajo, tipos de cómputo, registro de modelos y endpoints.</p>
 	</a>
-	<a class="home-card" href="modules/06-environment-setup/">
-		<span class="card-badge">Módulo 06</span>
+	<a class="home-card" href="modules/07-environment-setup/">
+		<span class="card-badge">Módulo 07</span>
 		<h3>Configuración del Entorno</h3>
 		<p>Configuración de Conda/pip, validación de paquetes y consistencia del entorno de ejecución.</p>
 	</a>
-	<a class="home-card" href="modules/07-data-preparation/">
-		<span class="card-badge">Módulo 07</span>
+	<a class="home-card" href="modules/08-data-preparation/">
+		<span class="card-badge">Módulo 08</span>
 		<h3>Preparación de Datos</h3>
 		<p>Recolección de datos, limpieza, manejo de esquemas y estrategia de división.</p>
 	</a>
-	<a class="home-card" href="modules/08-model-types/">
-		<span class="card-badge">Módulo 08</span>
+	<a class="home-card" href="modules/09-model-types/">
+		<span class="card-badge">Módulo 09</span>
 		<h3>Tipos de Modelos</h3>
 		<p>Familias de algoritmos con formulaciones matemáticas representativas.</p>
 	</a>
-	<a class="home-card" href="modules/09-training-automl/">
-		<span class="card-badge">Módulo 09</span>
+	<a class="home-card" href="modules/10-training-automl/">
+		<span class="card-badge">Módulo 10</span>
 		<h3>Entrenamiento y AutoML</h3>
 		<p>Flujo de búsqueda de AutoML, opciones de cómputo y pipeline práctico de entrenamiento.</p>
 	</a>
-	<a class="home-card" href="modules/10-performance-metrics/">
-		<span class="card-badge">Módulo 10</span>
+	<a class="home-card" href="modules/11-performance-metrics/">
+		<span class="card-badge">Módulo 11</span>
 		<h3>Métricas de Rendimiento</h3>
 		<p>Métricas de clasificación y regresión, fórmulas e interpretación.</p>
 	</a>
-	<a class="home-card" href="modules/11-results-explainability/">
-		<span class="card-badge">Módulo 11</span>
+	<a class="home-card" href="modules/12-results-explainability/">
+		<span class="card-badge">Módulo 12</span>
 		<h3>Resultados y Explicabilidad</h3>
 		<p>Análisis de resultados, detección de deriva y métodos de explicabilidad.</p>
 	</a>
-	<a class="home-card" href="modules/12-deployment/">
-		<span class="card-badge">Módulo 12</span>
+	<a class="home-card" href="modules/13-deployment/">
+		<span class="card-badge">Módulo 13</span>
 		<h3>Despliegue</h3>
 		<p>Registro, scoring, despliegue de endpoints y patrones de servicio.</p>
 	</a>
-	<a class="home-card" href="modules/13-deployment-debug-k8s/">
-		<span class="card-badge">Módulo 13</span>
+	<a class="home-card" href="modules/14-deployment-debug-k8s/">
+		<span class="card-badge">Módulo 14</span>
 		<h3>Depuración de Despliegue</h3>
 		<p>Solución de problemas centrada en Kubernetes para incidencias de endpoints en producción.</p>
 	</a>

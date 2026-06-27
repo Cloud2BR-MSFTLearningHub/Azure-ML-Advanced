@@ -61,18 +61,19 @@ extra:
 nav:
   - Home: index.md
   - 01. Math Prerequisites: modules/01-math-prerequisites.md
-  - 02. Introduction and Lifecycle: modules/02-introduction.md
-  - 03. ML Foundations: modules/03-ml-foundations.md
-  - 04. Neural Networks and Deep Learning: modules/04-neural-networks.md
-  - 05. Azure ML Environment: modules/05-azure-ml-environment.md
-  - 06. Environment Setup: modules/06-environment-setup.md
-  - 07. Data Preparation: modules/07-data-preparation.md
-  - 08. Model Types: modules/08-model-types.md
-  - 09. Training and AutoML: modules/09-training-automl.md
-  - 10. Performance Metrics: modules/10-performance-metrics.md
-  - 11. Results and Explainability: modules/11-results-explainability.md
-  - 12. Deployment: modules/12-deployment.md
-  - 13. Deployment Debugging: modules/13-deployment-debug-k8s.md
+  - 02. End-to-End ML Overview: modules/02-e2e-overview.md
+  - 03. Introduction and Lifecycle: modules/03-introduction.md
+  - 04. ML Foundations: modules/04-ml-foundations.md
+  - 05. Neural Networks and Deep Learning: modules/05-neural-networks.md
+  - 06. Azure ML Environment: modules/06-azure-ml-environment.md
+  - 07. Environment Setup: modules/07-environment-setup.md
+  - 08. Data Preparation: modules/08-data-preparation.md
+  - 09. Model Types: modules/09-model-types.md
+  - 10. Training and AutoML: modules/10-training-automl.md
+  - 11. Performance Metrics: modules/11-performance-metrics.md
+  - 12. Results and Explainability: modules/12-results-explainability.md
+  - 13. Deployment: modules/13-deployment.md
+  - 14. Deployment Debugging: modules/14-deployment-debug-k8s.md
   - Reference:
       - Overview: reference/index.md
       - Mathematical Model Deep Dive: reference/model-math-deep-dive.md

@@ -509,7 +509,7 @@ necessary structure.
 
 > **Tip - Full neural network coverage:** Deep architectures, backpropagation, convolutional
 > networks, transformers, training regularization, and Azure ML GPU training are covered in full
-> in the [Neural Networks module](04-neural-networks.md).
+> in the [Neural Networks module](05-neural-networks.md).
 
 ---
 

@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="680" viewBox="0 0 1040 680" role="img" aria-labelledby="title desc">
+  <title id="title">The End-to-End Machine Learning Workflow</title>
+  <desc id="desc">A staged pipeline from problem framing through data preparation, model development, evaluation, deployment, and monitoring, with a feedback loop back to data.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f7fafc; }
+      .title { fill: #0f172a; font-family: Segoe UI, Arial, sans-serif; font-size: 28px; font-weight: 700; }
+      .subtitle { fill: #334155; font-family: Segoe UI, Arial, sans-serif; font-size: 15px; }
+      .card { fill: #ffffff; stroke: #cbd5e1; stroke-width: 1.5; }
+      .ch { fill: #ffffff; font-family: Segoe UI, Arial, sans-serif; font-size: 16px; font-weight: 700; }
+      .mp { fill: #ffffff; font-family: Segoe UI, Arial, sans-serif; font-size: 11px; font-weight: 700; opacity: 0.92; }
+      .bul { fill: #1f2937; font-family: Segoe UI, Arial, sans-serif; font-size: 13px; }
+      .fnd { fill: #1e293b; font-family: Segoe UI, Arial, sans-serif; font-size: 14px; font-weight: 600; }
+      .fbl { fill: #6d28d9; font-family: Segoe UI, Arial, sans-serif; font-size: 12px; font-weight: 700; }
+      .arrow { stroke: #475569; stroke-width: 2.5; fill: none; }
+      .fb { stroke: #6d28d9; stroke-width: 2.2; fill: none; stroke-dasharray: 6 5; }
+    </style>
+    <marker id="ah" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#475569"/>
+    </marker>
+    <marker id="ahp" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#6d28d9"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1040" height="680"/>
+  <text class="title" x="44" y="48">The End-to-End Machine Learning Workflow</text>
+  <text class="subtitle" x="44" y="76">How the pieces fit together, from framing a problem to monitoring a live model in production</text>
+
+  <!-- ===== Row 1 ===== -->
+  <!-- Card 1: Problem Framing -->
+  <rect class="card" x="44" y="104" width="296" height="206" rx="12"/>
+  <path d="M44,140 V116 a12,12 0 0 1 12,-12 H328 a12,12 0 0 1 12,12 V140 Z" fill="#004a99"/>
+  <text class="ch" x="60" y="130">Problem Framing</text>
+  <text class="mp" x="324" y="130" text-anchor="end">Module 03</text>
+  <circle cx="62" cy="166" r="3" fill="#004a99"/><text class="bul" x="74" y="170">Decision to improve</text>
+  <circle cx="62" cy="192" r="3" fill="#004a99"/><text class="bul" x="74" y="196">Unit and label</text>
+  <circle cx="62" cy="218" r="3" fill="#004a99"/><text class="bul" x="74" y="222">Success KPI</text>
+  <circle cx="62" cy="244" r="3" fill="#004a99"/><text class="bul" x="74" y="248">Cost of each error</text>
+
+  <!-- Card 2: Data Preparation -->
+  <rect class="card" x="372" y="104" width="296" height="206" rx="12"/>
+  <path d="M372,140 V116 a12,12 0 0 1 12,-12 H656 a12,12 0 0 1 12,12 V140 Z" fill="#0e7490"/>
+  <text class="ch" x="388" y="130">Data Preparation</text>
+  <text class="mp" x="652" y="130" text-anchor="end">Module 08</text>
+  <circle cx="390" cy="166" r="3" fill="#0e7490"/><text class="bul" x="402" y="170">Collect sources</text>
+  <circle cx="390" cy="192" r="3" fill="#0e7490"/><text class="bul" x="402" y="196">Clean and encode</text>
+  <circle cx="390" cy="218" r="3" fill="#0e7490"/><text class="bul" x="402" y="222">Identify datasets</text>
+  <circle cx="390" cy="244" r="3" fill="#0e7490"/><text class="bul" x="402" y="248">Train / test split</text>
+
+  <!-- Card 3: Model Development -->
+  <rect class="card" x="700" y="104" width="296" height="206" rx="12"/>
+  <path d="M700,140 V116 a12,12 0 0 1 12,-12 H984 a12,12 0 0 1 12,12 V140 Z" fill="#b45309"/>
+  <text class="ch" x="716" y="130">Model Development</text>
+  <text class="mp" x="980" y="130" text-anchor="end">Modules 06, 07, 09, 10</text>
+  <circle cx="718" cy="166" r="3" fill="#b45309"/><text class="bul" x="730" y="170">Workspace and environment</text>
+  <circle cx="718" cy="192" r="3" fill="#b45309"/><text class="bul" x="730" y="196">Choose model type</text>
+  <circle cx="718" cy="218" r="3" fill="#b45309"/><text class="bul" x="730" y="222">AutoML setup</text>
+  <circle cx="718" cy="244" r="3" fill="#b45309"/><text class="bul" x="730" y="248">Train and search</text>
+
+  <!-- ===== Row 2 ===== -->
+  <!-- Card 4: Monitoring (col1) -->
+  <rect class="card" x="44" y="380" width="296" height="206" rx="12"/>
+  <path d="M44,416 V392 a12,12 0 0 1 12,-12 H328 a12,12 0 0 1 12,12 V416 Z" fill="#6d28d9"/>
+  <text class="ch" x="60" y="406">Monitoring</text>
+  <text class="mp" x="324" y="406" text-anchor="end">Module 14</text>
+  <circle cx="62" cy="442" r="3" fill="#6d28d9"/><text class="bul" x="74" y="446">Track data and model drift</text>
+  <circle cx="62" cy="468" r="3" fill="#6d28d9"/><text class="bul" x="74" y="472">Debug endpoints</text>
+  <circle cx="62" cy="494" r="3" fill="#6d28d9"/><text class="bul" x="74" y="498">Trigger retraining</text>
+
+  <!-- Card 5: Deployment (col2) -->
+  <rect class="card" x="372" y="380" width="296" height="206" rx="12"/>
+  <path d="M372,416 V392 a12,12 0 0 1 12,-12 H656 a12,12 0 0 1 12,12 V416 Z" fill="#004a99"/>
+  <text class="ch" x="388" y="406">Deployment</text>
+  <text class="mp" x="652" y="406" text-anchor="end">Module 13</text>
+  <circle cx="390" cy="442" r="3" fill="#004a99"/><text class="bul" x="402" y="446">Register the model</text>
+  <circle cx="390" cy="468" r="3" fill="#004a99"/><text class="bul" x="402" y="472">Online or batch endpoint</text>
+  <circle cx="390" cy="494" r="3" fill="#004a99"/><text class="bul" x="402" y="498">Kubernetes serving</text>
+
+  <!-- Card 6: Evaluation (col3) -->
+  <rect class="card" x="700" y="380" width="296" height="206" rx="12"/>
+  <path d="M700,416 V392 a12,12 0 0 1 12,-12 H984 a12,12 0 0 1 12,12 V416 Z" fill="#15803d"/>
+  <text class="ch" x="716" y="406">Evaluation</text>
+  <text class="mp" x="980" y="406" text-anchor="end">Modules 11, 12</text>
+  <circle cx="718" cy="442" r="3" fill="#15803d"/><text class="bul" x="730" y="446">Compute metrics</text>
+  <circle cx="718" cy="468" r="3" fill="#15803d"/><text class="bul" x="730" y="472">Analyze results</text>
+  <circle cx="718" cy="494" r="3" fill="#15803d"/><text class="bul" x="730" y="498">Explainability</text>
+
+  <!-- ===== Flow arrows ===== -->
+  <!-- Row1 left to right -->
+  <path class="arrow" d="M340,207 L368,207" marker-end="url(#ah)"/>
+  <path class="arrow" d="M668,207 L696,207" marker-end="url(#ah)"/>
+  <!-- Down from Model Development to Evaluation -->
+  <path class="arrow" d="M848,310 L848,376" marker-end="url(#ah)"/>
+  <!-- Row2 right to left: Evaluation -> Deployment -> Monitoring -->
+  <path class="arrow" d="M700,483 L672,483" marker-end="url(#ah)"/>
+  <path class="arrow" d="M372,483 L344,483" marker-end="url(#ah)"/>
+  <!-- Feedback loop: Monitoring back up to Data Preparation -->
+  <path class="fb" d="M192,380 C192,348 520,352 520,314" marker-end="url(#ahp)"/>
+  <text class="fbl" x="356" y="346" text-anchor="middle">Monitor and retrain</text>
+
+  <!-- ===== Foundations band ===== -->
+  <rect x="44" y="612" width="952" height="46" rx="10" fill="#eef2ff" stroke="#c7d2fe" stroke-width="1.5"/>
+  <text class="fnd" x="520" y="641" text-anchor="middle">Foundations under every stage: Mathematics (Module 01) and Neural Networks and Deep Learning (Module 05)</text>
+</svg>

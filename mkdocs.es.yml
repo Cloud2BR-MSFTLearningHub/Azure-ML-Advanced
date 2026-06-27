@@ -64,18 +64,19 @@ extra:
 nav:
   - Inicio: index.md
   - 01. Prerrequisitos Matemáticos: modules/01-math-prerequisites.md
-  - 02. Introducción y Ciclo de Vida: modules/02-introduction.md
-  - 03. Fundamentos de ML: modules/03-ml-foundations.md
-  - 04. Redes Neuronales y Deep Learning: modules/04-neural-networks.md
-  - 05. Entorno de Azure ML: modules/05-azure-ml-environment.md
-  - 06. Configuración del Entorno: modules/06-environment-setup.md
-  - 07. Preparación de Datos: modules/07-data-preparation.md
-  - 08. Tipos de Modelos: modules/08-model-types.md
-  - 09. Entrenamiento y AutoML: modules/09-training-automl.md
-  - 10. Métricas de Rendimiento: modules/10-performance-metrics.md
-  - 11. Resultados y Explicabilidad: modules/11-results-explainability.md
-  - 12. Despliegue: modules/12-deployment.md
-  - 13. Depuración de Despliegue: modules/13-deployment-debug-k8s.md
+  - 02. Visión General de Extremo a Extremo: modules/02-e2e-overview.md
+  - 03. Introducción y Ciclo de Vida: modules/03-introduction.md
+  - 04. Fundamentos de ML: modules/04-ml-foundations.md
+  - 05. Redes Neuronales y Deep Learning: modules/05-neural-networks.md
+  - 06. Entorno de Azure ML: modules/06-azure-ml-environment.md
+  - 07. Configuración del Entorno: modules/07-environment-setup.md
+  - 08. Preparación de Datos: modules/08-data-preparation.md
+  - 09. Tipos de Modelos: modules/09-model-types.md
+  - 10. Entrenamiento y AutoML: modules/10-training-automl.md
+  - 11. Métricas de Rendimiento: modules/11-performance-metrics.md
+  - 12. Resultados y Explicabilidad: modules/12-results-explainability.md
+  - 13. Despliegue: modules/13-deployment.md
+  - 14. Depuración de Despliegue: modules/14-deployment-debug-k8s.md
   - Referencia:
       - Visión General: reference/index.md
       - Análisis Matemático Profundo de Modelos: reference/model-math-deep-dive.md
