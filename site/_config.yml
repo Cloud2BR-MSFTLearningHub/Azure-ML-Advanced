@@ -1,0 +1,21 @@
+title: Azure ML Training Hub
+description: Azure Machine Learning advanced training
+remote_theme: just-the-docs/just-the-docs
+plugins:
+  - jekyll-remote-theme
+  - jekyll-seo-tag
+color_scheme: light
+search_enabled: true
+heading_anchors: true
+footer_content: "Maintained by <a href='https://github.com/Cloud2BR-MSFTLearningHub'>Cloud2BR-MSFTLearningHub</a>."
+mermaid:
+  version: "10.9.1"
+markdown: kramdown
+kramdown:
+  math_engine: null
+  syntax_highlighter: rouge
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - .bundle

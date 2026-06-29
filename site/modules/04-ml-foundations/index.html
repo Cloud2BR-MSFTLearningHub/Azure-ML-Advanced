@@ -1,0 +1,3496 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Azure Machine Learning training from fundamentals to advanced MLOps.">
+      
+      
+      
+        <link rel="canonical" href="https://cloud2br-msftlearninghub.github.io/Azure-ML-Advanced/modules/04-ml-foundations/">
+      
+      
+        <link rel="prev" href="../03-introduction/">
+      
+      
+        <link rel="next" href="../05-neural-networks/">
+      
+      
+        
+          <link rel="alternate" href="/Azure-ML-Advanced/" hreflang="en">
+        
+          <link rel="alternate" href="/Azure-ML-Advanced/es/" hreflang="es">
+        
+      
+      
+      <link rel="icon" href="../../assets/img/org-logo.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>04. ML Foundations - Azure Machine Learning: Advanced</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/css/custom.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ml-foundations" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Azure Machine Learning: Advanced" class="md-header__button md-logo" aria-label="Azure Machine Learning: Advanced" data-md-component="logo">
+      
+  <img src="../../assets/img/org-logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Azure Machine Learning: Advanced
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              04. ML Foundations
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="Select language">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="/Azure-ML-Advanced/" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="/Azure-ML-Advanced/es/" hreflang="es" class="md-select__link">
+              Español
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Azure Machine Learning: Advanced" class="md-nav__button md-logo" aria-label="Azure Machine Learning: Advanced" data-md-component="logo">
+      
+  <img src="../../assets/img/org-logo.png" alt="logo">
+
+    </a>
+    Azure Machine Learning: Advanced
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-math-prerequisites/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01. Math Prerequisites
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-e2e-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02. End-to-End ML Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03. Introduction and Lifecycle
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04. ML Foundations
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04. ML Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#core-learning-families" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core learning families
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#problem-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Problem Types
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-and-notation-basics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data and notation basics
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#supervised-learning-categories" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Supervised learning categories
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Supervised learning categories">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#classification-vs-regression-intuition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Classification vs regression intuition
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unsupervised-learning-categories" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Unsupervised learning categories
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#semi-supervised-and-self-supervised" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Semi-supervised and self-supervised
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reinforcement-learning-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reinforcement learning components
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#overfitting-and-generalization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overfitting and generalization
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bias-variance-intuition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bias-variance intuition
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-choose-an-ml-type-quickly" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How to choose an ML type quickly
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#typical-mistakes-to-avoid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Typical mistakes to avoid
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deep-dive-every-concept-explained" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deep dive: every concept, explained
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deep dive: every concept, explained">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reading-the-supervised-setup-d-x_i-y_i_i1n" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reading the supervised setup \(D = (x_i, y_i)_{i=1}^{N}\)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#empirical-risk-minimization-erm-step-by-step" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Empirical risk minimization (ERM), step by step
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-each-loss-function-has-the-shape-it-does" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why each loss function has the shape it does
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gradient-descent-what-each-symbol-controls" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gradient descent: what each symbol controls
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#l1-vs-l2-regularization-geometry-and-effect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        L1 vs L2 regularization: geometry and effect
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bias-variance-decomposition-in-plain-terms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bias: variance decomposition, in plain terms
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cross-validation-and-why-the-test-set-is-sacred" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cross-validation and why the test set is sacred
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#putting-it-together-diagnosing-underfitting-vs-overfitting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Putting it together: diagnosing underfitting vs overfitting
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-concrete-bias-variance-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A concrete bias-variance example
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-self-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick self-check
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#online-learning-and-streaming" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Online learning and streaming
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Online learning and streaming">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#formal-definition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Formal definition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-batch-training-fails" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When batch training fails
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sgd-as-an-online-learner" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SGD as an online learner
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vowpal-wabbit-and-the-river-library" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vowpal Wabbit and the river library
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#real-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Real examples
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#multi-armed-bandit-and-exploration-exploitation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Multi-armed bandit and exploration-exploitation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Multi-armed bandit and exploration-exploitation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-exploration-exploitation-dilemma" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The exploration-exploitation dilemma
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#epsilon-greedy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Epsilon-greedy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#upper-confidence-bound-ucb" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Upper Confidence Bound (UCB)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#thompson-sampling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Thompson sampling
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#difference-from-full-reinforcement-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Difference from full reinforcement learning
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ab-testing-vs-bandits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A/B testing vs bandits
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#transfer-learning-and-domain-adaptation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Transfer learning and domain adaptation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Transfer learning and domain adaptation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#formal-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Formal setup
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#covariate-shift" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Covariate shift
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fine-tuning-mechanics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fine-tuning mechanics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-pretrained-features-transfer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why pretrained features transfer
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#causal-inference-vs-correlation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Causal inference vs correlation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Causal inference vs correlation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#correlation-does-not-imply-causation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Correlation does not imply causation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#simpsons-paradox" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Simpson's paradox
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#observational-vs-experimental-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Observational vs experimental data
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-potential-outcomes-framework" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The potential outcomes framework
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-ml-is-not-enough" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When ML is not enough
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-no-free-lunch-theorem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The No Free Lunch theorem
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The No Free Lunch theorem">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#statement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Statement
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-this-is-not-pessimistic-in-practice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why this is not pessimistic in practice
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#implications-for-model-selection-and-evaluation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Implications for model selection and evaluation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#computational-complexity-of-ml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Computational complexity of ML
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Computational complexity of ML">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#training-complexity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Training complexity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prediction-complexity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prediction complexity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-complexity-matters-for-production" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why complexity matters for production
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deep-dive-additions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deep dive additions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deep dive additions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#derivation-of-the-bias-variance-decomposition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Derivation of the bias-variance decomposition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-cross-entropy-is-the-right-loss-for-classification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why cross-entropy is the right loss for classification
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Why cross-entropy is the right loss for classification">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setup-maximum-likelihood-estimation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setup: maximum likelihood estimation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-likelihood-of-the-training-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The likelihood of the training data
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#log-likelihood" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Log-likelihood
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#equivalence-to-minimizing-cross-entropy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Equivalence to minimizing cross-entropy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-other-losses-are-suboptimal-for-classification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why other losses are suboptimal for classification
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-self-check-extended" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick self-check (extended)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-neural-networks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05. Neural Networks and Deep Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-azure-ml-environment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06. Azure ML Environment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-environment-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07. Environment Setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-data-preparation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08. Data Preparation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-model-types/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09. Model Types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-training-automl/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Training and AutoML
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11-performance-metrics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Performance Metrics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../12-results-explainability/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Results and Explainability
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13-deployment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Deployment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../14-deployment-debug-k8s/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. Deployment Debugging
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_16" >
+        
+          
+          <label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_16">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/model-math-deep-dive/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mathematical Model Deep Dive
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/cli-commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#core-learning-families" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core learning families
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#problem-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Problem Types
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#data-and-notation-basics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data and notation basics
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#supervised-learning-categories" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Supervised learning categories
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Supervised learning categories">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#classification-vs-regression-intuition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Classification vs regression intuition
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unsupervised-learning-categories" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Unsupervised learning categories
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#semi-supervised-and-self-supervised" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Semi-supervised and self-supervised
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reinforcement-learning-components" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reinforcement learning components
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#overfitting-and-generalization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overfitting and generalization
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bias-variance-intuition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bias-variance intuition
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-choose-an-ml-type-quickly" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How to choose an ML type quickly
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#typical-mistakes-to-avoid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Typical mistakes to avoid
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deep-dive-every-concept-explained" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deep dive: every concept, explained
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deep dive: every concept, explained">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reading-the-supervised-setup-d-x_i-y_i_i1n" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reading the supervised setup \(D = (x_i, y_i)_{i=1}^{N}\)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#empirical-risk-minimization-erm-step-by-step" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Empirical risk minimization (ERM), step by step
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-each-loss-function-has-the-shape-it-does" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why each loss function has the shape it does
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gradient-descent-what-each-symbol-controls" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gradient descent: what each symbol controls
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#l1-vs-l2-regularization-geometry-and-effect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        L1 vs L2 regularization: geometry and effect
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bias-variance-decomposition-in-plain-terms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bias: variance decomposition, in plain terms
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cross-validation-and-why-the-test-set-is-sacred" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cross-validation and why the test set is sacred
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#putting-it-together-diagnosing-underfitting-vs-overfitting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Putting it together: diagnosing underfitting vs overfitting
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-concrete-bias-variance-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A concrete bias-variance example
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-self-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick self-check
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#online-learning-and-streaming" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Online learning and streaming
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Online learning and streaming">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#formal-definition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Formal definition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-batch-training-fails" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When batch training fails
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sgd-as-an-online-learner" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SGD as an online learner
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vowpal-wabbit-and-the-river-library" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vowpal Wabbit and the river library
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#real-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Real examples
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#multi-armed-bandit-and-exploration-exploitation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Multi-armed bandit and exploration-exploitation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Multi-armed bandit and exploration-exploitation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-exploration-exploitation-dilemma" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The exploration-exploitation dilemma
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#epsilon-greedy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Epsilon-greedy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#upper-confidence-bound-ucb" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Upper Confidence Bound (UCB)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#thompson-sampling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Thompson sampling
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#difference-from-full-reinforcement-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Difference from full reinforcement learning
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ab-testing-vs-bandits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A/B testing vs bandits
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#transfer-learning-and-domain-adaptation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Transfer learning and domain adaptation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Transfer learning and domain adaptation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#formal-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Formal setup
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#covariate-shift" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Covariate shift
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fine-tuning-mechanics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fine-tuning mechanics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-pretrained-features-transfer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why pretrained features transfer
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#causal-inference-vs-correlation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Causal inference vs correlation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Causal inference vs correlation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#correlation-does-not-imply-causation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Correlation does not imply causation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#simpsons-paradox" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Simpson's paradox
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#observational-vs-experimental-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Observational vs experimental data
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-potential-outcomes-framework" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The potential outcomes framework
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#when-ml-is-not-enough" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        When ML is not enough
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-no-free-lunch-theorem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The No Free Lunch theorem
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The No Free Lunch theorem">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#statement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Statement
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-this-is-not-pessimistic-in-practice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why this is not pessimistic in practice
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#implications-for-model-selection-and-evaluation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Implications for model selection and evaluation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#computational-complexity-of-ml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Computational complexity of ML
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Computational complexity of ML">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#training-complexity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Training complexity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prediction-complexity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prediction complexity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-complexity-matters-for-production" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why complexity matters for production
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deep-dive-additions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deep dive additions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deep dive additions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#derivation-of-the-bias-variance-decomposition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Derivation of the bias-variance decomposition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-cross-entropy-is-the-right-loss-for-classification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why cross-entropy is the right loss for classification
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Why cross-entropy is the right loss for classification">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setup-maximum-likelihood-estimation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Setup: maximum likelihood estimation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-likelihood-of-the-training-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The likelihood of the training data
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#log-likelihood" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Log-likelihood
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#equivalence-to-minimizing-cross-entropy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Equivalence to minimizing cross-entropy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-other-losses-are-suboptimal-for-classification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why other losses are suboptimal for classification
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-self-check-extended" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick self-check (extended)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="ml-foundations">ML Foundations<a class="headerlink" href="#ml-foundations" title="Permanent link">&para;</a></h1>
+<p>This module builds the mathematical and conceptual base needed for all later modules.<br />
+It starts from first principles and then moves into model families and selection logic.</p>
+<h2 id="core-learning-families">Core learning families<a class="headerlink" href="#core-learning-families" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Supervised learning: classification and regression</li>
+<li>Unsupervised learning: clustering and association</li>
+<li>Reinforcement learning: policy learning from rewards</li>
+</ul>
+<p>Additional modern families used in production:</p>
+<ul>
+<li>Semi-supervised learning: combine a small labeled set with a large unlabeled set.</li>
+<li>Self-supervised learning: create supervisory signals from the data itself.</li>
+<li>Online learning: update models continuously from streaming/new data.</li>
+</ul>
+<p>What to remember:</p>
+<ul>
+<li>Supervised learns from known answers.</li>
+<li>Unsupervised discovers structure without labels.</li>
+<li>Reinforcement learns through interaction and reward.</li>
+</ul>
+<p><img alt="Machine learning types" src="../../assets/img/machine_learning_types.svg" /></p>
+<blockquote>
+<p><strong>Note - What this shows:</strong> The major learning families side by side. The distinguishing axis is the <em>feedback signal</em>:
+labeled answers (supervised), structure-only (unsupervised), or reward from interaction
+(reinforcement). Identifying which signal your data provides is the first step in choosing an
+approach.</p>
+</blockquote>
+<p><img alt="Types of ML based on objective" src="../../assets/img/types_of_ml_based_in_objective.svg" /></p>
+<blockquote>
+<p><strong>Note - What this shows:</strong> ML tasks organized by <em>objective</em> (predict a class, predict a number, group records, reduce
+dimensions). Map your business question to one of these objectives before picking an algorithm :
+the objective constrains both the model family and the evaluation metric.</p>
+</blockquote>
+<h2 id="problem-types">Problem Types<a class="headerlink" href="#problem-types" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Supervised: classification and regression</li>
+<li>Unsupervised: clustering and association</li>
+<li>Reinforcement: control and policy optimization</li>
+</ul>
+<h2 id="data-and-notation-basics">Data and notation basics<a class="headerlink" href="#data-and-notation-basics" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Dataset: <span class="arithmatex">\(D = (x_i, y_i)_{i=1}^{N}\)</span> for supervised learning.</li>
+<li>Feature vector: <span class="arithmatex">\(x_i \in \mathbb{R}^{d}\)</span>.</li>
+<li>Target/label: <span class="arithmatex">\(y_i\)</span>.</li>
+<li>Model: <span class="arithmatex">\(f_{\theta}(x)\)</span> with parameters <span class="arithmatex">\(\theta\)</span>.</li>
+</ul>
+<h2 id="supervised-learning-categories">Supervised learning categories<a class="headerlink" href="#supervised-learning-categories" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Output type</th>
+<th>Examples</th>
+<th>Typical metrics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Binary classification</td>
+<td>0/1 class</td>
+<td>Fraud yes/no, churn yes/no</td>
+<td>Precision, Recall, F1, AUC</td>
+</tr>
+<tr>
+<td>Multi-class classification</td>
+<td>One of <span class="arithmatex">\(K\)</span> classes</td>
+<td>Product category, diagnosis class</td>
+<td>Macro-F1, accuracy, log loss</td>
+</tr>
+<tr>
+<td>Multi-label classification</td>
+<td>Multiple classes per sample</td>
+<td>Tagging documents/topics</td>
+<td>Micro-F1, Hamming loss</td>
+</tr>
+<tr>
+<td>Regression</td>
+<td>Continuous value</td>
+<td>Price, demand, latency</td>
+<td>MAE, RMSE, <span class="arithmatex">\(R^2\)</span></td>
+</tr>
+<tr>
+<td>Time-series forecasting</td>
+<td>Future values over time</td>
+<td>Sales, energy, traffic</td>
+<td>MAPE, RMSE, sMAPE</td>
+</tr>
+</tbody>
+</table>
+<h3 id="classification-vs-regression-intuition">Classification vs regression intuition<a class="headerlink" href="#classification-vs-regression-intuition" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Classification predicts which class.</li>
+<li>Regression predicts how much.</li>
+</ul>
+<p>The same feature set can support both depending on business objective.</p>
+<h2 id="unsupervised-learning-categories">Unsupervised learning categories<a class="headerlink" href="#unsupervised-learning-categories" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Purpose</th>
+<th>Typical methods</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Clustering</td>
+<td>Group similar observations</td>
+<td>K-Means, DBSCAN, hierarchical clustering</td>
+</tr>
+<tr>
+<td>Dimensionality reduction</td>
+<td>Compress features while retaining structure</td>
+<td>PCA, UMAP, autoencoders</td>
+</tr>
+<tr>
+<td>Association mining</td>
+<td>Find co-occurrence rules</td>
+<td>Apriori, FP-growth</td>
+</tr>
+<tr>
+<td>Anomaly detection</td>
+<td>Detect rare/abnormal patterns</td>
+<td>Isolation Forest, One-Class SVM</td>
+</tr>
+</tbody>
+</table>
+<h2 id="semi-supervised-and-self-supervised">Semi-supervised and self-supervised<a class="headerlink" href="#semi-supervised-and-self-supervised" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Semi-supervised is useful when labels are expensive. Example: you have 1,000 labelled medical images and 50,000 unlabelled ones. A semi-supervised approach trains on both, propagating labels from confident predictions.</li>
+<li>Self-supervised is common in foundation models (GPT, BERT, CLIP) and pretraining pipelines. The model is trained on a proxy task whose labels come from the data itself, for example predict the next word or reconstruct a masked patch.</li>
+<li>Both reduce dependence on manual labeling, which is expensive and slow at scale.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Approach</th>
+<th>Label requirement</th>
+<th>Common algorithms</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Supervised</td>
+<td>All samples labelled</td>
+<td>Logistic regression, XGBoost, NN</td>
+</tr>
+<tr>
+<td>Semi-supervised</td>
+<td>Small fraction labelled</td>
+<td>Label propagation, pseudo-labelling</td>
+</tr>
+<tr>
+<td>Self-supervised</td>
+<td>No labels needed</td>
+<td>Masked autoencoders, contrastive learning</td>
+</tr>
+</tbody>
+</table>
+<h2 id="reinforcement-learning-components">Reinforcement learning components<a class="headerlink" href="#reinforcement-learning-components" title="Permanent link">&para;</a></h2>
+<p>RL is usually modeled as a Markov Decision Process (MDP):</p>
+<div class="arithmatex">\[  
+(\mathcal{S},\mathcal{A},P,R,\gamma)  
+\]</div>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(\mathcal{S}\)</span>: set of states</li>
+<li><span class="arithmatex">\(\mathcal{A}\)</span>: set of actions</li>
+<li><span class="arithmatex">\(P\)</span>: transition dynamics</li>
+<li><span class="arithmatex">\(R\)</span>: reward function</li>
+<li><span class="arithmatex">\(\gamma\)</span>: discount factor</li>
+</ul>
+<p>Value function concept:</p>
+<div class="arithmatex">\[  
+V^{\pi}(s)=\mathbb{E}*{\pi}\left[\sum*{t=0}^{\infty}\gamma^t r_t\mid s_0=s\right]  
+\]</div>
+<p>Goal:</p>
+<div class="arithmatex">\[  
+\max_{\pi}\mathbb{E}*{\pi}\left[\sum*{t=0}^{\infty}\gamma^t r_t\right]  
+\]</div>
+<p>Supervised objective:</p>
+<div class="arithmatex">\[  
+\min_{\theta} \frac{1}{N}\sum_{i=1}^{N}\mathcal{L}(f_{\theta}(x_i), y_i)  
+\]</div>
+<p>This is empirical risk minimization: find parameters minimizing average training loss.</p>
+<p>Common loss functions:</p>
+<div class="arithmatex">\[  
+\mathcal{L}*{MSE}=\frac{1}{N}\sum*{i=1}^{N}(y_i-\hat{y}_i)^2  
+\]</div>
+<div class="arithmatex">\[  
+\mathcal{L}*{BCE}=-\frac{1}{N}\sum*{i=1}^{N}\left[y_i\log(\hat{p}_i)+(1-y_i)\log(1-\hat{p}_i)\right]  
+\]</div>
+<p>Multiclass cross-entropy:</p>
+<div class="arithmatex">\[  
+\mathcal{L}*{CE}=-\frac{1}{N}\sum*{i=1}^{N}\sum_{k=1}^{K}y_{ik}\log(\hat{p}_{ik})  
+\]</div>
+<p>Optimization objective with regularization:</p>
+<div class="arithmatex">\[  
+\min_{\theta}\frac{1}{N}\sum_{i=1}^{N}\mathcal{L}(f_{\theta}(x_i),y_i)+\lambda R(\theta)  
+\]</div>
+<p>Gradient descent update:</p>
+<div class="arithmatex">\[  
+\theta_{t+1}=\theta_t-\eta\nabla_{\theta}\mathcal{L}  
+\]</div>
+<p>Regularization:</p>
+<div class="arithmatex">\[  
+\min_{\theta}\frac{1}{N}\sum_{i=1}^{N}\mathcal{L}(f_{\theta}(x_i),y_i)+\lambda R(\theta)  
+\]</div>
+<p>Common choices:</p>
+<ul>
+<li>L1 regularization: <span class="arithmatex">\(R(\theta)=\lVert\theta\rVert_1\)</span> (sparsity, feature selection)</li>
+<li>L2 regularization: <span class="arithmatex">\(R(\theta)=\lVert\theta\rVert_2^2\)</span> (weight shrinkage, stability)</li>
+</ul>
+<h2 id="overfitting-and-generalization">Overfitting and generalization<a class="headerlink" href="#overfitting-and-generalization" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Training error can decrease while test error increases (overfitting).</li>
+<li>Use train/validation/test separation and cross-validation.</li>
+<li>Prefer simpler models when performance is comparable.</li>
+</ul>
+<p>Practical split sizes (rule of thumb):</p>
+<table>
+<thead>
+<tr>
+<th>Split</th>
+<th>Typical proportion</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Train</td>
+<td>60-80%</td>
+<td>Fit model parameters</td>
+</tr>
+<tr>
+<td>Validation</td>
+<td>10-20%</td>
+<td>Tune hyperparameters and compare models</td>
+</tr>
+<tr>
+<td>Test</td>
+<td>10-20%</td>
+<td>Final unbiased evaluation before deployment</td>
+</tr>
+</tbody>
+</table>
+<p>The test set must <strong>never</strong> be used during model selection. Using it for selection is a form of data leakage that makes offline scores over-optimistic.</p>
+<p>Cross-validation: when data is limited, k-fold CV uses all data for both training and validation by rotating folds. K=5 or K=10 is typical.</p>
+<h2 id="bias-variance-intuition">Bias-variance intuition<a class="headerlink" href="#bias-variance-intuition" title="Permanent link">&para;</a></h2>
+<p><img alt="Bias-variance trade-off" src="../../assets/img/bias-variance-tradeoff.svg" /></p>
+<blockquote>
+<p><strong>Note - How to read this chart:</strong> As complexity grows, <strong>bias squared</strong> falls (the model can fit more) while <strong>variance</strong> rises
+(the model reacts more to the particular training sample). Their sum : total error : is a U-shape
+minimized at an intermediate complexity. Left of the minimum you underfit; right of it you
+overfit. The floor of the curve never reaches zero because of irreducible noise <span class="arithmatex">\(\sigma^2\)</span>.</p>
+</blockquote>
+<ul>
+<li>High bias: model too simple, underfits. Symptom: low training accuracy and low test accuracy.</li>
+<li>High variance: model too complex, overfits. Symptom: high training accuracy, much lower test accuracy.</li>
+</ul>
+<p>The expected test error decomposes as:</p>
+<div class="arithmatex">\[  
+\mathbb{E}[(y-\hat{f}(x))^2] = \text{Bias}^2 + \text{Variance} + \sigma^2  
+\]</div>
+<p>where <span class="arithmatex">\(\sigma^2\)</span> is irreducible noise.</p>
+<p>The practical goal is to balance both:</p>
+<table>
+<thead>
+<tr>
+<th>Technique</th>
+<th>Addresses</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>More training data</td>
+<td>Reduces variance</td>
+</tr>
+<tr>
+<td>Regularization (L1/L2)</td>
+<td>Reduces variance</td>
+</tr>
+<tr>
+<td>Feature selection/engineering</td>
+<td>Can reduce bias and variance</td>
+</tr>
+<tr>
+<td>More complex model</td>
+<td>Reduces bias (risk: more variance)</td>
+</tr>
+<tr>
+<td>Ensemble methods</td>
+<td>Reduces both (usually)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="how-to-choose-an-ml-type-quickly">How to choose an ML type quickly<a class="headerlink" href="#how-to-choose-an-ml-type-quickly" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>If your question is...</th>
+<th>Use...</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Can I predict this known target?</td>
+<td>Supervised learning</td>
+</tr>
+<tr>
+<td>Can I group similar records without labels?</td>
+<td>Unsupervised learning</td>
+</tr>
+<tr>
+<td>Can an agent learn through interaction and reward?</td>
+<td>Reinforcement learning</td>
+</tr>
+<tr>
+<td>I have few labels but lots of unlabeled data</td>
+<td>Semi-supervised learning</td>
+</tr>
+</tbody>
+</table>
+<h2 id="typical-mistakes-to-avoid">Typical mistakes to avoid<a class="headerlink" href="#typical-mistakes-to-avoid" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Using accuracy alone on highly imbalanced datasets.</li>
+<li>Mixing train/test data during preprocessing (data leakage).</li>
+<li>Ignoring concept drift after deployment.</li>
+<li>Treating model score as the only KPI without business impact validation.</li>
+</ul>
+<h2 id="deep-dive-every-concept-explained">Deep dive: every concept, explained<a class="headerlink" href="#deep-dive-every-concept-explained" title="Permanent link">&para;</a></h2>
+<p>This section unpacks the notation and objectives above so each symbol has a clear meaning<br />
+and a reason for existing.</p>
+<h3 id="reading-the-supervised-setup-d-x_i-y_i_i1n">Reading the supervised setup <span class="arithmatex">\(D = (x_i, y_i)_{i=1}^{N}\)</span><a class="headerlink" href="#reading-the-supervised-setup-d-x_i-y_i_i1n" title="Permanent link">&para;</a></h3>
+<ul>
+<li><span class="arithmatex">\(N\)</span> is the number of training examples. More examples reduce <strong>variance</strong> (see below) because<br />
+the empirical average is a tighter estimate of the true expectation.</li>
+<li><span class="arithmatex">\(x_i \in \mathbb{R}^{d}\)</span> is a <strong>feature vector</strong>: a row of <span class="arithmatex">\(d\)</span> numbers describing one example.<br />
+The dimension <span class="arithmatex">\(d\)</span> is the <em>feature space size</em>; high <span class="arithmatex">\(d\)</span> with small <span class="arithmatex">\(N\)</span> is the classic<br />
+"curse of dimensionality", where data becomes sparse and distances lose meaning.</li>
+<li><span class="arithmatex">\(y_i\)</span> is the <strong>label</strong>. Its type decides the task: discrete → classification, continuous →<br />
+regression, ordered-over-time → forecasting.</li>
+<li><span class="arithmatex">\(f_\theta\)</span> is the <strong>model</strong>: a parameterized function. <span class="arithmatex">\(\theta\)</span> are the <strong>parameters</strong><br />
+(weights) the optimizer adjusts. Anything you set <em>before</em> training (tree depth, learning<br />
+rate, regularization strength) is a <strong>hyperparameter</strong>, tuned on validation data, not learned.</li>
+</ul>
+<h3 id="empirical-risk-minimization-erm-step-by-step">Empirical risk minimization (ERM), step by step<a class="headerlink" href="#empirical-risk-minimization-erm-step-by-step" title="Permanent link">&para;</a></h3>
+<p>The objective <span class="arithmatex">\(\min_\theta \frac{1}{N}\sum_i \mathcal{L}(f_\theta(x_i), y_i)\)</span> says:<br />
+"choose parameters that make the average mistake on the training data as small as possible."</p>
+<ul>
+<li><span class="arithmatex">\(\mathcal{L}\)</span> is the <strong>loss function</strong> : it scores how wrong a single prediction is.</li>
+<li>The <span class="arithmatex">\(\frac{1}{N}\sum\)</span> turns per-example losses into an <strong>average</strong> (the <em>empirical risk</em>),<br />
+which is our computable stand-in for the true expected risk over <span class="arithmatex">\(P(X,Y)\)</span>.</li>
+<li>ERM only works if the training sample resembles production data. When it does not, low<br />
+training risk does not imply low real-world risk : this is exactly why we hold out test data.</li>
+</ul>
+<h3 id="why-each-loss-function-has-the-shape-it-does">Why each loss function has the shape it does<a class="headerlink" href="#why-each-loss-function-has-the-shape-it-does" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>MSE</strong> <span class="arithmatex">\(\frac{1}{N}\sum (y_i-\hat y_i)^2\)</span> squares errors, so large mistakes dominate. It is<br />
+the maximum-likelihood loss when noise is Gaussian, which is why it pairs with regression.</li>
+<li><strong>Binary cross-entropy (BCE)</strong> <span class="arithmatex">\(-\frac{1}{N}\sum [y\log\hat p + (1-y)\log(1-\hat p)]\)</span><br />
+measures the <em>surprise</em> of the true label under the predicted probability. It explodes when<br />
+the model is confidently wrong (<span class="arithmatex">\(\hat p \to 0\)</span> while <span class="arithmatex">\(y=1\)</span>), which strongly discourages<br />
+overconfidence. It is the maximum-likelihood loss for a Bernoulli target.</li>
+<li><strong>Categorical cross-entropy</strong> generalizes BCE to <span class="arithmatex">\(K\)</span> classes by summing surprise over the<br />
+one-hot label <span class="arithmatex">\(y_{ik}\)</span>.</li>
+</ul>
+<h3 id="gradient-descent-what-each-symbol-controls">Gradient descent: what each symbol controls<a class="headerlink" href="#gradient-descent-what-each-symbol-controls" title="Permanent link">&para;</a></h3>
+<p>The update <span class="arithmatex">\(\theta_{t+1} = \theta_t - \eta\nabla_\theta\mathcal{L}\)</span> is the workhorse of ML.</p>
+<ul>
+<li><span class="arithmatex">\(\nabla_\theta\mathcal{L}\)</span> is the <strong>gradient</strong>: the direction of steepest <em>increase</em> of the<br />
+loss. Moving in the <em>negative</em> gradient direction reduces loss.</li>
+<li><span class="arithmatex">\(\eta\)</span> is the <strong>learning rate</strong> (step size). Too large → the optimizer overshoots and<br />
+diverges; too small → training is slow and may stall in flat regions. In practice it is the<br />
+single most important hyperparameter to tune.</li>
+<li>Variants matter operationally: <strong>batch</strong> GD uses all data per step (stable, slow);<br />
+<strong>stochastic</strong> GD uses one example (noisy, fast); <strong>mini-batch</strong> GD (the standard) trades off<br />
+both and is what deep-learning frameworks use.</li>
+</ul>
+<h3 id="l1-vs-l2-regularization-geometry-and-effect">L1 vs L2 regularization: geometry and effect<a class="headerlink" href="#l1-vs-l2-regularization-geometry-and-effect" title="Permanent link">&para;</a></h3>
+<p>Regularization adds a penalty <span class="arithmatex">\(\lambda R(\theta)\)</span> to discourage complex models:</p>
+<ul>
+<li><strong>L1</strong> (<span class="arithmatex">\(\lVert\theta\rVert_1\)</span>) has corners on its constraint region, so the optimum often<br />
+lands exactly on an axis → some weights become <strong>exactly zero</strong> → automatic feature selection<br />
+and sparse models.</li>
+<li><strong>L2</strong> (<span class="arithmatex">\(\lVert\theta\rVert_2^2\)</span>) shrinks all weights smoothly toward zero without forcing<br />
+any to vanish → more stable, better-conditioned solutions.</li>
+<li><span class="arithmatex">\(\lambda\)</span> is the <strong>regularization strength</strong>: higher <span class="arithmatex">\(\lambda\)</span> → simpler model → more bias,<br />
+less variance. It is tuned on validation data, never on the test set.</li>
+</ul>
+<h3 id="bias-variance-decomposition-in-plain-terms">Bias: variance decomposition, in plain terms<a class="headerlink" href="#bias-variance-decomposition-in-plain-terms" title="Permanent link">&para;</a></h3>
+<p><span class="arithmatex">\(\mathbb{E}[(y-\hat f(x))^2] = \text{Bias}^2 + \text{Variance} + \sigma^2\)</span> splits a model's<br />
+expected error into three sources:</p>
+<ul>
+<li><strong>Bias</strong> : error from wrong assumptions (model too simple to capture the pattern). High bias<br />
+shows as <em>both</em> low train and low test accuracy (underfitting).</li>
+<li><strong>Variance</strong> : error from sensitivity to the particular training sample. High variance shows<br />
+as a large gap between high train accuracy and lower test accuracy (overfitting).</li>
+<li><span class="arithmatex">\(\sigma^2\)</span> : <strong>irreducible noise</strong> in the labels themselves. No model can beat this floor; it<br />
+is set by data quality, not algorithm choice.</li>
+</ul>
+<p>The art of modeling is moving along this trade-off : adding capacity to cut bias, adding data<br />
+or regularization to cut variance : until the <em>sum</em> is minimized.</p>
+<h3 id="cross-validation-and-why-the-test-set-is-sacred">Cross-validation and why the test set is sacred<a class="headerlink" href="#cross-validation-and-why-the-test-set-is-sacred" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>k-fold cross-validation</strong> rotates which fold is held out, so every example is used for both<br />
+training and validation across folds. The averaged score is a lower-variance estimate of<br />
+generalization than a single split, essential when data is scarce.</li>
+<li>The <strong>test set</strong> is touched exactly once, at the very end. Any decision (model choice,<br />
+threshold, hyperparameter) influenced by test performance leaks information and makes the<br />
+reported score optimistically biased, a subtle but common form of <strong>data leakage</strong>.</li>
+</ul>
+<h3 id="putting-it-together-diagnosing-underfitting-vs-overfitting">Putting it together: diagnosing underfitting vs overfitting<a class="headerlink" href="#putting-it-together-diagnosing-underfitting-vs-overfitting" title="Permanent link">&para;</a></h3>
+<p>The theory becomes actionable when you can read a learning curve. Plot training and validation
+error as you increase model capacity (or training time), and the gap between the two curves
+tells you exactly what to do next:</p>
+<table>
+<thead>
+<tr>
+<th>What you observe</th>
+<th>Diagnosis</th>
+<th>What to do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Train error high, validation error high (close together)</td>
+<td>Underfitting (high bias)</td>
+<td>Add capacity: richer model, more features, less regularization, train longer</td>
+</tr>
+<tr>
+<td>Train error low, validation error much higher (big gap)</td>
+<td>Overfitting (high variance)</td>
+<td>Reduce variance: more data, stronger regularization, simpler model, early stopping</td>
+</tr>
+<tr>
+<td>Train and validation error both low and close</td>
+<td>Good fit</td>
+<td>Stop; this is the sweet spot of the bias-variance curve</td>
+</tr>
+<tr>
+<td>Both errors stuck above an acceptable floor</td>
+<td>Irreducible noise or label problems</td>
+<td>Improve data/label quality; no algorithm can pass the <span class="arithmatex">\(\sigma^2\)</span> floor</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Tip - Read the gap, not the absolute number:</strong> The <em>distance</em> between training and validation
+error diagnoses the problem. A small gap means a bias problem (add capacity); a large gap means
+a variance problem (add data or regularization). This single habit guides most model debugging.</p>
+</blockquote>
+<h3 id="a-concrete-bias-variance-example">A concrete bias-variance example<a class="headerlink" href="#a-concrete-bias-variance-example" title="Permanent link">&para;</a></h3>
+<p>Imagine fitting a curve to noisy points sampled from a gentle wave:</p>
+<ul>
+<li>A <strong>straight line</strong> (degree-1 polynomial) cannot bend to follow the wave: it is wrong in the
+  same way no matter which sample you draw. That is <strong>high bias, low variance</strong>.</li>
+<li>A <strong>degree-15 polynomial</strong> wiggles through every point, including the noise. Draw a new sample
+  and it wiggles completely differently. That is <strong>low bias, high variance</strong>.</li>
+<li>A <strong>degree-3 polynomial</strong> captures the wave's shape while ignoring the noise. It is stable
+  across samples and accurate: the minimum of the total-error curve.</li>
+</ul>
+<p>Regularization, more data, and ensembling are simply tools that let you use a flexible model
+(low bias) while taming its wiggle (controlling variance).</p>
+<h2 id="quick-self-check">Quick self-check<a class="headerlink" href="#quick-self-check" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Question</th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Given a feature vector <span class="arithmatex">\(x_i \in \mathbb{R}^d\)</span> and label <span class="arithmatex">\(y_i\)</span>, how do you tell whether the task is classification, regression, or forecasting?</td>
+<td>Look at the target: a discrete categorical label means classification, a continuous real value means regression, and a value indexed by future time (a time-ordered series) means forecasting.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Why does binary cross-entropy punish a confident wrong prediction so heavily?</td>
+<td>The loss for the true class is <span class="arithmatex">\(-\log \hat{p}\)</span>; as the probability assigned to the correct class approaches 0, <span class="arithmatex">\(-\log \hat{p} \to \infty\)</span>, so a confident wrong prediction incurs an unbounded penalty.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>What is the practical difference between L1 and L2 regularization on the learned weights?</td>
+<td>L1 (<span class="arithmatex">\(\lVert\theta\rVert_1\)</span>) drives many weights exactly to zero, giving sparsity and feature selection; L2 (<span class="arithmatex">\(\lVert\theta\rVert_2^2\)</span>) shrinks all weights smoothly toward zero for stability without making them exactly zero.</td>
+</tr>
+<tr>
+<td>4</td>
+<td>You see 99% train accuracy and 74% validation accuracy. Which part of the bias-variance trade-off is the problem, and what are two fixes?</td>
+<td>The large gap signals high variance (overfitting); fixes include adding regularization or reducing model complexity, and collecting more training data (also early stopping or dropout).</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Why must the test set be used only once, and what is it called when you violate this?</td>
+<td>Reusing it for model selection leaks information and makes scores optimistically biased; this is data leakage (overfitting to the test set).</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="online-learning-and-streaming">Online learning and streaming<a class="headerlink" href="#online-learning-and-streaming" title="Permanent link">&para;</a></h2>
+<h3 id="formal-definition">Formal definition<a class="headerlink" href="#formal-definition" title="Permanent link">&para;</a></h3>
+<p>In <strong>batch learning</strong> the model is trained once on a fixed dataset <span class="arithmatex">\(D = (x_i, y_i)_{i=1}^N\)</span> and then deployed. In <strong>online learning</strong> the model is updated continuously as each new example <span class="arithmatex">\((x_t, y_t)\)</span> arrives, without storing the full history. The update rule at time <span class="arithmatex">\(t\)</span> is:</p>
+<div class="arithmatex">\[
+\theta_{t+1} = \theta_t - \eta \nabla_\theta \mathcal{L}(f_{\theta_t}(x_t), y_t)
+\]</div>
+<p>This is stochastic gradient descent with a batch size of 1 — online learning is simply SGD applied in the most extreme case.</p>
+<h3 id="when-batch-training-fails">When batch training fails<a class="headerlink" href="#when-batch-training-fails" title="Permanent link">&para;</a></h3>
+<p>Batch retraining has a fundamental limitation: it requires you to collect a new dataset, retrain from scratch (or fine-tune), re-validate, and redeploy. This cycle typically takes hours to days. In domains where the world changes faster than this cycle, batch models silently degrade:</p>
+<ul>
+<li><strong>Financial markets</strong>: price distributions shift intraday; a model trained on yesterday's data may already be stale.</li>
+<li><strong>Recommender systems</strong>: user interests evolve continuously; stale recommendations lose engagement.</li>
+<li><strong>Intrusion detection</strong>: attackers adapt their patterns faster than periodic retraining cycles.</li>
+<li><strong>Language and trending content</strong>: topics emerge and disappear within hours.</li>
+</ul>
+<h3 id="sgd-as-an-online-learner">SGD as an online learner<a class="headerlink" href="#sgd-as-an-online-learner" title="Permanent link">&para;</a></h3>
+<p>Mini-batch SGD can be applied in online mode by treating each incoming micro-batch as a training step. The key property of SGD that makes it suitable for online settings is that it does not require seeing the full dataset to make progress — each step only needs a small local gradient estimate.</p>
+<p>The <strong>regret</strong> of an online learning algorithm over <span class="arithmatex">\(T\)</span> rounds is:</p>
+<div class="arithmatex">\[
+\text{Regret}(T) = \sum_{t=1}^T \mathcal{L}(f_{\theta_t}(x_t), y_t) - \min_\theta \sum_{t=1}^T \mathcal{L}(f_\theta(x_t), y_t)
+\]</div>
+<p>A good online learner achieves <strong>sublinear regret</strong>: <span class="arithmatex">\(\text{Regret}(T) = o(T)\)</span>, meaning it converges on average to the best fixed model in hindsight. Online gradient descent achieves <span class="arithmatex">\(O(\sqrt{T})\)</span> regret under standard assumptions.</p>
+<h3 id="vowpal-wabbit-and-the-river-library">Vowpal Wabbit and the river library<a class="headerlink" href="#vowpal-wabbit-and-the-river-library" title="Permanent link">&para;</a></h3>
+<p><strong>Vowpal Wabbit (VW)</strong> is an industrial-scale online learning system developed at Yahoo/Microsoft Research. Its design choices reflect the demands of streaming ML:</p>
+<ul>
+<li>Passes each example only once through memory (true online mode).</li>
+<li>Uses a hashing trick to handle extremely high-dimensional sparse feature spaces without storing a feature dictionary.</li>
+<li>Supports contextual bandits, reductions, and active learning natively.</li>
+<li>Typical throughput: tens of millions of examples per second on a single core.</li>
+</ul>
+<p>The <strong>river</strong> Python library provides a modern, scikit-learn-compatible API for online learning, supporting incremental versions of decision trees, naive Bayes, regression, clustering, and drift detection. It is the standard choice for streaming pipelines built in Python.</p>
+<h3 id="real-examples">Real examples<a class="headerlink" href="#real-examples" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Domain</th>
+<th>Why online learning</th>
+<th>Model</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Click-through rate prediction</td>
+<td>Billions of ad impressions daily; model staleness has direct revenue cost</td>
+<td>Online logistic regression (VW)</td>
+</tr>
+<tr>
+<td>Network anomaly detection</td>
+<td>New attack signatures appear faster than retraining cycles</td>
+<td>Adaptive LSTM, RRCF</td>
+</tr>
+<tr>
+<td>Real-time fraud scoring</td>
+<td>Card fraud patterns evolve within hours of a new attack vector</td>
+<td>Online gradient boosting</td>
+</tr>
+<tr>
+<td>Trending topic detection</td>
+<td>Topics have a lifespan of hours; batch vocabulary is always stale</td>
+<td>Streaming LDA, online embeddings</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Note - Online vs continual learning:</strong> Online learning updates on a stream in order. Continual (lifelong) learning also concerns how to add new tasks without forgetting previous ones — a related but distinct problem called catastrophic forgetting.</p>
+</blockquote>
+<hr />
+<h2 id="multi-armed-bandit-and-exploration-exploitation">Multi-armed bandit and exploration-exploitation<a class="headerlink" href="#multi-armed-bandit-and-exploration-exploitation" title="Permanent link">&para;</a></h2>
+<h3 id="the-exploration-exploitation-dilemma">The exploration-exploitation dilemma<a class="headerlink" href="#the-exploration-exploitation-dilemma" title="Permanent link">&para;</a></h3>
+<p>A <strong>multi-armed bandit</strong> (MAB) models the situation where you must repeatedly choose one of <span class="arithmatex">\(K\)</span> options (arms), each yielding a stochastic reward, with the goal of maximizing cumulative reward. The core tension is:</p>
+<ul>
+<li><strong>Exploitation</strong>: choose the arm with the highest estimated mean reward so far.</li>
+<li><strong>Exploration</strong>: try less-tested arms because their true means may be higher.</li>
+</ul>
+<p>Greedy exploitation ignores potentially better options. Pure exploration wastes pulls on arms already known to be poor. Good algorithms balance both.</p>
+<h3 id="epsilon-greedy">Epsilon-greedy<a class="headerlink" href="#epsilon-greedy" title="Permanent link">&para;</a></h3>
+<p>The simplest policy: with probability <span class="arithmatex">\(\epsilon\)</span> choose a random arm (explore); with probability <span class="arithmatex">\(1 - \epsilon\)</span> choose the best known arm (exploit).</p>
+<div class="arithmatex">\[
+a_t = \begin{cases} \text{random arm} &amp; \text{with probability } \epsilon \\ \arg\max_k \hat{\mu}_k &amp; \text{with probability } 1-\epsilon \end{cases}
+\]</div>
+<p>where <span class="arithmatex">\(\hat{\mu}_k\)</span> is the current empirical mean reward of arm <span class="arithmatex">\(k\)</span>. Despite its simplicity, <span class="arithmatex">\(\epsilon\)</span>-greedy with <span class="arithmatex">\(\epsilon\)</span> decayed over time achieves <span class="arithmatex">\(O(\log T)\)</span> regret.</p>
+<h3 id="upper-confidence-bound-ucb">Upper Confidence Bound (UCB)<a class="headerlink" href="#upper-confidence-bound-ucb" title="Permanent link">&para;</a></h3>
+<p>UCB algorithms choose the arm that maximizes the sum of the estimated mean and an <strong>uncertainty bonus</strong>:</p>
+<div class="arithmatex">\[
+a_t = \arg\max_k \left[ \hat{\mu}_k + \sqrt{\frac{2 \ln t}{n_k}} \right]
+\]</div>
+<p>where <span class="arithmatex">\(n_k\)</span> is the number of times arm <span class="arithmatex">\(k\)</span> has been pulled and <span class="arithmatex">\(t\)</span> is the total number of rounds. The bonus <span class="arithmatex">\(\sqrt{2 \ln t / n_k}\)</span> is large for rarely-pulled arms and shrinks as <span class="arithmatex">\(n_k\)</span> grows. UCB1 achieves <span class="arithmatex">\(O(\log T)\)</span> regret with a tighter constant than <span class="arithmatex">\(\epsilon\)</span>-greedy.</p>
+<h3 id="thompson-sampling">Thompson sampling<a class="headerlink" href="#thompson-sampling" title="Permanent link">&para;</a></h3>
+<p>Thompson sampling takes a Bayesian approach. Maintain a posterior distribution over the mean reward of each arm. At each step, <strong>sample</strong> a reward estimate from each arm's posterior and choose the arm with the highest sample:</p>
+<div class="arithmatex">\[
+\tilde{\mu}_k \sim \text{Posterior}(\mu_k \mid \text{observations})
+$$
+$$
+a_t = \arg\max_k \tilde{\mu}_k
+\]</div>
+<p>For Bernoulli rewards, the natural conjugate posterior is a Beta distribution. Thompson sampling matches or outperforms UCB empirically and is the dominant choice in modern production bandit systems.</p>
+<h3 id="difference-from-full-reinforcement-learning">Difference from full reinforcement learning<a class="headerlink" href="#difference-from-full-reinforcement-learning" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>Multi-armed bandit</th>
+<th>Full RL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>State</td>
+<td>Stateless (or single state)</td>
+<td>Full state space <span class="arithmatex">\(\mathcal{S}\)</span></td>
+</tr>
+<tr>
+<td>Action consequence</td>
+<td>Reward only; no state transition</td>
+<td>Action changes state; affects future</td>
+</tr>
+<tr>
+<td>Credit assignment</td>
+<td>Immediate</td>
+<td>Delayed over trajectories</td>
+</tr>
+<tr>
+<td>Complexity</td>
+<td>Low; analytically tractable</td>
+<td>High; requires value functions or policy gradient</td>
+</tr>
+</tbody>
+</table>
+<p>Bandits are the right tool when decisions are independent — each choice does not affect the context for the next choice. Full RL is needed when actions have lasting consequences on the environment.</p>
+<h3 id="ab-testing-vs-bandits">A/B testing vs bandits<a class="headerlink" href="#ab-testing-vs-bandits" title="Permanent link">&para;</a></h3>
+<p>Classic <strong>A/B testing</strong> splits traffic 50/50 between control and treatment for a fixed duration, then picks a winner. This is statistically rigorous but wasteful: during the entire experiment, half the traffic is exposed to the potentially inferior variant.</p>
+<p>A <strong>bandit</strong> continuously reallocates traffic toward the better-performing variant as evidence accumulates. This reduces the opportunity cost of exploration. However, bandit results are harder to interpret under classical null-hypothesis testing frameworks because the stopping rule is adaptive.</p>
+<blockquote>
+<p><strong>Tip - When to use bandits vs A/B tests:</strong> Use A/B testing when statistical rigor and clean causal inference matter (e.g., regulatory submissions, large organizational decisions). Use bandits when minimizing regret during the experiment period is the primary concern (e.g., web UI optimization, personalized content ranking, real-time ad selection).</p>
+</blockquote>
+<hr />
+<h2 id="transfer-learning-and-domain-adaptation">Transfer learning and domain adaptation<a class="headerlink" href="#transfer-learning-and-domain-adaptation" title="Permanent link">&para;</a></h2>
+<h3 id="formal-setup">Formal setup<a class="headerlink" href="#formal-setup" title="Permanent link">&para;</a></h3>
+<p>Let the <strong>source domain</strong> <span class="arithmatex">\(\mathcal{S}\)</span> consist of a feature space <span class="arithmatex">\(\mathcal{X}_S\)</span>, marginal distribution <span class="arithmatex">\(P_S(X)\)</span>, and task <span class="arithmatex">\(\mathcal{T}_S\)</span>. Let the <strong>target domain</strong> <span class="arithmatex">\(\mathcal{T}\)</span> be defined analogously with subscript <span class="arithmatex">\(T\)</span>. Transfer learning is useful when <span class="arithmatex">\(\mathcal{X}_S = \mathcal{X}_T\)</span> but <span class="arithmatex">\(P_S(X) \neq P_T(X)\)</span>, or when <span class="arithmatex">\(\mathcal{T}_S \neq \mathcal{T}_T\)</span>, and labeled data in the target domain is scarce.</p>
+<p>The central insight is that representations learned in the source domain (e.g., low-level edges in image classification, syntactic patterns in NLP) are reusable in the target domain even when the specific task differs.</p>
+<h3 id="covariate-shift">Covariate shift<a class="headerlink" href="#covariate-shift" title="Permanent link">&para;</a></h3>
+<p><strong>Covariate shift</strong> is the most common form of domain mismatch: <span class="arithmatex">\(P_S(X) \neq P_T(X)\)</span> while <span class="arithmatex">\(P(Y \mid X)\)</span> remains the same. The model learned on source data may perform poorly on target data not because the labeling function changed but because the input distribution changed.</p>
+<p>Correction approaches:</p>
+<ul>
+<li><strong>Importance weighting</strong>: reweight source examples by <span class="arithmatex">\(\frac{P_T(x)}{P_S(x)}\)</span> during training so that source examples resembling target distribution are emphasized.</li>
+<li><strong>Domain adversarial training</strong>: add a discriminator that tries to distinguish source from target examples; the feature extractor is trained to fool the discriminator (DANN: Domain-Adversarial Neural Network).</li>
+</ul>
+<h3 id="fine-tuning-mechanics">Fine-tuning mechanics<a class="headerlink" href="#fine-tuning-mechanics" title="Permanent link">&para;</a></h3>
+<p>The standard transfer learning workflow for deep networks:</p>
+<ol>
+<li><strong>Pretrain</strong> a large model <span class="arithmatex">\(f_\theta\)</span> on a large source dataset (e.g., ImageNet for vision, large text corpora for NLP).</li>
+<li><strong>Replace</strong> the task-specific head (final layer) with a new head matching the target task.</li>
+<li><strong>Freeze</strong> early layers (which capture universal low-level features) and fine-tune only the later layers and new head on the target dataset.</li>
+<li>Optionally <strong>unfreeze</strong> all layers and fine-tune with a very small learning rate if sufficient target data is available.</li>
+</ol>
+<p>The learning rate schedule for fine-tuning typically uses <strong>layer-wise learning rate decay</strong>: lower learning rates for earlier layers (whose features should change little) and higher rates for later layers and the new head.</p>
+<h3 id="why-pretrained-features-transfer">Why pretrained features transfer<a class="headerlink" href="#why-pretrained-features-transfer" title="Permanent link">&para;</a></h3>
+<p>In vision, early layers of CNNs learn Gabor-like edge detectors and color blobs that are universal across image domains — they appear regardless of whether the network was trained on cats, cars, or X-rays. Only deeper, more task-specific layers specialize to the source task. This hierarchy of abstraction is what makes transfer learning possible: the general-purpose low-level features are free to reuse.</p>
+<p>In NLP, pretrained language models (BERT, GPT) learn syntactic and semantic representations over massive corpora. Fine-tuning repurposes these representations for downstream tasks (classification, NER, QA) with as few as hundreds of labeled examples, because the model already "understands" language structure.</p>
+<blockquote>
+<p><strong>Note - When transfer learning fails:</strong> Transfer learning degrades when the source and target domains are too dissimilar (e.g., fine-tuning a natural image model on satellite thermal imagery). In these cases, features from the source domain are not just unhelpful — they can actively harm training through negative transfer. The solution is to use fewer frozen layers or train from scratch on the target domain if sufficient data is available.</p>
+</blockquote>
+<hr />
+<h2 id="causal-inference-vs-correlation">Causal inference vs correlation<a class="headerlink" href="#causal-inference-vs-correlation" title="Permanent link">&para;</a></h2>
+<h3 id="correlation-does-not-imply-causation">Correlation does not imply causation<a class="headerlink" href="#correlation-does-not-imply-causation" title="Permanent link">&para;</a></h3>
+<p>A model that finds a statistical association between <span class="arithmatex">\(X\)</span> and <span class="arithmatex">\(Y\)</span> does not tell you that changing <span class="arithmatex">\(X\)</span> will change <span class="arithmatex">\(Y\)</span>. This distinction is critical in settings where the goal is not prediction but <strong>intervention</strong> — deciding what action to take.</p>
+<p>Classic illustration: sales of ice cream are correlated with drowning rates. A model predicting drowning from ice cream sales would be accurate but entirely useless for intervention. The correct model is <span class="arithmatex">\(\text{temperature} \to \text{ice cream sales}\)</span> and <span class="arithmatex">\(\text{temperature} \to \text{swimming}\)</span>, where temperature is a <strong>confounder</strong>.</p>
+<h3 id="simpsons-paradox">Simpson's paradox<a class="headerlink" href="#simpsons-paradox" title="Permanent link">&para;</a></h3>
+<p>Simpson's paradox is a concrete demonstration of why aggregate correlations can be misleading:</p>
+<table>
+<thead>
+<tr>
+<th>Group</th>
+<th>Treatment A success rate</th>
+<th>Treatment B success rate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Small stones</td>
+<td>93% (81/87)</td>
+<td>87% (234/270)</td>
+</tr>
+<tr>
+<td>Large stones</td>
+<td>73% (192/263)</td>
+<td>69% (55/80)</td>
+</tr>
+<tr>
+<td><strong>Overall</strong></td>
+<td><strong>78% (273/350)</strong></td>
+<td><strong>83% (289/350)</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Treatment B appears better overall, but Treatment A is better in <strong>both</strong> sub-groups. The reversal occurs because large stones (harder cases) were more often assigned to Treatment A. The confounder — stone size — reverses the conclusion.</p>
+<p>A machine learning model trained on the aggregate data would learn the misleading pattern. Without causal analysis, it would recommend Treatment B and cause harm.</p>
+<h3 id="observational-vs-experimental-data">Observational vs experimental data<a class="headerlink" href="#observational-vs-experimental-data" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Experimental data</strong> (randomized controlled trials, A/B tests): treatment is randomly assigned, so confounders are balanced across groups by design. Causal claims are valid.</li>
+<li><strong>Observational data</strong>: treatment is assigned based on factors that may also affect the outcome. Causal claims require additional assumptions.</li>
+</ul>
+<p>Most ML training data is observational. A churn model trained on historical retention-offer assignments will reflect the company's (biased) policy of who to offer discounts to, not the causal effect of discounts on retention.</p>
+<h3 id="the-potential-outcomes-framework">The potential outcomes framework<a class="headerlink" href="#the-potential-outcomes-framework" title="Permanent link">&para;</a></h3>
+<p>The <strong>Rubin causal model</strong> defines the causal effect of treatment <span class="arithmatex">\(T\)</span> on unit <span class="arithmatex">\(i\)</span> in terms of <strong>potential outcomes</strong>:</p>
+<div class="arithmatex">\[
+\text{ITE}_i = Y_i(T=1) - Y_i(T=0)
+\]</div>
+<p>The fundamental problem of causal inference is that only one potential outcome is ever observed for each unit — you cannot simultaneously treat and not treat the same person. The <strong>average treatment effect (ATE)</strong> is:</p>
+<div class="arithmatex">\[
+\text{ATE} = \mathbb{E}[Y(T=1) - Y(T=0)]
+\]</div>
+<p>Estimation of ATE from observational data requires assumptions about which confounders have been measured (<strong>ignorability/unconfoundedness</strong>). Methods include:</p>
+<ul>
+<li><strong>Propensity score matching</strong>: match treated and control units with similar probabilities of treatment.</li>
+<li><strong>Instrumental variables</strong>: exploit a variable that affects treatment but not the outcome directly.</li>
+<li><strong>Double ML / causal forests</strong>: use ML to remove confounding, then estimate the treatment effect in a second stage.</li>
+</ul>
+<h3 id="when-ml-is-not-enough">When ML is not enough<a class="headerlink" href="#when-ml-is-not-enough" title="Permanent link">&para;</a></h3>
+<p>Pure predictive ML optimizes <span class="arithmatex">\(P(Y \mid X)\)</span> — the association between inputs and outputs. It cannot answer questions of the form "what would happen if we intervened and set <span class="arithmatex">\(X = x\)</span>?" (interventional queries) or "what would have happened if <span class="arithmatex">\(X\)</span> had been different?" (counterfactual queries). These require a causal model.</p>
+<blockquote>
+<p><strong>Note - Practical implication:</strong> When the goal of an ML project is to support an intervention decision (run a promotion, change a treatment, modify a policy), involve causal reasoning from the outset. A purely predictive model may select the wrong treatment or reinforce existing selection biases, leading to worse outcomes than no model at all.</p>
+</blockquote>
+<hr />
+<h2 id="the-no-free-lunch-theorem">The No Free Lunch theorem<a class="headerlink" href="#the-no-free-lunch-theorem" title="Permanent link">&para;</a></h2>
+<h3 id="statement">Statement<a class="headerlink" href="#statement" title="Permanent link">&para;</a></h3>
+<p>The <strong>No Free Lunch (NFL) theorem</strong> (Wolpert and Macready, 1997) states that averaged over all possible problem distributions, every optimization algorithm performs equally well. More precisely: for any two algorithms <span class="arithmatex">\(A_1\)</span> and <span class="arithmatex">\(A_2\)</span>, there exists a family of problems for which <span class="arithmatex">\(A_1\)</span> outperforms <span class="arithmatex">\(A_2\)</span> and another family for which <span class="arithmatex">\(A_2\)</span> outperforms <span class="arithmatex">\(A_1\)</span> — and these families are equally large.</p>
+<p>Formally, if we average expected loss over all possible target functions <span class="arithmatex">\(f: \mathcal{X} \to \mathcal{Y}\)</span>:</p>
+<div class="arithmatex">\[
+\sum_f \mathcal{L}(A_1, f) = \sum_f \mathcal{L}(A_2, f)
+\]</div>
+<p>No algorithm is universally better than any other when evaluated across all possible problems.</p>
+<h3 id="why-this-is-not-pessimistic-in-practice">Why this is not pessimistic in practice<a class="headerlink" href="#why-this-is-not-pessimistic-in-practice" title="Permanent link">&para;</a></h3>
+<p>The NFL theorem applies to a uniform distribution over all possible functions, including random noise and pathological adversarial functions that never appear in practice. Real-world ML problems are not drawn from this uniform distribution — they have <strong>structure</strong> (smooth decision boundaries, locality, compositionality) that certain algorithm families exploit better than others.</p>
+<p>The practical implication is:</p>
+<ul>
+<li>There is no single algorithm that wins on every real dataset (this is empirically verified on benchmarks like OpenML-CC18).</li>
+<li>Algorithm choice must be informed by <strong>domain knowledge</strong> and <strong>inductive bias</strong> — your prior belief about what kind of function you are approximating.</li>
+<li>Gradient boosted trees tend to dominate on structured tabular data; CNNs dominate on 2D spatial data; transformers dominate on sequence data. These are empirical regularities about the structure of specific domains.</li>
+</ul>
+<h3 id="implications-for-model-selection-and-evaluation">Implications for model selection and evaluation<a class="headerlink" href="#implications-for-model-selection-and-evaluation" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Always compare against baselines</strong>: a new algorithm is only meaningful if it outperforms simpler alternatives on your specific problem, not in general.</li>
+<li><strong>Evaluation protocol determines validity</strong>: a model selection result is valid only if it was performed on data with the same distribution as the deployment context.</li>
+<li><strong>Domain knowledge is a competitive advantage</strong>: teams that can encode structural assumptions (via architecture choice, feature engineering, or loss design) gain a free lunch that the NFL theorem does not prohibit — it only rules out free lunches <em>without</em> assumptions.</li>
+</ul>
+<blockquote>
+<p><strong>Tip - NFL and AutoML:</strong> This is why AutoML systems search over a space of algorithms rather than defaulting to one. Azure AutoML evaluates dozens of algorithm-hyperparameter combinations precisely because no single choice dominates across all datasets. The NFL theorem is the mathematical justification for algorithm search.</p>
+</blockquote>
+<hr />
+<h2 id="computational-complexity-of-ml">Computational complexity of ML<a class="headerlink" href="#computational-complexity-of-ml" title="Permanent link">&para;</a></h2>
+<p>Understanding the computational cost of ML algorithms is essential for production: a theoretically excellent algorithm that does not scale is not deployable.</p>
+<h3 id="training-complexity">Training complexity<a class="headerlink" href="#training-complexity" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Algorithm</th>
+<th>Training complexity</th>
+<th>Key variables</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Linear / logistic regression (GD)</td>
+<td><span class="arithmatex">\(O(N \cdot d \cdot T)\)</span></td>
+<td><span class="arithmatex">\(N\)</span> = samples, <span class="arithmatex">\(d\)</span> = features, <span class="arithmatex">\(T\)</span> = iterations</td>
+</tr>
+<tr>
+<td>Decision tree (CART)</td>
+<td><span class="arithmatex">\(O(N \cdot d \cdot \log N)\)</span> per tree</td>
+<td>Sort cost at each node</td>
+</tr>
+<tr>
+<td>Random forest (<span class="arithmatex">\(B\)</span> trees)</td>
+<td><span class="arithmatex">\(O(B \cdot N \cdot d' \cdot \log N)\)</span></td>
+<td><span class="arithmatex">\(d' = \sqrt{d}\)</span> features per split</td>
+</tr>
+<tr>
+<td>Gradient boosted trees (<span class="arithmatex">\(B\)</span> rounds)</td>
+<td><span class="arithmatex">\(O(B \cdot N \cdot d \cdot \log N)\)</span></td>
+<td>Sequential; harder to parallelize than RF</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(k\)</span>-nearest neighbor</td>
+<td><span class="arithmatex">\(O(1)\)</span> training (lazy learner)</td>
+<td>All cost at prediction time</td>
+</tr>
+<tr>
+<td>Neural network (SGD, <span class="arithmatex">\(T\)</span> steps)</td>
+<td><span class="arithmatex">\(O(T \cdot b \cdot P)\)</span></td>
+<td><span class="arithmatex">\(b\)</span> = batch size, <span class="arithmatex">\(P\)</span> = parameters</td>
+</tr>
+<tr>
+<td>SVM (kernel)</td>
+<td><span class="arithmatex">\(O(N^2 d)\)</span> to <span class="arithmatex">\(O(N^3)\)</span></td>
+<td>Quadratic program over support vectors</td>
+</tr>
+</tbody>
+</table>
+<h3 id="prediction-complexity">Prediction complexity<a class="headerlink" href="#prediction-complexity" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Algorithm</th>
+<th>Prediction complexity per query</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Linear model</td>
+<td><span class="arithmatex">\(O(d)\)</span></td>
+<td>Dot product; cache-friendly; fastest</td>
+</tr>
+<tr>
+<td>Decision tree / RF</td>
+<td><span class="arithmatex">\(O(d \cdot \log N)\)</span> per tree; <span class="arithmatex">\(O(B \cdot d \cdot \log N)\)</span> for forest</td>
+<td>Tree traversal depth <span class="arithmatex">\(\approx \log N\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(k\)</span>-NN (exact)</td>
+<td><span class="arithmatex">\(O(N \cdot d)\)</span></td>
+<td>Must compute distance to every training point</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(k\)</span>-NN (ANN)</td>
+<td><span class="arithmatex">\(O(d \log N)\)</span></td>
+<td>Approximate nearest neighbor (FAISS, HNSW)</td>
+</tr>
+<tr>
+<td>Neural network</td>
+<td><span class="arithmatex">\(O(P)\)</span></td>
+<td>Forward pass through all <span class="arithmatex">\(P\)</span> parameters</td>
+</tr>
+</tbody>
+</table>
+<p>The <span class="arithmatex">\(k\)</span>-NN <span class="arithmatex">\(O(Nd)\)</span> prediction cost is the most important complexity fact to know for production deployment: a <span class="arithmatex">\(k\)</span>-NN with <span class="arithmatex">\(N = 10^7\)</span> training points and <span class="arithmatex">\(d = 512\)</span> features requires <span class="arithmatex">\(5 \times 10^9\)</span> floating-point operations per query, which is around 5 seconds on a CPU — completely unusable for real-time serving without approximate indexing.</p>
+<h3 id="why-complexity-matters-for-production">Why complexity matters for production<a class="headerlink" href="#why-complexity-matters-for-production" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Batch vs real-time</strong>: a model with <span class="arithmatex">\(O(N^2)\)</span> prediction cost can serve offline batch scoring but cannot serve real-time requests.</li>
+<li><strong>Memory footprint</strong>: <span class="arithmatex">\(k\)</span>-NN requires storing all <span class="arithmatex">\(N\)</span> training vectors in memory. For <span class="arithmatex">\(N = 10^8\)</span> and <span class="arithmatex">\(d = 256\)</span> float32 features: <span class="arithmatex">\(N \cdot d \cdot 4\)</span> bytes <span class="arithmatex">\(= 100\)</span>GB — exceeding the RAM of a single server.</li>
+<li><strong>Scaling laws</strong>: neural network training cost scales with both the number of parameters <span class="arithmatex">\(P\)</span> and the amount of data <span class="arithmatex">\(N\)</span>. Doubling both roughly doubles cost, which is why large model training requires distributed compute.</li>
+<li><strong>Feature dimension curse</strong>: for tree models, adding features increases cost linearly. For <span class="arithmatex">\(k\)</span>-NN, adding features degrades both time complexity and statistical efficiency (curse of dimensionality).</li>
+</ul>
+<blockquote>
+<p><strong>Note - Practical rule of thumb:</strong> For latency-sensitive serving, linear models and shallow trees are the default unless accuracy requirements demand otherwise. For batch offline scoring, gradient boosting and neural networks are acceptable. For retrieval at scale (<span class="arithmatex">\(k\)</span>-NN lookups over large corpora), approximate nearest neighbor indexes (FAISS, ScaNN, Azure Cognitive Search vector) are mandatory.</p>
+</blockquote>
+<hr />
+<h2 id="deep-dive-additions">Deep dive additions<a class="headerlink" href="#deep-dive-additions" title="Permanent link">&para;</a></h2>
+<h3 id="derivation-of-the-bias-variance-decomposition">Derivation of the bias-variance decomposition<a class="headerlink" href="#derivation-of-the-bias-variance-decomposition" title="Permanent link">&para;</a></h3>
+<p>We derive the expected squared error of a model <span class="arithmatex">\(\hat{f}\)</span> trained on a dataset <span class="arithmatex">\(D\)</span> sampled from a distribution where <span class="arithmatex">\(y = f(x) + \epsilon\)</span>, with <span class="arithmatex">\(\epsilon \sim (0, \sigma^2)\)</span> (zero-mean noise independent of <span class="arithmatex">\(x\)</span>).</p>
+<p><strong>Setup.</strong> Fix a test point <span class="arithmatex">\(x\)</span>. The expected prediction is:</p>
+<div class="arithmatex">\[
+\bar{f}(x) = \mathbb{E}_D[\hat{f}(x)]
+\]</div>
+<p>the average prediction across all possible training sets <span class="arithmatex">\(D\)</span> of size <span class="arithmatex">\(N\)</span>. We want to compute:</p>
+<div class="arithmatex">\[
+\mathbb{E}_D\!\left[\mathbb{E}_\epsilon\big[(y - \hat{f}(x))^2\big]\right]
+\]</div>
+<p><strong>Step 1.</strong> Expand the squared error by adding and subtracting <span class="arithmatex">\(\bar{f}(x)\)</span>:</p>
+<div class="arithmatex">\[
+(y - \hat{f}(x))^2 = \big[(y - \bar{f}(x)) + (\bar{f}(x) - \hat{f}(x))\big]^2
+\]</div>
+<div class="arithmatex">\[
+= (y - \bar{f}(x))^2 + 2(y - \bar{f}(x))(\bar{f}(x) - \hat{f}(x)) + (\bar{f}(x) - \hat{f}(x))^2
+\]</div>
+<p><strong>Step 2.</strong> Take expectation over <span class="arithmatex">\(D\)</span> (which randomizes <span class="arithmatex">\(\hat{f}\)</span>). The middle cross-term:</p>
+<div class="arithmatex">\[
+\mathbb{E}_D\big[2(y - \bar{f}(x))(\bar{f}(x) - \hat{f}(x))\big] = 2(y - \bar{f}(x)) \cdot \underbrace{\mathbb{E}_D[\bar{f}(x) - \hat{f}(x)]}_{= 0}
+\]</div>
+<p>because <span class="arithmatex">\(\bar{f}(x) = \mathbb{E}_D[\hat{f}(x)]\)</span> by definition. So:</p>
+<div class="arithmatex">\[
+\mathbb{E}_D\big[(y - \hat{f}(x))^2\big] = (y - \bar{f}(x))^2 + \mathbb{E}_D\big[(\bar{f}(x) - \hat{f}(x))^2\big]
+\]</div>
+<p><strong>Step 3.</strong> Now take expectation over <span class="arithmatex">\(\epsilon\)</span> (which randomizes <span class="arithmatex">\(y = f(x) + \epsilon\)</span>). Expand <span class="arithmatex">\(y - \bar{f}(x) = (f(x) - \bar{f}(x)) + \epsilon\)</span>:</p>
+<div class="arithmatex">\[
+\mathbb{E}_\epsilon\big[(y - \bar{f}(x))^2\big] = (f(x) - \bar{f}(x))^2 + 2(f(x) - \bar{f}(x))\underbrace{\mathbb{E}_\epsilon[\epsilon]}_{=0} + \mathbb{E}_\epsilon[\epsilon^2]
+\]</div>
+<div class="arithmatex">\[
+= (f(x) - \bar{f}(x))^2 + \sigma^2
+\]</div>
+<p><strong>Step 4.</strong> Combine:</p>
+<div class="arithmatex">\[
+\mathbb{E}\big[(y - \hat{f}(x))^2\big] = \underbrace{(f(x) - \bar{f}(x))^2}_{\text{Bias}^2} + \underbrace{\mathbb{E}_D\big[(\hat{f}(x) - \bar{f}(x))^2\big]}_{\text{Variance}} + \underbrace{\sigma^2}_{\text{Irreducible noise}}
+\]</div>
+<p><strong>Interpretation of each term:</strong></p>
+<ul>
+<li><strong>Bias<span class="arithmatex">\(^2\)</span></strong> <span class="arithmatex">\(= (f(x) - \bar{f}(x))^2\)</span>: the squared difference between the true function and the average prediction across all training sets. A linear model fitting a quadratic relationship always has non-zero bias regardless of how much data you add.</li>
+<li><strong>Variance</strong> <span class="arithmatex">\(= \mathbb{E}_D[(\hat{f}(x) - \bar{f}(x))^2]\)</span>: how much the model's prediction fluctuates around its own mean as the training set varies. A degree-15 polynomial trained on 20 points has enormous variance — it wiggles wildly depending on which 20 points were selected.</li>
+<li><strong><span class="arithmatex">\(\sigma^2\)</span></strong>: the irreducible noise in the labels. No model, regardless of complexity, can beat this floor — it represents genuine randomness in the data-generating process.</li>
+</ul>
+<p>The total error <span class="arithmatex">\(\text{Bias}^2 + \text{Variance} + \sigma^2\)</span> is a U-shaped function of model complexity: the first term falls as complexity rises, the second rises, and their sum achieves a minimum at an intermediate complexity. This is the <strong>bias-variance trade-off</strong>.</p>
+<blockquote>
+<p><strong>Note - Algebraic completeness:</strong> Every step above used only three facts: linearity of expectation, the definition of variance as <span class="arithmatex">\(\mathbb{E}[(Z - \mathbb{E}[Z])^2]\)</span>, and the independence of noise <span class="arithmatex">\(\epsilon\)</span> from <span class="arithmatex">\(D\)</span> and <span class="arithmatex">\(x\)</span>. No distributional assumption beyond zero-mean <span class="arithmatex">\(\epsilon\)</span> with finite variance <span class="arithmatex">\(\sigma^2\)</span> was required.</p>
+</blockquote>
+<h3 id="why-cross-entropy-is-the-right-loss-for-classification">Why cross-entropy is the right loss for classification<a class="headerlink" href="#why-cross-entropy-is-the-right-loss-for-classification" title="Permanent link">&para;</a></h3>
+<h4 id="setup-maximum-likelihood-estimation">Setup: maximum likelihood estimation<a class="headerlink" href="#setup-maximum-likelihood-estimation" title="Permanent link">&para;</a></h4>
+<p>Suppose we have <span class="arithmatex">\(N\)</span> training examples <span class="arithmatex">\(\{(x_i, y_i)\}_{i=1}^N\)</span> where <span class="arithmatex">\(y_i \in \{1, \ldots, K\}\)</span>. Our model <span class="arithmatex">\(f_\theta\)</span> produces a probability distribution over classes via softmax:</p>
+<div class="arithmatex">\[
+\hat{p}_{ik} = \frac{e^{z_{ik}}}{\sum_{j=1}^K e^{z_{ij}}}
+\]</div>
+<p>where <span class="arithmatex">\(z_{ik}\)</span> is the <span class="arithmatex">\(k\)</span>-th logit for example <span class="arithmatex">\(i\)</span>.</p>
+<h4 id="the-likelihood-of-the-training-data">The likelihood of the training data<a class="headerlink" href="#the-likelihood-of-the-training-data" title="Permanent link">&para;</a></h4>
+<p>Assuming examples are i.i.d. from <span class="arithmatex">\(P(Y \mid X)\)</span>, the likelihood of observing the entire training set is:</p>
+<div class="arithmatex">\[
+\mathcal{L}(\theta) = \prod_{i=1}^N P(Y = y_i \mid X = x_i;\, \theta) = \prod_{i=1}^N \hat{p}_{i,y_i}
+\]</div>
+<p>Each factor is the probability the model assigned to the true class of example <span class="arithmatex">\(i\)</span>.</p>
+<h4 id="log-likelihood">Log-likelihood<a class="headerlink" href="#log-likelihood" title="Permanent link">&para;</a></h4>
+<p>Taking the logarithm (which is monotone, so maximizing log-likelihood = maximizing likelihood):</p>
+<div class="arithmatex">\[
+\log \mathcal{L}(\theta) = \sum_{i=1}^N \log \hat{p}_{i,y_i}
+\]</div>
+<h4 id="equivalence-to-minimizing-cross-entropy">Equivalence to minimizing cross-entropy<a class="headerlink" href="#equivalence-to-minimizing-cross-entropy" title="Permanent link">&para;</a></h4>
+<p><strong>Minimizing</strong> (negative log-likelihood) over <span class="arithmatex">\(\theta\)</span> is equivalent to <strong>maximizing</strong> log-likelihood:</p>
+<div class="arithmatex">\[
+\min_\theta -\frac{1}{N}\sum_{i=1}^N \log \hat{p}_{i,y_i}
+\]</div>
+<p>Now write <span class="arithmatex">\(y_i\)</span> in one-hot form: <span class="arithmatex">\(y_{ik} = \mathbf{1}[y_i = k]\)</span>. Then <span class="arithmatex">\(\log \hat{p}_{i,y_i} = \sum_k y_{ik} \log \hat{p}_{ik}\)</span>, and:</p>
+<div class="arithmatex">\[
+\min_\theta -\frac{1}{N}\sum_{i=1}^N \sum_{k=1}^K y_{ik} \log \hat{p}_{ik}
+\]</div>
+<p>This is exactly the <strong>categorical cross-entropy loss</strong> <span class="arithmatex">\(\mathcal{L}_{CE}\)</span>. We have shown that:</p>
+<div class="arithmatex">\[
+\boxed{\text{Minimizing cross-entropy} = \text{Maximizing log-likelihood of the training labels}}
+\]</div>
+<h4 id="why-other-losses-are-suboptimal-for-classification">Why other losses are suboptimal for classification<a class="headerlink" href="#why-other-losses-are-suboptimal-for-classification" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>MSE on probabilities</strong> <span class="arithmatex">\(\frac{1}{N}\sum_i (\hat{p}_{i,y_i} - 1)^2\)</span>: the gradient is linear in the error <span class="arithmatex">\((\hat{p} - 1)\)</span>. When the model is confidently wrong (<span class="arithmatex">\(\hat{p} \approx 0\)</span>), the gradient is near <span class="arithmatex">\((-1)^2 = 1\)</span> — a small signal. Cross-entropy's gradient is <span class="arithmatex">\((\hat{p} - 1)/\hat{p}\)</span>, which is large and negative when <span class="arithmatex">\(\hat{p}\)</span> is small, giving a much stronger learning signal precisely when the model is most wrong.</li>
+<li><strong>Hinge loss</strong> (SVM): maximizes margin rather than likelihood. This is geometrically motivated and does not produce calibrated probabilities.</li>
+<li><strong>Cross-entropy</strong> produces calibrated probability outputs (with a temperature parameter or Platt scaling), which is essential for downstream decision systems that need to act on model confidence.</li>
+</ul>
+<blockquote>
+<p><strong>Tip - Binary case:</strong> For binary classification with <span class="arithmatex">\(K=2\)</span>, the categorical cross-entropy reduces to <strong>binary cross-entropy</strong>: <span class="arithmatex">\(\mathcal{L}_{BCE} = -\frac{1}{N}\sum_i [y_i \log \hat{p}_i + (1-y_i)\log(1-\hat{p}_i)]\)</span>, which is the MLE loss for a Bernoulli random variable. The two formulations are the same thing expressed differently.</p>
+</blockquote>
+<hr />
+<h2 id="quick-self-check-extended">Quick self-check (extended)<a class="headerlink" href="#quick-self-check-extended" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Question</th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Given a feature vector <span class="arithmatex">\(x_i \in \mathbb{R}^d\)</span> and label <span class="arithmatex">\(y_i\)</span>, how do you tell whether the task is classification, regression, or forecasting?</td>
+<td>Look at the target: a discrete categorical label means classification, a continuous real value means regression, and a value indexed by future time (a time-ordered series) means forecasting.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Why does binary cross-entropy punish a confident wrong prediction so heavily?</td>
+<td>The loss for the true class is <span class="arithmatex">\(-\log \hat{p}\)</span>; as the probability assigned to the correct class approaches 0, <span class="arithmatex">\(-\log \hat{p} \to \infty\)</span>, so a confident wrong prediction incurs an unbounded penalty.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>What is the practical difference between L1 and L2 regularization on the learned weights?</td>
+<td>L1 (<span class="arithmatex">\(\lVert\theta\rVert_1\)</span>) drives many weights exactly to zero, giving sparsity and feature selection; L2 (<span class="arithmatex">\(\lVert\theta\rVert_2^2\)</span>) shrinks all weights smoothly toward zero for stability without making them exactly zero.</td>
+</tr>
+<tr>
+<td>4</td>
+<td>You see 99% train accuracy and 74% validation accuracy. Which part of the bias-variance trade-off is the problem, and what are two fixes?</td>
+<td>The large gap signals high variance (overfitting); fixes include adding regularization or reducing model complexity, and collecting more training data (also early stopping or dropout).</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Why must the test set be used only once, and what is it called when you violate this?</td>
+<td>Reusing it for model selection leaks information and makes scores optimistically biased; this is data leakage (overfitting to the test set).</td>
+</tr>
+<tr>
+<td>6</td>
+<td>What is the formal definition of regret in online learning, and what does sublinear regret mean?</td>
+<td>Regret is the learner's cumulative loss over <span class="arithmatex">\(T\)</span> rounds minus the loss of the best fixed model in hindsight; sublinear regret, <span class="arithmatex">\(\text{Regret}(T) = o(T)\)</span>, means the average regret per round goes to zero, so it converges to that best fixed model.</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Explain the epsilon-greedy exploration policy. What is the main weakness of a fixed <span class="arithmatex">\(\epsilon\)</span>?</td>
+<td>With probability <span class="arithmatex">\(\epsilon\)</span> it picks a random arm (explore) and with probability <span class="arithmatex">\(1-\epsilon\)</span> the best known arm (exploit); a fixed <span class="arithmatex">\(\epsilon\)</span> keeps exploring at a constant rate forever, wasting pulls on inferior arms, so <span class="arithmatex">\(\epsilon\)</span> should be decayed over time.</td>
+</tr>
+<tr>
+<td>8</td>
+<td>In the bias-variance decomposition derivation, why does the cross-term <span class="arithmatex">\(\mathbb{E}_D[\bar{f}(x) - \hat{f}(x)]\)</span> equal zero?</td>
+<td>Because <span class="arithmatex">\(\bar{f}(x) = \mathbb{E}_D[\hat{f}(x)]\)</span> by definition, so <span class="arithmatex">\(\mathbb{E}_D[\bar{f}(x) - \hat{f}(x)] = \bar{f}(x) - \bar{f}(x) = 0\)</span>.</td>
+</tr>
+<tr>
+<td>9</td>
+<td>State the No Free Lunch theorem in your own words. Does it mean there is no point in comparing algorithms? Why or why not?</td>
+<td>Averaged over all possible problems, every algorithm performs equally well. It does not make comparison pointless: real problems are a structured, non-uniform subset, so matching a model's inductive bias to the problem still matters.</td>
+</tr>
+<tr>
+<td>10</td>
+<td>A <span class="arithmatex">\(k\)</span>-NN model with <span class="arithmatex">\(N = 10^6\)</span> and <span class="arithmatex">\(d = 256\)</span> is deployed for real-time scoring. Estimate the number of floating-point operations per query and explain why this is a problem.</td>
+<td>About <span class="arithmatex">\(N \cdot d \approx 2.56 \times 10^8\)</span> FLOPs per query, since every training point is scanned at prediction time; this latency is far too high for real-time serving without approximate nearest-neighbor indexing.</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 <a href="https://github.com/Cloud2BR-MSFTLearningHub" target="_blank" rel="noopener">Cloud2BR MSFT Learning Hub</a>
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.expand", "navigation.top", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../../assets/js/org-link.js"></script>
+      
+    
+  </body>
+</html>

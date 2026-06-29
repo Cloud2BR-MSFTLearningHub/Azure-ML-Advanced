@@ -1,0 +1,2799 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="Azure Machine Learning training from fundamentals to advanced MLOps." name="description"/>
+<link href="https://cloud2br-msftlearninghub.github.io/Azure-ML-Advanced/modules/03-introduction/" rel="canonical"/>
+<link href="../02-e2e-overview/" rel="prev"/>
+<link href="../04-ml-foundations/" rel="next"/>
+<link href="/Azure-ML-Advanced/" hreflang="en" rel="alternate"/>
+<link href="/Azure-ML-Advanced/es/" hreflang="es" rel="alternate"/>
+<link href="../../assets/img/org-logo.png" rel="icon"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.7.6" name="generator"/>
+<title>03. Introduction and Lifecycle - Azure Machine Learning: Advanced</title>
+<link href="../../assets/stylesheets/main.484c7ddc.min.css" rel="stylesheet"/>
+<link href="../../assets/stylesheets/palette.ab4e12ef.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../../assets/css/custom.css" rel="stylesheet"/>
+<script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+</head>
+<body data-md-color-accent="blue" data-md-color-primary="blue" data-md-color-scheme="default" dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#introduction-and-ml-lifecycle">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header md-header--shadow" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="Azure Machine Learning: Advanced" class="md-header__button md-logo" data-md-component="logo" href="../.." title="Azure Machine Learning: Advanced">
+<img alt="logo" src="../../assets/img/org-logo.png"/>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            Azure Machine Learning: Advanced
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              03. Introduction and Lifecycle
+            
+          </span>
+</div>
+</div>
+</div>
+<div class="md-header__option">
+<div class="md-select">
+<button aria-label="Select language" class="md-header__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"></path></svg>
+</button>
+<div class="md-select__inner">
+<ul class="md-select__list">
+<li class="md-select__item">
+<a class="md-select__link" href="/Azure-ML-Advanced/" hreflang="en">
+              English
+            </a>
+</li>
+<li class="md-select__item">
+<a class="md-select__link" href="/Azure-ML-Advanced/es/" hreflang="es">
+              Español
+            </a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Azure Machine Learning: Advanced" class="md-nav__button md-logo" data-md-component="logo" href="../.." title="Azure Machine Learning: Advanced">
+<img alt="logo" src="../../assets/img/org-logo.png"/>
+</a>
+    Azure Machine Learning: Advanced
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../..">
+<span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../01-math-prerequisites/">
+<span class="md-ellipsis">
+    
+  
+    01. Math Prerequisites
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../02-e2e-overview/">
+<span class="md-ellipsis">
+    
+  
+    02. End-to-End ML Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+<span class="md-ellipsis">
+    
+  
+    03. Introduction and Lifecycle
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
+<span class="md-ellipsis">
+    
+  
+    03. Introduction and Lifecycle
+  
+
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#who-this-is-for">
+<span class="md-ellipsis">
+      
+        Who this is for
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#learning-outcomes">
+<span class="md-ellipsis">
+      
+        Learning outcomes
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#ai-vs-ml-vs-data-science">
+<span class="md-ellipsis">
+      
+        AI vs ML vs Data Science
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#major-ai-categories">
+<span class="md-ellipsis">
+      
+        Major AI categories
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#types-of-ml-at-a-glance">
+<span class="md-ellipsis">
+      
+        Types of ML at a glance
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#common-confusion-points">
+<span class="md-ellipsis">
+      
+        Common confusion points
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#real-world-example-e-commerce-recommendation">
+<span class="md-ellipsis">
+      
+        Real-world example: e-commerce recommendation
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#why-azure-ml-matters">
+<span class="md-ellipsis">
+      
+        Why Azure ML matters
+      
+    </span>
+</a>
+<nav aria-label="Why Azure ML matters" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#what-each-stage-does">
+<span class="md-ellipsis">
+      
+        What each stage does
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#web-service-vs-api">
+<span class="md-ellipsis">
+      
+        Web Service vs API
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#deep-dive-every-concept-explained">
+<span class="md-ellipsis">
+      
+        Deep dive: every concept, explained
+      
+    </span>
+</a>
+<nav aria-label="Deep dive: every concept, explained" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#what-learning-from-data-actually-means">
+<span class="md-ellipsis">
+      
+        What "learning from data" actually means
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#ai-ml-deep-learning-and-genai-as-nested-sets">
+<span class="md-ellipsis">
+      
+        AI, ML, deep learning, and GenAI as nested sets
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#supervised-unsupervised-and-reinforcement-the-signal-that-drives-learning">
+<span class="md-ellipsis">
+      
+        Supervised, unsupervised, and reinforcement : the signal that drives learning
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#why-the-pipeline-matters-more-than-the-model">
+<span class="md-ellipsis">
+      
+        Why "the pipeline matters more than the model"
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#latency-throughput-and-why-a-good-model-can-be-unusable">
+<span class="md-ellipsis">
+      
+        Latency, throughput, and why a "good" model can be unusable
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#problem-framing-in-practice-turning-a-business-goal-into-an-ml-task">
+<span class="md-ellipsis">
+      
+        Problem framing in practice: turning a business goal into an ML task
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#a-concrete-numeric-walk-through">
+<span class="md-ellipsis">
+      
+        A concrete numeric walk-through
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rest-api-endpoint-and-web-service-the-same-idea-at-different-layers">
+<span class="md-ellipsis">
+      
+        REST API, endpoint, and web service : the same idea at different layers
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#inference-request-flow-simple">
+<span class="md-ellipsis">
+      
+        Inference request flow (simple)
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#inference-request-flow-detailed">
+<span class="md-ellipsis">
+      
+        Inference request flow (detailed)
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#key-terms-glossary">
+<span class="md-ellipsis">
+      
+        Key terms glossary
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#quick-self-check">
+<span class="md-ellipsis">
+      
+        Quick self-check
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#probability-foundations-for-ml">
+<span class="md-ellipsis">
+      
+        Probability foundations for ML
+      
+    </span>
+</a>
+<nav aria-label="Probability foundations for ML" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#joint-and-marginal-probability">
+<span class="md-ellipsis">
+      
+        Joint and marginal probability
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#conditional-probability">
+<span class="md-ellipsis">
+      
+        Conditional probability
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#bayes-theorem">
+<span class="md-ellipsis">
+      
+        Bayes' theorem
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#why-probabilistic-thinking-is-essential-for-ml">
+<span class="md-ellipsis">
+      
+        Why probabilistic thinking is essential for ML
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#information-theory-and-entropy-in-ml">
+<span class="md-ellipsis">
+      
+        Information theory and entropy in ML
+      
+    </span>
+</a>
+<nav aria-label="Information theory and entropy in ML" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#entropy-measuring-uncertainty">
+<span class="md-ellipsis">
+      
+        Entropy: measuring uncertainty
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cross-entropy-as-the-natural-classification-loss">
+<span class="md-ellipsis">
+      
+        Cross-entropy as the natural classification loss
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#kl-divergence-measuring-distribution-mismatch">
+<span class="md-ellipsis">
+      
+        KL divergence: measuring distribution mismatch
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#statistical-learning-theory-overview">
+<span class="md-ellipsis">
+      
+        Statistical learning theory overview
+      
+    </span>
+</a>
+<nav aria-label="Statistical learning theory overview" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#the-generalization-problem-formally">
+<span class="md-ellipsis">
+      
+        The generalization problem formally
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#pac-learning">
+<span class="md-ellipsis">
+      
+        PAC learning
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#vc-dimension">
+<span class="md-ellipsis">
+      
+        VC dimension
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#generalization-bounds">
+<span class="md-ellipsis">
+      
+        Generalization bounds
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#why-more-data-helps-variance-but-not-bias">
+<span class="md-ellipsis">
+      
+        Why more data helps variance but not bias
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#the-scientific-method-as-ml-workflow">
+<span class="md-ellipsis">
+      
+        The scientific method as ML workflow
+      
+    </span>
+</a>
+<nav aria-label="The scientific method as ML workflow" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#mapping-science-to-ml">
+<span class="md-ellipsis">
+      
+        Mapping science to ML
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#controlled-experiments-in-ml">
+<span class="md-ellipsis">
+      
+        Controlled experiments in ML
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#reproducibility-and-its-enemies">
+<span class="md-ellipsis">
+      
+        Reproducibility and its enemies
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#responsible-ai-and-ethical-framing">
+<span class="md-ellipsis">
+      
+        Responsible AI and ethical framing
+      
+    </span>
+</a>
+<nav aria-label="Responsible AI and ethical framing" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#why-ethics-is-a-first-class-engineering-concern">
+<span class="md-ellipsis">
+      
+        Why ethics is a first-class engineering concern
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#fairness-definitions">
+<span class="md-ellipsis">
+      
+        Fairness definitions
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#transparency-and-explainability">
+<span class="md-ellipsis">
+      
+        Transparency and explainability
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#privacy-and-data-minimization">
+<span class="md-ellipsis">
+      
+        Privacy and data minimization
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#accountability-and-governance">
+<span class="md-ellipsis">
+      
+        Accountability and governance
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#industry-applications-taxonomy">
+<span class="md-ellipsis">
+      
+        Industry applications taxonomy
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#a-complete-numeric-walkthrough-spam-classification-from-scratch">
+<span class="md-ellipsis">
+      
+        A complete numeric walkthrough: spam classification from scratch
+      
+    </span>
+</a>
+<nav aria-label="A complete numeric walkthrough: spam classification from scratch" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-1-problem-definition-and-features">
+<span class="md-ellipsis">
+      
+        Step 1: Problem definition and features
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-2-the-logistic-regression-model">
+<span class="md-ellipsis">
+      
+        Step 2: The logistic regression model
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-3-forward-pass-compute-predictions">
+<span class="md-ellipsis">
+      
+        Step 3: Forward pass — compute predictions
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-4-compute-the-binary-cross-entropy-loss">
+<span class="md-ellipsis">
+      
+        Step 4: Compute the binary cross-entropy loss
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-5-compute-gradients">
+<span class="md-ellipsis">
+      
+        Step 5: Compute gradients
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-6-gradient-descent-update">
+<span class="md-ellipsis">
+      
+        Step 6: Gradient descent update
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-7-second-forward-pass">
+<span class="md-ellipsis">
+      
+        Step 7: Second forward pass
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-8-evaluate-with-a-confusion-matrix">
+<span class="md-ellipsis">
+      
+        Step 8: Evaluate with a confusion matrix
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#quick-self-check-extended">
+<span class="md-ellipsis">
+      
+        Quick self-check (extended)
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../04-ml-foundations/">
+<span class="md-ellipsis">
+    
+  
+    04. ML Foundations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../05-neural-networks/">
+<span class="md-ellipsis">
+    
+  
+    05. Neural Networks and Deep Learning
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../06-azure-ml-environment/">
+<span class="md-ellipsis">
+    
+  
+    06. Azure ML Environment
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../07-environment-setup/">
+<span class="md-ellipsis">
+    
+  
+    07. Environment Setup
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../08-data-preparation/">
+<span class="md-ellipsis">
+    
+  
+    08. Data Preparation
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../09-model-types/">
+<span class="md-ellipsis">
+    
+  
+    09. Model Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../10-training-automl/">
+<span class="md-ellipsis">
+    
+  
+    10. Training and AutoML
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../11-performance-metrics/">
+<span class="md-ellipsis">
+    
+  
+    11. Performance Metrics
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../12-results-explainability/">
+<span class="md-ellipsis">
+    
+  
+    12. Results and Explainability
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../13-deployment/">
+<span class="md-ellipsis">
+    
+  
+    13. Deployment
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../14-deployment-debug-k8s/">
+<span class="md-ellipsis">
+    
+  
+    14. Deployment Debugging
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_16" type="checkbox"/>
+<label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="">
+<span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_16_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_16">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/model-math-deep-dive/">
+<span class="md-ellipsis">
+    
+  
+    Mathematical Model Deep Dive
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/cli-commands/">
+<span class="md-ellipsis">
+    
+  
+    CLI Commands
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/glossary/">
+<span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#who-this-is-for">
+<span class="md-ellipsis">
+      
+        Who this is for
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#learning-outcomes">
+<span class="md-ellipsis">
+      
+        Learning outcomes
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#ai-vs-ml-vs-data-science">
+<span class="md-ellipsis">
+      
+        AI vs ML vs Data Science
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#major-ai-categories">
+<span class="md-ellipsis">
+      
+        Major AI categories
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#types-of-ml-at-a-glance">
+<span class="md-ellipsis">
+      
+        Types of ML at a glance
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#common-confusion-points">
+<span class="md-ellipsis">
+      
+        Common confusion points
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#real-world-example-e-commerce-recommendation">
+<span class="md-ellipsis">
+      
+        Real-world example: e-commerce recommendation
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#why-azure-ml-matters">
+<span class="md-ellipsis">
+      
+        Why Azure ML matters
+      
+    </span>
+</a>
+<nav aria-label="Why Azure ML matters" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#what-each-stage-does">
+<span class="md-ellipsis">
+      
+        What each stage does
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#web-service-vs-api">
+<span class="md-ellipsis">
+      
+        Web Service vs API
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#deep-dive-every-concept-explained">
+<span class="md-ellipsis">
+      
+        Deep dive: every concept, explained
+      
+    </span>
+</a>
+<nav aria-label="Deep dive: every concept, explained" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#what-learning-from-data-actually-means">
+<span class="md-ellipsis">
+      
+        What "learning from data" actually means
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#ai-ml-deep-learning-and-genai-as-nested-sets">
+<span class="md-ellipsis">
+      
+        AI, ML, deep learning, and GenAI as nested sets
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#supervised-unsupervised-and-reinforcement-the-signal-that-drives-learning">
+<span class="md-ellipsis">
+      
+        Supervised, unsupervised, and reinforcement : the signal that drives learning
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#why-the-pipeline-matters-more-than-the-model">
+<span class="md-ellipsis">
+      
+        Why "the pipeline matters more than the model"
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#latency-throughput-and-why-a-good-model-can-be-unusable">
+<span class="md-ellipsis">
+      
+        Latency, throughput, and why a "good" model can be unusable
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#problem-framing-in-practice-turning-a-business-goal-into-an-ml-task">
+<span class="md-ellipsis">
+      
+        Problem framing in practice: turning a business goal into an ML task
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#a-concrete-numeric-walk-through">
+<span class="md-ellipsis">
+      
+        A concrete numeric walk-through
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rest-api-endpoint-and-web-service-the-same-idea-at-different-layers">
+<span class="md-ellipsis">
+      
+        REST API, endpoint, and web service : the same idea at different layers
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#inference-request-flow-simple">
+<span class="md-ellipsis">
+      
+        Inference request flow (simple)
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#inference-request-flow-detailed">
+<span class="md-ellipsis">
+      
+        Inference request flow (detailed)
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#key-terms-glossary">
+<span class="md-ellipsis">
+      
+        Key terms glossary
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#quick-self-check">
+<span class="md-ellipsis">
+      
+        Quick self-check
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#probability-foundations-for-ml">
+<span class="md-ellipsis">
+      
+        Probability foundations for ML
+      
+    </span>
+</a>
+<nav aria-label="Probability foundations for ML" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#joint-and-marginal-probability">
+<span class="md-ellipsis">
+      
+        Joint and marginal probability
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#conditional-probability">
+<span class="md-ellipsis">
+      
+        Conditional probability
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#bayes-theorem">
+<span class="md-ellipsis">
+      
+        Bayes' theorem
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#why-probabilistic-thinking-is-essential-for-ml">
+<span class="md-ellipsis">
+      
+        Why probabilistic thinking is essential for ML
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#information-theory-and-entropy-in-ml">
+<span class="md-ellipsis">
+      
+        Information theory and entropy in ML
+      
+    </span>
+</a>
+<nav aria-label="Information theory and entropy in ML" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#entropy-measuring-uncertainty">
+<span class="md-ellipsis">
+      
+        Entropy: measuring uncertainty
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cross-entropy-as-the-natural-classification-loss">
+<span class="md-ellipsis">
+      
+        Cross-entropy as the natural classification loss
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#kl-divergence-measuring-distribution-mismatch">
+<span class="md-ellipsis">
+      
+        KL divergence: measuring distribution mismatch
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#statistical-learning-theory-overview">
+<span class="md-ellipsis">
+      
+        Statistical learning theory overview
+      
+    </span>
+</a>
+<nav aria-label="Statistical learning theory overview" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#the-generalization-problem-formally">
+<span class="md-ellipsis">
+      
+        The generalization problem formally
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#pac-learning">
+<span class="md-ellipsis">
+      
+        PAC learning
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#vc-dimension">
+<span class="md-ellipsis">
+      
+        VC dimension
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#generalization-bounds">
+<span class="md-ellipsis">
+      
+        Generalization bounds
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#why-more-data-helps-variance-but-not-bias">
+<span class="md-ellipsis">
+      
+        Why more data helps variance but not bias
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#the-scientific-method-as-ml-workflow">
+<span class="md-ellipsis">
+      
+        The scientific method as ML workflow
+      
+    </span>
+</a>
+<nav aria-label="The scientific method as ML workflow" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#mapping-science-to-ml">
+<span class="md-ellipsis">
+      
+        Mapping science to ML
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#controlled-experiments-in-ml">
+<span class="md-ellipsis">
+      
+        Controlled experiments in ML
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#reproducibility-and-its-enemies">
+<span class="md-ellipsis">
+      
+        Reproducibility and its enemies
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#responsible-ai-and-ethical-framing">
+<span class="md-ellipsis">
+      
+        Responsible AI and ethical framing
+      
+    </span>
+</a>
+<nav aria-label="Responsible AI and ethical framing" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#why-ethics-is-a-first-class-engineering-concern">
+<span class="md-ellipsis">
+      
+        Why ethics is a first-class engineering concern
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#fairness-definitions">
+<span class="md-ellipsis">
+      
+        Fairness definitions
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#transparency-and-explainability">
+<span class="md-ellipsis">
+      
+        Transparency and explainability
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#privacy-and-data-minimization">
+<span class="md-ellipsis">
+      
+        Privacy and data minimization
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#accountability-and-governance">
+<span class="md-ellipsis">
+      
+        Accountability and governance
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#industry-applications-taxonomy">
+<span class="md-ellipsis">
+      
+        Industry applications taxonomy
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#a-complete-numeric-walkthrough-spam-classification-from-scratch">
+<span class="md-ellipsis">
+      
+        A complete numeric walkthrough: spam classification from scratch
+      
+    </span>
+</a>
+<nav aria-label="A complete numeric walkthrough: spam classification from scratch" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-1-problem-definition-and-features">
+<span class="md-ellipsis">
+      
+        Step 1: Problem definition and features
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-2-the-logistic-regression-model">
+<span class="md-ellipsis">
+      
+        Step 2: The logistic regression model
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-3-forward-pass-compute-predictions">
+<span class="md-ellipsis">
+      
+        Step 3: Forward pass — compute predictions
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-4-compute-the-binary-cross-entropy-loss">
+<span class="md-ellipsis">
+      
+        Step 4: Compute the binary cross-entropy loss
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-5-compute-gradients">
+<span class="md-ellipsis">
+      
+        Step 5: Compute gradients
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-6-gradient-descent-update">
+<span class="md-ellipsis">
+      
+        Step 6: Gradient descent update
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-7-second-forward-pass">
+<span class="md-ellipsis">
+      
+        Step 7: Second forward pass
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-8-evaluate-with-a-confusion-matrix">
+<span class="md-ellipsis">
+      
+        Step 8: Evaluate with a confusion matrix
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#quick-self-check-extended">
+<span class="md-ellipsis">
+      
+        Quick self-check (extended)
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1 id="introduction-and-ml-lifecycle">Introduction and ML Lifecycle<a class="headerlink" href="#introduction-and-ml-lifecycle" title="Permanent link">¶</a></h1>
+<p>This course is built for learners starting from scratch and progressing to production<br/>
+MLOps thinking. The goal is not only to define terms, but to build intuition for how<br/>
+real ML systems are designed, shipped, and operated.</p>
+<h2 id="who-this-is-for">Who this is for<a class="headerlink" href="#who-this-is-for" title="Permanent link">¶</a></h2>
+<ul>
+<li>Beginners who know little or nothing about ML.</li>
+<li>Engineers who can code but need end-to-end ML platform understanding.</li>
+<li>Teams preparing to deploy Azure ML workloads in production.</li>
+</ul>
+<h2 id="learning-outcomes">Learning outcomes<a class="headerlink" href="#learning-outcomes" title="Permanent link">¶</a></h2>
+<p>By the end of this module, you should be able to:</p>
+<ol>
+<li>Explain the difference between AI, ML, and data science.</li>
+<li>Identify major AI and ML categories.</li>
+<li>Describe the Azure ML lifecycle from problem framing to monitoring.</li>
+<li>Explain how a deployed model is exposed as an API/web service.</li>
+</ol>
+<h2 id="ai-vs-ml-vs-data-science">AI vs ML vs Data Science<a class="headerlink" href="#ai-vs-ml-vs-data-science" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Topic</th>
+<th>What it is</th>
+<th>Goal</th>
+<th>Typical output</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AI (Artificial Intelligence)</td>
+<td>Broad field of building systems that perform tasks requiring human-like intelligence</td>
+<td>Reason, plan, perceive, generate, decide</td>
+<td>Intelligent behavior</td>
+</tr>
+<tr>
+<td>ML (Machine Learning)</td>
+<td>Subset of AI where systems learn patterns from data</td>
+<td>Predict/estimate outcomes from examples</td>
+<td>Trained model</td>
+</tr>
+<tr>
+<td>Data Science</td>
+<td>Interdisciplinary practice of extracting insight from data</td>
+<td>Understand data and support decisions</td>
+<td>Analysis, dashboards, models</td>
+</tr>
+</tbody>
+</table>
+<p>Key relationship for beginners:</p>
+<ul>
+<li><strong>AI</strong> is the umbrella.</li>
+<li><strong>ML</strong> is one major way to build AI systems.</li>
+<li><strong>Data science</strong> uses statistics, ML, and domain knowledge to solve business problems<br/>
+and communicate insights.</li>
+</ul>
+<p>In short: AI is the mission, ML is one method, and data science is the broader practice.</p>
+<h2 id="major-ai-categories">Major AI categories<a class="headerlink" href="#major-ai-categories" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Description</th>
+<th>Real-world examples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Symbolic / Rule-based AI</td>
+<td>Explicit rules and logic created by humans</td>
+<td>Expert systems, business rule engines</td>
+</tr>
+<tr>
+<td>Machine Learning AI</td>
+<td>Learns from data instead of hard-coded rules</td>
+<td>Fraud scoring, demand forecasting</td>
+</tr>
+<tr>
+<td>Generative AI</td>
+<td>Learns to generate new content</td>
+<td>Text generation, image generation, code assistants</td>
+</tr>
+<tr>
+<td>Classical Search/Planning</td>
+<td>Finds actions to optimize a goal</td>
+<td>Route planning, scheduling</td>
+</tr>
+</tbody>
+</table>
+<p>Practical note: many enterprise solutions combine categories. Example: a fraud system can<br/>
+use supervised ML scoring plus rule-based guardrails.</p>
+<h2 id="types-of-ml-at-a-glance">Types of ML at a glance<a class="headerlink" href="#types-of-ml-at-a-glance" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Data requirement</th>
+<th>Typical task</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Supervised learning</td>
+<td>Labeled data <span class="arithmatex">\((X, y)\)</span></td>
+<td>Classification, regression</td>
+</tr>
+<tr>
+<td>Unsupervised learning</td>
+<td>Unlabeled data <span class="arithmatex">\(X\)</span></td>
+<td>Clustering, anomaly detection</td>
+</tr>
+<tr>
+<td>Reinforcement learning</td>
+<td>Environment + reward signal</td>
+<td>Sequential decision/control</td>
+</tr>
+<tr>
+<td>Semi-supervised learning</td>
+<td>Small labeled + large unlabeled</td>
+<td>Classification with sparse labels</td>
+</tr>
+<tr>
+<td>Self-supervised learning</td>
+<td>Labels generated from data itself</td>
+<td>Representation learning (NLP/CV)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="common-confusion-points">Common confusion points<a class="headerlink" href="#common-confusion-points" title="Permanent link">¶</a></h2>
+<ul>
+<li>A model can be "accurate" but still unusable if latency is too high.</li>
+<li>A model can be statistically strong but fail fairness/compliance checks.</li>
+<li>A model is not a product by itself; the surrounding data and ops system matters.</li>
+<li>Deep learning is a subset of ML, not a separate thing; it uses neural networks with many layers.</li>
+<li>"Training" a model means finding parameter values that minimise a loss function on data, not teaching in the human sense.</li>
+</ul>
+<h2 id="real-world-example-e-commerce-recommendation">Real-world example: e-commerce recommendation<a class="headerlink" href="#real-world-example-e-commerce-recommendation" title="Permanent link">¶</a></h2>
+<p>To make this concrete, here is how the full technology stack maps to a product:</p>
+<table>
+<thead>
+<tr>
+<th>Concern</th>
+<th>Technology choice</th>
+<th>ML lifecycle stage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Collect user events</td>
+<td>Event streaming (Kafka, Event Hub)</td>
+<td>Data ingestion</td>
+</tr>
+<tr>
+<td>Store features</td>
+<td>Feature store or Azure Data Lake</td>
+<td>Data preparation</td>
+</tr>
+<tr>
+<td>Train model</td>
+<td>Azure ML training job</td>
+<td>Training</td>
+</tr>
+<tr>
+<td>Serve recommendations</td>
+<td>Online endpoint (AKS)</td>
+<td>Deployment</td>
+</tr>
+<tr>
+<td>Detect stale model</td>
+<td>Azure ML data drift monitor</td>
+<td>Monitoring</td>
+</tr>
+</tbody>
+</table>
+<p>The model is one component. The pipeline around it is what makes it reliable.</p>
+<h2 id="why-azure-ml-matters">Why Azure ML matters<a class="headerlink" href="#why-azure-ml-matters" title="Permanent link">¶</a></h2>
+<p>Azure Machine Learning gives you the managed platform to run the full lifecycle with<br/>
+reproducibility and governance: versioned data/model assets, tracked runs, deployment<br/>
+endpoints, and monitoring.</p>
+<p>Azure Machine Learning organizes the end-to-end lifecycle:</p>
+<ol>
+<li>Problem framing</li>
+<li>Data preparation</li>
+<li>Training and validation</li>
+<li>Model registration</li>
+<li>Deployment</li>
+<li>Monitoring and retraining</li>
+</ol>
+<p>This is not a linear path. Production systems continuously loop from monitoring back to<br/>
+data and training when model quality or data distributions change.</p>
+<div class="mermaid">flowchart LR
+  A[Problem Framing] --&gt; B[Data Preparation]
+  B --&gt; C[Training and Validation]
+  C --&gt; D[Model Registration]
+  D --&gt; E[Deployment]
+  E --&gt; F[Monitoring]
+  F --&gt; C
+</div>
+<h3 id="what-each-stage-does">What each stage does<a class="headerlink" href="#what-each-stage-does" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Main question</th>
+<th>Key output</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Problem framing</td>
+<td>What decision are we trying to improve?</td>
+<td>Business KPI definition, success criteria</td>
+</tr>
+<tr>
+<td>Data preparation</td>
+<td>Do we trust the data and labels?</td>
+<td>Validated, versioned dataset</td>
+</tr>
+<tr>
+<td>Training</td>
+<td>Which model learns the signal best?</td>
+<td>Candidate models with tracked metrics</td>
+</tr>
+<tr>
+<td>Registration</td>
+<td>Is the artifact versioned and reproducible?</td>
+<td>Registered model with lineage</td>
+</tr>
+<tr>
+<td>Deployment</td>
+<td>Can consumers call this model safely?</td>
+<td>Live endpoint with auth and monitoring</td>
+</tr>
+<tr>
+<td>Monitoring</td>
+<td>Is quality stable over time in production?</td>
+<td>Drift and quality alerts, retraining signals</td>
+</tr>
+</tbody>
+</table>
+<p>Note: Stage 1 (problem framing) is often underinvested. The single most common reason ML projects fail is a poorly defined business objective, not a weak model.</p>
+<p><img alt="ML infrastructure tools for production" src="../../assets/img/ml-infrastructure-tools-for-production.svg"/></p>
+<blockquote>
+<p><strong>Note - What this shows:</strong> The production ML stack is far larger than the model itself: ingestion, feature storage,<br/>
+training orchestration, serving, and monitoring are all distinct tools. The takeaway for Azure<br/>
+ML learners is that choosing a model is one box among many : most reliability work happens in<br/>
+the surrounding infrastructure.</p>
+</blockquote>
+<p><img alt="ML workflow stages" src="../../assets/img/ml_workflow_stages.svg"/></p>
+<blockquote>
+<p><strong>Note - What this shows:</strong> The workflow stages map one-to-one onto the Azure ML lifecycle (problem framing → data →<br/>
+training → registration → deployment → monitoring). Notice the loop back from monitoring to<br/>
+data/training: production ML is iterative, not a one-way pipeline.</p>
+</blockquote>
+<p><img alt="Overview ML flow" src="../../assets/img/Overview_ML_flow.svg"/></p>
+<blockquote>
+<p><strong>Note - What this shows:</strong> An end-to-end view of how raw data becomes a served prediction. Use it to locate where each<br/>
+later module fits: data preparation, model training, deployment, and monitoring are all stages<br/>
+on this single flow.</p>
+</blockquote>
+<h2 id="web-service-vs-api">Web Service vs API<a class="headerlink" href="#web-service-vs-api" title="Permanent link">¶</a></h2>
+<ul>
+<li>A deployed Azure ML model is typically exposed as a REST API endpoint.</li>
+<li>In practice, teams often say "web service" for the deployed scoring interface.</li>
+</ul>
+<h2 id="deep-dive-every-concept-explained">Deep dive: every concept, explained<a class="headerlink" href="#deep-dive-every-concept-explained" title="Permanent link">¶</a></h2>
+<p>This section expands the terms used above so that no concept is left as a black box.</p>
+<h3 id="what-learning-from-data-actually-means">What "learning from data" actually means<a class="headerlink" href="#what-learning-from-data-actually-means" title="Permanent link">¶</a></h3>
+<p>A classical program is a fixed function written by a human: <code>output = program(input)</code>.<br/>
+Machine learning <strong>inverts</strong> this. You provide examples of inputs and desired outputs, and<br/>
+an optimization procedure searches for a function that reproduces them and, crucially,<br/>
+<em>generalizes</em> to unseen inputs. Formally, ML assumes the data is drawn from an unknown<br/>
+joint distribution <span class="arithmatex">\(P(X, Y)\)</span>, and the goal is to learn a function <span class="arithmatex">\(f\)</span> that minimizes the<br/>
+<strong>expected risk</strong> over that distribution:</p>
+<div class="arithmatex">\[  
+R(f) = \mathbb{E}_{(x,y)\sim P}\big[\mathcal{L}(f(x), y)\big]  
+\]</div>
+<p>Because <span class="arithmatex">\(P\)</span> is unknown, we minimize the <strong>empirical risk</strong> on a finite sample instead<br/>
+(the training set). The entire discipline of ML is about making that approximation<br/>
+trustworthy : which is why data quality, validation, and monitoring matter as much as the<br/>
+algorithm.</p>
+<h3 id="ai-ml-deep-learning-and-genai-as-nested-sets">AI, ML, deep learning, and GenAI as nested sets<a class="headerlink" href="#ai-ml-deep-learning-and-genai-as-nested-sets" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Precise scope</th>
+<th>What distinguishes it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Artificial Intelligence</td>
+<td>Any system exhibiting goal-directed "intelligent" behavior</td>
+<td>Includes hand-written logic, search, and learning</td>
+</tr>
+<tr>
+<td>Machine Learning</td>
+<td>AI systems that improve from data</td>
+<td>Parameters are <em>fit</em>, not hand-coded</td>
+</tr>
+<tr>
+<td>Deep Learning</td>
+<td>ML using multi-layer neural networks</td>
+<td>Learns hierarchical feature representations automatically</td>
+</tr>
+<tr>
+<td>Generative AI</td>
+<td>Models that learn <span class="arithmatex">\(P(X)\)</span> (or <span class="arithmatex">\(P(X\mid \text{prompt})\)</span>) to synthesize new data</td>
+<td>Produces content rather than only labels/scores</td>
+</tr>
+</tbody>
+</table>
+<p>The mental model: each is a strict subset of the one before it. A logistic regression is<br/>
+ML but not deep learning; a CNN is deep learning; a diffusion model or LLM is deep learning<br/>
+<em>and</em> generative AI.</p>
+<h3 id="supervised-unsupervised-and-reinforcement-the-signal-that-drives-learning">Supervised, unsupervised, and reinforcement : the signal that drives learning<a class="headerlink" href="#supervised-unsupervised-and-reinforcement-the-signal-that-drives-learning" title="Permanent link">¶</a></h3>
+<p>The families differ only in <strong>what feedback signal is available</strong>:</p>
+<ul>
+<li><strong>Supervised</strong>: every example carries a correct answer <span class="arithmatex">\(y\)</span>. The loss directly measures the<br/>
+gap between prediction and truth, so the gradient "knows" which direction to move.</li>
+<li><strong>Unsupervised</strong>: there is no <span class="arithmatex">\(y\)</span>. The objective instead rewards structure the model<br/>
+discovers itself : minimizing reconstruction error, maximizing cluster compactness, or<br/>
+maximizing likelihood of the data under a density model.</li>
+<li><strong>Reinforcement</strong>: feedback is a delayed, scalar <strong>reward</strong> earned by interacting with an<br/>
+environment. The hard part is <em>credit assignment</em> : deciding which earlier actions caused<br/>
+a later reward.</li>
+<li><strong>Self-supervised</strong> is the bridge that powers foundation models: it manufactures a<br/>
+supervised signal <em>from the data itself</em> (predict the masked word, the next token, the<br/>
+missing image patch), giving the scale benefits of supervised learning without manual labels.</li>
+</ul>
+<h3 id="why-the-pipeline-matters-more-than-the-model">Why "the pipeline matters more than the model"<a class="headerlink" href="#why-the-pipeline-matters-more-than-the-model" title="Permanent link">¶</a></h3>
+<p>The lifecycle diagram is a closed loop on purpose. In production the dominant failure mode is<br/>
+not a weak algorithm but a <strong>distribution shift</strong>: the data the model sees in production<br/>
+drifts away from the data it was trained on (<code>P_train(X) ≠ P_prod(X)</code>), so a model that was<br/>
+accurate at launch silently degrades. The monitoring → training feedback edge exists to<br/>
+detect this and retrain. This is the core idea of <strong>MLOps</strong>: treating data, models, and<br/>
+deployments as versioned, testable, observable assets rather than one-off artifacts.</p>
+<h3 id="latency-throughput-and-why-a-good-model-can-be-unusable">Latency, throughput, and why a "good" model can be unusable<a class="headerlink" href="#latency-throughput-and-why-a-good-model-can-be-unusable" title="Permanent link">¶</a></h3>
+<p>Two operational terms appear throughout the course:</p>
+<ul>
+<li><strong>Latency</strong> : time to serve a single request (often measured at the p95 or p99<br/>
+percentile, not the average, because tail latency is what users feel).</li>
+<li><strong>Throughput</strong> : requests served per second (QPS) at acceptable latency.</li>
+</ul>
+<p>A model that scores 0.99 AUC but needs 800 ms per call may be useless for a checkout flow<br/>
+with a 100 ms budget. Model selection is therefore always a <em>joint</em> optimization over<br/>
+accuracy, latency, cost, and governance constraints : a theme repeated in every later module.</p>
+<h3 id="problem-framing-in-practice-turning-a-business-goal-into-an-ml-task">Problem framing in practice: turning a business goal into an ML task<a class="headerlink" href="#problem-framing-in-practice-turning-a-business-goal-into-an-ml-task" title="Permanent link">¶</a></h3>
+<p>Problem framing is the stage where most projects are silently won or lost, so it deserves a<br/>
+concrete checklist. The job is to translate a vague business wish ("reduce churn") into a<br/>
+precise, measurable learning task. Five questions force that translation:</p>
+<ol>
+<li><strong>What decision changes because of the prediction?</strong> If no human or system will act
+  differently, the model has no value. "Predict churn" is only useful if it triggers a<br/>
+   retention offer. The decision defines the whole project.</li>
+<li><strong>What is the unit of prediction?</strong> One row per customer? Per customer per month? Per
+  session? This fixes the granularity of your data and labels.</li>
+<li><strong>What exactly is the label?</strong> "Churn" must become a rule: for example, "no purchase in
+  the next 60 days". Ambiguous labels produce models that learn the wrong thing.</li>
+<li><strong>What does success look like as a number?</strong> Tie the model to a business KPI (retained
+  revenue, fraud caught, cost avoided), not just accuracy. This is the metric the project is<br/>
+   judged on.</li>
+<li><strong>What is the cost of each error type?</strong> A false positive (flagging a loyal customer) and
+  a false negative (missing a leaver) rarely cost the same. This asymmetry drives the loss<br/>
+   function and the decision threshold in later modules.</li>
+</ol>
+<blockquote>
+<p><strong>Note - The framing trap:</strong> A technically excellent model built on a poorly framed problem<br/>
+is worse than useless: it produces confident, well-validated answers to the wrong question.<br/>
+Spend real time here before touching data or algorithms.</p>
+</blockquote>
+<h3 id="a-concrete-numeric-walk-through">A concrete numeric walk-through<a class="headerlink" href="#a-concrete-numeric-walk-through" title="Permanent link">¶</a></h3>
+<p>To demystify "the model is just math", here is the smallest possible end-to-end example. Suppose<br/>
+we predict whether an email is spam from one feature, the number of suspicious links <span class="arithmatex">\(x\)</span>. A<br/>
+logistic-regression model learns two numbers, a weight <span class="arithmatex">\(w\)</span> and a bias <span class="arithmatex">\(b\)</span>, and computes:</p>
+<div class="arithmatex">\[  
+\hat{p} = \frac{1}{1 + e^{-(wx + b)}}  
+\]</div>
+<p>Say training settles on <span class="arithmatex">\(w = 1.2\)</span> and <span class="arithmatex">\(b = -2.0\)</span>. For an email with <span class="arithmatex">\(x = 3\)</span> links, the score is<br/>
+<span class="arithmatex">\(wx + b = 1.6\)</span>, and <span class="arithmatex">\(\hat{p} = 1/(1 + e^{-1.6}) \approx 0.83\)</span>. With a decision threshold of<br/>
+<span class="arithmatex">\(0.5\)</span>, the email is flagged as spam. Every model in this course is a richer version of exactly<br/>
+this: learn parameters from examples, combine them with the input to get a score, then apply a<br/>
+threshold to make a decision.</p>
+<h3 id="rest-api-endpoint-and-web-service-the-same-idea-at-different-layers">REST API, endpoint, and web service : the same idea at different layers<a class="headerlink" href="#rest-api-endpoint-and-web-service-the-same-idea-at-different-layers" title="Permanent link">¶</a></h3>
+<ul>
+<li>A <strong>REST API</strong> is an HTTP contract: a client sends a request (usually JSON) to a URL and<br/>
+gets a structured response. "REST" means it uses standard HTTP verbs and is stateless.</li>
+<li>An <strong>endpoint</strong> in Azure ML is the concrete, addressable deployment of that API, with<br/>
+authentication, scaling, and traffic-routing attached.</li>
+<li>"<strong>Web service</strong>" is the informal name teams give the running endpoint. All three describe<br/>
+the same thing seen from the contract, the platform, and the team's vocabulary respectively.</li>
+</ul>
+<p>Practical distinction:</p>
+<ul>
+<li><strong>API</strong> describes the contract (request/response schema, authentication, versioning).</li>
+<li><strong>Web service</strong> is the hosted implementation of that API.</li>
+<li>In Azure ML online endpoints, you design the API contract through the scoring payload<br/>
+and endpoint auth, and Azure hosts the service.</li>
+</ul>
+<h3 id="inference-request-flow-simple">Inference request flow (simple)<a class="headerlink" href="#inference-request-flow-simple" title="Permanent link">¶</a></h3>
+<ol>
+<li>Client sends JSON payload to endpoint URI.</li>
+<li>Endpoint auth validates identity/key.</li>
+<li>Scoring script parses input and runs model.</li>
+<li>API returns prediction response + metadata.</li>
+</ol>
+<h3 id="inference-request-flow-detailed">Inference request flow (detailed)<a class="headerlink" href="#inference-request-flow-detailed" title="Permanent link">¶</a></h3>
+<div class="mermaid">sequenceDiagram
+  participant C as Client App
+  participant G as API Gateway / Auth
+  participant E as Scoring Endpoint
+  participant M as Model
+  participant L as Logging
+  C-&gt;&gt;G: POST /score {features: [...]}
+  G-&gt;&gt;G: Validate auth token / key
+  G-&gt;&gt;E: Forward request
+  E-&gt;&gt;E: Deserialize and validate schema
+  E-&gt;&gt;M: Run model.predict(features)
+  M--&gt;&gt;E: Return raw prediction
+  E-&gt;&gt;E: Post-process / format response
+  E-&gt;&gt;L: Log input hash + prediction
+  E--&gt;&gt;C: Return {prediction, confidence}
+</div>
+<p>Key production considerations for this flow:</p>
+<ul>
+<li><strong>Schema validation in the scoring script</strong> protects against unexpected input shapes.</li>
+<li><strong>Logging input hashes</strong> (not raw PII) enables later drift analysis and auditing.</li>
+<li><strong>Timeouts and retries</strong> must be defined at both the gateway and client layers to avoid silent failures.</li>
+</ul>
+<p><img alt="Web service vs API" src="../../assets/img/webservice_vs_api.svg"/></p>
+<blockquote>
+<p><strong>Tip - Mental model:</strong> A <em>web service</em> is the running deployment; the <em>API</em> is the contract clients use to call it.<br/>
+In Azure ML a model is wrapped behind a REST endpoint : clients send JSON and receive a<br/>
+prediction, without knowing which model or framework runs underneath.</p>
+</blockquote>
+<p><img alt="Web service vs API table" src="../../assets/img/table_webservice_vs_api.svg"/></p>
+<blockquote>
+<p><strong>Note - Quick comparison:</strong> The table contrasts the informal term <em>web service</em> with the technical term <em>API</em>. They<br/>
+describe the same deployed scoring interface from two angles : the running process versus the<br/>
+HTTP contract it exposes.</p>
+</blockquote>
+<h2 id="key-terms-glossary">Key terms glossary<a class="headerlink" href="#key-terms-glossary" title="Permanent link">¶</a></h2>
+<p>This glossary collects the vocabulary introduced above in one place so later modules can assume<br/>
+it. Each term is defined in one plain sentence.</p>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Model</td>
+<td>A function with learned numbers (parameters) that turns inputs into predictions.</td>
+</tr>
+<tr>
+<td>Parameter / weight</td>
+<td>One of the numbers the training process adjusts; together they store what was learned.</td>
+</tr>
+<tr>
+<td>Feature</td>
+<td>A single input column (a measurable property) the model reads.</td>
+</tr>
+<tr>
+<td>Label / target</td>
+<td>The correct answer attached to each training example in supervised learning.</td>
+</tr>
+<tr>
+<td>Loss function</td>
+<td>A single number measuring how wrong the model is; training tries to make it small.</td>
+</tr>
+<tr>
+<td>Training</td>
+<td>The optimization process that searches for parameters that minimize the loss.</td>
+</tr>
+<tr>
+<td>Generalization</td>
+<td>How well the model performs on data it never saw during training.</td>
+</tr>
+<tr>
+<td>Overfitting</td>
+<td>Memorizing training noise so accuracy drops on new data.</td>
+</tr>
+<tr>
+<td>Inference / scoring</td>
+<td>Using a trained model to make predictions on new inputs.</td>
+</tr>
+<tr>
+<td>Endpoint</td>
+<td>The deployed, addressable service that serves a model over HTTP.</td>
+</tr>
+<tr>
+<td>Drift</td>
+<td>A change in production data distribution that degrades model quality over time.</td>
+</tr>
+<tr>
+<td>MLOps</td>
+<td>Treating data, models, and deployments as versioned, tested, monitored assets.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="quick-self-check">Quick self-check<a class="headerlink" href="#quick-self-check" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Question</th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Is every AI system an ML system?</td>
+<td>No. ML is a subset of AI; rule-based and symbolic AI systems make decisions without learning from data.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>In production, which stage catches drift issues?</td>
+<td>The monitoring stage, which watches the live data distribution and model quality and flags drift over time.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>What is the difference between API and web service?</td>
+<td>The API is the contract (request/response schema, authentication, versioning); the web service is the hosted, running implementation of that API (the endpoint).</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Given a business goal, what are the five problem-framing questions you must answer first?</td>
+<td>(1) What decision changes because of the prediction? (2) What is the unit of prediction? (3) What exactly is the label? (4) What does success look like as a number (business KPI)? (5) What is the cost of each error type?</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Why can a model with excellent accuracy still be the wrong choice for production?</td>
+<td>Accuracy ignores error costs, class imbalance, fairness, latency, and the business KPI; a high-accuracy model can still miss rare positives or be too slow, costly, or unfair to deploy.</td>
+</tr>
+</tbody>
+</table>
+<hr/>
+<h2 id="probability-foundations-for-ml">Probability foundations for ML<a class="headerlink" href="#probability-foundations-for-ml" title="Permanent link">¶</a></h2>
+<p>Machine learning is fundamentally applied probability. Every loss function, every metric, and every generalization guarantee has a probabilistic argument behind it. This section builds the minimum required vocabulary.</p>
+<h3 id="joint-and-marginal-probability">Joint and marginal probability<a class="headerlink" href="#joint-and-marginal-probability" title="Permanent link">¶</a></h3>
+<p>The <strong>joint probability</strong> <span class="arithmatex">\(P(X = x, Y = y)\)</span> is the probability that a randomly drawn example has feature value <span class="arithmatex">\(x\)</span> <em>and</em> label <span class="arithmatex">\(y\)</span> simultaneously. Supervised learning assumes your dataset is sampled i.i.d. from this joint distribution.</p>
+<p>The <strong>marginal probability</strong> of <span class="arithmatex">\(X\)</span> is obtained by summing (or integrating) out <span class="arithmatex">\(Y\)</span>:</p>
+<div class="arithmatex">\[
+P(X = x) = \sum_{y} P(X = x, Y = y)
+\]</div>
+<p>This tells you nothing about the label — only what the input looks like.</p>
+<h3 id="conditional-probability">Conditional probability<a class="headerlink" href="#conditional-probability" title="Permanent link">¶</a></h3>
+<p>The <strong>conditional probability</strong> <span class="arithmatex">\(P(Y = y \mid X = x)\)</span> is the probability of label <span class="arithmatex">\(y\)</span> given that the input is <span class="arithmatex">\(x\)</span>. This is exactly what a classifier learns to estimate. Formally:</p>
+<div class="arithmatex">\[
+P(Y \mid X) = \frac{P(X, Y)}{P(X)}
+\]</div>
+<p>The denominator <span class="arithmatex">\(P(X)\)</span> normalizes the joint so that probabilities over all <span class="arithmatex">\(y\)</span> sum to 1. When a model outputs a "probability" of class 1, it is estimating <span class="arithmatex">\(P(Y=1 \mid X=x)\)</span>.</p>
+<h3 id="bayes-theorem">Bayes' theorem<a class="headerlink" href="#bayes-theorem" title="Permanent link">¶</a></h3>
+<p>Bayes' theorem is the central engine of probabilistic reasoning. It inverts conditioning:</p>
+<div class="arithmatex">\[
+P(Y \mid X) = \frac{P(X \mid Y) \cdot P(Y)}{P(X)}
+\]</div>
+<ul>
+<li><span class="arithmatex">\(P(Y)\)</span> is the <strong>prior</strong>: what you believe about <span class="arithmatex">\(Y\)</span> before seeing <span class="arithmatex">\(X\)</span>. For spam, this might be "5% of all emails are spam."</li>
+<li><span class="arithmatex">\(P(X \mid Y)\)</span> is the <strong>likelihood</strong>: how probable is this input given the label? E.g., how likely is the word "lottery" in a spam email?</li>
+<li><span class="arithmatex">\(P(Y \mid X)\)</span> is the <strong>posterior</strong>: your updated belief after seeing <span class="arithmatex">\(X\)</span>. This is what you want.</li>
+<li><span class="arithmatex">\(P(X)\)</span> is the <strong>evidence</strong>: a normalizing constant.</li>
+</ul>
+<p>A <strong>Naive Bayes classifier</strong> directly applies this theorem, assuming features are conditionally independent given the class. Despite this unrealistic assumption, it performs surprisingly well on text classification because the relative ordering of posteriors is preserved.</p>
+<h3 id="why-probabilistic-thinking-is-essential-for-ml">Why probabilistic thinking is essential for ML<a class="headerlink" href="#why-probabilistic-thinking-is-essential-for-ml" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Calibration</strong>: a model predicting 0.9 probability should be right 90% of the time. Miscalibrated models mislead downstream decision systems.</li>
+<li><strong>Uncertainty quantification</strong>: knowing <em>how confident</em> the model is matters as much as the prediction itself in medical and financial settings.</li>
+<li><strong>Loss derivation</strong>: most standard loss functions (cross-entropy, MSE) fall out naturally as maximum likelihood objectives under specific probabilistic assumptions.</li>
+<li><strong>Handling class imbalance</strong>: imbalanced datasets have a skewed prior <span class="arithmatex">\(P(Y)\)</span>; understanding this prevents naive accuracy from being a misleading metric.</li>
+</ul>
+<blockquote>
+<p><strong>Note - Probability vs statistics:</strong> Probability reasons forward from a known model to data. Statistics reasons backward from data to unknown parameters. ML does both simultaneously: it uses statistical estimation to learn a probabilistic model, then uses that model to reason forward at inference time.</p>
+</blockquote>
+<hr/>
+<h2 id="information-theory-and-entropy-in-ml">Information theory and entropy in ML<a class="headerlink" href="#information-theory-and-entropy-in-ml" title="Permanent link">¶</a></h2>
+<p>Information theory, developed by Claude Shannon in 1948, provides the mathematical language for measuring uncertainty. It turns out to be the natural foundation for classification losses.</p>
+<h3 id="entropy-measuring-uncertainty">Entropy: measuring uncertainty<a class="headerlink" href="#entropy-measuring-uncertainty" title="Permanent link">¶</a></h3>
+<p>The <strong>entropy</strong> of a discrete probability distribution <span class="arithmatex">\(P\)</span> over <span class="arithmatex">\(K\)</span> classes measures the average surprise (unpredictability) of drawing a sample:</p>
+<div class="arithmatex">\[
+H(P) = -\sum_{k=1}^{K} p_k \log_2 p_k
+\]</div>
+<p>Entropy is measured in <strong>bits</strong> when using <span class="arithmatex">\(\log_2\)</span>, and in <strong>nats</strong> when using <span class="arithmatex">\(\ln\)</span>. Key properties:</p>
+<ul>
+<li><span class="arithmatex">\(H = 0\)</span> when one class has probability 1 (no uncertainty).</li>
+<li><span class="arithmatex">\(H\)</span> is maximized at <span class="arithmatex">\(\log_2 K\)</span> bits when all <span class="arithmatex">\(K\)</span> classes are equally likely (maximum uncertainty).</li>
+<li>For a fair coin (binary, <span class="arithmatex">\(p = 0.5\)</span>): <span class="arithmatex">\(H = -0.5 \log_2 0.5 - 0.5 \log_2 0.5 = 1\)</span> bit.</li>
+</ul>
+<h3 id="cross-entropy-as-the-natural-classification-loss">Cross-entropy as the natural classification loss<a class="headerlink" href="#cross-entropy-as-the-natural-classification-loss" title="Permanent link">¶</a></h3>
+<p>Suppose the true distribution over classes is <span class="arithmatex">\(P\)</span> (the one-hot label vector), and your model produces a predicted distribution <span class="arithmatex">\(Q\)</span> (the softmax outputs). The <strong>cross-entropy</strong> between <span class="arithmatex">\(P\)</span> and <span class="arithmatex">\(Q\)</span> is:</p>
+<div class="arithmatex">\[
+H(P, Q) = -\sum_{k=1}^{K} p_k \log q_k
+\]</div>
+<p>For a single example with true class <span class="arithmatex">\(c\)</span>, the one-hot vector makes <span class="arithmatex">\(p_k = 1\)</span> only for <span class="arithmatex">\(k = c\)</span>, so this reduces to:</p>
+<div class="arithmatex">\[
+H(P, Q) = -\log q_c
+\]</div>
+<p>This is exactly the <strong>negative log-likelihood</strong> of the correct class under the model's distribution. Minimizing cross-entropy is equivalent to maximizing the probability the model assigns to the true labels — the most principled objective possible.</p>
+<p>The averaged cross-entropy over a dataset is the standard <strong>categorical cross-entropy loss</strong> used in virtually every classification model:</p>
+<div class="arithmatex">\[
+\mathcal{L}_{CE} = -\frac{1}{N} \sum_{i=1}^{N} \sum_{k=1}^{K} y_{ik} \log \hat{p}_{ik}
+\]</div>
+<h3 id="kl-divergence-measuring-distribution-mismatch">KL divergence: measuring distribution mismatch<a class="headerlink" href="#kl-divergence-measuring-distribution-mismatch" title="Permanent link">¶</a></h3>
+<p>The <strong>Kullback-Leibler (KL) divergence</strong> from distribution <span class="arithmatex">\(Q\)</span> to <span class="arithmatex">\(P\)</span> measures how much information is lost when <span class="arithmatex">\(Q\)</span> is used to approximate <span class="arithmatex">\(P\)</span>:</p>
+<div class="arithmatex">\[
+D_{KL}(P \| Q) = \sum_{k} p_k \log \frac{p_k}{q_k} = H(P, Q) - H(P)
+\]</div>
+<p>Key facts:</p>
+<ul>
+<li><span class="arithmatex">\(D_{KL}(P \| Q) \geq 0\)</span> always, with equality only when <span class="arithmatex">\(P = Q\)</span> (Gibbs inequality).</li>
+<li>It is <strong>asymmetric</strong>: <span class="arithmatex">\(D_{KL}(P \| Q) \neq D_{KL}(Q \| P)\)</span> in general.</li>
+<li>Minimizing cross-entropy <span class="arithmatex">\(H(P, Q)\)</span> with respect to model parameters is identical to minimizing <span class="arithmatex">\(D_{KL}(P \| Q)\)</span>, because <span class="arithmatex">\(H(P)\)</span> does not depend on the model.</li>
+</ul>
+<p>KL divergence appears throughout ML: in variational autoencoders (as the regularization term), in knowledge distillation (aligning student and teacher distributions), and in monitoring (measuring how much a production distribution has drifted from training).</p>
+<blockquote>
+<p><strong>Tip - Intuition for cross-entropy:</strong> Think of <span class="arithmatex">\(-\log q_c\)</span> as the "cost" of encoding the true class using your model's probability distribution. If the model is very confident and correct (<span class="arithmatex">\(q_c \approx 1\)</span>), the cost is near zero. If the model is confidently wrong (<span class="arithmatex">\(q_c \approx 0\)</span>), the cost is enormous. This is why cross-entropy strongly penalizes overconfident mistakes.</p>
+</blockquote>
+<hr/>
+<h2 id="statistical-learning-theory-overview">Statistical learning theory overview<a class="headerlink" href="#statistical-learning-theory-overview" title="Permanent link">¶</a></h2>
+<p>Statistical learning theory is the branch of mathematics that asks: <em>when does empirical risk minimization actually work?</em> It provides formal guarantees connecting what we observe on training data to what we can expect on unseen data.</p>
+<h3 id="the-generalization-problem-formally">The generalization problem formally<a class="headerlink" href="#the-generalization-problem-formally" title="Permanent link">¶</a></h3>
+<p>We want to learn a function <span class="arithmatex">\(f\)</span> from a hypothesis class <span class="arithmatex">\(\mathcal{H}\)</span> such that the <strong>true risk</strong> <span class="arithmatex">\(R(f)\)</span> is small. We only have access to the <strong>empirical risk</strong> on <span class="arithmatex">\(N\)</span> samples:</p>
+<div class="arithmatex">\[
+\hat{R}(f) = \frac{1}{N} \sum_{i=1}^{N} \mathcal{L}(f(x_i), y_i)
+\]</div>
+<p>The generalization gap <span class="arithmatex">\(R(f) - \hat{R}(f)\)</span> is the core quantity theory tries to bound.</p>
+<h3 id="pac-learning">PAC learning<a class="headerlink" href="#pac-learning" title="Permanent link">¶</a></h3>
+<p><strong>Probably Approximately Correct (PAC) learning</strong>, introduced by Leslie Valiant (1984), formalizes what it means for a learning algorithm to succeed. An algorithm PAC-learns a concept class <span class="arithmatex">\(\mathcal{C}\)</span> if: for any target concept, any distribution over inputs, and any <span class="arithmatex">\(\epsilon, \delta &gt; 0\)</span>, the algorithm outputs a hypothesis <span class="arithmatex">\(h\)</span> such that:</p>
+<div class="arithmatex">\[
+P\big[R(h) \leq \epsilon\big] \geq 1 - \delta
+\]</div>
+<p>using a number of samples that is polynomial in <span class="arithmatex">\(1/\epsilon\)</span>, <span class="arithmatex">\(1/\delta\)</span>, and the complexity of the concept class. Intuitively: with enough data, the algorithm will (with high probability) find a hypothesis whose true error is small.</p>
+<h3 id="vc-dimension">VC dimension<a class="headerlink" href="#vc-dimension" title="Permanent link">¶</a></h3>
+<p>The <strong>Vapnik-Chervonenkis (VC) dimension</strong> of a hypothesis class <span class="arithmatex">\(\mathcal{H}\)</span> is the largest set of points that <span class="arithmatex">\(\mathcal{H}\)</span> can <strong>shatter</strong> — classify in all <span class="arithmatex">\(2^n\)</span> possible binary labelings. It measures the expressive power of the model class.</p>
+<p>Examples:</p>
+<ul>
+<li>Linear classifiers in <span class="arithmatex">\(\mathbb{R}^2\)</span> (half-planes): VC dimension = 3. Any 3 non-collinear points can be shattered; no set of 4 can.</li>
+<li>Decision stumps (threshold on one feature): VC dimension = 2.</li>
+<li><span class="arithmatex">\(k\)</span>-nearest-neighbor: VC dimension = <span class="arithmatex">\(\infty\)</span> (infinitely expressive).</li>
+</ul>
+<p>The fundamental sample complexity bound:</p>
+<div class="arithmatex">\[
+N = O\!\left(\frac{d_{VC} + \log(1/\delta)}{\epsilon^2}\right)
+\]</div>
+<p>where <span class="arithmatex">\(d_{VC}\)</span> is the VC dimension. To halve the allowed error <span class="arithmatex">\(\epsilon\)</span>, you need roughly <strong>four times as much data</strong>.</p>
+<h3 id="generalization-bounds">Generalization bounds<a class="headerlink" href="#generalization-bounds" title="Permanent link">¶</a></h3>
+<p>A uniform convergence bound states that with probability at least <span class="arithmatex">\(1 - \delta\)</span>:</p>
+<div class="arithmatex">\[
+R(f) \leq \hat{R}(f) + O\!\left(\sqrt{\frac{d_{VC} \log N + \log(1/\delta)}{N}}\right)
+\]</div>
+<p>Practical implications:</p>
+<ul>
+<li><strong>More data</strong> (<span class="arithmatex">\(N\)</span> increases): the bound tightens — variance falls.</li>
+<li><strong>More complex model</strong> (<span class="arithmatex">\(d_{VC}\)</span> increases): the bound loosens — variance rises.</li>
+<li><strong>Bias</strong> is not captured by this bound; it only describes how much the model can overfit.</li>
+</ul>
+<h3 id="why-more-data-helps-variance-but-not-bias">Why more data helps variance but not bias<a class="headerlink" href="#why-more-data-helps-variance-but-not-bias" title="Permanent link">¶</a></h3>
+<p>Increasing <span class="arithmatex">\(N\)</span> reduces the generalization gap by concentrating the empirical distribution around the true distribution (law of large numbers). However, if the hypothesis class is too simple (small <span class="arithmatex">\(d_{VC}\)</span>), no amount of data will allow the model to express the true function — that is bias, a structural limitation of the model family.</p>
+<blockquote>
+<p><strong>Note - Practical implication:</strong> If your model plateaus despite adding data, the problem is bias (capacity). If train and test error diverge, the problem is variance (complexity). These two diagnostics drive all model selection decisions.</p>
+</blockquote>
+<hr/>
+<h2 id="the-scientific-method-as-ml-workflow">The scientific method as ML workflow<a class="headerlink" href="#the-scientific-method-as-ml-workflow" title="Permanent link">¶</a></h2>
+<p>Good ML practice is good science. The scientific method provides the epistemological discipline that prevents teams from fooling themselves.</p>
+<h3 id="mapping-science-to-ml">Mapping science to ML<a class="headerlink" href="#mapping-science-to-ml" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Scientific step</th>
+<th>ML equivalent</th>
+<th>Risk if skipped</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hypothesis</td>
+<td>Define the problem and success metric precisely</td>
+<td>Building a model that answers the wrong question</td>
+</tr>
+<tr>
+<td>Experimental design</td>
+<td>Design the train/val/test split and evaluation</td>
+<td>Data leakage; optimistic results that do not transfer</td>
+</tr>
+<tr>
+<td>Experiment</td>
+<td>Train model with controlled hyperparameters</td>
+<td>Uninterpretable results; cannot isolate causes</td>
+</tr>
+<tr>
+<td>Measurement</td>
+<td>Record metrics on held-out data</td>
+<td>Overfitting the reported number to the test set</td>
+</tr>
+<tr>
+<td>Conclusion</td>
+<td>Accept/reject the hypothesis; decide next step</td>
+<td>Premature deployment or abandoned good models</td>
+</tr>
+<tr>
+<td>Replication</td>
+<td>Version code, data, and environment</td>
+<td>Results that cannot be reproduced by teammates or auditors</td>
+</tr>
+</tbody>
+</table>
+<h3 id="controlled-experiments-in-ml">Controlled experiments in ML<a class="headerlink" href="#controlled-experiments-in-ml" title="Permanent link">¶</a></h3>
+<p>A <strong>controlled experiment</strong> changes one variable at a time. In ML this means:</p>
+<ul>
+<li>When comparing models, hold the dataset, preprocessing, and evaluation metric constant.</li>
+<li>When comparing feature sets, hold the model architecture and hyperparameters constant.</li>
+<li>When comparing hyperparameters, use the same random seed and data split.</li>
+</ul>
+<p>Azure ML <strong>experiment tracking</strong> enforces this discipline by logging every run with its hyperparameters, data version, code commit, and metrics.</p>
+<h3 id="reproducibility-and-its-enemies">Reproducibility and its enemies<a class="headerlink" href="#reproducibility-and-its-enemies" title="Permanent link">¶</a></h3>
+<p>A result is <strong>reproducible</strong> if anyone with the same inputs can get the same outputs. Reproducibility is threatened by:</p>
+<ul>
+<li><strong>Random seeds</strong>: randomness in weight initialization, data shuffling, or augmentation must be fixed and logged.</li>
+<li><strong>Library versions</strong>: a different version of scikit-learn or PyTorch may produce numerically different results.</li>
+<li><strong>Data version</strong>: if the training dataset changes without versioning, you cannot re-create historical runs.</li>
+<li><strong>Hardware</strong>: GPU non-determinism means bit-identical reproduction sometimes requires pinning hardware.</li>
+</ul>
+<p>Azure ML addresses these with dataset versioning, environment snapshots, and run reproducibility metadata.</p>
+<blockquote>
+<p><strong>Tip - The reproducibility checklist:</strong> Before publishing or deploying a result, verify: (1) the data version is pinned, (2) the code commit is tagged, (3) the environment is containerized, (4) random seeds are logged. A result that cannot be reproduced is not a result.</p>
+</blockquote>
+<hr/>
+<h2 id="responsible-ai-and-ethical-framing">Responsible AI and ethical framing<a class="headerlink" href="#responsible-ai-and-ethical-framing" title="Permanent link">¶</a></h2>
+<p>Responsible AI is not a box to check at the end of a project — it is a design discipline that must be embedded from problem framing onwards.</p>
+<h3 id="why-ethics-is-a-first-class-engineering-concern">Why ethics is a first-class engineering concern<a class="headerlink" href="#why-ethics-is-a-first-class-engineering-concern" title="Permanent link">¶</a></h3>
+<p>A model encodes decisions. Those decisions affect people. When a credit-scoring model denies a loan, a hiring model ranks résumés, or a medical triage model allocates attention, the downstream consequences are real and potentially discriminatory. The question "is this model accurate?" is incomplete without also asking "accurate for whom, and at what cost to which group?"</p>
+<h3 id="fairness-definitions">Fairness definitions<a class="headerlink" href="#fairness-definitions" title="Permanent link">¶</a></h3>
+<p>There is no single agreed definition of fairness. The three most common statistical definitions are:</p>
+<p><strong>Demographic parity (statistical parity):</strong> The positive prediction rate is equal across groups <span class="arithmatex">\(A\)</span> and <span class="arithmatex">\(B\)</span>:</p>
+<div class="arithmatex">\[
+P(\hat{Y} = 1 \mid G = A) = P(\hat{Y} = 1 \mid G = B)
+\]</div>
+<p>This ensures equal representation of positive outcomes. It does not require equal accuracy.</p>
+<p><strong>Equalized odds:</strong> Both the true positive rate (TPR) and false positive rate (FPR) are equal across groups:</p>
+<div class="arithmatex">\[
+P(\hat{Y} = 1 \mid Y = y, G = A) = P(\hat{Y} = 1 \mid Y = y, G = B) \quad \text{for } y \in \{0, 1\}
+\]</div>
+<p>This is stricter: the model must be equally accurate <em>and</em> equally inaccurate across groups.</p>
+<p><strong>Calibration:</strong> The predicted probability <span class="arithmatex">\(\hat{p}\)</span> matches the true positive rate within each group. A model calibrated at the population level may be miscalibrated within sub-groups — a common failure mode in medical scoring.</p>
+<blockquote>
+<p><strong>Note - The impossibility theorem:</strong> It is mathematically impossible to satisfy demographic parity, equalized odds, and calibration simultaneously when base rates differ across groups (Chouldechova 2017; Kleinberg et al. 2016). Choosing a fairness criterion is a value judgment that must involve stakeholders, not just engineers.</p>
+</blockquote>
+<h3 id="transparency-and-explainability">Transparency and explainability<a class="headerlink" href="#transparency-and-explainability" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Transparency</strong> refers to the ability to understand <em>why</em> a model made a specific decision. Opaque "black box" models create accountability gaps in regulated industries.</li>
+<li><strong>Explainability</strong> techniques (SHAP, LIME, attention visualization) approximate or expose feature attributions. These are covered in the Results and Explainability module.</li>
+<li>Regulations such as GDPR (Article 22) and the EU AI Act require that automated decisions affecting individuals be explainable on request.</li>
+</ul>
+<h3 id="privacy-and-data-minimization">Privacy and data minimization<a class="headerlink" href="#privacy-and-data-minimization" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Data minimization</strong>: only collect and use the features necessary for the task. Every additional personal attribute is a liability.</li>
+<li><strong>Differential privacy</strong>: a formal mathematical guarantee that the presence or absence of any single individual in the training data cannot be inferred from the model's output.</li>
+<li><strong>Federated learning</strong>: train models on data that never leaves the device or institution. Gradients are aggregated centrally but raw data stays local.</li>
+</ul>
+<h3 id="accountability-and-governance">Accountability and governance<a class="headerlink" href="#accountability-and-governance" title="Permanent link">¶</a></h3>
+<ul>
+<li>Every model deployed in production should have a named owner responsible for monitoring, retraining, and decommissioning.</li>
+<li><strong>Model cards</strong> document a model's intended use, performance across sub-groups, known limitations, and out-of-scope uses. They are the audit trail that regulated organizations require.</li>
+<li>In the EU AI Act framework, high-risk AI systems (hiring, credit, biometric identification, critical infrastructure) face mandatory conformity assessments, logging requirements, and human-oversight mechanisms.</li>
+</ul>
+<blockquote>
+<p><strong>Note - GDPR and Azure ML:</strong> If training data includes personal data of EU residents, the data controller must document the legal basis, retention period, and processing purpose. Model outputs that constitute automated decisions triggering legal effects require a human review pathway. Azure ML's audit logs and dataset lineage features directly support this compliance requirement.</p>
+</blockquote>
+<hr/>
+<h2 id="industry-applications-taxonomy">Industry applications taxonomy<a class="headerlink" href="#industry-applications-taxonomy" title="Permanent link">¶</a></h2>
+<p>The table below catalogs 22 real-world ML applications across major industries. For each application the relevant ML problem type, typical model family, data type, and a key deployment risk are listed.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Industry</th>
+<th>Application</th>
+<th>Problem type</th>
+<th>Model family</th>
+<th>Data type</th>
+<th>Key risk</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Healthcare</td>
+<td>Disease risk scoring</td>
+<td>Binary classification</td>
+<td>Gradient boosting, logistic regression</td>
+<td>Tabular (EHR)</td>
+<td>Disparate performance across demographic groups</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Healthcare</td>
+<td>Medical image diagnosis</td>
+<td>Multi-class classification</td>
+<td>CNN, Vision Transformer</td>
+<td>Images (X-ray, MRI)</td>
+<td>Distribution shift between hospital systems</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Healthcare</td>
+<td>Length-of-stay prediction</td>
+<td>Regression</td>
+<td>XGBoost, RNN</td>
+<td>Tabular + time series</td>
+<td>Temporal leakage from future observations</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Healthcare</td>
+<td>Drug discovery</td>
+<td>Generative / regression</td>
+<td>Graph neural networks</td>
+<td>Molecular graphs</td>
+<td>Out-of-distribution extrapolation</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Finance</td>
+<td>Credit default scoring</td>
+<td>Binary classification</td>
+<td>Logistic regression, XGBoost</td>
+<td>Tabular (bureau data)</td>
+<td>Regulatory fairness (ECOA); model explainability</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Finance</td>
+<td>Fraud detection</td>
+<td>Anomaly detection / binary</td>
+<td>Isolation Forest, XGBoost</td>
+<td>Tabular + graph</td>
+<td>Severe class imbalance; adversarial evolution</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Finance</td>
+<td>Algorithmic trading</td>
+<td>Time-series forecasting</td>
+<td>LSTM, Transformer</td>
+<td>Market tick data</td>
+<td>Non-stationarity; regime change</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Finance</td>
+<td>Document processing (KYC)</td>
+<td>NER / classification</td>
+<td>BERT, LayoutLM</td>
+<td>Text + PDF layout</td>
+<td>Hallucination risk from LLMs</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Retail</td>
+<td>Product recommendation</td>
+<td>Collaborative filtering</td>
+<td>Matrix factorization, two-tower neural net</td>
+<td>Interaction logs</td>
+<td>Popularity bias; cold-start problem</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Retail</td>
+<td>Demand forecasting</td>
+<td>Time-series regression</td>
+<td>LightGBM, N-BEATS</td>
+<td>Tabular + calendar features</td>
+<td>Promotions causing distributional breaks</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Retail</td>
+<td>Dynamic pricing</td>
+<td>Regression + RL</td>
+<td>Bandit models, policy gradient</td>
+<td>Tabular</td>
+<td>Price elasticity model errors amplify losses</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Retail</td>
+<td>Churn prediction</td>
+<td>Binary classification</td>
+<td>XGBoost, logistic regression</td>
+<td>Tabular (CRM)</td>
+<td>Label ambiguity; what counts as churned?</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Manufacturing</td>
+<td>Predictive maintenance</td>
+<td>Anomaly detection / binary</td>
+<td>Autoencoder, LSTM</td>
+<td>Sensor time series</td>
+<td>Rare event class imbalance; cost of false negatives</td>
+</tr>
+<tr>
+<td>14</td>
+<td>Manufacturing</td>
+<td>Visual quality inspection</td>
+<td>Object detection</td>
+<td>YOLO, ResNet</td>
+<td>Images</td>
+<td>Lighting / background shift across production lines</td>
+</tr>
+<tr>
+<td>15</td>
+<td>Manufacturing</td>
+<td>Supply chain optimization</td>
+<td>Combinatorial optimization</td>
+<td>Reinforcement learning, OR solvers</td>
+<td>Mixed (tabular + graph)</td>
+<td>Reward shaping errors; sim-to-real gap</td>
+</tr>
+<tr>
+<td>16</td>
+<td>Government</td>
+<td>Document classification</td>
+<td>Multi-class classification</td>
+<td>BERT fine-tune</td>
+<td>Text</td>
+<td>Sensitive categories; privacy regulations</td>
+</tr>
+<tr>
+<td>17</td>
+<td>Government</td>
+<td>Benefits fraud detection</td>
+<td>Anomaly detection</td>
+<td>Graph analytics + XGBoost</td>
+<td>Tabular + relational</td>
+<td>Disparate impact on vulnerable populations</td>
+</tr>
+<tr>
+<td>18</td>
+<td>Government</td>
+<td>Traffic flow prediction</td>
+<td>Time-series regression</td>
+<td>GNN, LSTM</td>
+<td>Sensor + GPS data</td>
+<td>Sensor failures causing silent covariate shift</td>
+</tr>
+<tr>
+<td>19</td>
+<td>Energy</td>
+<td>Renewable output forecasting</td>
+<td>Time-series regression</td>
+<td>Prophet, TCN</td>
+<td>Weather + grid sensors</td>
+<td>Distribution shift from climate trends</td>
+</tr>
+<tr>
+<td>20</td>
+<td>Media</td>
+<td>Content moderation</td>
+<td>Multi-label classification</td>
+<td>BERT, CLIP</td>
+<td>Text + images</td>
+<td>Adversarial bypass; language/dialect fairness</td>
+</tr>
+<tr>
+<td>21</td>
+<td>HR / Talent</td>
+<td>Résumé screening</td>
+<td>Ranking / classification</td>
+<td>BERT, logistic regression</td>
+<td>Text</td>
+<td>Historical hiring bias encoded in labels</td>
+</tr>
+<tr>
+<td>22</td>
+<td>Logistics</td>
+<td>Route optimization</td>
+<td>Combinatorial + regression</td>
+<td>Reinforcement learning</td>
+<td>Graph + spatial</td>
+<td>Objective function mismatch with real cost</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Note - Using this table:</strong> Before selecting a model family, identify your industry row. The "Key risk" column is the most valuable: it contains the specific failure mode most commonly observed in production for that application type. Ignoring it is the most frequent cause of ML projects that succeed in offline evaluation but fail in deployment.</p>
+</blockquote>
+<hr/>
+<h2 id="a-complete-numeric-walkthrough-spam-classification-from-scratch">A complete numeric walkthrough: spam classification from scratch<a class="headerlink" href="#a-complete-numeric-walkthrough-spam-classification-from-scratch" title="Permanent link">¶</a></h2>
+<p>This section walks through an end-to-end spam classification example with full arithmetic at every step. No step is left as "and then magic happens."</p>
+<h3 id="step-1-problem-definition-and-features">Step 1: Problem definition and features<a class="headerlink" href="#step-1-problem-definition-and-features" title="Permanent link">¶</a></h3>
+<p><strong>Task</strong>: classify an email as spam (1) or not spam (0).</p>
+<p><strong>Features</strong> (two, for clarity):</p>
+<ul>
+<li><span class="arithmatex">\(x_1\)</span>: number of suspicious links in the email.</li>
+<li><span class="arithmatex">\(x_2\)</span>: 1 if the subject contains the word "FREE", 0 otherwise.</li>
+</ul>
+<p><strong>Training dataset</strong> (four examples):</p>
+<table>
+<thead>
+<tr>
+<th>Email</th>
+<th><span class="arithmatex">\(x_1\)</span></th>
+<th><span class="arithmatex">\(x_2\)</span></th>
+<th>Label <span class="arithmatex">\(y\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>3</td>
+<td>1</td>
+<td>1 (spam)</td>
+</tr>
+<tr>
+<td>B</td>
+<td>0</td>
+<td>0</td>
+<td>0 (not)</td>
+</tr>
+<tr>
+<td>C</td>
+<td>5</td>
+<td>1</td>
+<td>1 (spam)</td>
+</tr>
+<tr>
+<td>D</td>
+<td>1</td>
+<td>0</td>
+<td>0 (not)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="step-2-the-logistic-regression-model">Step 2: The logistic regression model<a class="headerlink" href="#step-2-the-logistic-regression-model" title="Permanent link">¶</a></h3>
+<p>Logistic regression learns weights <span class="arithmatex">\(w_1, w_2\)</span> and a bias <span class="arithmatex">\(b\)</span> to compute:</p>
+<div class="arithmatex">\[
+z_i = w_1 x_{i1} + w_2 x_{i2} + b
+\]</div>
+<div class="arithmatex">\[
+\hat{p}_i = \sigma(z_i) = \frac{1}{1 + e^{-z_i}}
+\]</div>
+<p>The sigmoid function <span class="arithmatex">\(\sigma\)</span> squashes any real number to <span class="arithmatex">\((0, 1)\)</span>, making it interpretable as a probability.</p>
+<p><strong>Initialize:</strong> <span class="arithmatex">\(w_1 = 0,\; w_2 = 0,\; b = 0\)</span>.</p>
+<h3 id="step-3-forward-pass-compute-predictions">Step 3: Forward pass — compute predictions<a class="headerlink" href="#step-3-forward-pass-compute-predictions" title="Permanent link">¶</a></h3>
+<p>With all parameters at zero, <span class="arithmatex">\(z_i = 0\)</span> for all emails, so <span class="arithmatex">\(\hat{p}_i = \sigma(0) = 0.5\)</span> for all four examples.</p>
+<h3 id="step-4-compute-the-binary-cross-entropy-loss">Step 4: Compute the binary cross-entropy loss<a class="headerlink" href="#step-4-compute-the-binary-cross-entropy-loss" title="Permanent link">¶</a></h3>
+<div class="arithmatex">\[
+\mathcal{L} = -\frac{1}{N} \sum_{i=1}^{N} \left[ y_i \log \hat{p}_i + (1 - y_i) \log(1 - \hat{p}_i) \right]
+\]</div>
+<p>For <span class="arithmatex">\(\hat{p}_i = 0.5\)</span> and <span class="arithmatex">\(N = 4\)</span>, each term equals <span class="arithmatex">\(-\log 0.5 = \log 2 \approx 0.693\)</span>.</p>
+<p>Total: <span class="arithmatex">\(\mathcal{L} = 0.693\)</span>. This is the maximum-entropy baseline — the model knows nothing.</p>
+<h3 id="step-5-compute-gradients">Step 5: Compute gradients<a class="headerlink" href="#step-5-compute-gradients" title="Permanent link">¶</a></h3>
+<p>For logistic regression with binary cross-entropy, the gradient with respect to <span class="arithmatex">\(w_j\)</span> is:</p>
+<div class="arithmatex">\[
+\frac{\partial \mathcal{L}}{\partial w_j} = \frac{1}{N} \sum_{i=1}^{N} (\hat{p}_i - y_i) x_{ij}
+\]</div>
+<p><strong>Gradient for <span class="arithmatex">\(w_1\)</span>:</strong></p>
+<div class="arithmatex">\[
+\frac{\partial \mathcal{L}}{\partial w_1} = \frac{1}{4}\big[(0.5-1)(3) + (0.5-0)(0) + (0.5-1)(5) + (0.5-0)(1)\big]
+= \frac{-1.5 + 0 - 2.5 + 0.5}{4} = -0.875
+\]</div>
+<p><strong>Gradient for <span class="arithmatex">\(w_2\)</span>:</strong></p>
+<div class="arithmatex">\[
+\frac{\partial \mathcal{L}}{\partial w_2} = \frac{1}{4}\big[(0.5-1)(1) + (0.5-0)(0) + (0.5-1)(1) + (0.5-0)(0)\big]
+= \frac{-0.5 + 0 - 0.5 + 0}{4} = -0.25
+\]</div>
+<p><strong>Gradient for <span class="arithmatex">\(b\)</span>:</strong></p>
+<div class="arithmatex">\[
+\frac{\partial \mathcal{L}}{\partial b} = \frac{1}{4}\big[-0.5 + 0.5 - 0.5 + 0.5\big] = 0
+\]</div>
+<h3 id="step-6-gradient-descent-update">Step 6: Gradient descent update<a class="headerlink" href="#step-6-gradient-descent-update" title="Permanent link">¶</a></h3>
+<p>With learning rate <span class="arithmatex">\(\eta = 0.5\)</span>:</p>
+<div class="arithmatex">\[
+w_1 \leftarrow 0 - 0.5 \times (-0.875) = +0.4375
+\]</div>
+<div class="arithmatex">\[
+w_2 \leftarrow 0 - 0.5 \times (-0.25) = +0.125
+\]</div>
+<div class="arithmatex">\[
+b \leftarrow 0 - 0.5 \times 0 = 0
+\]</div>
+<p>Both <span class="arithmatex">\(w_1\)</span> and <span class="arithmatex">\(w_2\)</span> became positive, which makes sense: more links and "FREE" in the subject both increase the spam probability.</p>
+<h3 id="step-7-second-forward-pass">Step 7: Second forward pass<a class="headerlink" href="#step-7-second-forward-pass" title="Permanent link">¶</a></h3>
+<p>Recompute predictions with the updated weights:</p>
+<table>
+<thead>
+<tr>
+<th>Email</th>
+<th><span class="arithmatex">\(z_i = 0.4375 x_1 + 0.125 x_2\)</span></th>
+<th><span class="arithmatex">\(\hat{p}_i = \sigma(z_i)\)</span></th>
+<th>Label</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td><span class="arithmatex">\(0.4375(3) + 0.125(1) = 1.4375\)</span></td>
+<td><span class="arithmatex">\(\approx 0.808\)</span></td>
+<td>1</td>
+</tr>
+<tr>
+<td>B</td>
+<td><span class="arithmatex">\(0.4375(0) + 0.125(0) = 0.000\)</span></td>
+<td><span class="arithmatex">\(= 0.500\)</span></td>
+<td>0</td>
+</tr>
+<tr>
+<td>C</td>
+<td><span class="arithmatex">\(0.4375(5) + 0.125(1) = 2.3125\)</span></td>
+<td><span class="arithmatex">\(\approx 0.910\)</span></td>
+<td>1</td>
+</tr>
+<tr>
+<td>D</td>
+<td><span class="arithmatex">\(0.4375(1) + 0.125(0) = 0.4375\)</span></td>
+<td><span class="arithmatex">\(\approx 0.607\)</span></td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>The spam emails (A, C) now have probabilities above 0.5. After more gradient descent iterations the model will cleanly separate the classes.</p>
+<h3 id="step-8-evaluate-with-a-confusion-matrix">Step 8: Evaluate with a confusion matrix<a class="headerlink" href="#step-8-evaluate-with-a-confusion-matrix" title="Permanent link">¶</a></h3>
+<p>After full convergence, predictions at threshold <span class="arithmatex">\(0.5\)</span>:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Predicted spam</th>
+<th>Predicted not spam</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Actual spam</strong></td>
+<td>TP = 2</td>
+<td>FN = 0</td>
+</tr>
+<tr>
+<td><strong>Actual not spam</strong></td>
+<td>FP = 0</td>
+<td>TN = 2</td>
+</tr>
+</tbody>
+</table>
+<p>Derived metrics:</p>
+<ul>
+<li><strong>Precision</strong> <span class="arithmatex">\(= \frac{TP}{TP + FP} = \frac{2}{2} = 1.0\)</span></li>
+<li><strong>Recall</strong> <span class="arithmatex">\(= \frac{TP}{TP + FN} = \frac{2}{2} = 1.0\)</span></li>
+<li><strong>F1</strong> <span class="arithmatex">\(= 2 \cdot \frac{1.0 \times 1.0}{1.0 + 1.0} = 1.0\)</span></li>
+</ul>
+<blockquote>
+<p><strong>Note - What this walkthrough teaches:</strong> The entire ML pipeline — define features, initialize weights, forward pass, compute loss, compute gradients, update, repeat — is arithmetic. Every deep-learning model, no matter how large, is doing exactly this sequence. The complexity grows but the principle does not change.</p>
+</blockquote>
+<hr/>
+<h2 id="quick-self-check-extended">Quick self-check (extended)<a class="headerlink" href="#quick-self-check-extended" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Question</th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Is every AI system an ML system?</td>
+<td>No. ML is a subset of AI; rule-based and symbolic AI systems make decisions without learning from data.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>In production, which stage catches drift issues?</td>
+<td>The monitoring stage, which watches the live data distribution and model quality and flags drift over time.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>What is the difference between API and web service?</td>
+<td>The API is the contract (request/response schema, authentication, versioning); the web service is the hosted, running implementation of that API (the endpoint).</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Given a business goal, what are the five problem-framing questions you must answer first?</td>
+<td>(1) What decision changes because of the prediction? (2) What is the unit of prediction? (3) What exactly is the label? (4) What does success look like as a number (business KPI)? (5) What is the cost of each error type?</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Why can a model with excellent accuracy still be the wrong choice for production?</td>
+<td>Accuracy ignores error costs, class imbalance, fairness, latency, and the business KPI; a high-accuracy model can still miss rare positives or be too slow, costly, or unfair to deploy.</td>
+</tr>
+<tr>
+<td>6</td>
+<td>What does entropy measure, and what is its minimum and maximum value for a binary distribution?</td>
+<td>It measures the average uncertainty (surprise) of a distribution; for a binary distribution it is minimized at 0 bits (one outcome certain) and maximized at 1 bit (when <span class="arithmatex">\(p = 0.5\)</span>).</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Why is minimizing cross-entropy equivalent to maximizing the likelihood of the training labels?</td>
+<td>For the true class the cross-entropy reduces to <span class="arithmatex">\(-\log q_c\)</span>, the negative log-likelihood of the correct label, so minimizing it maximizes the probability the model assigns to the true labels.</td>
+</tr>
+<tr>
+<td>8</td>
+<td>What is the VC dimension of a linear classifier in two dimensions?</td>
+<td>3 — any 3 non-collinear points can be shattered, but no set of 4 can.</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Name two fairness definitions and explain why they cannot all be satisfied simultaneously when base rates differ.</td>
+<td>Demographic parity and equalized odds (and calibration). When base rates differ across groups the impossibility theorem (Chouldechova; Kleinberg et al.) shows they cannot all hold at once, so choosing one is a value judgment.</td>
+</tr>
+<tr>
+<td>10</td>
+<td>In the spam walkthrough, why did <span class="arithmatex">\(w_1\)</span> receive a larger gradient update than <span class="arithmatex">\(w_2\)</span> after the first step?</td>
+<td>Because <span class="arithmatex">\(x_1\)</span> (number of links) has larger feature values than <span class="arithmatex">\(x_2\)</span>, so the gradient <span class="arithmatex">\(\frac{1}{N}\sum_i(\hat{p}_i - y_i)x_{ij}\)</span> was bigger in magnitude for <span class="arithmatex">\(w_1\)</span> (<span class="arithmatex">\(-0.875\)</span> vs <span class="arithmatex">\(-0.25\)</span>).</td>
+</tr>
+</tbody>
+</table>
+</article>
+</div>
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+</div>
+<button class="md-top md-icon" data-md-component="top" hidden="" type="button">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Back to top
+</button>
+</main>
+<footer class="md-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+<div class="md-copyright__highlight">
+      Copyright © 2026 <a href="https://github.com/Cloud2BR-MSFTLearningHub" rel="noopener" target="_blank">Cloud2BR MSFT Learning Hub</a>
+</div>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.expand", "navigation.top", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+<script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script src="../../assets/js/org-link.js"></script>
+<script type="module">import mermaid from "https://unpkg.com/mermaid@10.4.0/dist/mermaid.esm.min.mjs";
+mermaid.initialize({});</script></body>
+</html>

@@ -1,0 +1,2226 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Azure Machine Learning training from fundamentals to advanced MLOps.">
+      
+      
+      
+        <link rel="canonical" href="https://cloud2br-msftlearninghub.github.io/Azure-ML-Advanced/reference/model-math-deep-dive/">
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../cli-commands/">
+      
+      
+        
+          <link rel="alternate" href="/Azure-ML-Advanced/" hreflang="en">
+        
+          <link rel="alternate" href="/Azure-ML-Advanced/es/" hreflang="es">
+        
+      
+      
+      <link rel="icon" href="../../assets/img/org-logo.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Mathematical Model Deep Dive - Azure Machine Learning: Advanced</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/css/custom.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#mathematical-deep-dive-core-ml-models" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Azure Machine Learning: Advanced" class="md-header__button md-logo" aria-label="Azure Machine Learning: Advanced" data-md-component="logo">
+      
+  <img src="../../assets/img/org-logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Azure Machine Learning: Advanced
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Mathematical Model Deep Dive
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="Select language">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="/Azure-ML-Advanced/" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="/Azure-ML-Advanced/es/" hreflang="es" class="md-select__link">
+              Español
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Azure Machine Learning: Advanced" class="md-nav__button md-logo" aria-label="Azure Machine Learning: Advanced" data-md-component="logo">
+      
+  <img src="../../assets/img/org-logo.png" alt="logo">
+
+    </a>
+    Azure Machine Learning: Advanced
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../modules/01-math-prerequisites/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01. Math Prerequisites
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../modules/02-e2e-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02. End-to-End ML Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../modules/03-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03. Introduction and Lifecycle
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../modules/04-ml-foundations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04. ML Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../modules/05-neural-networks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05. Neural Networks and Deep Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../modules/06-azure-ml-environment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06. Azure ML Environment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../modules/07-environment-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07. Environment Setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../modules/08-data-preparation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08. Data Preparation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../modules/09-model-types/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09. Model Types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../modules/10-training-automl/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Training and AutoML
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../modules/11-performance-metrics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Performance Metrics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../modules/12-results-explainability/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Results and Explainability
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../modules/13-deployment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Deployment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../modules/14-deployment-debug-k8s/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. Deployment Debugging
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_16" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_16">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mathematical Model Deep Dive
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mathematical Model Deep Dive
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-use-this-page" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How to use this page
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-this-page-covers-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What this page covers (overview)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-the-mathematical-components-actually-mean-in-action-and-in-value" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What the mathematical components actually mean (in action and in value)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What the mathematical components actually mean (in action and in value)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-model-function-f_thetax-the-thing-that-makes-predictions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The model function \(f_\theta(x)\) : the thing that makes predictions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-objective-loss-function-mathcall-the-definition-of-wrong" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The objective / loss function \(\mathcal{L}\) : the definition of "wrong"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optimization-and-the-gradient-nabla_theta-mathcall-how-the-model-learns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Optimization and the gradient \(\nabla_\theta \mathcal{L}\) : how the model learns
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#convexity-the-guarantee-that-training-just-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Convexity : the guarantee that training "just works"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#regularization-lambdatheta-the-brake-that-prevents-memorizing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Regularization (\(\lambda\|\theta\|\)) : the brake that prevents memorizing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#probability-likelihood-and-argmax-turning-scores-into-decisions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Probability, likelihood, and \(\arg\max\) : turning scores into decisions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#linear-algebra-xtheta-xtx-kernels-why-any-of-this-is-fast" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Linear algebra (\(X\theta\), \(X^TX\), kernels) : why any of this is fast
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-linear-regression" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1) Linear Regression
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-logistic-regression" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2) Logistic Regression
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-naive-bayes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3) Naive Bayes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-support-vector-machines-svm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4) Support Vector Machines (SVM)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-decision-trees" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5) Decision Trees
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-random-forest" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6) Random Forest
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-gradient-boosting-xgboost-lightgbm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7) Gradient Boosting (XGBoost / LightGBM)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-neural-networks-mlp-basics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8) Neural Networks (MLP basics)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-time-series-forecasting-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9) Time-Series Forecasting Models
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-model-comparison-from-a-mathematical-lens" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10) Model Comparison from a Mathematical Lens
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-choosing-the-right-model-in-azure-ml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11) Choosing the Right Model in Azure ML
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli-commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#how-to-use-this-page" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How to use this page
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-this-page-covers-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What this page covers (overview)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-the-mathematical-components-actually-mean-in-action-and-in-value" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What the mathematical components actually mean (in action and in value)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What the mathematical components actually mean (in action and in value)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-model-function-f_thetax-the-thing-that-makes-predictions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The model function \(f_\theta(x)\) : the thing that makes predictions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-objective-loss-function-mathcall-the-definition-of-wrong" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The objective / loss function \(\mathcal{L}\) : the definition of "wrong"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optimization-and-the-gradient-nabla_theta-mathcall-how-the-model-learns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Optimization and the gradient \(\nabla_\theta \mathcal{L}\) : how the model learns
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#convexity-the-guarantee-that-training-just-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Convexity : the guarantee that training "just works"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#regularization-lambdatheta-the-brake-that-prevents-memorizing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Regularization (\(\lambda\|\theta\|\)) : the brake that prevents memorizing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#probability-likelihood-and-argmax-turning-scores-into-decisions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Probability, likelihood, and \(\arg\max\) : turning scores into decisions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#linear-algebra-xtheta-xtx-kernels-why-any-of-this-is-fast" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Linear algebra (\(X\theta\), \(X^TX\), kernels) : why any of this is fast
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-linear-regression" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1) Linear Regression
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-logistic-regression" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2) Logistic Regression
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-naive-bayes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3) Naive Bayes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-support-vector-machines-svm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4) Support Vector Machines (SVM)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-decision-trees" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5) Decision Trees
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-random-forest" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6) Random Forest
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-gradient-boosting-xgboost-lightgbm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7) Gradient Boosting (XGBoost / LightGBM)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-neural-networks-mlp-basics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8) Neural Networks (MLP basics)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-time-series-forecasting-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9) Time-Series Forecasting Models
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-model-comparison-from-a-mathematical-lens" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10) Model Comparison from a Mathematical Lens
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-choosing-the-right-model-in-azure-ml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11) Choosing the Right Model in Azure ML
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="mathematical-deep-dive-core-ml-models">Mathematical Deep Dive: Core ML Models<a class="headerlink" href="#mathematical-deep-dive-core-ml-models" title="Permanent link">&para;</a></h1>
+<p>This page is an expanded mathematical deep dive of the model families used across
+this training hub. It is designed as a practical reference for engineers who want
+both formula-level understanding and production intuition. Every section follows the
+same rhythm: <strong>what the model assumes</strong>, <strong>the objective it optimizes</strong>, <strong>how it is
+trained</strong>, <strong>the kinds/variants it comes in</strong>, <strong>how to tune it</strong>, and <strong>how it fails</strong>.</p>
+<h2 id="how-to-use-this-page">How to use this page<a class="headerlink" href="#how-to-use-this-page" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Start with the objective function and assumptions.</li>
+<li>Review optimization behavior and regularization knobs.</li>
+<li>Check failure modes before deployment.</li>
+<li>Connect to metric choice in the performance module.</li>
+</ol>
+<h2 id="what-this-page-covers-overview">What this page covers (overview)<a class="headerlink" href="#what-this-page-covers-overview" title="Permanent link">&para;</a></h2>
+<p>The table below is a map of everything explained later on. Read it top-to-bottom as a
+rough order of increasing capacity (and increasing risk of overfitting): linear models
+are the simplest and most interpretable, neural networks the most flexible and the most
+data-hungry. "Where it shines" is the single best reason to reach for each family.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Model family</th>
+<th>Learning type</th>
+<th>Output</th>
+<th>Where it shines</th>
+<th>Main weakness</th>
+<th>Key hyperparameters</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Linear Regression</td>
+<td>Supervised (regression)</td>
+<td>Continuous value</td>
+<td>Interpretable tabular baselines, trend estimation</td>
+<td>Misses nonlinearity, sensitive to outliers</td>
+<td>regularization <span class="arithmatex">\(\lambda\)</span>, penalty type</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Logistic Regression</td>
+<td>Supervised (classification)</td>
+<td>Class probability</td>
+<td>Calibrated probabilities, interpretable risk scoring</td>
+<td>Linear decision boundary only</td>
+<td><span class="arithmatex">\(\lambda\)</span>, class weights, threshold <span class="arithmatex">\(\tau\)</span></td>
+</tr>
+<tr>
+<td>3</td>
+<td>Naive Bayes</td>
+<td>Supervised (classification)</td>
+<td>Class probability</td>
+<td>Text/spam, very high-dimensional sparse data</td>
+<td>Independence assumption, weak calibration</td>
+<td>smoothing <span class="arithmatex">\(\alpha\)</span>, distribution choice</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Support Vector Machine</td>
+<td>Supervised (class./regr.)</td>
+<td>Class or value</td>
+<td>Clear margins, medium-size complex boundaries</td>
+<td>Scales poorly to large <span class="arithmatex">\(N\)</span>, needs scaling</td>
+<td><span class="arithmatex">\(C\)</span>, kernel, <span class="arithmatex">\(\gamma\)</span></td>
+</tr>
+<tr>
+<td>5</td>
+<td>Decision Tree</td>
+<td>Supervised (class./regr.)</td>
+<td>Class or value</td>
+<td>Human-readable rules, mixed data types</td>
+<td>Overfits, unstable to small data changes</td>
+<td>max depth, min samples, criterion</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Random Forest</td>
+<td>Supervised ensemble (bagging)</td>
+<td>Class or value</td>
+<td>Robust tabular baseline with little tuning</td>
+<td>Larger memory/latency, less interpretable</td>
+<td>n_estimators, max_features, depth</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Gradient Boosting</td>
+<td>Supervised ensemble (boosting)</td>
+<td>Class or value</td>
+<td>Best-in-class tabular accuracy</td>
+<td>Tuning sensitivity, overfit risk</td>
+<td>learning_rate, n_estimators, depth/leaves</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Neural Network (MLP)</td>
+<td>Supervised (class./regr.)</td>
+<td>Class or value</td>
+<td>Unstructured data, complex interactions</td>
+<td>Data hunger, harder to interpret/operate</td>
+<td>layers, width, learning rate, dropout</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Time-Series Models</td>
+<td>Supervised (forecasting)</td>
+<td>Future values</td>
+<td>Temporal/seasonal data, demand &amp; capacity</td>
+<td>Needs chronological care, drift-prone</td>
+<td>order <span class="arithmatex">\((p,d,q)\)</span>, seasonality, horizon</td>
+</tr>
+</tbody>
+</table>
+<p>Families 1-3 are <strong>parametric and convex</strong> (a single global optimum, fast to train).
+Families 4-9 trade that guarantee for <strong>flexibility</strong>: trees and ensembles capture
+nonlinear interactions, and neural networks approximate almost any function given enough
+data. Sections 10 and 11 then compare them side-by-side and give an Azure ML selection
+workflow.</p>
+<blockquote>
+<p><strong>Tip - Reading the math:</strong> Throughout, <span class="arithmatex">\(X\)</span> is the feature matrix (<span class="arithmatex">\(N\)</span> rows, <span class="arithmatex">\(d\)</span> columns),
+<span class="arithmatex">\(y\)</span> the target, <span class="arithmatex">\(\theta\)</span> or <span class="arithmatex">\(w\)</span> the learned weights, and <span class="arithmatex">\(\mathcal{L}\)</span> a loss. "Convex" means
+gradient descent cannot get stuck in a bad local optimum; "non-convex" (trees, deep nets) means
+training is a heuristic search and results depend on initialization and data order.</p>
+</blockquote>
+<h2 id="what-the-mathematical-components-actually-mean-in-action-and-in-value">What the mathematical components actually mean (in action and in value)<a class="headerlink" href="#what-the-mathematical-components-actually-mean-in-action-and-in-value" title="Permanent link">&para;</a></h2>
+<p>Every model below is built from the same handful of mathematical ideas. The formulas look
+different, but they are doing the same jobs. This section decodes each recurring component:
+what it <strong>is</strong>, what it <strong>does in action</strong> during training or prediction, and what <strong>value</strong> it
+delivers to a real project. Read this once and the rest of the page becomes pattern-matching.</p>
+<h3 id="the-model-function-f_thetax-the-thing-that-makes-predictions">The model function <span class="arithmatex">\(f_\theta(x)\)</span> : the thing that makes predictions<a class="headerlink" href="#the-model-function-f_thetax-the-thing-that-makes-predictions" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>What it is:</strong> a formula with adjustable numbers (parameters <span class="arithmatex">\(\theta\)</span>) that maps an input
+  <span class="arithmatex">\(x\)</span> to an output <span class="arithmatex">\(\hat{y}\)</span>. For linear regression it is a weighted sum; for a neural network
+  it is layers of weighted sums and nonlinearities.</li>
+<li><strong>In action:</strong> at <strong>prediction time</strong> this is literally the arithmetic your endpoint runs on
+  each request: plug in the features, get a number out. The weights <span class="arithmatex">\(\theta\)</span> are frozen after
+  training, so serving is just fast, deterministic math.</li>
+<li><strong>Its value:</strong> the parameters are where the "learning" is stored. A 50 MB model file is just a
+  big list of these numbers. Interpretable parameters (a regression coefficient) double as
+  business insight: "each extra year of tenure lowers churn risk by X".</li>
+</ul>
+<h3 id="the-objective-loss-function-mathcall-the-definition-of-wrong">The objective / loss function <span class="arithmatex">\(\mathcal{L}\)</span> : the definition of "wrong"<a class="headerlink" href="#the-objective-loss-function-mathcall-the-definition-of-wrong" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>What it is:</strong> a single number that measures how badly the current model fits the data.
+  Squared error for regression, cross-entropy for classification, hinge loss for SVMs.</li>
+<li><strong>In action:</strong> training is nothing more than <strong>searching for parameters that make this number
+  small</strong>. The loss is the scoreboard the optimizer plays against; change the loss and you change
+  what the model considers a good answer.</li>
+<li><strong>Its value:</strong> this is your main lever for <strong>encoding business priorities into math</strong>. Caring
+  more about rare fraud than common legit traffic? Weight the loss. Big errors much worse than
+  small ones? Use squared error. The loss is where strategy becomes a number a computer can chase.</li>
+</ul>
+<h3 id="optimization-and-the-gradient-nabla_theta-mathcall-how-the-model-learns">Optimization and the gradient <span class="arithmatex">\(\nabla_\theta \mathcal{L}\)</span> : how the model learns<a class="headerlink" href="#optimization-and-the-gradient-nabla_theta-mathcall-how-the-model-learns" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>What it is:</strong> the gradient is the slope of the loss with respect to every parameter : a vector
+  pointing in the direction that <strong>increases</strong> error fastest. Gradient descent steps the opposite
+  way: <span class="arithmatex">\(\theta_{t+1} = \theta_t - \eta\,\nabla_\theta\mathcal{L}\)</span>.</li>
+<li><strong>In action:</strong> training repeats "measure error, compute gradient, nudge weights downhill"
+  thousands of times. The learning rate <span class="arithmatex">\(\eta\)</span> is the step size: too big and training diverges,
+  too small and it crawls. This loop is what consumes your GPU hours.</li>
+<li><strong>Its value:</strong> gradients are why models can have <strong>millions of parameters</strong> and still train :
+  you never search blindly, you always know which way is downhill. Understanding this explains
+  most training failures (loss exploding, loss stuck, loss oscillating).</li>
+</ul>
+<p><img alt="Gradient descent stepping downhill on a bowl-shaped loss curve toward the minimum" src="../../assets/img/gradient-descent-loss.svg" /></p>
+<p>The picture above is the whole idea in one image: the curve is the loss, the dots are successive
+training steps, and the gradient is just the slope under each dot. Steps are large where the
+slope is steep and shrink to nothing at the bottom, which is the model arriving at its best
+weights.</p>
+<h3 id="convexity-the-guarantee-that-training-just-works">Convexity : the guarantee that training "just works"<a class="headerlink" href="#convexity-the-guarantee-that-training-just-works" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>What it is:</strong> a convex loss is bowl-shaped : it has exactly one bottom. Non-convex losses
+  (trees, deep nets) are a mountain range with many valleys.</li>
+<li><strong>In action:</strong> for convex models (linear, logistic, SVM) the optimizer <strong>always lands at the
+  single best answer</strong>, regardless of where it starts. For non-convex models, different random
+  seeds give different results, so you set seeds, run multiple times, and validate carefully.</li>
+<li><strong>Its value:</strong> convexity buys <strong>reproducibility and trust</strong> with almost no tuning : a huge
+  reason simple models are still the right call for many production systems and audits.</li>
+</ul>
+<h3 id="regularization-lambdatheta-the-brake-that-prevents-memorizing">Regularization (<span class="arithmatex">\(\lambda\|\theta\|\)</span>) : the brake that prevents memorizing<a class="headerlink" href="#regularization-lambdatheta-the-brake-that-prevents-memorizing" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>What it is:</strong> an extra penalty added to the loss that grows when weights get large, so the
+  model is rewarded for staying simple. <span class="arithmatex">\(L_2\)</span> shrinks weights smoothly; <span class="arithmatex">\(L_1\)</span> zeroes some out.</li>
+<li><strong>In action:</strong> during training it pulls back on parameters that only fit noise, trading a bit
+  of training accuracy for better performance on <strong>unseen</strong> data. The strength <span class="arithmatex">\(\lambda\)</span> is the
+  single knob that moves the model along the underfit-to-overfit spectrum.</li>
+<li><strong>Its value:</strong> this is the <strong>generalization dial</strong>. It is the difference between a model that
+  scores 99% in the demo and fails in production, and one that scores 92% everywhere. Tuning
+  <span class="arithmatex">\(\lambda\)</span> is often the highest-ROI thing you do.</li>
+</ul>
+<h3 id="probability-likelihood-and-argmax-turning-scores-into-decisions">Probability, likelihood, and <span class="arithmatex">\(\arg\max\)</span> : turning scores into decisions<a class="headerlink" href="#probability-likelihood-and-argmax-turning-scores-into-decisions" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>What it is:</strong> many models output a probability <span class="arithmatex">\(P(y\mid x)\)</span> (sigmoid/softmax) and pick the
+  class with the highest one via <span class="arithmatex">\(\arg\max\)</span>. Training often <strong>maximizes likelihood</strong> : finding
+  parameters that make the observed data most probable.</li>
+<li><strong>In action:</strong> at prediction time the model emits a confidence (e.g. 0.83), and a threshold
+  <span class="arithmatex">\(\tau\)</span> or <span class="arithmatex">\(\arg\max\)</span> converts it into an action (approve/deny). That threshold is a business
+  choice applied <em>after</em> the math.</li>
+<li><strong>Its value:</strong> probabilities let you <strong>rank, prioritize, and set cost-aware cutoffs</strong> instead
+  of getting a bare yes/no. Calibrated probabilities are what make pricing, triage, and
+  risk-scoring systems possible.</li>
+</ul>
+<p><img alt="Sigmoid curve mapping a model score to a probability, with a threshold splitting predictions into class 0 and class 1" src="../../assets/img/score-to-decision.svg" /></p>
+<p>This is what "a score becomes a decision" looks like: the S-curve squashes any raw score into a
+probability, and the dashed threshold line is the business rule that turns that probability into
+a concrete Yes or No. Sliding the threshold left or right is how you trade catching more cases
+against raising fewer false alarms.</p>
+<h3 id="linear-algebra-xtheta-xtx-kernels-why-any-of-this-is-fast">Linear algebra (<span class="arithmatex">\(X\theta\)</span>, <span class="arithmatex">\(X^TX\)</span>, kernels) : why any of this is fast<a class="headerlink" href="#linear-algebra-xtheta-xtx-kernels-why-any-of-this-is-fast" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>What it is:</strong> stacking data into matrices and expressing predictions as matrix products.
+  <span class="arithmatex">\(X\theta\)</span> computes every row's prediction at once; kernels compute similarities in bulk.</li>
+<li><strong>In action:</strong> vectorized matrix operations run on optimized BLAS/GPU hardware, so scoring a
+  million rows is one matrix multiply, not a million loops.</li>
+<li><strong>Its value:</strong> this is the <strong>engineering reason</strong> ML is practical at scale. It also explains
+  cost and latency: model size and feature count translate directly into FLOPs per request.</li>
+</ul>
+<blockquote>
+<p><strong>Note - The one-sentence summary:</strong> A model is a <strong>function</strong> (<span class="arithmatex">\(f_\theta\)</span>) whose <strong>parameters</strong>
+are chosen by an <strong>optimizer</strong> (gradient descent) to minimize a <strong>loss</strong> (your definition of
+wrong), kept honest by <strong>regularization</strong> (so it generalizes), and turned into <strong>decisions</strong> via
+<strong>probabilities and thresholds</strong>. Every section below is a specific choice of those five pieces.</p>
+</blockquote>
+<p><img alt="The five components: function, loss, optimizer, regularization, and decision, connected in a training-to-prediction pipeline" src="../../assets/img/ml-math-pipeline.svg" /></p>
+<p>Use this diagram as a mental checklist: when you meet any model below, ask which function it
+uses, what loss it minimizes, how it optimizes, how it regularizes, and how it makes the final
+call. Those five answers fully describe it.</p>
+<hr />
+<h2 id="1-linear-regression">1) Linear Regression<a class="headerlink" href="#1-linear-regression" title="Permanent link">&para;</a></h2>
+<p>Linear regression is the foundational regression model and the mental anchor for almost
+everything else: it predicts a continuous target as a <strong>weighted sum of features</strong>. It is
+the model you reach for first because it is fast, interpretable, and gives a baseline that
+more complex models must beat to justify their cost.</p>
+<p><img alt="Scatter of points with a straight best-fit line and dashed vertical residuals showing prediction error" src="../../assets/img/linear-regression-fit.svg" /></p>
+<p>The line is the model and the dashed segments are the residuals : least squares simply picks the
+line whose squared residuals add up to the smallest total. The slope is each feature's effect and
+the intercept is the baseline value when every feature is zero.</p>
+<p>Model form:</p>
+<div class="arithmatex">\[
+\hat{y} = X\theta + b
+\]</div>
+<p>Each coefficient <span class="arithmatex">\(\theta_j\)</span> is the expected change in <span class="arithmatex">\(\hat{y}\)</span> for a one-unit increase in
+feature <span class="arithmatex">\(j\)</span>, <strong>holding all other features fixed</strong> : this is exactly why the model is so
+interpretable, and also why correlated features make individual coefficients hard to trust.</p>
+<p>Least-squares objective:</p>
+<div class="arithmatex">\[
+\min_{\theta,b}\;\frac{1}{N}\|y-(X\theta+b)\|_2^2
+\]</div>
+<p>We square the residuals for two reasons: it penalizes large errors disproportionately, and
+it yields a smooth, convex objective with a unique minimum. Minimizing squared error is also
+equivalent to <strong>maximum-likelihood estimation under Gaussian noise</strong>, which is the formal
+justification for the method.</p>
+<p>Closed-form (normal equation, centered form):</p>
+<div class="arithmatex">\[
+\hat{\theta}=(X^TX)^{-1}X^Ty
+\]</div>
+<p>This exact solution exists only because the problem is convex and quadratic. In practice we
+rarely invert <span class="arithmatex">\(X^TX\)</span> directly (it is <span class="arithmatex">\(O(d^3)\)</span> and numerically unstable when features are
+correlated); libraries use QR decomposition or, for large data, iterative gradient descent.</p>
+<p>Assumptions and notes:</p>
+<ul>
+<li><strong>Linearity</strong>: the target is a linear function of the features (you can still model curves
+  by adding polynomial or interaction features).</li>
+<li><strong>Independent, homoscedastic errors</strong>: residuals have constant variance and are uncorrelated.</li>
+<li><strong>Low multicollinearity</strong>: highly correlated features inflate coefficient variance and make
+  <span class="arithmatex">\(X^TX\)</span> near-singular.</li>
+<li><strong>Outlier sensitivity</strong>: because errors are squared, a few extreme points can dominate the fit.</li>
+<li>It remains a <strong>great baseline</strong> for tabular regression and a diagnostic tool even when a
+  fancier model ships.</li>
+</ul>
+<p>Regularized variants (the "kinds" of linear regression):</p>
+<ul>
+<li><strong>Ridge (L2)</strong>: adds <span class="arithmatex">\(\lambda\|\theta\|_2^2\)</span>. Shrinks coefficients smoothly toward zero,
+  stabilizes correlated features, and never sets weights exactly to zero. Best when many
+  features each contribute a little.</li>
+<li><strong>Lasso (L1)</strong>: adds <span class="arithmatex">\(\lambda\|\theta\|_1\)</span>. Drives some coefficients exactly to zero, so it
+  performs <strong>automatic feature selection</strong>. Best when you expect only a few features to matter.</li>
+<li><strong>Elastic Net</strong>: combines L1 and L2, <span class="arithmatex">\(\lambda_1\|\theta\|_1 + \lambda_2\|\theta\|_2^2\)</span>. Gets
+  Lasso's sparsity while handling correlated feature groups gracefully.</li>
+<li><strong>Polynomial / basis-expansion regression</strong>: still "linear in the parameters" but fits
+  curves by transforming inputs (<span class="arithmatex">\(x, x^2, x^3, \dots\)</span>).</li>
+</ul>
+<blockquote>
+<p><strong>Note - Azure ML connection:</strong> Linear models train in seconds, so they make ideal
+smoke-test baselines in an AutoML run. If a heavily tuned boosting model barely beats ridge
+regression, the extra serving cost and complexity may not be worth it.</p>
+</blockquote>
+<hr />
+<h2 id="2-logistic-regression">2) Logistic Regression<a class="headerlink" href="#2-logistic-regression" title="Permanent link">&para;</a></h2>
+<p>Despite the name, logistic regression is a <strong>classification</strong> model. It takes the same linear
+score as linear regression and squashes it through the sigmoid function to produce a
+probability between 0 and 1. It is the default first model for binary classification because
+its outputs are calibrated, interpretable, and cheap to compute.</p>
+<p><img alt="Two classes of points separated by a straight p equals 0.5 boundary, with a shaded band marking the least-confident region" src="../../assets/img/logistic-regression-boundary.svg" /></p>
+<p>The boundary is the line where the predicted probability equals 0.5; points get more confidently
+classified the further they sit from it. The shaded band is the uncertain zone where small feature
+changes flip the prediction, which is exactly where threshold tuning matters most.</p>
+<p>Binary probability:</p>
+<div class="arithmatex">\[
+P(y=1\mid x)=\sigma(\theta^Tx+b)=\frac{1}{1+e^{-(\theta^Tx+b)}}
+\]</div>
+<p>The linear part <span class="arithmatex">\(\theta^Tx+b\)</span> is called the <strong>logit</strong> or log-odds. Rearranging gives
+<span class="arithmatex">\(\log\frac{p}{1-p}=\theta^Tx+b\)</span>, so each coefficient <span class="arithmatex">\(\theta_j\)</span> is the change in <strong>log-odds</strong>
+per unit of feature <span class="arithmatex">\(j\)</span>; exponentiating, <span class="arithmatex">\(e^{\theta_j}\)</span> is an <strong>odds ratio</strong>, which is how
+these models are reported in risk and medical settings.</p>
+<p>Binary cross-entropy loss:</p>
+<div class="arithmatex">\[
+\min_{\theta,b}\;-\frac{1}{N}\sum_{i=1}^{N}\left[y_i\log\hat{p}_i+(1-y_i)\log(1-\hat{p}_i)\right]
+\]</div>
+<p>This is the negative log-likelihood of the data under a Bernoulli model. It is convex, so
+there is a single global optimum, but unlike linear regression there is <strong>no closed form</strong> :
+it is solved iteratively with gradient descent, Newton's method, or L-BFGS.</p>
+<p>Decision rule:</p>
+<div class="arithmatex">\[
+\hat{y}=\mathbb{1}[\hat{p}&gt;\tau]
+\]</div>
+<p>The threshold <span class="arithmatex">\(\tau\)</span> is a <strong>business decision, not a model parameter</strong>. The default <span class="arithmatex">\(0.5\)</span> is
+rarely optimal under class imbalance or asymmetric error costs; it is tuned afterward using
+the precision/recall trade-off from the performance-metrics module.</p>
+<p>Kinds and extensions:</p>
+<ul>
+<li><strong>Binary logistic regression</strong>: the base two-class case above.</li>
+<li><strong>Multinomial (softmax) regression</strong>: generalizes to <span class="arithmatex">\(K\)</span> classes with
+  <span class="arithmatex">\(P(y=k\mid x)=\frac{e^{\theta_k^Tx}}{\sum_j e^{\theta_j^Tx}}\)</span>.</li>
+<li><strong>Ordinal logistic regression</strong>: for ordered categories (low/medium/high).</li>
+<li><strong>Regularized logistic regression</strong>: L1/L2/Elastic-Net penalties, exactly as in linear
+  regression, to control overfitting in high dimensions.</li>
+</ul>
+<p>Practical points:</p>
+<ul>
+<li>Coefficients are interpretable in log-odds space, which auditors and domain experts like.</li>
+<li>Class imbalance requires threshold tuning and often <strong>class weights</strong> (penalize errors on the
+  rare class more heavily).</li>
+<li>Always run <strong>calibration checks</strong> (reliability curves) when probabilities, not just labels,
+  drive downstream decisions such as pricing or triage.</li>
+<li>Features should be scaled when using regularization, so the penalty treats them comparably.</li>
+</ul>
+<blockquote>
+<p><strong>Note - Azure ML connection:</strong> Because the output is a probability, logistic regression
+pairs naturally with a threshold/cost policy at the endpoint: the model returns <span class="arithmatex">\(\hat{p}\)</span>, and
+the application decides the action (block, review, allow) based on tuned cutoffs.</p>
+</blockquote>
+<hr />
+<h2 id="3-naive-bayes">3) Naive Bayes<a class="headerlink" href="#3-naive-bayes" title="Permanent link">&para;</a></h2>
+<p>Naive Bayes is a <strong>probabilistic classifier</strong> built directly from Bayes' theorem. Its "naive"
+simplifying assumption : that features are conditionally independent given the class : makes it
+extremely fast and surprisingly effective on high-dimensional sparse data such as text.</p>
+<p><img alt="Bayes rule shown as a class prior multiplied by per-feature likelihoods to give a score, with arg max selecting the winning class" src="../../assets/img/naive-bayes.svg" /></p>
+<p>The picture is the whole model: multiply the class prior by one likelihood per feature, do that
+for every class, and take the largest. The independence assumption is what lets those per-feature
+terms simply multiply, and working in log-space turns the product into a safe sum.</p>
+<p>Bayes rule with conditional independence:</p>
+<div class="arithmatex">\[
+P(y\mid x_1,\dots,x_d)\propto P(y)\prod_{j=1}^{d}P(x_j\mid y)
+\]</div>
+<p><span class="arithmatex">\(P(y)\)</span> is the <strong>prior</strong> (how common each class is), and each <span class="arithmatex">\(P(x_j\mid y)\)</span> is the
+<strong>likelihood</strong> of seeing a feature value given the class. The product over features is exactly
+where the independence assumption enters : it lets us estimate <span class="arithmatex">\(d\)</span> simple one-dimensional
+distributions instead of one intractable <span class="arithmatex">\(d\)</span>-dimensional joint distribution.</p>
+<p>Prediction:</p>
+<div class="arithmatex">\[
+\hat{y}=\arg\max_y\left[\log P(y)+\sum_{j=1}^{d}\log P(x_j\mid y)\right]
+\]</div>
+<p>We work in <strong>log-space</strong> to turn the product into a sum, avoiding numerical underflow when
+multiplying thousands of tiny probabilities (common in text with large vocabularies).</p>
+<p>Kinds of Naive Bayes (the variant matches the feature distribution):</p>
+<ul>
+<li><strong>Gaussian NB</strong>: continuous features modeled as normal distributions per class. Use for
+  real-valued tabular data.</li>
+<li><strong>Multinomial NB</strong>: discrete counts (e.g. word frequencies). The default for document/topic
+  classification.</li>
+<li><strong>Bernoulli NB</strong>: binary presence/absence features. Good for short texts where a word either
+  appears or not.</li>
+<li><strong>Complement NB</strong>: a multinomial variant that corrects for class imbalance, often better on
+  skewed text corpora.</li>
+</ul>
+<p>Why it works despite the assumption:</p>
+<ul>
+<li>Independence is often false, but the model only needs the <strong>correct class to get the highest
+  score</strong> : accurate ranking survives even when the probability estimates are biased.</li>
+<li>It performs well for sparse high-dimensional text tasks (spam, sentiment, topic tagging) and
+  trains in a single pass over the data.</li>
+</ul>
+<p>Practical notes and failure modes:</p>
+<ul>
+<li><strong>Laplace/additive smoothing</strong> (<span class="arithmatex">\(\alpha\)</span>) is essential : without it, a single unseen
+  feature-class combination produces a zero probability that wipes out the whole product.</li>
+<li>Correlated features <strong>double-count evidence</strong>, pushing probabilities toward 0 or 1, so the
+  outputs are poorly calibrated even when labels are right.</li>
+<li>Treat its probabilities as scores, not trustworthy confidences, unless you recalibrate.</li>
+</ul>
+<hr />
+<h2 id="4-support-vector-machines-svm">4) Support Vector Machines (SVM)<a class="headerlink" href="#4-support-vector-machines-svm" title="Permanent link">&para;</a></h2>
+<p>An SVM finds the decision boundary that <strong>maximizes the margin</strong> : the distance between the
+boundary and the nearest points of each class. The intuition is that the widest possible
+"street" between classes generalizes best. Only the points on the edge of that street (the
+<strong>support vectors</strong>) determine the boundary; everything else is irrelevant.</p>
+<p><img alt="Two classes separated by a boundary with a wide dashed margin street; the circled points on the margin edges are the support vectors" src="../../assets/img/svm-margin.svg" /></p>
+<p>The solid line is the boundary and the dashed lines mark the edges of the widest "street" that
+still separates the classes. Only the circled support vectors touch those edges and define the
+fit; the parameter <span class="arithmatex">\(C\)</span> decides how many points are allowed to sit inside the street.</p>
+<p>Hard-margin formulation:</p>
+<div class="arithmatex">\[
+\min_{w,b}\;\frac{1}{2}\|w\|^2 \quad \text{s.t.}\; y_i(w^Tx_i+b)\ge 1
+\]</div>
+<p>Minimizing <span class="arithmatex">\(\|w\|^2\)</span> is equivalent to <strong>maximizing the margin</strong> <span class="arithmatex">\(2/\|w\|\)</span>. The hard-margin form
+assumes the data is perfectly separable : a fragile assumption that breaks on any noisy dataset.</p>
+<p>Soft-margin (hinge loss):</p>
+<div class="arithmatex">\[
+\min_{w,b,\xi}\;\frac{1}{2}\|w\|^2 + C\sum_i\xi_i
+\quad \text{s.t.}\; y_i(w^Tx_i+b)\ge 1-\xi_i,\;\xi_i\ge 0
+\]</div>
+<p>The <strong>slack variables</strong> <span class="arithmatex">\(\xi_i\)</span> allow some points to violate the margin, and <span class="arithmatex">\(C\)</span> controls the
+trade-off: large <span class="arithmatex">\(C\)</span> punishes violations hard (low bias, high variance, risk of overfitting),
+small <span class="arithmatex">\(C\)</span> tolerates them (wider margin, more regularization). This is the single most important
+knob.</p>
+<p>Kernel trick:</p>
+<div class="arithmatex">\[
+K(x_i,x_j)=\phi(x_i)^T\phi(x_j)
+\]</div>
+<p>The kernel computes inner products in a high-dimensional feature space <strong>without ever forming
+that space explicitly</strong>, letting a linear margin in the transformed space become a curved
+boundary in the original one. Common kernels (the "kinds" of SVM):</p>
+<ul>
+<li><strong>Linear</strong>: <span class="arithmatex">\(K=x_i^Tx_j\)</span>. Fast, best when data is already high-dimensional (e.g. text).</li>
+<li><strong>Polynomial</strong>: <span class="arithmatex">\(K=(x_i^Tx_j+c)^p\)</span>. Captures feature interactions up to degree <span class="arithmatex">\(p\)</span>.</li>
+<li><strong>RBF / Gaussian</strong>: <span class="arithmatex">\(K=\exp(-\gamma\|x_i-x_j\|^2)\)</span>. The flexible default; <span class="arithmatex">\(\gamma\)</span> sets how
+  far each point's influence reaches.</li>
+<li><strong>Sigmoid</strong>: behaves like a two-layer neural net for certain parameters.</li>
+</ul>
+<p>Related forms:</p>
+<ul>
+<li><strong>SVR (Support Vector Regression)</strong> applies the same margin idea to regression using an
+  <span class="arithmatex">\(\epsilon\)</span>-insensitive tube around the prediction.</li>
+<li><strong>One-Class SVM</strong> is used for novelty/anomaly detection.</li>
+</ul>
+<p>Practical notes:</p>
+<ul>
+<li>Strong on <strong>medium-size</strong> datasets with clear class structure.</li>
+<li>Kernel SVM scales <strong>poorly on very large <span class="arithmatex">\(N\)</span></strong> (training is between <span class="arithmatex">\(O(N^2)\)</span> and <span class="arithmatex">\(O(N^3)\)</span>).</li>
+<li>Features <strong>must be scaled</strong> : distance-based kernels are dominated by large-magnitude features.</li>
+<li>Hyperparameters <span class="arithmatex">\(C\)</span> and the kernel parameters (e.g. <span class="arithmatex">\(\gamma\)</span>) dominate behavior and require
+  cross-validated tuning.</li>
+</ul>
+<hr />
+<h2 id="5-decision-trees">5) Decision Trees<a class="headerlink" href="#5-decision-trees" title="Permanent link">&para;</a></h2>
+<p>A decision tree splits the data into ever-smaller regions by asking a sequence of yes/no
+questions on features, producing a flowchart that a human can read directly. It is the building
+block of the most powerful tabular models (forests and boosting), so understanding it is key.</p>
+<p><img alt="A decision tree as a flowchart of yes/no feature questions branching down to leaf nodes that give a predicted class" src="../../assets/img/decision-tree.svg" /></p>
+<p>Each internal box is a yes/no question on one feature and each leaf is a prediction; following a
+row's answers from root to leaf is the entire inference process. The tree greedily picks the
+question that most reduces impurity at every node, which is why deeper trees fit more detail but
+risk memorizing noise.</p>
+<p>Split criterion examples:</p>
+<div class="arithmatex">\[
+\text{Gini}(S)=1-\sum_{k=1}^{K}p_k^2
+\]</div>
+<div class="arithmatex">\[
+H(S)=-\sum_{k=1}^{K}p_k\log_2 p_k
+\]</div>
+<p>Both measure <strong>impurity</strong> : how mixed the class labels are in a node. Gini and entropy behave
+similarly; Gini is slightly cheaper to compute, entropy comes from information theory. A pure
+node (all one class) has impurity 0.</p>
+<p>Information gain for split <span class="arithmatex">\(v\)</span>:</p>
+<div class="arithmatex">\[
+IG=H(S)-\sum_v\frac{|S_v|}{|S|}H(S_v)
+\]</div>
+<p>The tree is grown <strong>greedily</strong>: at each node it tries every feature and threshold and picks the
+split that most reduces impurity (largest information gain). It never reconsiders earlier
+splits, which is why trees are fast but not globally optimal.</p>
+<p>Kinds and criteria:</p>
+<ul>
+<li><strong>Classification trees</strong> use Gini or entropy and predict the majority class in a leaf.</li>
+<li><strong>Regression trees</strong> split to minimize variance (or MSE) and predict the <strong>mean</strong> of the
+  leaf's targets.</li>
+<li>Classic algorithms differ in detail: <strong>CART</strong> (binary splits, the scikit-learn default),
+  <strong>ID3/C4.5</strong> (multi-way splits, gain ratio).</li>
+</ul>
+<p>Regularization (how you stop a tree from memorizing):</p>
+<ul>
+<li><strong>max_depth</strong>: hard cap on how many questions deep the tree can go.</li>
+<li><strong>min_samples_split / min_samples_leaf</strong>: require enough data in a node before/after a split.</li>
+<li><strong>Cost-complexity pruning</strong> (<span class="arithmatex">\(\alpha\)</span>): grow fully, then trim branches that add little.</li>
+</ul>
+<p>Pros and risks:</p>
+<ul>
+<li>Highly <strong>interpretable</strong>, handles mixed numeric/categorical data, needs no feature scaling,
+  and is insensitive to monotonic transforms.</li>
+<li><strong>Unpruned trees overfit quickly</strong> : a deep tree can carve out a leaf for every training row.</li>
+<li><strong>High variance</strong>: a small change in the data can produce a very different tree, which is the
+  exact weakness that ensembles (Sections 6-7) were invented to fix.</li>
+</ul>
+<hr />
+<h2 id="6-random-forest">6) Random Forest<a class="headerlink" href="#6-random-forest" title="Permanent link">&para;</a></h2>
+<p>A random forest is an <strong>ensemble of decision trees</strong> combined by averaging (regression) or
+voting (classification). It directly attacks the single tree's high-variance weakness: many
+decorrelated trees, each slightly wrong in a different way, average out to a stable prediction.</p>
+<p><img alt="Training data feeding many trees built on different random samples, whose predictions combine through a majority vote into a final class" src="../../assets/img/random-forest.svg" /></p>
+<p>Each tree trains on its own random sample of rows and features, so they make different mistakes;
+the vote (or average) cancels those mistakes out. This is bagging : it lowers variance without
+increasing bias, which is why a forest is far more stable than any single tree.</p>
+<p>Ensemble prediction (regression):</p>
+<div class="arithmatex">\[
+\hat{y}=\frac{1}{T}\sum_{t=1}^{T}f_t(x)
+\]</div>
+<p>Classification via majority vote:</p>
+<div class="arithmatex">\[
+\hat{y}=\text{mode}(f_1(x),\dots,f_T(x))
+\]</div>
+<p>Core idea : two sources of randomness make the trees different:</p>
+<ul>
+<li><strong>Bagging (bootstrap aggregation)</strong>: each tree trains on a random sample of rows drawn with
+  replacement, so no two trees see the same data.</li>
+<li><strong>Random feature subsets</strong>: at each split a tree may only choose from a random subset of
+  features, which prevents a few dominant features from making all trees look alike.</li>
+</ul>
+<p>Averaging independent estimators reduces variance roughly in proportion to how <strong>decorrelated</strong>
+they are : that is the whole reason for injecting randomness, not just bagging.</p>
+<p>Useful properties:</p>
+<ul>
+<li><strong>Out-of-bag (OOB) error</strong>: rows not sampled for a tree act as a built-in validation set,
+  giving a free generalization estimate without a separate hold-out.</li>
+<li><strong>Feature importance</strong>: averaged impurity reduction (or permutation importance) ranks which
+  features the forest relied on : though correlated features can share/dilute importance.</li>
+</ul>
+<p>Related variant:</p>
+<ul>
+<li><strong>Extremely Randomized Trees (Extra-Trees)</strong> also randomize the split thresholds, trading a
+  little more bias for even lower variance and faster training.</li>
+</ul>
+<p>Trade-offs and tuning:</p>
+<ul>
+<li><strong>Strong baseline</strong> for tabular data with minimal tuning : often competitive out of the box.</li>
+<li>More trees (<code>n_estimators</code>) only help (never overfit from count alone) but cost memory and
+  inference latency; <code>max_features</code>, <code>max_depth</code>, and <code>min_samples_leaf</code> control each tree.</li>
+<li>Higher memory and inference cost than linear models; less interpretable than a single tree,
+  though still explainable via importances and SHAP.</li>
+</ul>
+<hr />
+<h2 id="7-gradient-boosting-xgboost-lightgbm">7) Gradient Boosting (XGBoost / LightGBM)<a class="headerlink" href="#7-gradient-boosting-xgboost-lightgbm" title="Permanent link">&para;</a></h2>
+<p>Gradient boosting builds an ensemble <strong>sequentially</strong>: each new tree focuses on the errors the
+current ensemble still makes. Where a random forest builds independent trees in parallel and
+averages them, boosting builds dependent trees in series and adds them : this is the difference
+between reducing variance (forests) and reducing bias (boosting), and it is why boosting tends
+to win accuracy contests on tabular data.</p>
+<p><img alt="A sequence of trees where each new tree is trained on the residual errors of the previous ones, and all tree outputs are summed into the final prediction" src="../../assets/img/gradient-boosting.svg" /></p>
+<p>Unlike a forest's parallel vote, boosting adds trees in sequence: every new tree predicts the
+leftover error of the running sum, scaled down by the learning rate. Summing these corrections
+drives bias down step by step, while shrinkage and regularization keep it from chasing noise.</p>
+<p>Additive stage-wise model:</p>
+<div class="arithmatex">\[
+F_m(x)=F_{m-1}(x)+\nu h_m(x)
+\]</div>
+<p>where <span class="arithmatex">\(h_m\)</span> is a small tree fit to the <strong>negative gradient</strong> of the loss (the direction that
+most reduces error), and <span class="arithmatex">\(\nu\)</span> is the <strong>learning rate</strong> (shrinkage). A small <span class="arithmatex">\(\nu\)</span> means each
+tree contributes a little, so you need more trees but generalize better : the classic
+<code>learning_rate</code> vs <code>n_estimators</code> trade-off.</p>
+<p>Generic regularized objective:</p>
+<div class="arithmatex">\[
+\mathcal{L}=\sum_{i=1}^{N}\ell(y_i,\hat{y}_i)+\sum_{m}\Omega(h_m)
+\]</div>
+<p>The second term <span class="arithmatex">\(\Omega\)</span> penalizes tree complexity (number of leaves, leaf weights). Modern
+implementations such as XGBoost also use a <strong>second-order (Newton) expansion</strong> of the loss,
+using both gradients and Hessians to choose splits more precisely.</p>
+<p>Kinds and implementations (the "flavors" of boosting):</p>
+<ul>
+<li><strong>AdaBoost</strong>: the original, reweights misclassified points each round.</li>
+<li><strong>Gradient Boosting Machines (GBM)</strong>: the general gradient-descent-in-function-space view.</li>
+<li><strong>XGBoost</strong>: regularized, second-order, level-wise tree growth; very robust.</li>
+<li><strong>LightGBM</strong>: leaf-wise growth with histogram binning : fastest on large data, controlled by
+  <code>num_leaves</code>.</li>
+<li><strong>CatBoost</strong>: native, ordered handling of categorical features with less leakage.</li>
+</ul>
+<p>Why it wins often on tabular data:</p>
+<ul>
+<li>Captures nonlinear interactions and feature thresholds automatically.</li>
+<li>Handles heterogeneous feature scales and missing values gracefully.</li>
+<li>Rich regularization and shrinkage controls let you trade bias for variance precisely.</li>
+</ul>
+<p>Most important knobs (and what they do):</p>
+<ul>
+<li><code>learning_rate</code> and <code>n_estimators</code>: lower rate + more trees = better but slower.</li>
+<li><code>max_depth</code> or <code>num_leaves</code>: tree capacity; the main overfitting lever.</li>
+<li><code>subsample</code>, <code>colsample_bytree</code>: row/column sampling for regularization and speed.</li>
+<li><code>lambda_l1</code>, <code>lambda_l2</code>, <code>min_child_weight</code>: penalize complexity.</li>
+</ul>
+<blockquote>
+<p><strong>Note - Azure ML connection:</strong> Boosting is the workhorse of AutoML's tabular runs. Because
+it is tuning-sensitive, pair it with early stopping on a validation set and HyperDrive/sweep
+search rather than hand-tuning.</p>
+</blockquote>
+<hr />
+<h2 id="8-neural-networks-mlp-basics">8) Neural Networks (MLP basics)<a class="headerlink" href="#8-neural-networks-mlp-basics" title="Permanent link">&para;</a></h2>
+<p>A neural network stacks layers of linear transforms followed by nonlinear activations, letting
+it approximate almost any function given enough capacity and data (the universal approximation
+property). The multilayer perceptron (MLP) is the simplest form and the foundation for deep
+learning architectures.</p>
+<p><img alt="A multilayer perceptron with an input layer, two fully connected hidden layers, and an output layer" src="../../assets/img/neural-network.svg" /></p>
+<p>Every connection carries a weight and every node computes a weighted sum followed by a nonlinear
+activation; stacking these simple steps is what lets the network represent complex functions. More
+width and depth add capacity, which is powerful but demands more data and makes the model harder
+to interpret and operate.</p>
+<p>Layer mapping (forward pass):</p>
+<div class="arithmatex">\[
+a^{(l)}=\phi\left(W^{(l)}a^{(l-1)}+b^{(l)}\right)
+\]</div>
+<p>Each layer applies weights <span class="arithmatex">\(W^{(l)}\)</span>, a bias, and a nonlinearity <span class="arithmatex">\(\phi\)</span>. The <strong>nonlinearity is
+essential</strong> : without it, stacking layers would collapse into a single linear map. Common
+choices are ReLU (fast, default for hidden layers), sigmoid/tanh (older, prone to vanishing
+gradients), and softmax (output layer for multiclass probabilities).</p>
+<p>Empirical risk minimization:</p>
+<div class="arithmatex">\[
+\min_{\Theta}\frac{1}{N}\sum_{i=1}^{N}\mathcal{L}(f_{\Theta}(x_i),y_i)
+\]</div>
+<p>Gradient descent update:</p>
+<div class="arithmatex">\[
+\Theta_{t+1}=\Theta_t-\eta\nabla_{\Theta}\mathcal{L}
+\]</div>
+<p>Gradients are computed by <strong>backpropagation</strong> (the chain rule applied layer by layer). The
+objective is <strong>non-convex</strong>, so training finds a good local optimum, not a guaranteed global
+one : results depend on initialization, data order, and the optimizer. In practice <span class="arithmatex">\(\eta\)</span> (the
+learning rate) is the single most important hyperparameter, and adaptive optimizers like
+<strong>Adam</strong> adjust it per-parameter for faster, more stable convergence than plain SGD.</p>
+<p>Kinds of neural networks (beyond the MLP):</p>
+<ul>
+<li><strong>MLP / fully-connected</strong>: tabular data and as building blocks.</li>
+<li><strong>CNN (convolutional)</strong>: images and spatial data; share weights across locations.</li>
+<li><strong>RNN / LSTM / GRU</strong>: sequences and time series with memory of past steps.</li>
+<li><strong>Transformers</strong>: attention-based; dominate language and increasingly vision.</li>
+</ul>
+<p>Regularization options (capacity is high, so controlling it is mandatory):</p>
+<ul>
+<li><strong>Weight decay (<span class="arithmatex">\(L_2\)</span>)</strong>: shrinks weights to reduce overfitting.</li>
+<li><strong>Dropout</strong>: randomly zeros activations during training to prevent co-adaptation.</li>
+<li><strong>Early stopping</strong>: halt when validation loss stops improving.</li>
+<li><strong>Batch normalization</strong> and <strong>data augmentation</strong>: stabilize and enrich training.</li>
+</ul>
+<p>Operational note:</p>
+<ul>
+<li>Capacity is high, so validation strategy and monitoring are mandatory.</li>
+<li>Neural nets are <strong>data-hungry and compute-hungry</strong>; for small/medium tabular data, boosting
+  usually matches or beats them at a fraction of the cost.</li>
+<li>They are harder to interpret and operate (GPU serving, versioning), so reserve them for
+  unstructured data (text, images, audio) or genuinely complex interactions.</li>
+</ul>
+<hr />
+<h2 id="9-time-series-forecasting-models">9) Time-Series Forecasting Models<a class="headerlink" href="#9-time-series-forecasting-models" title="Permanent link">&para;</a></h2>
+<p>Time-series models predict future values from a sequence ordered in time. The defining
+difference from every other model on this page is that <strong>observations are not independent</strong> :
+today depends on yesterday, so order matters and the usual random train/test split is invalid.</p>
+<p><img alt="A historical series with an upward trend and seasonal waves extended into a future forecast with a widening uncertainty band" src="../../assets/img/time-series-forecast.svg" /></p>
+<p>Forecasting decomposes the past into a trend plus repeating seasonal cycles, then projects them
+forward. The widening band past "now" is the key message : uncertainty grows with the horizon, so
+longer-range forecasts must report intervals, not just a single line.</p>
+<p>Autoregressive family (AR):</p>
+<div class="arithmatex">\[
+y_t=c+\sum_{i=1}^{p}\phi_i y_{t-i}+\epsilon_t
+\]</div>
+<p>An AR(<span class="arithmatex">\(p\)</span>) model predicts the current value as a weighted sum of the previous <span class="arithmatex">\(p\)</span> values plus
+noise. The companion <strong>MA(<span class="arithmatex">\(q\)</span>)</strong> model instead regresses on the previous <span class="arithmatex">\(q\)</span> forecast errors.</p>
+<p>ARIMA combines them and adds differencing:</p>
+<div class="arithmatex">\[
+\phi(B)(1-B)^d y_t = c + \theta(B)\epsilon_t
+\]</div>
+<p>where <span class="arithmatex">\(B\)</span> is the <strong>backshift operator</strong> (<span class="arithmatex">\(B y_t = y_{t-1}\)</span>). The three orders <span class="arithmatex">\((p,d,q)\)</span> are:
+<span class="arithmatex">\(p\)</span> autoregressive terms, <span class="arithmatex">\(d\)</span> rounds of differencing to remove trend (make the series
+<strong>stationary</strong>), and <span class="arithmatex">\(q\)</span> moving-average terms.</p>
+<p>Kinds of forecasting models:</p>
+<ul>
+<li><strong>AR / MA / ARMA</strong>: stationary series without/with trend handling.</li>
+<li><strong>ARIMA</strong>: adds differencing for trending data.</li>
+<li><strong>SARIMA</strong>: adds seasonal terms for repeating cycles (weekly, yearly).</li>
+<li><strong>Exponential smoothing (ETS / Holt-Winters)</strong>: weights recent observations more heavily,
+  with explicit trend and seasonal components.</li>
+<li><strong>Prophet</strong>: decomposes into trend + seasonality + holidays; robust and easy to use.</li>
+<li><strong>ML/DL approaches</strong>: gradient boosting on lag features, or LSTMs/Transformers for complex,
+  multivariate series.</li>
+</ul>
+<p>Practical forecasting constraints:</p>
+<ul>
+<li>Use <strong>chronological (rolling/expanding) validation</strong> only : never shuffle, or you leak the
+  future into the past.</li>
+<li>Check <strong>stationarity</strong> (e.g. ADF test) and difference or transform as needed.</li>
+<li>Evaluate both <strong>scale-dependent</strong> (MAE, RMSE) and <strong>percentage</strong> (MAPE, sMAPE) metrics.</li>
+<li>Refit cadence should follow drift and seasonality changes; forecasts degrade as the horizon
+  lengthens, so report uncertainty intervals, not just point predictions.</li>
+</ul>
+<hr />
+<h2 id="10-model-comparison-from-a-mathematical-lens">10) Model Comparison from a Mathematical Lens<a class="headerlink" href="#10-model-comparison-from-a-mathematical-lens" title="Permanent link">&para;</a></h2>
+<p>The table below summarizes the trade-offs that recur throughout this page. The single most
+useful pattern: <strong>convex models</strong> (top rows) give you stability and speed, while <strong>non-convex,
+high-capacity models</strong> (lower rows) give you flexibility at the cost of tuning effort and
+overfitting risk.</p>
+<table>
+<thead>
+<tr>
+<th>Family</th>
+<th>Main objective</th>
+<th>Typical optimization</th>
+<th>Common risk</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Linear/Logistic</td>
+<td>Convex loss + optional regularization</td>
+<td>Deterministic convex methods</td>
+<td>Underfitting nonlinear patterns</td>
+</tr>
+<tr>
+<td>Naive Bayes</td>
+<td>Maximize class posterior</td>
+<td>Closed-form counting</td>
+<td>Independence assumption, poor calibration</td>
+</tr>
+<tr>
+<td>SVM</td>
+<td>Margin maximization + hinge loss</td>
+<td>Quadratic optimization</td>
+<td>Scaling on large datasets</td>
+</tr>
+<tr>
+<td>Trees/Forests</td>
+<td>Impurity minimization</td>
+<td>Greedy recursive splitting</td>
+<td>Overfit without constraints</td>
+</tr>
+<tr>
+<td>Boosting</td>
+<td>Additive loss reduction</td>
+<td>Gradient-based stage updates</td>
+<td>Overfit if too many deep trees</td>
+</tr>
+<tr>
+<td>Neural Nets</td>
+<td>Non-convex empirical risk minimization</td>
+<td>SGD/Adam backprop</td>
+<td>Instability, data hunger</td>
+</tr>
+<tr>
+<td>Time-Series</td>
+<td>Minimize forecast error on ordered data</td>
+<td>Likelihood / least squares</td>
+<td>Leakage if not validated chronologically</td>
+</tr>
+</tbody>
+</table>
+<p>A few cross-cutting themes worth internalizing:</p>
+<ul>
+<li><strong>Bias-variance</strong>: linear/Naive Bayes are high-bias/low-variance; deep trees and neural nets
+  are low-bias/high-variance. Ensembles (forests, boosting) deliberately engineer a better
+  middle ground.</li>
+<li><strong>Interpretability vs accuracy</strong>: roughly decreases as you move down the table. Pick the
+  least complex model that meets the accuracy bar.</li>
+<li><strong>Scaling sensitivity</strong>: distance- and gradient-based models (SVM, neural nets, regularized
+  linear) need feature scaling; tree-based models do not.</li>
+</ul>
+<hr />
+<h2 id="11-choosing-the-right-model-in-azure-ml">11) Choosing the Right Model in Azure ML<a class="headerlink" href="#11-choosing-the-right-model-in-azure-ml" title="Permanent link">&para;</a></h2>
+<p>Suggested workflow:</p>
+<ol>
+<li>Start with linear/logistic and tree baselines.</li>
+<li>Move to boosting for tabular accuracy gains.</li>
+<li>Use neural architectures for unstructured data.</li>
+<li>Validate with business-aligned metrics and threshold policy.</li>
+<li>Deploy with monitoring for drift, latency, and calibration.</li>
+</ol>
+<p>A practical decision guide based on the data you have:</p>
+<ul>
+<li><strong>Small tabular, interpretability required</strong>: linear/logistic regression or a single shallow
+  tree. Cheap, auditable, fast.</li>
+<li><strong>Medium tabular, accuracy matters</strong>: gradient boosting (XGBoost/LightGBM) is usually the
+  best default; a random forest is the no-tuning fallback.</li>
+<li><strong>High-dimensional sparse text</strong>: Naive Bayes or linear models as baselines, then move up.</li>
+<li><strong>Clear margins, medium <span class="arithmatex">\(N\)</span></strong>: SVM with an RBF kernel.</li>
+<li><strong>Unstructured data (images, audio, language)</strong>: neural networks (CNNs, RNNs, Transformers).</li>
+<li><strong>Time-ordered data</strong>: ARIMA/SARIMA or Prophet first, then boosting on lag features or
+  sequence models if needed.</li>
+</ul>
+<p>A mathematically elegant model is not automatically the best production model. In
+practice, the best model maximizes business value under latency, cost, governance,
+and maintainability constraints. The disciplined path is to <strong>establish a simple baseline
+first</strong>, then only add complexity when it earns its keep on a metric that the business actually
+cares about.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 <a href="https://github.com/Cloud2BR-MSFTLearningHub" target="_blank" rel="noopener">Cloud2BR MSFT Learning Hub</a>
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.expand", "navigation.top", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../../assets/js/org-link.js"></script>
+      
+    
+  </body>
+</html>
