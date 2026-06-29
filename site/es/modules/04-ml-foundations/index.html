@@ -1,0 +1,3460 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Capacitación de Azure Machine Learning desde fundamentos hasta MLOps avanzado.">
+      
+      
+      
+        <link rel="canonical" href="https://cloud2br-msftlearninghub.github.io/Azure-ML-Advanced/es/modules/04-ml-foundations/">
+      
+      
+        <link rel="prev" href="../03-introduction/">
+      
+      
+        <link rel="next" href="../05-neural-networks/">
+      
+      
+        
+          <link rel="alternate" href="/Azure-ML-Advanced/" hreflang="en">
+        
+          <link rel="alternate" href="/Azure-ML-Advanced/es/" hreflang="es">
+        
+      
+      
+      <link rel="icon" href="../../assets/img/org-logo.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>04. Fundamentos de ML - Azure Machine Learning: Advanced</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/css/custom.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#fundamentos-del-ml" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href="../.." title="Azure Machine Learning: Advanced" class="md-header__button md-logo" aria-label="Azure Machine Learning: Advanced" data-md-component="logo">
+      
+  <img src="../../assets/img/org-logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Azure Machine Learning: Advanced
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              04. Fundamentos de ML
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="Seleccionar idioma">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="/Azure-ML-Advanced/" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="/Azure-ML-Advanced/es/" hreflang="es" class="md-select__link">
+              Español
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Azure Machine Learning: Advanced" class="md-nav__button md-logo" aria-label="Azure Machine Learning: Advanced" data-md-component="logo">
+      
+  <img src="../../assets/img/org-logo.png" alt="logo">
+
+    </a>
+    Azure Machine Learning: Advanced
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-math-prerequisites/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01. Prerrequisitos Matemáticos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-e2e-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02. Visión General de Extremo a Extremo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03. Introducción y Ciclo de Vida
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04. Fundamentos de ML
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04. Fundamentos de ML
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#familias-de-aprendizaje-fundamentales" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Familias de aprendizaje fundamentales
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tipos-de-problemas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tipos de problemas
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conceptos-basicos-de-datos-y-notacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conceptos básicos de datos y notación
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#categorias-de-aprendizaje-supervisado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Categorías de aprendizaje supervisado
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Categorías de aprendizaje supervisado">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#intuicion-de-clasificacion-vs-regresion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Intuición de clasificación vs regresión
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#categorias-de-aprendizaje-no-supervisado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Categorías de aprendizaje no supervisado
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#semisupervisado-y-autosupervisado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Semisupervisado y autosupervisado
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#componentes-del-aprendizaje-por-refuerzo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Componentes del aprendizaje por refuerzo
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sobreajuste-y-generalizacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sobreajuste y generalización
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#intuicion-del-sesgo-varianza" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Intuición del sesgo-varianza
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#como-elegir-un-tipo-de-ml-rapidamente" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cómo elegir un tipo de ML rápidamente
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#errores-tipicos-a-evitar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Errores típicos a evitar
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#analisis-a-fondo-cada-concepto-explicado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Análisis a fondo: cada concepto, explicado
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Análisis a fondo: cada concepto, explicado">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#leyendo-la-configuracion-supervisada-d-x_i-y_i_i1n" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Leyendo la configuración supervisada \(D = (x_i, y_i)_{i=1}^{N}\)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#minimizacion-del-riesgo-empirico-erm-paso-a-paso" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Minimización del riesgo empírico (ERM), paso a paso
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#por-que-cada-funcion-de-perdida-tiene-la-forma-que-tiene" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Por qué cada función de pérdida tiene la forma que tiene
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#descenso-de-gradiente-que-controla-cada-simbolo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Descenso de gradiente: qué controla cada símbolo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#regularizacion-l1-vs-l2-geometria-y-efecto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Regularización L1 vs L2: geometría y efecto
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#descomposicion-sesgo-varianza-en-terminos-sencillos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Descomposición sesgo-varianza, en términos sencillos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#validacion-cruzada-y-por-que-el-conjunto-de-prueba-es-sagrado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Validación cruzada y por qué el conjunto de prueba es sagrado
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#poniendolo-todo-junto-diagnosticar-subajuste-vs-sobreajuste" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Poniéndolo todo junto: diagnosticar subajuste vs sobreajuste
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#un-ejemplo-concreto-de-sesgo-varianza" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Un ejemplo concreto de sesgo-varianza
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verificacion-rapida" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verificación rápida
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#aprendizaje-en-linea-y-streaming" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Aprendizaje en línea y streaming
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Aprendizaje en línea y streaming">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#definicion-formal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Definición formal
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cuando-falla-el-entrenamiento-por-lotes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cuándo falla el entrenamiento por lotes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sgd-como-aprendiz-en-linea" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SGD como aprendiz en línea
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vowpal-wabbit-y-la-biblioteca-river" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vowpal Wabbit y la biblioteca river
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ejemplos-reales" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejemplos reales
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bandit-multibrazo-y-la-exploracion-explotacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bandit multibrazo y la exploración-explotación
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bandit multibrazo y la exploración-explotación">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#el-dilema-exploracion-explotacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        El dilema exploración-explotación
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#epsilon-codicioso" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Epsilon-codicioso
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cota-de-confianza-superior-ucb" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cota de confianza superior (UCB)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#muestreo-de-thompson" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Muestreo de Thompson
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diferencia-con-el-aprendizaje-por-refuerzo-completo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diferencia con el aprendizaje por refuerzo completo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pruebas-ab-vs-bandits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pruebas A/B vs bandits
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#aprendizaje-por-transferencia-y-adaptacion-de-dominio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Aprendizaje por transferencia y adaptación de dominio
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Aprendizaje por transferencia y adaptación de dominio">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configuracion-formal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuración formal
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cambio-de-covariables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cambio de covariables
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mecanica-del-ajuste-fino" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mecánica del ajuste fino
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#por-que-las-caracteristicas-preentrenadas-se-transfieren" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Por qué las características preentrenadas se transfieren
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inferencia-causal-vs-correlacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inferencia causal vs correlación
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Inferencia causal vs correlación">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#la-correlacion-no-implica-causalidad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        La correlación no implica causalidad
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#la-paradoja-de-simpson" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        La paradoja de Simpson
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#datos-observacionales-vs-experimentales" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Datos observacionales vs experimentales
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#el-marco-de-resultados-potenciales" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        El marco de resultados potenciales
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cuando-el-ml-no-es-suficiente" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cuándo el ML no es suficiente
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#el-teorema-no-free-lunch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        El teorema No Free Lunch
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="El teorema No Free Lunch">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#enunciado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Enunciado
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#por-que-esto-no-es-pesimista-en-la-practica" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Por qué esto no es pesimista en la práctica
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#implicaciones-para-la-seleccion-y-evaluacion-de-modelos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Implicaciones para la selección y evaluación de modelos
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#complejidad-computacional-del-ml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Complejidad computacional del ML
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Complejidad computacional del ML">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#complejidad-de-entrenamiento" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Complejidad de entrenamiento
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#complejidad-de-prediccion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Complejidad de predicción
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#por-que-la-complejidad-importa-para-produccion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Por qué la complejidad importa para producción
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adiciones-al-analisis-a-fondo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Adiciones al análisis a fondo
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Adiciones al análisis a fondo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#derivacion-de-la-descomposicion-sesgo-varianza" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Derivación de la descomposición sesgo-varianza
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#por-que-la-entropia-cruzada-es-la-perdida-correcta-para-la-clasificacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Por qué la entropía cruzada es la pérdida correcta para la clasificación
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Por qué la entropía cruzada es la pérdida correcta para la clasificación">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configuracion-estimacion-de-maxima-verosimilitud" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuración: estimación de máxima verosimilitud
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#la-verosimilitud-de-los-datos-de-entrenamiento" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        La verosimilitud de los datos de entrenamiento
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#log-verosimilitud" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Log-verosimilitud
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#equivalencia-con-minimizar-la-entropia-cruzada" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Equivalencia con minimizar la entropía cruzada
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#por-que-otras-perdidas-son-suboptimas-para-la-clasificacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Por qué otras pérdidas son subóptimas para la clasificación
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verificacion-rapida-ampliada" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verificación rápida (ampliada)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-neural-networks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05. Redes Neuronales y Deep Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-azure-ml-environment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06. Entorno de Azure ML
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-environment-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07. Configuración del Entorno
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-data-preparation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08. Preparación de Datos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-model-types/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09. Tipos de Modelos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-training-automl/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Entrenamiento y AutoML
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11-performance-metrics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Métricas de Rendimiento
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../12-results-explainability/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Resultados y Explicabilidad
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13-deployment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Despliegue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../14-deployment-debug-k8s/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. Depuración de Despliegue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_16" >
+        
+          
+          <label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Referencia
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_16">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Referencia
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visión General
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/model-math-deep-dive/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Análisis Matemático Profundo de Modelos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/cli-commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comandos CLI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glosario
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#familias-de-aprendizaje-fundamentales" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Familias de aprendizaje fundamentales
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tipos-de-problemas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tipos de problemas
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conceptos-basicos-de-datos-y-notacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conceptos básicos de datos y notación
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#categorias-de-aprendizaje-supervisado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Categorías de aprendizaje supervisado
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Categorías de aprendizaje supervisado">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#intuicion-de-clasificacion-vs-regresion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Intuición de clasificación vs regresión
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#categorias-de-aprendizaje-no-supervisado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Categorías de aprendizaje no supervisado
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#semisupervisado-y-autosupervisado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Semisupervisado y autosupervisado
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#componentes-del-aprendizaje-por-refuerzo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Componentes del aprendizaje por refuerzo
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sobreajuste-y-generalizacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sobreajuste y generalización
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#intuicion-del-sesgo-varianza" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Intuición del sesgo-varianza
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#como-elegir-un-tipo-de-ml-rapidamente" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cómo elegir un tipo de ML rápidamente
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#errores-tipicos-a-evitar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Errores típicos a evitar
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#analisis-a-fondo-cada-concepto-explicado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Análisis a fondo: cada concepto, explicado
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Análisis a fondo: cada concepto, explicado">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#leyendo-la-configuracion-supervisada-d-x_i-y_i_i1n" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Leyendo la configuración supervisada \(D = (x_i, y_i)_{i=1}^{N}\)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#minimizacion-del-riesgo-empirico-erm-paso-a-paso" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Minimización del riesgo empírico (ERM), paso a paso
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#por-que-cada-funcion-de-perdida-tiene-la-forma-que-tiene" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Por qué cada función de pérdida tiene la forma que tiene
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#descenso-de-gradiente-que-controla-cada-simbolo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Descenso de gradiente: qué controla cada símbolo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#regularizacion-l1-vs-l2-geometria-y-efecto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Regularización L1 vs L2: geometría y efecto
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#descomposicion-sesgo-varianza-en-terminos-sencillos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Descomposición sesgo-varianza, en términos sencillos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#validacion-cruzada-y-por-que-el-conjunto-de-prueba-es-sagrado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Validación cruzada y por qué el conjunto de prueba es sagrado
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#poniendolo-todo-junto-diagnosticar-subajuste-vs-sobreajuste" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Poniéndolo todo junto: diagnosticar subajuste vs sobreajuste
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#un-ejemplo-concreto-de-sesgo-varianza" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Un ejemplo concreto de sesgo-varianza
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verificacion-rapida" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verificación rápida
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#aprendizaje-en-linea-y-streaming" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Aprendizaje en línea y streaming
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Aprendizaje en línea y streaming">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#definicion-formal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Definición formal
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cuando-falla-el-entrenamiento-por-lotes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cuándo falla el entrenamiento por lotes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sgd-como-aprendiz-en-linea" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SGD como aprendiz en línea
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vowpal-wabbit-y-la-biblioteca-river" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vowpal Wabbit y la biblioteca river
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ejemplos-reales" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejemplos reales
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bandit-multibrazo-y-la-exploracion-explotacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bandit multibrazo y la exploración-explotación
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Bandit multibrazo y la exploración-explotación">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#el-dilema-exploracion-explotacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        El dilema exploración-explotación
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#epsilon-codicioso" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Epsilon-codicioso
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cota-de-confianza-superior-ucb" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cota de confianza superior (UCB)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#muestreo-de-thompson" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Muestreo de Thompson
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diferencia-con-el-aprendizaje-por-refuerzo-completo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diferencia con el aprendizaje por refuerzo completo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pruebas-ab-vs-bandits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pruebas A/B vs bandits
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#aprendizaje-por-transferencia-y-adaptacion-de-dominio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Aprendizaje por transferencia y adaptación de dominio
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Aprendizaje por transferencia y adaptación de dominio">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configuracion-formal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuración formal
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cambio-de-covariables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cambio de covariables
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mecanica-del-ajuste-fino" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mecánica del ajuste fino
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#por-que-las-caracteristicas-preentrenadas-se-transfieren" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Por qué las características preentrenadas se transfieren
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inferencia-causal-vs-correlacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inferencia causal vs correlación
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Inferencia causal vs correlación">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#la-correlacion-no-implica-causalidad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        La correlación no implica causalidad
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#la-paradoja-de-simpson" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        La paradoja de Simpson
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#datos-observacionales-vs-experimentales" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Datos observacionales vs experimentales
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#el-marco-de-resultados-potenciales" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        El marco de resultados potenciales
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cuando-el-ml-no-es-suficiente" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cuándo el ML no es suficiente
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#el-teorema-no-free-lunch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        El teorema No Free Lunch
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="El teorema No Free Lunch">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#enunciado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Enunciado
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#por-que-esto-no-es-pesimista-en-la-practica" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Por qué esto no es pesimista en la práctica
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#implicaciones-para-la-seleccion-y-evaluacion-de-modelos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Implicaciones para la selección y evaluación de modelos
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#complejidad-computacional-del-ml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Complejidad computacional del ML
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Complejidad computacional del ML">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#complejidad-de-entrenamiento" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Complejidad de entrenamiento
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#complejidad-de-prediccion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Complejidad de predicción
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#por-que-la-complejidad-importa-para-produccion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Por qué la complejidad importa para producción
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#adiciones-al-analisis-a-fondo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Adiciones al análisis a fondo
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Adiciones al análisis a fondo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#derivacion-de-la-descomposicion-sesgo-varianza" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Derivación de la descomposición sesgo-varianza
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#por-que-la-entropia-cruzada-es-la-perdida-correcta-para-la-clasificacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Por qué la entropía cruzada es la pérdida correcta para la clasificación
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Por qué la entropía cruzada es la pérdida correcta para la clasificación">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configuracion-estimacion-de-maxima-verosimilitud" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuración: estimación de máxima verosimilitud
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#la-verosimilitud-de-los-datos-de-entrenamiento" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        La verosimilitud de los datos de entrenamiento
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#log-verosimilitud" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Log-verosimilitud
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#equivalencia-con-minimizar-la-entropia-cruzada" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Equivalencia con minimizar la entropía cruzada
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#por-que-otras-perdidas-son-suboptimas-para-la-clasificacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Por qué otras pérdidas son subóptimas para la clasificación
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verificacion-rapida-ampliada" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verificación rápida (ampliada)
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="fundamentos-del-ml">Fundamentos del ML<a class="headerlink" href="#fundamentos-del-ml" title="Permanent link">&para;</a></h1>
+<p>Este módulo construye la base matemática y conceptual necesaria para todos los módulos posteriores.<br />
+Comienza desde los primeros principios y luego avanza hacia las familias de modelos y la lógica de selección.</p>
+<h2 id="familias-de-aprendizaje-fundamentales">Familias de aprendizaje fundamentales<a class="headerlink" href="#familias-de-aprendizaje-fundamentales" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Aprendizaje supervisado: clasificación y regresión</li>
+<li>Aprendizaje no supervisado: agrupamiento y asociación</li>
+<li>Aprendizaje por refuerzo: aprendizaje de políticas a partir de recompensas</li>
+</ul>
+<p>Familias modernas adicionales usadas en producción:</p>
+<ul>
+<li>Aprendizaje semisupervisado: combinar un pequeño conjunto etiquetado con un gran conjunto sin etiquetar.</li>
+<li>Aprendizaje autosupervisado: crear señales de supervisión a partir de los propios datos.</li>
+<li>Aprendizaje en línea: actualizar los modelos de forma continua a partir de datos en streaming/nuevos.</li>
+</ul>
+<p>Qué recordar:</p>
+<ul>
+<li>El supervisado aprende a partir de respuestas conocidas.</li>
+<li>El no supervisado descubre estructura sin etiquetas.</li>
+<li>El de refuerzo aprende a través de la interacción y la recompensa.</li>
+</ul>
+<p><img alt="Tipos de aprendizaje automático" src="../../assets/img/machine_learning_types.svg" /></p>
+<blockquote>
+<p><strong>Nota - Qué muestra esto:</strong> Las principales familias de aprendizaje una al lado de la otra. El eje distintivo es la <em>señal de retroalimentación</em>:
+respuestas etiquetadas (supervisado), solo estructura (no supervisado) o recompensa por interacción
+(refuerzo). Identificar qué señal proporcionan tus datos es el primer paso para elegir un
+enfoque.</p>
+</blockquote>
+<p><img alt="Tipos de ML según el objetivo" src="../../assets/img/types_of_ml_based_in_objective.svg" /></p>
+<blockquote>
+<p><strong>Nota - Qué muestra esto:</strong> Las tareas de ML organizadas por <em>objetivo</em> (predecir una clase, predecir un número, agrupar registros, reducir
+dimensiones). Asigna tu pregunta de negocio a uno de estos objetivos antes de elegir un algoritmo:
+el objetivo restringe tanto la familia del modelo como la métrica de evaluación.</p>
+</blockquote>
+<h2 id="tipos-de-problemas">Tipos de problemas<a class="headerlink" href="#tipos-de-problemas" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Supervisado: clasificación y regresión</li>
+<li>No supervisado: agrupamiento y asociación</li>
+<li>Refuerzo: control y optimización de políticas</li>
+</ul>
+<h2 id="conceptos-basicos-de-datos-y-notacion">Conceptos básicos de datos y notación<a class="headerlink" href="#conceptos-basicos-de-datos-y-notacion" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Conjunto de datos: <span class="arithmatex">\(D = (x_i, y_i)_{i=1}^{N}\)</span> para el aprendizaje supervisado.</li>
+<li>Vector de características: <span class="arithmatex">\(x_i \in \mathbb{R}^{d}\)</span>.</li>
+<li>Objetivo/etiqueta: <span class="arithmatex">\(y_i\)</span>.</li>
+<li>Modelo: <span class="arithmatex">\(f_{\theta}(x)\)</span> con parámetros <span class="arithmatex">\(\theta\)</span>.</li>
+</ul>
+<h2 id="categorias-de-aprendizaje-supervisado">Categorías de aprendizaje supervisado<a class="headerlink" href="#categorias-de-aprendizaje-supervisado" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Categoría</th>
+<th>Tipo de salida</th>
+<th>Ejemplos</th>
+<th>Métricas típicas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Clasificación binaria</td>
+<td>Clase 0/1</td>
+<td>Fraude sí/no, fuga de clientes sí/no</td>
+<td>Precisión, Exhaustividad, F1, AUC</td>
+</tr>
+<tr>
+<td>Clasificación multiclase</td>
+<td>Una de <span class="arithmatex">\(K\)</span> clases</td>
+<td>Categoría de producto, clase de diagnóstico</td>
+<td>Macro-F1, exactitud, log loss</td>
+</tr>
+<tr>
+<td>Clasificación multietiqueta</td>
+<td>Múltiples clases por muestra</td>
+<td>Etiquetar documentos/temas</td>
+<td>Micro-F1, pérdida de Hamming</td>
+</tr>
+<tr>
+<td>Regresión</td>
+<td>Valor continuo</td>
+<td>Precio, demanda, latencia</td>
+<td>MAE, RMSE, <span class="arithmatex">\(R^2\)</span></td>
+</tr>
+<tr>
+<td>Pronóstico de series temporales</td>
+<td>Valores futuros a lo largo del tiempo</td>
+<td>Ventas, energía, tráfico</td>
+<td>MAPE, RMSE, sMAPE</td>
+</tr>
+</tbody>
+</table>
+<h3 id="intuicion-de-clasificacion-vs-regresion">Intuición de clasificación vs regresión<a class="headerlink" href="#intuicion-de-clasificacion-vs-regresion" title="Permanent link">&para;</a></h3>
+<ul>
+<li>La clasificación predice qué clase.</li>
+<li>La regresión predice cuánto.</li>
+</ul>
+<p>El mismo conjunto de características puede admitir ambas según el objetivo de negocio.</p>
+<h2 id="categorias-de-aprendizaje-no-supervisado">Categorías de aprendizaje no supervisado<a class="headerlink" href="#categorias-de-aprendizaje-no-supervisado" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Categoría</th>
+<th>Propósito</th>
+<th>Métodos típicos</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Agrupamiento</td>
+<td>Agrupar observaciones similares</td>
+<td>K-Means, DBSCAN, agrupamiento jerárquico</td>
+</tr>
+<tr>
+<td>Reducción de dimensionalidad</td>
+<td>Comprimir características conservando la estructura</td>
+<td>PCA, UMAP, autoencoders</td>
+</tr>
+<tr>
+<td>Minería de asociación</td>
+<td>Encontrar reglas de coocurrencia</td>
+<td>Apriori, FP-growth</td>
+</tr>
+<tr>
+<td>Detección de anomalías</td>
+<td>Detectar patrones raros/anormales</td>
+<td>Isolation Forest, One-Class SVM</td>
+</tr>
+</tbody>
+</table>
+<h2 id="semisupervisado-y-autosupervisado">Semisupervisado y autosupervisado<a class="headerlink" href="#semisupervisado-y-autosupervisado" title="Permanent link">&para;</a></h2>
+<ul>
+<li>El semisupervisado es útil cuando las etiquetas son costosas. Ejemplo: tienes 1,000 imágenes médicas etiquetadas y 50,000 sin etiquetar. Un enfoque semisupervisado entrena sobre ambas, propagando etiquetas a partir de predicciones con confianza.</li>
+<li>El autosupervisado es común en los modelos fundacionales (GPT, BERT, CLIP) y en los pipelines de preentrenamiento. El modelo se entrena sobre una tarea proxy cuyas etiquetas provienen de los propios datos, por ejemplo predecir la siguiente palabra o reconstruir un parche enmascarado.</li>
+<li>Ambos reducen la dependencia del etiquetado manual, que es costoso y lento a gran escala.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Enfoque</th>
+<th>Requisito de etiquetas</th>
+<th>Algoritmos comunes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Supervisado</td>
+<td>Todas las muestras etiquetadas</td>
+<td>Regresión logística, XGBoost, NN</td>
+</tr>
+<tr>
+<td>Semisupervisado</td>
+<td>Pequeña fracción etiquetada</td>
+<td>Propagación de etiquetas, pseudoetiquetado</td>
+</tr>
+<tr>
+<td>Autosupervisado</td>
+<td>No se necesitan etiquetas</td>
+<td>Autoencoders enmascarados, aprendizaje contrastivo</td>
+</tr>
+</tbody>
+</table>
+<h2 id="componentes-del-aprendizaje-por-refuerzo">Componentes del aprendizaje por refuerzo<a class="headerlink" href="#componentes-del-aprendizaje-por-refuerzo" title="Permanent link">&para;</a></h2>
+<p>El RL normalmente se modela como un Proceso de Decisión de Markov (MDP):</p>
+<div class="arithmatex">\[  
+(\mathcal{S},\mathcal{A},P,R,\gamma)  
+\]</div>
+<p>donde:</p>
+<ul>
+<li><span class="arithmatex">\(\mathcal{S}\)</span>: conjunto de estados</li>
+<li><span class="arithmatex">\(\mathcal{A}\)</span>: conjunto de acciones</li>
+<li><span class="arithmatex">\(P\)</span>: dinámica de transición</li>
+<li><span class="arithmatex">\(R\)</span>: función de recompensa</li>
+<li><span class="arithmatex">\(\gamma\)</span>: factor de descuento</li>
+</ul>
+<p>Concepto de función de valor:</p>
+<div class="arithmatex">\[  
+V^{\pi}(s)=\mathbb{E}_{\pi}\left[\sum_{t=0}^{\infty}\gamma^t r_t\mid s_0=s\right]  
+\]</div>
+<p>Objetivo:</p>
+<div class="arithmatex">\[  
+\max_{\pi}\mathbb{E}_{\pi}\left[\sum_{t=0}^{\infty}\gamma^t r_t\right]  
+\]</div>
+<p>Objetivo supervisado:</p>
+<div class="arithmatex">\[  
+\min_{\theta} \frac{1}{N}\sum_{i=1}^{N}\mathcal{L}(f_{\theta}(x_i), y_i)  
+\]</div>
+<p>Esto es la minimización del riesgo empírico: encontrar los parámetros que minimizan la pérdida promedio de entrenamiento.</p>
+<p>Funciones de pérdida comunes:</p>
+<div class="arithmatex">\[  
+\mathcal{L}_{MSE}=\frac{1}{N}\sum_{i=1}^{N}(y_i-\hat{y}_i)^2  
+\]</div>
+<div class="arithmatex">\[  
+\mathcal{L}_{BCE}=-\frac{1}{N}\sum_{i=1}^{N}\left[y_i\log(\hat{p}_i)+(1-y_i)\log(1-\hat{p}_i)\right]  
+\]</div>
+<p>Entropía cruzada multiclase:</p>
+<div class="arithmatex">\[  
+\mathcal{L}_{CE}=-\frac{1}{N}\sum_{i=1}^{N}\sum_{k=1}^{K}y_{ik}\log(\hat{p}_{ik})  
+\]</div>
+<p>Objetivo de optimización con regularización:</p>
+<div class="arithmatex">\[  
+\min_{\theta}\frac{1}{N}\sum_{i=1}^{N}\mathcal{L}(f_{\theta}(x_i),y_i)+\lambda R(\theta)  
+\]</div>
+<p>Actualización por descenso de gradiente:</p>
+<div class="arithmatex">\[  
+\theta_{t+1}=\theta_t-\eta\nabla_{\theta}\mathcal{L}  
+\]</div>
+<p>Regularización:</p>
+<div class="arithmatex">\[  
+\min_{\theta}\frac{1}{N}\sum_{i=1}^{N}\mathcal{L}(f_{\theta}(x_i),y_i)+\lambda R(\theta)  
+\]</div>
+<p>Opciones comunes:</p>
+<ul>
+<li>Regularización L1: <span class="arithmatex">\(R(\theta)=\lVert\theta\rVert_1\)</span> (dispersión, selección de características)</li>
+<li>Regularización L2: <span class="arithmatex">\(R(\theta)=\lVert\theta\rVert_2^2\)</span> (contracción de pesos, estabilidad)</li>
+</ul>
+<h2 id="sobreajuste-y-generalizacion">Sobreajuste y generalización<a class="headerlink" href="#sobreajuste-y-generalizacion" title="Permanent link">&para;</a></h2>
+<ul>
+<li>El error de entrenamiento puede disminuir mientras el error de prueba aumenta (sobreajuste).</li>
+<li>Usa la separación entrenamiento/validación/prueba y validación cruzada.</li>
+<li>Prefiere modelos más simples cuando el rendimiento es comparable.</li>
+</ul>
+<p>Tamaños de división prácticos (regla general):</p>
+<table>
+<thead>
+<tr>
+<th>División</th>
+<th>Proporción típica</th>
+<th>Propósito</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Entrenamiento</td>
+<td>60-80%</td>
+<td>Ajustar los parámetros del modelo</td>
+</tr>
+<tr>
+<td>Validación</td>
+<td>10-20%</td>
+<td>Ajustar hiperparámetros y comparar modelos</td>
+</tr>
+<tr>
+<td>Prueba</td>
+<td>10-20%</td>
+<td>Evaluación final sin sesgo antes del despliegue</td>
+</tr>
+</tbody>
+</table>
+<p>El conjunto de prueba <strong>nunca</strong> debe usarse durante la selección del modelo. Usarlo para la selección es una forma de fuga de datos que hace que las puntuaciones offline sean demasiado optimistas.</p>
+<p>Validación cruzada: cuando los datos son limitados, la validación cruzada k-fold usa todos los datos para tanto entrenamiento como validación rotando los pliegues. K=5 o K=10 es típico.</p>
+<h2 id="intuicion-del-sesgo-varianza">Intuición del sesgo-varianza<a class="headerlink" href="#intuicion-del-sesgo-varianza" title="Permanent link">&para;</a></h2>
+<p><img alt="Compromiso sesgo-varianza" src="../../assets/img/bias-variance-tradeoff.svg" /></p>
+<blockquote>
+<p><strong>Nota - Cómo leer este gráfico:</strong> A medida que la complejidad crece, el <strong>sesgo al cuadrado</strong> cae (el modelo puede ajustarse más) mientras que la <strong>varianza</strong> sube
+(el modelo reacciona más a la muestra de entrenamiento particular). Su suma, el error total, es una U
+minimizada en una complejidad intermedia. A la izquierda del mínimo hay subajuste; a la derecha, sobreajuste. El piso de la curva nunca llega a cero debido al ruido irreducible <span class="arithmatex">\(\sigma^2\)</span>.</p>
+</blockquote>
+<ul>
+<li>Alto sesgo: modelo demasiado simple, subajusta. Síntoma: baja exactitud de entrenamiento y baja exactitud de prueba.</li>
+<li>Alta varianza: modelo demasiado complejo, sobreajusta. Síntoma: alta exactitud de entrenamiento, exactitud de prueba mucho menor.</li>
+</ul>
+<p>El error de prueba esperado se descompone como:</p>
+<div class="arithmatex">\[  
+\mathbb{E}[(y-\hat{f}(x))^2] = \text{Sesgo}^2 + \text{Varianza} + \sigma^2  
+\]</div>
+<p>donde <span class="arithmatex">\(\sigma^2\)</span> es el ruido irreducible.</p>
+<h2 id="como-elegir-un-tipo-de-ml-rapidamente">Cómo elegir un tipo de ML rápidamente<a class="headerlink" href="#como-elegir-un-tipo-de-ml-rapidamente" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Si tu pregunta es...</th>
+<th>Usa...</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>¿Puedo predecir este objetivo conocido?</td>
+<td>Aprendizaje supervisado</td>
+</tr>
+<tr>
+<td>¿Puedo agrupar registros similares sin etiquetas?</td>
+<td>Aprendizaje no supervisado</td>
+</tr>
+<tr>
+<td>¿Puede un agente aprender mediante interacción y recompensa?</td>
+<td>Aprendizaje por refuerzo</td>
+</tr>
+<tr>
+<td>Tengo pocas etiquetas pero muchos datos sin etiquetar</td>
+<td>Aprendizaje semisupervisado</td>
+</tr>
+</tbody>
+</table>
+<h2 id="errores-tipicos-a-evitar">Errores típicos a evitar<a class="headerlink" href="#errores-tipicos-a-evitar" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Usar solo la exactitud en conjuntos de datos muy desequilibrados.</li>
+<li>Mezclar datos de entrenamiento/prueba durante el preprocesamiento (fuga de datos).</li>
+<li>Ignorar el drift de conceptos tras el despliegue.</li>
+<li>Tratar la puntuación del modelo como el único KPI sin validación del impacto de negocio.</li>
+</ul>
+<h2 id="analisis-a-fondo-cada-concepto-explicado">Análisis a fondo: cada concepto, explicado<a class="headerlink" href="#analisis-a-fondo-cada-concepto-explicado" title="Permanent link">&para;</a></h2>
+<p>Esta sección desglosa la notación y los objetivos anteriores para que cada símbolo tenga un significado claro<br />
+y una razón de existir.</p>
+<h3 id="leyendo-la-configuracion-supervisada-d-x_i-y_i_i1n">Leyendo la configuración supervisada <span class="arithmatex">\(D = (x_i, y_i)_{i=1}^{N}\)</span><a class="headerlink" href="#leyendo-la-configuracion-supervisada-d-x_i-y_i_i1n" title="Permanent link">&para;</a></h3>
+<ul>
+<li><span class="arithmatex">\(N\)</span> es el número de ejemplos de entrenamiento. Más ejemplos reducen la <strong>varianza</strong> porque<br />
+el promedio empírico es una estimación más ajustada de la expectativa verdadera.</li>
+<li><span class="arithmatex">\(x_i \in \mathbb{R}^{d}\)</span> es un <strong>vector de características</strong>: una fila de <span class="arithmatex">\(d\)</span> números que describe un ejemplo.<br />
+La dimensión <span class="arithmatex">\(d\)</span> es el <em>tamaño del espacio de características</em>; un <span class="arithmatex">\(d\)</span> alto con <span class="arithmatex">\(N\)</span> pequeño es la clásica<br />
+"maldición de la dimensionalidad", donde los datos se vuelven dispersos y las distancias pierden significado.</li>
+<li><span class="arithmatex">\(y_i\)</span> es la <strong>etiqueta</strong>. Su tipo decide la tarea: discreto → clasificación, continuo →<br />
+regresión, ordenado en el tiempo → pronóstico.</li>
+<li><span class="arithmatex">\(f_\theta\)</span> es el <strong>modelo</strong>: una función parametrizada. <span class="arithmatex">\(\theta\)</span> son los <strong>parámetros</strong><br />
+(pesos) que el optimizador ajusta. Todo lo que estableces <em>antes</em> del entrenamiento (profundidad del árbol, tasa de<br />
+aprendizaje, fuerza de regularización) es un <strong>hiperparámetro</strong>, ajustado en datos de validación, no aprendido.</li>
+</ul>
+<h3 id="minimizacion-del-riesgo-empirico-erm-paso-a-paso">Minimización del riesgo empírico (ERM), paso a paso<a class="headerlink" href="#minimizacion-del-riesgo-empirico-erm-paso-a-paso" title="Permanent link">&para;</a></h3>
+<p>El objetivo <span class="arithmatex">\(\min_\theta \frac{1}{N}\sum_i \mathcal{L}(f_\theta(x_i), y_i)\)</span> dice:<br />
+"elige parámetros que hagan el error promedio en los datos de entrenamiento lo más pequeño posible."</p>
+<ul>
+<li><span class="arithmatex">\(\mathcal{L}\)</span> es la <strong>función de pérdida</strong>: puntúa qué tan equivocada es una única predicción.</li>
+<li>El <span class="arithmatex">\(\frac{1}{N}\sum\)</span> convierte las pérdidas por ejemplo en un <strong>promedio</strong> (el <em>riesgo empírico</em>),<br />
+que es nuestro sustituto computable del verdadero riesgo esperado sobre <span class="arithmatex">\(P(X,Y)\)</span>.</li>
+<li>La ERM solo funciona si la muestra de entrenamiento se parece a los datos de producción. Cuando no lo hace, el bajo<br />
+riesgo de entrenamiento no implica bajo riesgo en el mundo real: exactamente por eso apartamos datos de prueba.</li>
+</ul>
+<h3 id="por-que-cada-funcion-de-perdida-tiene-la-forma-que-tiene">Por qué cada función de pérdida tiene la forma que tiene<a class="headerlink" href="#por-que-cada-funcion-de-perdida-tiene-la-forma-que-tiene" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>MSE</strong> <span class="arithmatex">\(\frac{1}{N}\sum (y_i-\hat y_i)^2\)</span> cuadra los errores, de modo que los errores grandes dominan. Es<br />
+la pérdida de máxima verosimilitud cuando el ruido es gaussiano, por eso se empareja con la regresión.</li>
+<li><strong>Entropía cruzada binaria (BCE)</strong> <span class="arithmatex">\(-\frac{1}{N}\sum [y\log\hat p + (1-y)\log(1-\hat p)]\)</span><br />
+mide la <em>sorpresa</em> de la etiqueta verdadera bajo la probabilidad predicha. Explota cuando<br />
+el modelo está equivocado con confianza (<span class="arithmatex">\(\hat p \to 0\)</span> mientras <span class="arithmatex">\(y=1\)</span>), lo que desalienta fuertemente<br />
+el exceso de confianza. Es la pérdida de máxima verosimilitud para un objetivo de Bernoulli.</li>
+<li>La <strong>entropía cruzada categórica</strong> generaliza la BCE a <span class="arithmatex">\(K\)</span> clases sumando la sorpresa sobre la<br />
+etiqueta one-hot <span class="arithmatex">\(y_{ik}\)</span>.</li>
+</ul>
+<h3 id="descenso-de-gradiente-que-controla-cada-simbolo">Descenso de gradiente: qué controla cada símbolo<a class="headerlink" href="#descenso-de-gradiente-que-controla-cada-simbolo" title="Permanent link">&para;</a></h3>
+<p>La actualización <span class="arithmatex">\(\theta_{t+1} = \theta_t - \eta\nabla_\theta\mathcal{L}\)</span> es el motor del ML.</p>
+<ul>
+<li><span class="arithmatex">\(\nabla_\theta\mathcal{L}\)</span> es el <strong>gradiente</strong>: la dirección de mayor <em>aumento</em> de la<br />
+pérdida. Moverse en la dirección <em>negativa</em> del gradiente reduce la pérdida.</li>
+<li><span class="arithmatex">\(\eta\)</span> es la <strong>tasa de aprendizaje</strong> (tamaño del paso). Demasiado grande → el optimizador sobrepasa y<br />
+diverge; demasiado pequeño → el entrenamiento es lento y puede estancarse en regiones planas. En la práctica es el<br />
+único hiperparámetro más importante a ajustar.</li>
+<li>Las variantes importan operacionalmente: el GD <strong>por lotes</strong> usa todos los datos por paso (estable, lento);<br />
+el GD <strong>estocástico</strong> usa un ejemplo (ruidoso, rápido); el GD de <strong>mini-lotes</strong> (el estándar) equilibra<br />
+ambos y es lo que usan los frameworks de aprendizaje profundo.</li>
+</ul>
+<h3 id="regularizacion-l1-vs-l2-geometria-y-efecto">Regularización L1 vs L2: geometría y efecto<a class="headerlink" href="#regularizacion-l1-vs-l2-geometria-y-efecto" title="Permanent link">&para;</a></h3>
+<p>La regularización añade una penalización <span class="arithmatex">\(\lambda R(\theta)\)</span> para desalentar los modelos complejos:</p>
+<ul>
+<li><strong>L1</strong> (<span class="arithmatex">\(\lVert\theta\rVert_1\)</span>) tiene esquinas en su región de restricción, por lo que el óptimo a menudo<br />
+cae exactamente en un eje → algunos pesos se vuelven <strong>exactamente cero</strong> → selección automática de características<br />
+y modelos dispersos.</li>
+<li><strong>L2</strong> (<span class="arithmatex">\(\lVert\theta\rVert_2^2\)</span>) encoge todos los pesos suavemente hacia cero sin forzar<br />
+ninguno a desaparecer → soluciones más estables y mejor condicionadas.</li>
+<li><span class="arithmatex">\(\lambda\)</span> es la <strong>fuerza de regularización</strong>: mayor <span class="arithmatex">\(\lambda\)</span> → modelo más simple → más sesgo,<br />
+menos varianza. Se ajusta en datos de validación, nunca en el conjunto de prueba.</li>
+</ul>
+<h3 id="descomposicion-sesgo-varianza-en-terminos-sencillos">Descomposición sesgo-varianza, en términos sencillos<a class="headerlink" href="#descomposicion-sesgo-varianza-en-terminos-sencillos" title="Permanent link">&para;</a></h3>
+<p><span class="arithmatex">\(\mathbb{E}[(y-\hat f(x))^2] = \text{Sesgo}^2 + \text{Varianza} + \sigma^2\)</span> divide el<br />
+error esperado de un modelo en tres fuentes:</p>
+<ul>
+<li><strong>Sesgo</strong>: error por suposiciones incorrectas (modelo demasiado simple para capturar el patrón). El alto sesgo<br />
+se muestra como <em>baja</em> exactitud tanto de entrenamiento como de prueba (subajuste).</li>
+<li><strong>Varianza</strong>: error por sensibilidad a la muestra de entrenamiento particular. La alta varianza se muestra<br />
+como una gran brecha entre alta exactitud de entrenamiento y menor exactitud de prueba (sobreajuste).</li>
+<li><span class="arithmatex">\(\sigma^2\)</span>: <strong>ruido irreducible</strong> en las etiquetas mismas. Ningún modelo puede superar este piso; está<br />
+determinado por la calidad de los datos, no por la elección del algoritmo.</li>
+</ul>
+<p>El arte del modelado es moverse a lo largo de este compromiso: añadir capacidad para reducir el sesgo, añadir datos<br />
+o regularización para reducir la varianza, hasta que la <em>suma</em> se minimice.</p>
+<h3 id="validacion-cruzada-y-por-que-el-conjunto-de-prueba-es-sagrado">Validación cruzada y por qué el conjunto de prueba es sagrado<a class="headerlink" href="#validacion-cruzada-y-por-que-el-conjunto-de-prueba-es-sagrado" title="Permanent link">&para;</a></h3>
+<ul>
+<li>La <strong>validación cruzada k-fold</strong> rota qué pliegue se aparta, de modo que cada ejemplo se usa para tanto<br />
+entrenamiento como validación entre pliegues. La puntuación promediada es una estimación de menor varianza de la<br />
+generalización que una única división, esencial cuando los datos son escasos.</li>
+<li>El <strong>conjunto de prueba</strong> se toca exactamente una vez, al final. Cualquier decisión (elección de modelo,<br />
+umbral, hiperparámetro) influenciada por el rendimiento de prueba filtra información y hace que la puntuación<br />
+reportada tenga un sesgo optimista, una forma sutil pero común de <strong>fuga de datos</strong>.</li>
+</ul>
+<h3 id="poniendolo-todo-junto-diagnosticar-subajuste-vs-sobreajuste">Poniéndolo todo junto: diagnosticar subajuste vs sobreajuste<a class="headerlink" href="#poniendolo-todo-junto-diagnosticar-subajuste-vs-sobreajuste" title="Permanent link">&para;</a></h3>
+<p>La teoría se vuelve práctica cuando puedes leer una curva de aprendizaje. Traza el error de entrenamiento y validación
+mientras aumentas la capacidad del modelo (o el tiempo de entrenamiento), y la brecha entre las dos curvas
+te dice exactamente qué hacer a continuación:</p>
+<table>
+<thead>
+<tr>
+<th>Lo que observas</th>
+<th>Diagnóstico</th>
+<th>Qué hacer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Error de entrenamiento alto, error de validación alto (cercanos entre sí)</td>
+<td>Subajuste (alto sesgo)</td>
+<td>Añadir capacidad: modelo más rico, más características, menos regularización, entrenar más tiempo</td>
+</tr>
+<tr>
+<td>Error de entrenamiento bajo, error de validación mucho mayor (gran brecha)</td>
+<td>Sobreajuste (alta varianza)</td>
+<td>Reducir varianza: más datos, regularización más fuerte, modelo más simple, parada temprana</td>
+</tr>
+<tr>
+<td>Errores de entrenamiento y validación ambos bajos y cercanos</td>
+<td>Buen ajuste</td>
+<td>Detener; este es el punto óptimo de la curva sesgo-varianza</td>
+</tr>
+<tr>
+<td>Ambos errores estancados por encima de un umbral aceptable</td>
+<td>Ruido irreducible o problemas de etiqueta</td>
+<td>Mejorar la calidad de datos/etiquetas; ningún algoritmo puede superar el piso <span class="arithmatex">\(\sigma^2\)</span></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Consejo - Lee la brecha, no el número absoluto:</strong> La <em>distancia</em> entre el error de entrenamiento y de validación
+diagnostica el problema. Una brecha pequeña significa un problema de sesgo (añadir capacidad); una brecha grande significa
+un problema de varianza (añadir datos o regularización). Este único hábito guía la mayor parte de la depuración de modelos.</p>
+</blockquote>
+<h3 id="un-ejemplo-concreto-de-sesgo-varianza">Un ejemplo concreto de sesgo-varianza<a class="headerlink" href="#un-ejemplo-concreto-de-sesgo-varianza" title="Permanent link">&para;</a></h3>
+<p>Imagina ajustar una curva a puntos ruidosos muestreados de una suave onda:</p>
+<ul>
+<li>Una <strong>línea recta</strong> (polinomio de grado 1) no puede doblarse para seguir la onda: está equivocada de la misma
+  manera sin importar qué muestra extraigas. Eso es <strong>alto sesgo, baja varianza</strong>.</li>
+<li>Un <strong>polinomio de grado 15</strong> serpentea a través de cada punto, incluido el ruido. Extrae una nueva muestra
+  y serpentea de manera completamente diferente. Eso es <strong>bajo sesgo, alta varianza</strong>.</li>
+<li>Un <strong>polinomio de grado 3</strong> captura la forma de la onda mientras ignora el ruido. Es estable
+  entre muestras y preciso: el mínimo de la curva de error total.</li>
+</ul>
+<p>La regularización, más datos y los métodos de ensamble son simplemente herramientas que te permiten usar un modelo flexible
+(bajo sesgo) mientras dominas su oscilación (controlando la varianza).</p>
+<h2 id="verificacion-rapida">Verificación rápida<a class="headerlink" href="#verificacion-rapida" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Pregunta</th>
+<th>Respuesta</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Dado un vector de características <span class="arithmatex">\(x_i \in \mathbb{R}^d\)</span> y etiqueta <span class="arithmatex">\(y_i\)</span>, ¿cómo determinas si la tarea es clasificación, regresión o pronóstico?</td>
+<td>Observa el objetivo: una etiqueta categórica discreta indica clasificación, un valor real continuo indica regresión, y un valor indexado por tiempo futuro (una serie ordenada en el tiempo) indica pronóstico.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>¿Por qué la entropía cruzada binaria penaliza tan fuertemente una predicción incorrecta con confianza?</td>
+<td>La pérdida para la clase verdadera es <span class="arithmatex">\(-\log \hat{p}\)</span>; cuando la probabilidad asignada a la clase correcta tiende a 0, <span class="arithmatex">\(-\log \hat{p} \to \infty\)</span>, por lo que una predicción incorrecta con alta confianza incurre en una penalización no acotada.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>¿Cuál es la diferencia práctica entre la regularización L1 y L2 sobre los pesos aprendidos?</td>
+<td>L1 (<span class="arithmatex">\(\lVert\theta\rVert_1\)</span>) lleva muchos pesos exactamente a cero, dando dispersión y selección de características; L2 (<span class="arithmatex">\(\lVert\theta\rVert_2^2\)</span>) contrae todos los pesos suavemente hacia cero para dar estabilidad sin volverlos exactamente cero.</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Ves 99% de exactitud de entrenamiento y 74% de exactitud de validación. ¿Qué parte del compromiso sesgo-varianza es el problema, y cuáles son dos soluciones?</td>
+<td>La gran brecha indica alta varianza (sobreajuste); las soluciones incluyen añadir regularización o reducir la complejidad del modelo, y recolectar más datos de entrenamiento (también detención temprana o dropout).</td>
+</tr>
+<tr>
+<td>5</td>
+<td>¿Por qué el conjunto de prueba debe usarse solo una vez, y cómo se llama cuando se viola esto?</td>
+<td>Reutilizarlo para la selección de modelos filtra información y sesga las puntuaciones de forma optimista; esto es fuga de datos (data leakage), un sobreajuste al conjunto de prueba.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="aprendizaje-en-linea-y-streaming">Aprendizaje en línea y streaming<a class="headerlink" href="#aprendizaje-en-linea-y-streaming" title="Permanent link">&para;</a></h2>
+<h3 id="definicion-formal">Definición formal<a class="headerlink" href="#definicion-formal" title="Permanent link">&para;</a></h3>
+<p>En el <strong>aprendizaje por lotes</strong> el modelo se entrena una vez sobre un conjunto de datos fijo <span class="arithmatex">\(D = (x_i, y_i)_{i=1}^N\)</span> y luego se despliega. En el <strong>aprendizaje en línea</strong> el modelo se actualiza continuamente a medida que llega cada nuevo ejemplo <span class="arithmatex">\((x_t, y_t)\)</span>, sin almacenar el historial completo. La regla de actualización en el tiempo <span class="arithmatex">\(t\)</span> es:</p>
+<div class="arithmatex">\[
+\theta_{t+1} = \theta_t - \eta \nabla_\theta \mathcal{L}(f_{\theta_t}(x_t), y_t)
+\]</div>
+<p>Esto es descenso de gradiente estocástico con un tamaño de lote de 1: el aprendizaje en línea es simplemente SGD aplicado en el caso más extremo.</p>
+<h3 id="cuando-falla-el-entrenamiento-por-lotes">Cuándo falla el entrenamiento por lotes<a class="headerlink" href="#cuando-falla-el-entrenamiento-por-lotes" title="Permanent link">&para;</a></h3>
+<p>El reentrenamiento por lotes tiene una limitación fundamental: requiere recopilar un nuevo conjunto de datos, reentrenar desde cero (o ajustar finamente), revalidar y redesplegar. Este ciclo suele durar horas o días. En dominios donde el mundo cambia más rápido que este ciclo, los modelos por lotes se degradan silenciosamente:</p>
+<ul>
+<li><strong>Mercados financieros</strong>: las distribuciones de precios cambian durante el día; un modelo entrenado con los datos de ayer puede estar ya desactualizado.</li>
+<li><strong>Sistemas de recomendación</strong>: los intereses de los usuarios evolucionan continuamente; las recomendaciones desactualizadas pierden compromiso.</li>
+<li><strong>Detección de intrusiones</strong>: los atacantes adaptan sus patrones más rápido que los ciclos de reentrenamiento periódico.</li>
+<li><strong>Lenguaje y contenido de tendencia</strong>: los temas emergen y desaparecen en horas.</li>
+</ul>
+<h3 id="sgd-como-aprendiz-en-linea">SGD como aprendiz en línea<a class="headerlink" href="#sgd-como-aprendiz-en-linea" title="Permanent link">&para;</a></h3>
+<p>El mini-lote SGD puede aplicarse en modo en línea tratando cada micro-lote entrante como un paso de entrenamiento. La propiedad clave del SGD que lo hace adecuado para entornos en línea es que no requiere ver el conjunto de datos completo para progresar: cada paso solo necesita una pequeña estimación del gradiente local.</p>
+<p>El <strong>arrepentimiento</strong> de un algoritmo de aprendizaje en línea a lo largo de <span class="arithmatex">\(T\)</span> rondas es:</p>
+<div class="arithmatex">\[
+\text{Arrepentimiento}(T) = \sum_{t=1}^T \mathcal{L}(f_{\theta_t}(x_t), y_t) - \min_\theta \sum_{t=1}^T \mathcal{L}(f_\theta(x_t), y_t)
+\]</div>
+<p>Un buen aprendiz en línea logra <strong>arrepentimiento sublineal</strong>: <span class="arithmatex">\(\text{Arrepentimiento}(T) = o(T)\)</span>, lo que significa que converge en promedio al mejor modelo fijo en retrospectiva. El descenso de gradiente en línea logra arrepentimiento <span class="arithmatex">\(O(\sqrt{T})\)</span> bajo suposiciones estándar.</p>
+<h3 id="vowpal-wabbit-y-la-biblioteca-river">Vowpal Wabbit y la biblioteca river<a class="headerlink" href="#vowpal-wabbit-y-la-biblioteca-river" title="Permanent link">&para;</a></h3>
+<p><strong>Vowpal Wabbit (VW)</strong> es un sistema de aprendizaje en línea a escala industrial desarrollado en Yahoo/Microsoft Research. Sus opciones de diseño reflejan las demandas del ML en streaming:</p>
+<ul>
+<li>Pasa cada ejemplo solo una vez por la memoria (modo en línea verdadero).</li>
+<li>Usa un truco de hashing para manejar espacios de características dispersos y de dimensión extremadamente alta sin almacenar un diccionario de características.</li>
+<li>Admite bandits contextuales, reducciones y aprendizaje activo de forma nativa.</li>
+<li>Rendimiento típico: decenas de millones de ejemplos por segundo en un solo núcleo.</li>
+</ul>
+<p>La biblioteca <strong>river</strong> de Python proporciona una API moderna compatible con scikit-learn para el aprendizaje en línea, admitiendo versiones incrementales de árboles de decisión, Naive Bayes, regresión, agrupamiento y detección de drift. Es la opción estándar para pipelines de streaming construidos en Python.</p>
+<h3 id="ejemplos-reales">Ejemplos reales<a class="headerlink" href="#ejemplos-reales" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Dominio</th>
+<th>Por qué aprendizaje en línea</th>
+<th>Modelo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Predicción de tasa de clics</td>
+<td>Miles de millones de impresiones de anuncios al día; el desempeño del modelo tiene costo directo de ingresos</td>
+<td>Regresión logística en línea (VW)</td>
+</tr>
+<tr>
+<td>Detección de anomalías de red</td>
+<td>Las nuevas firmas de ataque aparecen más rápido que los ciclos de reentrenamiento</td>
+<td>LSTM adaptativo, RRCF</td>
+</tr>
+<tr>
+<td>Puntuación de fraude en tiempo real</td>
+<td>Los patrones de fraude en tarjetas evolucionan en horas tras un nuevo vector de ataque</td>
+<td>Gradient boosting en línea</td>
+</tr>
+<tr>
+<td>Detección de temas de tendencia</td>
+<td>Los temas tienen una vida útil de horas; el vocabulario por lotes siempre está desactualizado</td>
+<td>LDA en streaming, embeddings en línea</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Nota - Aprendizaje en línea vs continuo:</strong> El aprendizaje en línea actualiza en un stream en orden. El aprendizaje continuo (de por vida) también se ocupa de cómo añadir nuevas tareas sin olvidar las anteriores, un problema relacionado pero distinto llamado olvido catastrófico.</p>
+</blockquote>
+<hr />
+<h2 id="bandit-multibrazo-y-la-exploracion-explotacion">Bandit multibrazo y la exploración-explotación<a class="headerlink" href="#bandit-multibrazo-y-la-exploracion-explotacion" title="Permanent link">&para;</a></h2>
+<h3 id="el-dilema-exploracion-explotacion">El dilema exploración-explotación<a class="headerlink" href="#el-dilema-exploracion-explotacion" title="Permanent link">&para;</a></h3>
+<p>Un <strong>bandit multibrazo</strong> (MAB) modela la situación donde debes elegir repetidamente una de <span class="arithmatex">\(K\)</span> opciones (brazos), cada una con una recompensa estocástica, con el objetivo de maximizar la recompensa acumulada. La tensión central es:</p>
+<ul>
+<li><strong>Explotación</strong>: elegir el brazo con la mayor recompensa media estimada hasta ahora.</li>
+<li><strong>Exploración</strong>: probar brazos menos probados porque sus medias verdaderas pueden ser más altas.</li>
+</ul>
+<p>La explotación codiciosa ignora opciones potencialmente mejores. La exploración pura desperdicia intentos en brazos ya conocidos como pobres. Los buenos algoritmos equilibran ambas.</p>
+<h3 id="epsilon-codicioso">Epsilon-codicioso<a class="headerlink" href="#epsilon-codicioso" title="Permanent link">&para;</a></h3>
+<p>La política más simple: con probabilidad <span class="arithmatex">\(\epsilon\)</span> elegir un brazo aleatorio (explorar); con probabilidad <span class="arithmatex">\(1 - \epsilon\)</span> elegir el mejor brazo conocido (explotar).</p>
+<div class="arithmatex">\[
+a_t = \begin{cases} \text{brazo aleatorio} &amp; \text{con probabilidad } \epsilon \\ \arg\max_k \hat{\mu}_k &amp; \text{con probabilidad } 1-\epsilon \end{cases}
+\]</div>
+<p>donde <span class="arithmatex">\(\hat{\mu}_k\)</span> es la recompensa media empírica actual del brazo <span class="arithmatex">\(k\)</span>. A pesar de su simplicidad, el epsilon-codicioso con <span class="arithmatex">\(\epsilon\)</span> decayendo con el tiempo logra arrepentimiento <span class="arithmatex">\(O(\log T)\)</span>.</p>
+<h3 id="cota-de-confianza-superior-ucb">Cota de confianza superior (UCB)<a class="headerlink" href="#cota-de-confianza-superior-ucb" title="Permanent link">&para;</a></h3>
+<p>Los algoritmos UCB eligen el brazo que maximiza la suma de la media estimada y una <strong>bonificación de incertidumbre</strong>:</p>
+<div class="arithmatex">\[
+a_t = \arg\max_k \left[ \hat{\mu}_k + \sqrt{\frac{2 \ln t}{n_k}} \right]
+\]</div>
+<p>donde <span class="arithmatex">\(n_k\)</span> es el número de veces que el brazo <span class="arithmatex">\(k\)</span> ha sido elegido y <span class="arithmatex">\(t\)</span> es el número total de rondas. La bonificación <span class="arithmatex">\(\sqrt{2 \ln t / n_k}\)</span> es grande para los brazos raramente elegidos y se reduce a medida que <span class="arithmatex">\(n_k\)</span> crece. UCB1 logra arrepentimiento <span class="arithmatex">\(O(\log T)\)</span> con una constante más ajustada que el epsilon-codicioso.</p>
+<h3 id="muestreo-de-thompson">Muestreo de Thompson<a class="headerlink" href="#muestreo-de-thompson" title="Permanent link">&para;</a></h3>
+<p>El muestreo de Thompson adopta un enfoque bayesiano. Mantiene una distribución posterior sobre la recompensa media de cada brazo. En cada paso, <strong>muestra</strong> una estimación de recompensa de la posterior de cada brazo y elige el brazo con la muestra más alta:</p>
+<div class="arithmatex">\[
+\tilde{\mu}_k \sim \text{Posterior}(\mu_k \mid \text{observaciones})
+$$
+$$
+a_t = \arg\max_k \tilde{\mu}_k
+\]</div>
+<p>Para recompensas de Bernoulli, la posterior conjugada natural es una distribución Beta. El muestreo de Thompson iguala o supera a UCB empíricamente y es la opción dominante en los sistemas de bandit de producción modernos.</p>
+<h3 id="diferencia-con-el-aprendizaje-por-refuerzo-completo">Diferencia con el aprendizaje por refuerzo completo<a class="headerlink" href="#diferencia-con-el-aprendizaje-por-refuerzo-completo" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Aspecto</th>
+<th>Bandit multibrazo</th>
+<th>RL completo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Estado</td>
+<td>Sin estado (o estado único)</td>
+<td>Espacio de estados completo <span class="arithmatex">\(\mathcal{S}\)</span></td>
+</tr>
+<tr>
+<td>Consecuencia de la acción</td>
+<td>Solo recompensa; sin transición de estado</td>
+<td>La acción cambia el estado; afecta el futuro</td>
+</tr>
+<tr>
+<td>Asignación de crédito</td>
+<td>Inmediata</td>
+<td>Retardada a lo largo de trayectorias</td>
+</tr>
+<tr>
+<td>Complejidad</td>
+<td>Baja; tratable analíticamente</td>
+<td>Alta; requiere funciones de valor o gradiente de política</td>
+</tr>
+</tbody>
+</table>
+<p>Los bandits son la herramienta adecuada cuando las decisiones son independientes: cada elección no afecta el contexto para la siguiente elección. El RL completo es necesario cuando las acciones tienen consecuencias duraderas sobre el entorno.</p>
+<h3 id="pruebas-ab-vs-bandits">Pruebas A/B vs bandits<a class="headerlink" href="#pruebas-ab-vs-bandits" title="Permanent link">&para;</a></h3>
+<p>Las <strong>pruebas A/B</strong> clásicas dividen el tráfico 50/50 entre control y tratamiento durante una duración fija, luego eligen al ganador. Esto es estadísticamente riguroso pero ineficiente: durante todo el experimento, la mitad del tráfico está expuesto a la variante potencialmente inferior.</p>
+<p>Un <strong>bandit</strong> reasigna continuamente el tráfico hacia la variante de mejor rendimiento a medida que se acumula la evidencia. Esto reduce el costo de oportunidad de la exploración. Sin embargo, los resultados del bandit son más difíciles de interpretar bajo los marcos clásicos de prueba de hipótesis nulas porque la regla de parada es adaptativa.</p>
+<blockquote>
+<p><strong>Consejo - Cuándo usar bandits vs pruebas A/B:</strong> Usa pruebas A/B cuando el rigor estadístico y la inferencia causal limpia importan (por ejemplo, presentaciones regulatorias, grandes decisiones organizacionales). Usa bandits cuando minimizar el arrepentimiento durante el período de experimento es la preocupación principal (por ejemplo, optimización de UI web, clasificación de contenido personalizado, selección de anuncios en tiempo real).</p>
+</blockquote>
+<hr />
+<h2 id="aprendizaje-por-transferencia-y-adaptacion-de-dominio">Aprendizaje por transferencia y adaptación de dominio<a class="headerlink" href="#aprendizaje-por-transferencia-y-adaptacion-de-dominio" title="Permanent link">&para;</a></h2>
+<h3 id="configuracion-formal">Configuración formal<a class="headerlink" href="#configuracion-formal" title="Permanent link">&para;</a></h3>
+<p>Sea el <strong>dominio fuente</strong> <span class="arithmatex">\(\mathcal{S}\)</span> compuesto por un espacio de características <span class="arithmatex">\(\mathcal{X}_S\)</span>, distribución marginal <span class="arithmatex">\(P_S(X)\)</span> y tarea <span class="arithmatex">\(\mathcal{T}_S\)</span>. Sea el <strong>dominio objetivo</strong> <span class="arithmatex">\(\mathcal{T}\)</span> definido análogamente con subíndice <span class="arithmatex">\(T\)</span>. El aprendizaje por transferencia es útil cuando <span class="arithmatex">\(\mathcal{X}_S = \mathcal{X}_T\)</span> pero <span class="arithmatex">\(P_S(X) \neq P_T(X)\)</span>, o cuando <span class="arithmatex">\(\mathcal{T}_S \neq \mathcal{T}_T\)</span>, y los datos etiquetados en el dominio objetivo son escasos.</p>
+<p>La idea central es que las representaciones aprendidas en el dominio fuente (por ejemplo, bordes de bajo nivel en clasificación de imágenes, patrones sintácticos en NLP) son reutilizables en el dominio objetivo incluso cuando la tarea específica difiere.</p>
+<h3 id="cambio-de-covariables">Cambio de covariables<a class="headerlink" href="#cambio-de-covariables" title="Permanent link">&para;</a></h3>
+<p>El <strong>cambio de covariables</strong> es la forma más común de desajuste de dominio: <span class="arithmatex">\(P_S(X) \neq P_T(X)\)</span> mientras <span class="arithmatex">\(P(Y \mid X)\)</span> permanece igual. El modelo aprendido sobre los datos fuente puede funcionar mal en los datos objetivo no porque la función de etiquetado haya cambiado, sino porque la distribución de entrada cambió.</p>
+<p>Enfoques de corrección:</p>
+<ul>
+<li><strong>Ponderación por importancia</strong>: reponderar los ejemplos fuente por <span class="arithmatex">\(\frac{P_T(x)}{P_S(x)}\)</span> durante el entrenamiento para que los ejemplos fuente que se parecen a la distribución objetivo sean enfatizados.</li>
+<li><strong>Entrenamiento adversarial de dominio</strong>: añadir un discriminador que intente distinguir ejemplos fuente de objetivo; el extractor de características se entrena para engañar al discriminador (DANN: Red Neuronal Adversarial de Dominio).</li>
+</ul>
+<h3 id="mecanica-del-ajuste-fino">Mecánica del ajuste fino<a class="headerlink" href="#mecanica-del-ajuste-fino" title="Permanent link">&para;</a></h3>
+<p>El flujo de trabajo estándar de aprendizaje por transferencia para redes profundas:</p>
+<ol>
+<li><strong>Preentrenar</strong> un modelo grande <span class="arithmatex">\(f_\theta\)</span> en un gran conjunto de datos fuente (por ejemplo, ImageNet para visión, grandes corpus de texto para NLP).</li>
+<li><strong>Reemplazar</strong> la cabeza específica de la tarea (capa final) con una nueva cabeza que coincida con la tarea objetivo.</li>
+<li><strong>Congelar</strong> las capas tempranas (que capturan características universales de bajo nivel) y ajustar finamente solo las capas posteriores y la nueva cabeza en el conjunto de datos objetivo.</li>
+<li>Opcionalmente <strong>descongelar</strong> todas las capas y ajustar finamente con una tasa de aprendizaje muy pequeña si hay suficientes datos objetivo disponibles.</li>
+</ol>
+<p>El programa de tasa de aprendizaje para el ajuste fino típicamente usa <strong>decaimiento de tasa de aprendizaje por capas</strong>: tasas de aprendizaje más bajas para las capas tempranas (cuyas características deben cambiar poco) y tasas más altas para las capas posteriores y la nueva cabeza.</p>
+<h3 id="por-que-las-caracteristicas-preentrenadas-se-transfieren">Por qué las características preentrenadas se transfieren<a class="headerlink" href="#por-que-las-caracteristicas-preentrenadas-se-transfieren" title="Permanent link">&para;</a></h3>
+<p>En visión, las capas tempranas de las CNN aprenden detectores de bordes tipo Gabor y manchas de color que son universales en todos los dominios de imagen: aparecen independientemente de si la red fue entrenada con gatos, coches o radiografías. Solo las capas más profundas y más específicas de la tarea se especializan en la tarea fuente. Esta jerarquía de abstracción es lo que hace posible el aprendizaje por transferencia: las características de bajo nivel de propósito general son gratuitas para reutilizar.</p>
+<p>En NLP, los modelos de lenguaje preentrenados (BERT, GPT) aprenden representaciones sintácticas y semánticas sobre corpus masivos. El ajuste fino reutiliza estas representaciones para tareas posteriores (clasificación, NER, QA) con tan solo cientos de ejemplos etiquetados, porque el modelo ya "entiende" la estructura del lenguaje.</p>
+<blockquote>
+<p><strong>Nota - Cuándo falla el aprendizaje por transferencia:</strong> El aprendizaje por transferencia se degrada cuando los dominios fuente y objetivo son demasiado disímiles (por ejemplo, ajustar finamente un modelo de imágenes naturales sobre imágenes térmicas de satélite). En estos casos, las características del dominio fuente no solo son inútiles, sino que pueden dañar activamente el entrenamiento mediante transferencia negativa. La solución es usar menos capas congeladas o entrenar desde cero en el dominio objetivo si hay suficientes datos disponibles.</p>
+</blockquote>
+<hr />
+<h2 id="inferencia-causal-vs-correlacion">Inferencia causal vs correlación<a class="headerlink" href="#inferencia-causal-vs-correlacion" title="Permanent link">&para;</a></h2>
+<h3 id="la-correlacion-no-implica-causalidad">La correlación no implica causalidad<a class="headerlink" href="#la-correlacion-no-implica-causalidad" title="Permanent link">&para;</a></h3>
+<p>Un modelo que encuentra una asociación estadística entre <span class="arithmatex">\(X\)</span> e <span class="arithmatex">\(Y\)</span> no te dice que cambiar <span class="arithmatex">\(X\)</span> cambiará <span class="arithmatex">\(Y\)</span>. Esta distinción es crítica en entornos donde el objetivo no es la predicción sino la <strong>intervención</strong>: decidir qué acción tomar.</p>
+<p>Ilustración clásica: las ventas de helado están correlacionadas con las tasas de ahogamiento. Un modelo que predice el ahogamiento a partir de las ventas de helado sería preciso pero completamente inútil para la intervención. El modelo correcto es <span class="arithmatex">\(\text{temperatura} \to \text{ventas de helado}\)</span> y <span class="arithmatex">\(\text{temperatura} \to \text{natación}\)</span>, donde la temperatura es un <strong>confusor</strong>.</p>
+<h3 id="la-paradoja-de-simpson">La paradoja de Simpson<a class="headerlink" href="#la-paradoja-de-simpson" title="Permanent link">&para;</a></h3>
+<p>La paradoja de Simpson es una demostración concreta de por qué las correlaciones agregadas pueden ser engañosas:</p>
+<table>
+<thead>
+<tr>
+<th>Grupo</th>
+<th>Tasa de éxito del tratamiento A</th>
+<th>Tasa de éxito del tratamiento B</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cálculos pequeños</td>
+<td>93% (81/87)</td>
+<td>87% (234/270)</td>
+</tr>
+<tr>
+<td>Cálculos grandes</td>
+<td>73% (192/263)</td>
+<td>69% (55/80)</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td><strong>78% (273/350)</strong></td>
+<td><strong>83% (289/350)</strong></td>
+</tr>
+</tbody>
+</table>
+<p>El tratamiento B parece mejor en general, pero el tratamiento A es mejor en <strong>ambos</strong> subgrupos. La inversión ocurre porque los cálculos grandes (casos más difíciles) fueron asignados con más frecuencia al tratamiento A. El confusor, el tamaño del cálculo, invierte la conclusión.</p>
+<p>Un modelo de ML entrenado sobre los datos agregados aprendería el patrón engañoso. Sin análisis causal, recomendaría el tratamiento B y causaría daño.</p>
+<h3 id="datos-observacionales-vs-experimentales">Datos observacionales vs experimentales<a class="headerlink" href="#datos-observacionales-vs-experimentales" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Datos experimentales</strong> (ensayos controlados aleatorios, pruebas A/B): el tratamiento se asigna aleatoriamente, por lo que los confusores están equilibrados entre grupos por diseño. Las afirmaciones causales son válidas.</li>
+<li><strong>Datos observacionales</strong>: el tratamiento se asigna en función de factores que también pueden afectar el resultado. Las afirmaciones causales requieren suposiciones adicionales.</li>
+</ul>
+<p>La mayoría de los datos de entrenamiento de ML son observacionales. Un modelo de fuga entrenado en asignaciones históricas de ofertas de retención reflejará la política (sesgada) de la empresa de a quién ofrecer descuentos, no el efecto causal de los descuentos sobre la retención.</p>
+<h3 id="el-marco-de-resultados-potenciales">El marco de resultados potenciales<a class="headerlink" href="#el-marco-de-resultados-potenciales" title="Permanent link">&para;</a></h3>
+<p>El <strong>modelo causal de Rubin</strong> define el efecto causal del tratamiento <span class="arithmatex">\(T\)</span> sobre la unidad <span class="arithmatex">\(i\)</span> en términos de <strong>resultados potenciales</strong>:</p>
+<div class="arithmatex">\[
+\text{EIT}_i = Y_i(T=1) - Y_i(T=0)
+\]</div>
+<p>El problema fundamental de la inferencia causal es que solo un resultado potencial es observado para cada unidad: no puedes tratar y no tratar a la misma persona simultáneamente. El <strong>efecto promedio del tratamiento (EPT)</strong> es:</p>
+<div class="arithmatex">\[
+\text{EPT} = \mathbb{E}[Y(T=1) - Y(T=0)]
+\]</div>
+<p>La estimación del EPT a partir de datos observacionales requiere suposiciones sobre qué confusores han sido medidos (<strong>ignorabilidad/no confusión</strong>). Los métodos incluyen:</p>
+<ul>
+<li><strong>Emparejamiento por puntuación de propensión</strong>: emparejar unidades tratadas y de control con probabilidades similares de tratamiento.</li>
+<li><strong>Variables instrumentales</strong>: explotar una variable que afecta el tratamiento pero no el resultado directamente.</li>
+<li><strong>Double ML / bosques causales</strong>: usar ML para eliminar la confusión, luego estimar el efecto del tratamiento en una segunda etapa.</li>
+</ul>
+<h3 id="cuando-el-ml-no-es-suficiente">Cuándo el ML no es suficiente<a class="headerlink" href="#cuando-el-ml-no-es-suficiente" title="Permanent link">&para;</a></h3>
+<p>El ML predictivo puro optimiza <span class="arithmatex">\(P(Y \mid X)\)</span>: la asociación entre entradas y salidas. No puede responder preguntas de la forma "¿qué pasaría si interviniéramos y estableciéramos <span class="arithmatex">\(X = x\)</span>?" (consultas de intervención) o "¿qué habría pasado si <span class="arithmatex">\(X\)</span> hubiera sido diferente?" (consultas contrafactuales). Estas requieren un modelo causal.</p>
+<blockquote>
+<p><strong>Nota - Implicación práctica:</strong> Cuando el objetivo de un proyecto de ML es apoyar una decisión de intervención (ejecutar una promoción, cambiar un tratamiento, modificar una política), incorpora el razonamiento causal desde el principio. Un modelo puramente predictivo puede seleccionar el tratamiento incorrecto o reforzar los sesgos de selección existentes, llevando a peores resultados que ningún modelo en absoluto.</p>
+</blockquote>
+<hr />
+<h2 id="el-teorema-no-free-lunch">El teorema No Free Lunch<a class="headerlink" href="#el-teorema-no-free-lunch" title="Permanent link">&para;</a></h2>
+<h3 id="enunciado">Enunciado<a class="headerlink" href="#enunciado" title="Permanent link">&para;</a></h3>
+<p>El <strong>teorema No Free Lunch (NFL)</strong> (Wolpert y Macready, 1997) establece que promediado sobre todas las distribuciones de problemas posibles, cada algoritmo de optimización funciona igualmente bien. Más precisamente: para dos algoritmos cualesquiera <span class="arithmatex">\(A_1\)</span> y <span class="arithmatex">\(A_2\)</span>, existe una familia de problemas para la que <span class="arithmatex">\(A_1\)</span> supera a <span class="arithmatex">\(A_2\)</span> y otra familia para la que <span class="arithmatex">\(A_2\)</span> supera a <span class="arithmatex">\(A_1\)</span>, y estas familias son igualmente grandes.</p>
+<p>Formalmente, si promediamos la pérdida esperada sobre todas las funciones objetivo posibles <span class="arithmatex">\(f: \mathcal{X} \to \mathcal{Y}\)</span>:</p>
+<div class="arithmatex">\[
+\sum_f \mathcal{L}(A_1, f) = \sum_f \mathcal{L}(A_2, f)
+\]</div>
+<p>Ningún algoritmo es universalmente mejor que cualquier otro cuando se evalúa en todos los problemas posibles.</p>
+<h3 id="por-que-esto-no-es-pesimista-en-la-practica">Por qué esto no es pesimista en la práctica<a class="headerlink" href="#por-que-esto-no-es-pesimista-en-la-practica" title="Permanent link">&para;</a></h3>
+<p>El teorema NFL se aplica a una distribución uniforme sobre todas las funciones posibles, incluido el ruido aleatorio y las funciones adversariales patológicas que nunca aparecen en la práctica. Los problemas de ML del mundo real no se extraen de esta distribución uniforme: tienen <strong>estructura</strong> (fronteras de decisión suaves, localidad, composicionalidad) que ciertas familias de algoritmos explotan mejor que otras.</p>
+<p>La implicación práctica es:</p>
+<ul>
+<li>No existe un único algoritmo que gane en cada conjunto de datos real (esto se verifica empíricamente en benchmarks como OpenML-CC18).</li>
+<li>La elección del algoritmo debe estar informada por el <strong>conocimiento del dominio</strong> y el <strong>sesgo inductivo</strong>: tu creencia previa sobre qué tipo de función estás aproximando.</li>
+<li>Los árboles de gradient boosting tienden a dominar en datos tabulares estructurados; las CNN dominan en datos espaciales 2D; los transformers dominan en datos de secuencias. Estas son regularidades empíricas sobre la estructura de dominios específicos.</li>
+</ul>
+<h3 id="implicaciones-para-la-seleccion-y-evaluacion-de-modelos">Implicaciones para la selección y evaluación de modelos<a class="headerlink" href="#implicaciones-para-la-seleccion-y-evaluacion-de-modelos" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Siempre comparar contra líneas de base</strong>: un nuevo algoritmo solo es significativo si supera a las alternativas más simples en tu problema específico, no en general.</li>
+<li><strong>El protocolo de evaluación determina la validez</strong>: un resultado de selección de modelos es válido solo si se realizó en datos con la misma distribución que el contexto de despliegue.</li>
+<li><strong>El conocimiento del dominio es una ventaja competitiva</strong>: los equipos que pueden codificar suposiciones estructurales (mediante elección de arquitectura, ingeniería de características o diseño de pérdida) obtienen un almuerzo gratis que el teorema NFL no prohíbe: solo descarta los almuerzos gratis <em>sin</em> suposiciones.</li>
+</ul>
+<blockquote>
+<p><strong>Consejo - NFL y AutoML:</strong> Por eso los sistemas de AutoML buscan en un espacio de algoritmos en lugar de predeterminar uno. Azure AutoML evalúa docenas de combinaciones de algoritmos-hiperparámetros precisamente porque ninguna elección única domina en todos los conjuntos de datos. El teorema NFL es la justificación matemática para la búsqueda de algoritmos.</p>
+</blockquote>
+<hr />
+<h2 id="complejidad-computacional-del-ml">Complejidad computacional del ML<a class="headerlink" href="#complejidad-computacional-del-ml" title="Permanent link">&para;</a></h2>
+<p>Comprender el costo computacional de los algoritmos de ML es esencial para producción: un algoritmo teóricamente excelente que no escala no es desplegable.</p>
+<h3 id="complejidad-de-entrenamiento">Complejidad de entrenamiento<a class="headerlink" href="#complejidad-de-entrenamiento" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Algoritmo</th>
+<th>Complejidad de entrenamiento</th>
+<th>Variables clave</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Regresión lineal / logística (GD)</td>
+<td><span class="arithmatex">\(O(N \cdot d \cdot T)\)</span></td>
+<td><span class="arithmatex">\(N\)</span> = muestras, <span class="arithmatex">\(d\)</span> = características, <span class="arithmatex">\(T\)</span> = iteraciones</td>
+</tr>
+<tr>
+<td>Árbol de decisión (CART)</td>
+<td><span class="arithmatex">\(O(N \cdot d \cdot \log N)\)</span> por árbol</td>
+<td>Costo de ordenación en cada nodo</td>
+</tr>
+<tr>
+<td>Random forest (<span class="arithmatex">\(B\)</span> árboles)</td>
+<td><span class="arithmatex">\(O(B \cdot N \cdot d' \cdot \log N)\)</span></td>
+<td><span class="arithmatex">\(d' = \sqrt{d}\)</span> características por división</td>
+</tr>
+<tr>
+<td>Árboles de gradient boosting (<span class="arithmatex">\(B\)</span> rondas)</td>
+<td><span class="arithmatex">\(O(B \cdot N \cdot d \cdot \log N)\)</span></td>
+<td>Secuencial; más difícil de paralelizar que RF</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(k\)</span> vecinos más cercanos</td>
+<td><span class="arithmatex">\(O(1)\)</span> entrenamiento (aprendiz perezoso)</td>
+<td>Todo el costo en el momento de la predicción</td>
+</tr>
+<tr>
+<td>Red neuronal (SGD, <span class="arithmatex">\(T\)</span> pasos)</td>
+<td><span class="arithmatex">\(O(T \cdot b \cdot P)\)</span></td>
+<td><span class="arithmatex">\(b\)</span> = tamaño de lote, <span class="arithmatex">\(P\)</span> = parámetros</td>
+</tr>
+<tr>
+<td>SVM (kernel)</td>
+<td><span class="arithmatex">\(O(N^2 d)\)</span> a <span class="arithmatex">\(O(N^3)\)</span></td>
+<td>Programa cuadrático sobre vectores de soporte</td>
+</tr>
+</tbody>
+</table>
+<h3 id="complejidad-de-prediccion">Complejidad de predicción<a class="headerlink" href="#complejidad-de-prediccion" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Algoritmo</th>
+<th>Complejidad de predicción por consulta</th>
+<th>Notas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Modelo lineal</td>
+<td><span class="arithmatex">\(O(d)\)</span></td>
+<td>Producto punto; favorable para caché; el más rápido</td>
+</tr>
+<tr>
+<td>Árbol de decisión / RF</td>
+<td><span class="arithmatex">\(O(d \cdot \log N)\)</span> por árbol; <span class="arithmatex">\(O(B \cdot d \cdot \log N)\)</span> para el bosque</td>
+<td>Profundidad del recorrido del árbol <span class="arithmatex">\(\approx \log N\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(k\)</span>-NN (exacto)</td>
+<td><span class="arithmatex">\(O(N \cdot d)\)</span></td>
+<td>Debe calcular la distancia a cada punto de entrenamiento</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(k\)</span>-NN (ANN)</td>
+<td><span class="arithmatex">\(O(d \log N)\)</span></td>
+<td>Vecino más cercano aproximado (FAISS, HNSW)</td>
+</tr>
+<tr>
+<td>Red neuronal</td>
+<td><span class="arithmatex">\(O(P)\)</span></td>
+<td>Pase hacia adelante a través de todos los <span class="arithmatex">\(P\)</span> parámetros</td>
+</tr>
+</tbody>
+</table>
+<p>El costo de predicción <span class="arithmatex">\(O(Nd)\)</span> del <span class="arithmatex">\(k\)</span>-NN es el hecho de complejidad más importante para conocer para el despliegue en producción: un <span class="arithmatex">\(k\)</span>-NN con <span class="arithmatex">\(N = 10^7\)</span> puntos de entrenamiento y <span class="arithmatex">\(d = 512\)</span> características requiere <span class="arithmatex">\(5 \times 10^9\)</span> operaciones de punto flotante por consulta, alrededor de 5 segundos en una CPU, completamente inútil para servicio en tiempo real sin indexación aproximada.</p>
+<h3 id="por-que-la-complejidad-importa-para-produccion">Por qué la complejidad importa para producción<a class="headerlink" href="#por-que-la-complejidad-importa-para-produccion" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Por lotes vs tiempo real</strong>: un modelo con costo de predicción <span class="arithmatex">\(O(N^2)\)</span> puede servir puntuación offline en lotes pero no puede atender solicitudes en tiempo real.</li>
+<li><strong>Huella de memoria</strong>: el <span class="arithmatex">\(k\)</span>-NN requiere almacenar todos los <span class="arithmatex">\(N\)</span> vectores de entrenamiento en memoria. Para <span class="arithmatex">\(N = 10^8\)</span> y <span class="arithmatex">\(d = 256\)</span> características float32: <span class="arithmatex">\(N \cdot d \cdot 4\)</span> bytes <span class="arithmatex">\(= 100\)</span> GB, superando la RAM de un solo servidor.</li>
+<li><strong>Leyes de escala</strong>: el costo de entrenamiento de la red neuronal escala con el número de parámetros <span class="arithmatex">\(P\)</span> y la cantidad de datos <span class="arithmatex">\(N\)</span>. Duplicar ambos aproximadamente duplica el costo, por eso el entrenamiento de modelos grandes requiere cómputo distribuido.</li>
+<li><strong>Maldición de la dimensión de características</strong>: para los modelos de árbol, añadir características aumenta el costo linealmente. Para <span class="arithmatex">\(k\)</span>-NN, añadir características degrada tanto la complejidad temporal como la eficiencia estadística.</li>
+</ul>
+<blockquote>
+<p><strong>Nota - Regla general práctica:</strong> Para el servicio sensible a la latencia, los modelos lineales y los árboles poco profundos son el predeterminado a menos que los requisitos de exactitud exijan otra cosa. Para la puntuación offline en lotes, el gradient boosting y las redes neuronales son aceptables. Para la recuperación a escala (búsquedas <span class="arithmatex">\(k\)</span>-NN sobre grandes corpus), los índices de vecinos más cercanos aproximados (FAISS, ScaNN, Azure Cognitive Search vector) son obligatorios.</p>
+</blockquote>
+<hr />
+<h2 id="adiciones-al-analisis-a-fondo">Adiciones al análisis a fondo<a class="headerlink" href="#adiciones-al-analisis-a-fondo" title="Permanent link">&para;</a></h2>
+<h3 id="derivacion-de-la-descomposicion-sesgo-varianza">Derivación de la descomposición sesgo-varianza<a class="headerlink" href="#derivacion-de-la-descomposicion-sesgo-varianza" title="Permanent link">&para;</a></h3>
+<p>Derivamos el error cuadrático esperado de un modelo <span class="arithmatex">\(\hat{f}\)</span> entrenado en un conjunto de datos <span class="arithmatex">\(D\)</span> muestreado de una distribución donde <span class="arithmatex">\(y = f(x) + \epsilon\)</span>, con <span class="arithmatex">\(\epsilon \sim (0, \sigma^2)\)</span> (ruido de media cero independiente de <span class="arithmatex">\(x\)</span>).</p>
+<p><strong>Configuración.</strong> Fija un punto de prueba <span class="arithmatex">\(x\)</span>. La predicción esperada es:</p>
+<div class="arithmatex">\[
+\bar{f}(x) = \mathbb{E}_D[\hat{f}(x)]
+\]</div>
+<p>el promedio de predicciones a través de todos los posibles conjuntos de entrenamiento <span class="arithmatex">\(D\)</span> de tamaño <span class="arithmatex">\(N\)</span>. Queremos calcular:</p>
+<div class="arithmatex">\[
+\mathbb{E}_D\!\left[\mathbb{E}_\epsilon\big[(y - \hat{f}(x))^2\big]\right]
+\]</div>
+<p><strong>Paso 1.</strong> Expandir el error cuadrático sumando y restando <span class="arithmatex">\(\bar{f}(x)\)</span>:</p>
+<div class="arithmatex">\[
+(y - \hat{f}(x))^2 = \big[(y - \bar{f}(x)) + (\bar{f}(x) - \hat{f}(x))\big]^2
+\]</div>
+<div class="arithmatex">\[
+= (y - \bar{f}(x))^2 + 2(y - \bar{f}(x))(\bar{f}(x) - \hat{f}(x)) + (\bar{f}(x) - \hat{f}(x))^2
+\]</div>
+<p><strong>Paso 2.</strong> Tomar la expectativa sobre <span class="arithmatex">\(D\)</span>. El término cruzado del medio:</p>
+<div class="arithmatex">\[
+\mathbb{E}_D\big[2(y - \bar{f}(x))(\bar{f}(x) - \hat{f}(x))\big] = 2(y - \bar{f}(x)) \cdot \underbrace{\mathbb{E}_D[\bar{f}(x) - \hat{f}(x)]}_{= 0}
+\]</div>
+<p>porque <span class="arithmatex">\(\bar{f}(x) = \mathbb{E}_D[\hat{f}(x)]\)</span> por definición. Entonces:</p>
+<div class="arithmatex">\[
+\mathbb{E}_D\big[(y - \hat{f}(x))^2\big] = (y - \bar{f}(x))^2 + \mathbb{E}_D\big[(\bar{f}(x) - \hat{f}(x))^2\big]
+\]</div>
+<p><strong>Paso 3.</strong> Ahora tomar la expectativa sobre <span class="arithmatex">\(\epsilon\)</span>. Expandir <span class="arithmatex">\(y - \bar{f}(x) = (f(x) - \bar{f}(x)) + \epsilon\)</span>:</p>
+<div class="arithmatex">\[
+\mathbb{E}_\epsilon\big[(y - \bar{f}(x))^2\big] = (f(x) - \bar{f}(x))^2 + \sigma^2
+\]</div>
+<p><strong>Paso 4.</strong> Combinar:</p>
+<div class="arithmatex">\[
+\mathbb{E}\big[(y - \hat{f}(x))^2\big] = \underbrace{(f(x) - \bar{f}(x))^2}_{\text{Sesgo}^2} + \underbrace{\mathbb{E}_D\big[(\hat{f}(x) - \bar{f}(x))^2\big]}_{\text{Varianza}} + \underbrace{\sigma^2}_{\text{Ruido irreducible}}
+\]</div>
+<p><strong>Interpretación de cada término:</strong></p>
+<ul>
+<li><strong>Sesgo<span class="arithmatex">\(^2\)</span></strong> <span class="arithmatex">\(= (f(x) - \bar{f}(x))^2\)</span>: la diferencia al cuadrado entre la función verdadera y la predicción promedio a través de todos los conjuntos de entrenamiento. Un modelo lineal ajustando una relación cuadrática siempre tiene sesgo no nulo independientemente de cuántos datos añadas.</li>
+<li><strong>Varianza</strong> <span class="arithmatex">\(= \mathbb{E}_D[(\hat{f}(x) - \bar{f}(x))^2]\)</span>: cuánto fluctúa la predicción del modelo alrededor de su propia media a medida que varía el conjunto de entrenamiento. Un polinomio de grado 15 entrenado en 20 puntos tiene una varianza enorme: oscila salvajemente dependiendo de qué 20 puntos fueron seleccionados.</li>
+<li><strong><span class="arithmatex">\(\sigma^2\)</span></strong>: el ruido irreducible en las etiquetas. Ningún modelo, independientemente de la complejidad, puede superar este piso: representa la aleatoriedad genuina en el proceso generador de datos.</li>
+</ul>
+<blockquote>
+<p><strong>Nota - Completitud algebraica:</strong> Cada paso anterior usó solo tres hechos: la linealidad de la expectativa, la definición de varianza como <span class="arithmatex">\(\mathbb{E}[(Z - \mathbb{E}[Z])^2]\)</span>, y la independencia del ruido <span class="arithmatex">\(\epsilon\)</span> de <span class="arithmatex">\(D\)</span> y <span class="arithmatex">\(x\)</span>. No se requirió ninguna suposición distribucional más allá del ruido de media cero <span class="arithmatex">\(\epsilon\)</span> con varianza finita <span class="arithmatex">\(\sigma^2\)</span>.</p>
+</blockquote>
+<h3 id="por-que-la-entropia-cruzada-es-la-perdida-correcta-para-la-clasificacion">Por qué la entropía cruzada es la pérdida correcta para la clasificación<a class="headerlink" href="#por-que-la-entropia-cruzada-es-la-perdida-correcta-para-la-clasificacion" title="Permanent link">&para;</a></h3>
+<h4 id="configuracion-estimacion-de-maxima-verosimilitud">Configuración: estimación de máxima verosimilitud<a class="headerlink" href="#configuracion-estimacion-de-maxima-verosimilitud" title="Permanent link">&para;</a></h4>
+<p>Supongamos que tenemos <span class="arithmatex">\(N\)</span> ejemplos de entrenamiento <span class="arithmatex">\(\{(x_i, y_i)\}_{i=1}^N\)</span> donde <span class="arithmatex">\(y_i \in \{1, \ldots, K\}\)</span>. Nuestro modelo <span class="arithmatex">\(f_\theta\)</span> produce una distribución de probabilidad sobre las clases mediante softmax:</p>
+<div class="arithmatex">\[
+\hat{p}_{ik} = \frac{e^{z_{ik}}}{\sum_{j=1}^K e^{z_{ij}}}
+\]</div>
+<p>donde <span class="arithmatex">\(z_{ik}\)</span> es el <span class="arithmatex">\(k\)</span>-ésimo logit para el ejemplo <span class="arithmatex">\(i\)</span>.</p>
+<h4 id="la-verosimilitud-de-los-datos-de-entrenamiento">La verosimilitud de los datos de entrenamiento<a class="headerlink" href="#la-verosimilitud-de-los-datos-de-entrenamiento" title="Permanent link">&para;</a></h4>
+<p>Asumiendo que los ejemplos son i.i.d. de <span class="arithmatex">\(P(Y \mid X)\)</span>, la verosimilitud de observar todo el conjunto de entrenamiento es:</p>
+<div class="arithmatex">\[
+\mathcal{L}(\theta) = \prod_{i=1}^N P(Y = y_i \mid X = x_i;\, \theta) = \prod_{i=1}^N \hat{p}_{i,y_i}
+\]</div>
+<p>Cada factor es la probabilidad que el modelo asignó a la clase verdadera del ejemplo <span class="arithmatex">\(i\)</span>.</p>
+<h4 id="log-verosimilitud">Log-verosimilitud<a class="headerlink" href="#log-verosimilitud" title="Permanent link">&para;</a></h4>
+<p>Tomando el logaritmo (que es monótono, por lo que maximizar la log-verosimilitud = maximizar la verosimilitud):</p>
+<div class="arithmatex">\[
+\log \mathcal{L}(\theta) = \sum_{i=1}^N \log \hat{p}_{i,y_i}
+\]</div>
+<h4 id="equivalencia-con-minimizar-la-entropia-cruzada">Equivalencia con minimizar la entropía cruzada<a class="headerlink" href="#equivalencia-con-minimizar-la-entropia-cruzada" title="Permanent link">&para;</a></h4>
+<p><strong>Minimizar</strong> la (log-verosimilitud negativa) sobre <span class="arithmatex">\(\theta\)</span> equivale a <strong>maximizar</strong> la log-verosimilitud:</p>
+<div class="arithmatex">\[
+\min_\theta -\frac{1}{N}\sum_{i=1}^N \log \hat{p}_{i,y_i}
+\]</div>
+<p>Escribiendo <span class="arithmatex">\(y_i\)</span> en forma one-hot: <span class="arithmatex">\(y_{ik} = \mathbf{1}[y_i = k]\)</span>. Entonces <span class="arithmatex">\(\log \hat{p}_{i,y_i} = \sum_k y_{ik} \log \hat{p}_{ik}\)</span>, y:</p>
+<div class="arithmatex">\[
+\min_\theta -\frac{1}{N}\sum_{i=1}^N \sum_{k=1}^K y_{ik} \log \hat{p}_{ik}
+\]</div>
+<p>Esto es exactamente la <strong>pérdida de entropía cruzada categórica</strong> <span class="arithmatex">\(\mathcal{L}_{CE}\)</span>. Hemos demostrado que:</p>
+<div class="arithmatex">\[
+\boxed{\text{Minimizar la entropía cruzada} = \text{Maximizar la log-verosimilitud de las etiquetas de entrenamiento}}
+\]</div>
+<h4 id="por-que-otras-perdidas-son-suboptimas-para-la-clasificacion">Por qué otras pérdidas son subóptimas para la clasificación<a class="headerlink" href="#por-que-otras-perdidas-son-suboptimas-para-la-clasificacion" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>MSE sobre probabilidades</strong> <span class="arithmatex">\(\frac{1}{N}\sum_i (\hat{p}_{i,y_i} - 1)^2\)</span>: el gradiente es lineal en el error <span class="arithmatex">\((\hat{p} - 1)\)</span>. Cuando el modelo está equivocado con confianza (<span class="arithmatex">\(\hat{p} \approx 0\)</span>), el gradiente es cercano a <span class="arithmatex">\((-1)^2 = 1\)</span>, una señal pequeña. El gradiente de la entropía cruzada es <span class="arithmatex">\((\hat{p} - 1)/\hat{p}\)</span>, que es grande y negativo cuando <span class="arithmatex">\(\hat{p}\)</span> es pequeño, dando una señal de aprendizaje mucho más fuerte precisamente cuando el modelo está más equivocado.</li>
+<li><strong>Pérdida hinge</strong> (SVM): maximiza el margen en lugar de la verosimilitud. Está motivada geométricamente y no produce probabilidades calibradas.</li>
+<li>La <strong>entropía cruzada</strong> produce salidas de probabilidad calibradas (con un parámetro de temperatura o escalado de Platt), lo que es esencial para los sistemas de decisión posteriores que necesitan actuar sobre la confianza del modelo.</li>
+</ul>
+<blockquote>
+<p><strong>Consejo - Caso binario:</strong> Para la clasificación binaria con <span class="arithmatex">\(K=2\)</span>, la entropía cruzada categórica se reduce a la <strong>entropía cruzada binaria</strong>: <span class="arithmatex">\(\mathcal{L}_{BCE} = -\frac{1}{N}\sum_i [y_i \log \hat{p}_i + (1-y_i)\log(1-\hat{p}_i)]\)</span>, que es la pérdida MLE para una variable aleatoria de Bernoulli. Las dos formulaciones son lo mismo expresado de forma diferente.</p>
+</blockquote>
+<hr />
+<h2 id="verificacion-rapida-ampliada">Verificación rápida (ampliada)<a class="headerlink" href="#verificacion-rapida-ampliada" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Pregunta</th>
+<th>Respuesta</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Dado un vector de características <span class="arithmatex">\(x_i \in \mathbb{R}^d\)</span> y etiqueta <span class="arithmatex">\(y_i\)</span>, ¿cómo determinas si la tarea es clasificación, regresión o pronóstico?</td>
+<td>Observa el objetivo: una etiqueta categórica discreta indica clasificación, un valor real continuo indica regresión, y un valor indexado por tiempo futuro (una serie ordenada en el tiempo) indica pronóstico.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>¿Por qué la entropía cruzada binaria penaliza tan fuertemente una predicción incorrecta con confianza?</td>
+<td>La pérdida para la clase verdadera es <span class="arithmatex">\(-\log \hat{p}\)</span>; cuando la probabilidad asignada a la clase correcta tiende a 0, <span class="arithmatex">\(-\log \hat{p} \to \infty\)</span>, por lo que una predicción incorrecta con alta confianza incurre en una penalización no acotada.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>¿Cuál es la diferencia práctica entre la regularización L1 y L2 sobre los pesos aprendidos?</td>
+<td>L1 (<span class="arithmatex">\(\lVert\theta\rVert_1\)</span>) lleva muchos pesos exactamente a cero, dando dispersión y selección de características; L2 (<span class="arithmatex">\(\lVert\theta\rVert_2^2\)</span>) contrae todos los pesos suavemente hacia cero para dar estabilidad sin volverlos exactamente cero.</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Ves 99% de exactitud de entrenamiento y 74% de exactitud de validación. ¿Qué parte del compromiso sesgo-varianza es el problema, y cuáles son dos soluciones?</td>
+<td>La gran brecha indica alta varianza (sobreajuste); las soluciones incluyen añadir regularización o reducir la complejidad del modelo, y recolectar más datos de entrenamiento (también detención temprana o dropout).</td>
+</tr>
+<tr>
+<td>5</td>
+<td>¿Por qué el conjunto de prueba debe usarse solo una vez, y cómo se llama cuando se viola esto?</td>
+<td>Reutilizarlo para la selección de modelos filtra información y sesga las puntuaciones de forma optimista; esto es fuga de datos (data leakage), un sobreajuste al conjunto de prueba.</td>
+</tr>
+<tr>
+<td>6</td>
+<td>¿Cuál es la definición formal del arrepentimiento en el aprendizaje en línea, y qué significa arrepentimiento sublineal?</td>
+<td>El arrepentimiento es la pérdida acumulada del aprendiz en <span class="arithmatex">\(T\)</span> rondas menos la pérdida del mejor modelo fijo en retrospectiva; el arrepentimiento sublineal, <span class="arithmatex">\(\text{Regret}(T) = o(T)\)</span>, significa que el arrepentimiento promedio por ronda tiende a cero, por lo que converge a ese mejor modelo fijo.</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Explica la política de exploración epsilon-codicioso. ¿Cuál es la principal debilidad de un <span class="arithmatex">\(\epsilon\)</span> fijo?</td>
+<td>Con probabilidad <span class="arithmatex">\(\epsilon\)</span> elige un brazo aleatorio (explorar) y con probabilidad <span class="arithmatex">\(1-\epsilon\)</span> el mejor brazo conocido (explotar); un <span class="arithmatex">\(\epsilon\)</span> fijo sigue explorando a una tasa constante para siempre, desperdiciando tiradas en brazos inferiores, por lo que <span class="arithmatex">\(\epsilon\)</span> debería decaer con el tiempo.</td>
+</tr>
+<tr>
+<td>8</td>
+<td>En la derivación de la descomposición sesgo-varianza, ¿por qué el término cruzado <span class="arithmatex">\(\mathbb{E}_D[\bar{f}(x) - \hat{f}(x)]\)</span> es igual a cero?</td>
+<td>Porque <span class="arithmatex">\(\bar{f}(x) = \mathbb{E}_D[\hat{f}(x)]\)</span> por definición, así que <span class="arithmatex">\(\mathbb{E}_D[\bar{f}(x) - \hat{f}(x)] = \bar{f}(x) - \bar{f}(x) = 0\)</span>.</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Enuncia el teorema No Free Lunch con tus propias palabras. ¿Significa que no tiene sentido comparar algoritmos? ¿Por qué o por qué no?</td>
+<td>Promediado sobre todos los problemas posibles, todo algoritmo rinde igual de bien. No hace inútil la comparación: los problemas reales son un subconjunto estructurado y no uniforme, así que ajustar el sesgo inductivo del modelo al problema sigue importando.</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Un modelo <span class="arithmatex">\(k\)</span>-NN con <span class="arithmatex">\(N = 10^6\)</span> y <span class="arithmatex">\(d = 256\)</span> está desplegado para puntuación en tiempo real. Estima el número de operaciones de punto flotante por consulta y explica por qué esto es un problema.</td>
+<td>Alrededor de <span class="arithmatex">\(N \cdot d \approx 2.56 \times 10^8\)</span> FLOPs por consulta, ya que cada punto de entrenamiento se recorre en el momento de la predicción; esta latencia es demasiado alta para servir en tiempo real sin indexación aproximada de vecinos más cercanos.</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Volver al principio
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Derechos de autor &copy; 2026 <a href="https://github.com/Cloud2BR-MSFTLearningHub" target="_blank" rel="noopener">Cloud2BR MSFT Learning Hub</a>
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.expand", "navigation.top", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../../assets/js/org-link.js"></script>
+      
+    
+  </body>
+</html>

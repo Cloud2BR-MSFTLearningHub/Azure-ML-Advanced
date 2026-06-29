@@ -1,0 +1,2774 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="Azure Machine Learning training from fundamentals to advanced MLOps." name="description"/>
+<link href="https://cloud2br-msftlearninghub.github.io/Azure-ML-Advanced/modules/14-deployment-debug-k8s/" rel="canonical"/>
+<link href="../13-deployment/" rel="prev"/>
+<link href="../../reference/" rel="next"/>
+<link href="/Azure-ML-Advanced/" hreflang="en" rel="alternate"/>
+<link href="/Azure-ML-Advanced/es/" hreflang="es" rel="alternate"/>
+<link href="../../assets/img/org-logo.png" rel="icon"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.7.6" name="generator"/>
+<title>14. Deployment Debugging - Azure Machine Learning: Advanced</title>
+<link href="../../assets/stylesheets/main.484c7ddc.min.css" rel="stylesheet"/>
+<link href="../../assets/stylesheets/palette.ab4e12ef.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../../assets/css/custom.css" rel="stylesheet"/>
+<script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+</head>
+<body data-md-color-accent="blue" data-md-color-primary="blue" data-md-color-scheme="default" dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#deployment-debugging-with-kubernetes">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header md-header--shadow" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="Azure Machine Learning: Advanced" class="md-header__button md-logo" data-md-component="logo" href="../.." title="Azure Machine Learning: Advanced">
+<img alt="logo" src="../../assets/img/org-logo.png"/>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            Azure Machine Learning: Advanced
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              14. Deployment Debugging
+            
+          </span>
+</div>
+</div>
+</div>
+<div class="md-header__option">
+<div class="md-select">
+<button aria-label="Select language" class="md-header__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"></path></svg>
+</button>
+<div class="md-select__inner">
+<ul class="md-select__list">
+<li class="md-select__item">
+<a class="md-select__link" href="/Azure-ML-Advanced/" hreflang="en">
+              English
+            </a>
+</li>
+<li class="md-select__item">
+<a class="md-select__link" href="/Azure-ML-Advanced/es/" hreflang="es">
+              Español
+            </a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Azure Machine Learning: Advanced" class="md-nav__button md-logo" data-md-component="logo" href="../.." title="Azure Machine Learning: Advanced">
+<img alt="logo" src="../../assets/img/org-logo.png"/>
+</a>
+    Azure Machine Learning: Advanced
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../..">
+<span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../01-math-prerequisites/">
+<span class="md-ellipsis">
+    
+  
+    01. Math Prerequisites
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../02-e2e-overview/">
+<span class="md-ellipsis">
+    
+  
+    02. End-to-End ML Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../03-introduction/">
+<span class="md-ellipsis">
+    
+  
+    03. Introduction and Lifecycle
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../04-ml-foundations/">
+<span class="md-ellipsis">
+    
+  
+    04. ML Foundations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../05-neural-networks/">
+<span class="md-ellipsis">
+    
+  
+    05. Neural Networks and Deep Learning
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../06-azure-ml-environment/">
+<span class="md-ellipsis">
+    
+  
+    06. Azure ML Environment
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../07-environment-setup/">
+<span class="md-ellipsis">
+    
+  
+    07. Environment Setup
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../08-data-preparation/">
+<span class="md-ellipsis">
+    
+  
+    08. Data Preparation
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../09-model-types/">
+<span class="md-ellipsis">
+    
+  
+    09. Model Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../10-training-automl/">
+<span class="md-ellipsis">
+    
+  
+    10. Training and AutoML
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../11-performance-metrics/">
+<span class="md-ellipsis">
+    
+  
+    11. Performance Metrics
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../12-results-explainability/">
+<span class="md-ellipsis">
+    
+  
+    12. Results and Explainability
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../13-deployment/">
+<span class="md-ellipsis">
+    
+  
+    13. Deployment
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+<span class="md-ellipsis">
+    
+  
+    14. Deployment Debugging
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
+<span class="md-ellipsis">
+    
+  
+    14. Deployment Debugging
+  
+
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#key-tools">
+<span class="md-ellipsis">
+      
+        Key tools
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#debugging-workflow">
+<span class="md-ellipsis">
+      
+        Debugging workflow
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#useful-commands">
+<span class="md-ellipsis">
+      
+        Useful commands
+      
+    </span>
+</a>
+<nav aria-label="Useful commands" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#systematic-triage-sequence">
+<span class="md-ellipsis">
+      
+        Systematic triage sequence
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#common-failure-patterns">
+<span class="md-ellipsis">
+      
+        Common failure patterns
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sre-style-runbook-basics">
+<span class="md-ellipsis">
+      
+        SRE-style runbook basics
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#incident-severity-matrix">
+<span class="md-ellipsis">
+      
+        Incident severity matrix
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#troubleshooting-decision-tree">
+<span class="md-ellipsis">
+      
+        Troubleshooting decision tree
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#what-to-capture-in-postmortem">
+<span class="md-ellipsis">
+      
+        What to capture in postmortem
+      
+    </span>
+</a>
+<nav aria-label="What to capture in postmortem" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#postmortem-template">
+<span class="md-ellipsis">
+      
+        Postmortem template
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#turning-incidents-into-improvements">
+<span class="md-ellipsis">
+      
+        Turning incidents into improvements
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#quick-self-check">
+<span class="md-ellipsis">
+      
+        Quick self-check
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#deep-dive-every-concept-explained">
+<span class="md-ellipsis">
+      
+        Deep dive: every concept, explained
+      
+    </span>
+</a>
+<nav aria-label="Deep dive: every concept, explained" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#the-kubernetes-objects-you-are-actually-debugging">
+<span class="md-ellipsis">
+      
+        The Kubernetes objects you are actually debugging
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#pod-lifecycle-and-what-the-states-mean">
+<span class="md-ellipsis">
+      
+        Pod lifecycle and what the states mean
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#liveness-vs-readiness-probes">
+<span class="md-ellipsis">
+      
+        Liveness vs readiness probes
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#mapping-the-common-failures-to-their-mechanism">
+<span class="md-ellipsis">
+      
+        Mapping the common failures to their mechanism
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#why-modelversion-mismatch-is-uniquely-an-ml-failure">
+<span class="md-ellipsis">
+      
+        Why model/version mismatch is uniquely an ML failure
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#from-incident-to-prevention-the-reliability-flywheel">
+<span class="md-ellipsis">
+      
+        From incident to prevention : the reliability flywheel
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#quick-self-check-deep-dive">
+<span class="md-ellipsis">
+      
+        Quick self-check (deep dive)
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#kubernetes-fundamentals-for-ml-engineers">
+<span class="md-ellipsis">
+      
+        Kubernetes fundamentals for ML engineers
+      
+    </span>
+</a>
+<nav aria-label="Kubernetes fundamentals for ML engineers" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#pods">
+<span class="md-ellipsis">
+      
+        Pods
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#deployments">
+<span class="md-ellipsis">
+      
+        Deployments
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#services">
+<span class="md-ellipsis">
+      
+        Services
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#ingress">
+<span class="md-ellipsis">
+      
+        Ingress
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#resource-requests-and-limits">
+<span class="md-ellipsis">
+      
+        Resource requests and limits
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#namespaces">
+<span class="md-ellipsis">
+      
+        Namespaces
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#common-kubernetes-failure-modes-in-ml-explained">
+<span class="md-ellipsis">
+      
+        Common Kubernetes failure modes in ML, explained
+      
+    </span>
+</a>
+<nav aria-label="Common Kubernetes failure modes in ML, explained" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#oomkilled-memory-limit-exceeded">
+<span class="md-ellipsis">
+      
+        OOMKilled: memory limit exceeded
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#imagepullbackoff-registry-authentication-failure">
+<span class="md-ellipsis">
+      
+        ImagePullBackOff: registry authentication failure
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#initerror-init-container-failed">
+<span class="md-ellipsis">
+      
+        Init:Error: init container failed
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#pending-quota-or-node-selector-mismatch">
+<span class="md-ellipsis">
+      
+        Pending: quota or node selector mismatch
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#full-diagnosis-command-reference">
+<span class="md-ellipsis">
+      
+        Full diagnosis command reference
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#observability-stack">
+<span class="md-ellipsis">
+      
+        Observability stack
+      
+    </span>
+</a>
+<nav aria-label="Observability stack" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#prometheus-metrics">
+<span class="md-ellipsis">
+      
+        Prometheus metrics
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#grafana-dashboards">
+<span class="md-ellipsis">
+      
+        Grafana dashboards
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#jaeger-distributed-tracing">
+<span class="md-ellipsis">
+      
+        Jaeger distributed tracing
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#azure-monitor-integration">
+<span class="md-ellipsis">
+      
+        Azure Monitor integration
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#chaos-engineering-for-ml-endpoints">
+<span class="md-ellipsis">
+      
+        Chaos engineering for ML endpoints
+      
+    </span>
+</a>
+<nav aria-label="Chaos engineering for ML endpoints" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#why-chaos-testing-matters-for-ml">
+<span class="md-ellipsis">
+      
+        Why chaos testing matters for ML
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#pod-disruption-budget">
+<span class="md-ellipsis">
+      
+        Pod disruption budget
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#simulate-pod-kill">
+<span class="md-ellipsis">
+      
+        Simulate pod kill
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#simulate-high-load">
+<span class="md-ellipsis">
+      
+        Simulate high load
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#circuit-breakers">
+<span class="md-ellipsis">
+      
+        Circuit breakers
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#what-chaos-engineering-validates-for-ml">
+<span class="md-ellipsis">
+      
+        What chaos engineering validates for ML
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sre-practices-applied-to-ml">
+<span class="md-ellipsis">
+      
+        SRE practices applied to ML
+      
+    </span>
+</a>
+<nav aria-label="SRE practices applied to ML" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sli-slo-and-sla-definitions">
+<span class="md-ellipsis">
+      
+        SLI, SLO, and SLA definitions
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#error-budget">
+<span class="md-ellipsis">
+      
+        Error budget
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#toil-reduction">
+<span class="md-ellipsis">
+      
+        Toil reduction
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#blameless-postmortems">
+<span class="md-ellipsis">
+      
+        Blameless postmortems
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#game-days">
+<span class="md-ellipsis">
+      
+        Game days
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#runbook-automation">
+<span class="md-ellipsis">
+      
+        Runbook automation
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#on-call-rotation">
+<span class="md-ellipsis">
+      
+        On-call rotation
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#quick-self-check-sre-and-chaos">
+<span class="md-ellipsis">
+      
+        Quick self-check (SRE and chaos)
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_16" type="checkbox"/>
+<label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="">
+<span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_16_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_16">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/model-math-deep-dive/">
+<span class="md-ellipsis">
+    
+  
+    Mathematical Model Deep Dive
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/cli-commands/">
+<span class="md-ellipsis">
+    
+  
+    CLI Commands
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/glossary/">
+<span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#key-tools">
+<span class="md-ellipsis">
+      
+        Key tools
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#debugging-workflow">
+<span class="md-ellipsis">
+      
+        Debugging workflow
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#useful-commands">
+<span class="md-ellipsis">
+      
+        Useful commands
+      
+    </span>
+</a>
+<nav aria-label="Useful commands" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#systematic-triage-sequence">
+<span class="md-ellipsis">
+      
+        Systematic triage sequence
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#common-failure-patterns">
+<span class="md-ellipsis">
+      
+        Common failure patterns
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sre-style-runbook-basics">
+<span class="md-ellipsis">
+      
+        SRE-style runbook basics
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#incident-severity-matrix">
+<span class="md-ellipsis">
+      
+        Incident severity matrix
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#troubleshooting-decision-tree">
+<span class="md-ellipsis">
+      
+        Troubleshooting decision tree
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#what-to-capture-in-postmortem">
+<span class="md-ellipsis">
+      
+        What to capture in postmortem
+      
+    </span>
+</a>
+<nav aria-label="What to capture in postmortem" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#postmortem-template">
+<span class="md-ellipsis">
+      
+        Postmortem template
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#turning-incidents-into-improvements">
+<span class="md-ellipsis">
+      
+        Turning incidents into improvements
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#quick-self-check">
+<span class="md-ellipsis">
+      
+        Quick self-check
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#deep-dive-every-concept-explained">
+<span class="md-ellipsis">
+      
+        Deep dive: every concept, explained
+      
+    </span>
+</a>
+<nav aria-label="Deep dive: every concept, explained" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#the-kubernetes-objects-you-are-actually-debugging">
+<span class="md-ellipsis">
+      
+        The Kubernetes objects you are actually debugging
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#pod-lifecycle-and-what-the-states-mean">
+<span class="md-ellipsis">
+      
+        Pod lifecycle and what the states mean
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#liveness-vs-readiness-probes">
+<span class="md-ellipsis">
+      
+        Liveness vs readiness probes
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#mapping-the-common-failures-to-their-mechanism">
+<span class="md-ellipsis">
+      
+        Mapping the common failures to their mechanism
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#why-modelversion-mismatch-is-uniquely-an-ml-failure">
+<span class="md-ellipsis">
+      
+        Why model/version mismatch is uniquely an ML failure
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#from-incident-to-prevention-the-reliability-flywheel">
+<span class="md-ellipsis">
+      
+        From incident to prevention : the reliability flywheel
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#quick-self-check-deep-dive">
+<span class="md-ellipsis">
+      
+        Quick self-check (deep dive)
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#kubernetes-fundamentals-for-ml-engineers">
+<span class="md-ellipsis">
+      
+        Kubernetes fundamentals for ML engineers
+      
+    </span>
+</a>
+<nav aria-label="Kubernetes fundamentals for ML engineers" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#pods">
+<span class="md-ellipsis">
+      
+        Pods
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#deployments">
+<span class="md-ellipsis">
+      
+        Deployments
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#services">
+<span class="md-ellipsis">
+      
+        Services
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#ingress">
+<span class="md-ellipsis">
+      
+        Ingress
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#resource-requests-and-limits">
+<span class="md-ellipsis">
+      
+        Resource requests and limits
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#namespaces">
+<span class="md-ellipsis">
+      
+        Namespaces
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#common-kubernetes-failure-modes-in-ml-explained">
+<span class="md-ellipsis">
+      
+        Common Kubernetes failure modes in ML, explained
+      
+    </span>
+</a>
+<nav aria-label="Common Kubernetes failure modes in ML, explained" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#oomkilled-memory-limit-exceeded">
+<span class="md-ellipsis">
+      
+        OOMKilled: memory limit exceeded
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#imagepullbackoff-registry-authentication-failure">
+<span class="md-ellipsis">
+      
+        ImagePullBackOff: registry authentication failure
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#initerror-init-container-failed">
+<span class="md-ellipsis">
+      
+        Init:Error: init container failed
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#pending-quota-or-node-selector-mismatch">
+<span class="md-ellipsis">
+      
+        Pending: quota or node selector mismatch
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#full-diagnosis-command-reference">
+<span class="md-ellipsis">
+      
+        Full diagnosis command reference
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#observability-stack">
+<span class="md-ellipsis">
+      
+        Observability stack
+      
+    </span>
+</a>
+<nav aria-label="Observability stack" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#prometheus-metrics">
+<span class="md-ellipsis">
+      
+        Prometheus metrics
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#grafana-dashboards">
+<span class="md-ellipsis">
+      
+        Grafana dashboards
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#jaeger-distributed-tracing">
+<span class="md-ellipsis">
+      
+        Jaeger distributed tracing
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#azure-monitor-integration">
+<span class="md-ellipsis">
+      
+        Azure Monitor integration
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#chaos-engineering-for-ml-endpoints">
+<span class="md-ellipsis">
+      
+        Chaos engineering for ML endpoints
+      
+    </span>
+</a>
+<nav aria-label="Chaos engineering for ML endpoints" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#why-chaos-testing-matters-for-ml">
+<span class="md-ellipsis">
+      
+        Why chaos testing matters for ML
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#pod-disruption-budget">
+<span class="md-ellipsis">
+      
+        Pod disruption budget
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#simulate-pod-kill">
+<span class="md-ellipsis">
+      
+        Simulate pod kill
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#simulate-high-load">
+<span class="md-ellipsis">
+      
+        Simulate high load
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#circuit-breakers">
+<span class="md-ellipsis">
+      
+        Circuit breakers
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#what-chaos-engineering-validates-for-ml">
+<span class="md-ellipsis">
+      
+        What chaos engineering validates for ML
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sre-practices-applied-to-ml">
+<span class="md-ellipsis">
+      
+        SRE practices applied to ML
+      
+    </span>
+</a>
+<nav aria-label="SRE practices applied to ML" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sli-slo-and-sla-definitions">
+<span class="md-ellipsis">
+      
+        SLI, SLO, and SLA definitions
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#error-budget">
+<span class="md-ellipsis">
+      
+        Error budget
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#toil-reduction">
+<span class="md-ellipsis">
+      
+        Toil reduction
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#blameless-postmortems">
+<span class="md-ellipsis">
+      
+        Blameless postmortems
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#game-days">
+<span class="md-ellipsis">
+      
+        Game days
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#runbook-automation">
+<span class="md-ellipsis">
+      
+        Runbook automation
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#on-call-rotation">
+<span class="md-ellipsis">
+      
+        On-call rotation
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#quick-self-check-sre-and-chaos">
+<span class="md-ellipsis">
+      
+        Quick self-check (SRE and chaos)
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1 id="deployment-debugging-with-kubernetes">Deployment Debugging with Kubernetes<a class="headerlink" href="#deployment-debugging-with-kubernetes" title="Permanent link">¶</a></h1>
+<p>This module provides a practical incident-response path for ML endpoints running on
+Kubernetes-backed infrastructure.</p>
+<p><img alt="Confusion matrix quality reference" src="../../assets/img/confusion_matrix_good_bad.svg"/></p>
+<blockquote>
+<p><strong>Note - How to read it:</strong> A good vs bad confusion matrix. A strong model concentrates mass on the diagonal (correct
+predictions); off-diagonal mass shows which error type dominates : the first clue when debugging
+a quality regression.</p>
+</blockquote>
+<p><img alt="Lift curve quality reference" src="../../assets/img/lift_good_bad.svg"/></p>
+<blockquote>
+<p><strong>Note - How to read it:</strong> A lift curve shows how much better the model ranks positives than random selection. A curve
+hugging the top-left captures most positives in the highest-scoring fraction : valuable for
+prioritized review queues.</p>
+</blockquote>
+<p><img alt="ROC quality reference" src="../../assets/img/roc_good_bad.svg"/></p>
+<blockquote>
+<p><strong>Note - How to read it:</strong> The ROC curve plots true-positive vs false-positive rate across thresholds. A curve bowing
+toward the top-left (higher AUC) ranks better; the diagonal is random guessing.</p>
+</blockquote>
+<h2 id="key-tools">Key tools<a class="headerlink" href="#key-tools" title="Permanent link">¶</a></h2>
+<ul>
+<li>kubectl</li>
+<li>kind</li>
+<li>minikube</li>
+<li>kubeadm</li>
+</ul>
+<h2 id="debugging-workflow">Debugging workflow<a class="headerlink" href="#debugging-workflow" title="Permanent link">¶</a></h2>
+<ol>
+<li>Confirm deployment and pod status.</li>
+<li>Inspect pod events and restart causes.</li>
+<li>Inspect container logs (current and previous).</li>
+<li>Validate service/endpoints and ingress paths.</li>
+<li>Validate model input payload and schema.</li>
+<li>Confirm model version and environment alignment.</li>
+</ol>
+<h2 id="useful-commands">Useful commands<a class="headerlink" href="#useful-commands" title="Permanent link">¶</a></h2>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>pods
+kubectl<span class="w"> </span>describe<span class="w"> </span>pod<span class="w"> </span>&lt;pod-name&gt;
+kubectl<span class="w"> </span>logs<span class="w"> </span>&lt;pod-name&gt;
+</code></pre></div>
+<p>Additional high-value commands:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>get<span class="w"> </span>events<span class="w"> </span>--sort-by<span class="o">=</span>.lastTimestamp
+kubectl<span class="w"> </span>logs<span class="w"> </span>&lt;pod-name&gt;<span class="w"> </span>--previous
+kubectl<span class="w"> </span>get<span class="w"> </span>svc
+kubectl<span class="w"> </span>get<span class="w"> </span>endpoints
+</code></pre></div>
+<h3 id="systematic-triage-sequence">Systematic triage sequence<a class="headerlink" href="#systematic-triage-sequence" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># 1. Check pod state</span>
+kubectl<span class="w"> </span>get<span class="w"> </span>pods<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;
+
+<span class="c1"># 2. If any pods are not Running, describe to see events</span>
+kubectl<span class="w"> </span>describe<span class="w"> </span>pod<span class="w"> </span>&lt;pod-name&gt;<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;
+
+<span class="c1"># 3. Check container logs (running)</span>
+kubectl<span class="w"> </span>logs<span class="w"> </span>&lt;pod-name&gt;<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span>-c<span class="w"> </span>&lt;container-name&gt;
+
+<span class="c1"># 4. Check previous container logs (if CrashLoopBackOff)</span>
+kubectl<span class="w"> </span>logs<span class="w"> </span>&lt;pod-name&gt;<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;<span class="w"> </span>--previous
+
+<span class="c1"># 5. Check service endpoints are populated</span>
+kubectl<span class="w"> </span>get<span class="w"> </span>endpoints<span class="w"> </span>&lt;service-name&gt;<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;
+
+<span class="c1"># 6. Port-forward for direct endpoint test</span>
+kubectl<span class="w"> </span>port-forward<span class="w"> </span>svc/&lt;service-name&gt;<span class="w"> </span><span class="m">8080</span>:80<span class="w"> </span>-n<span class="w"> </span>&lt;namespace&gt;
+curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>http://localhost:8080/score<span class="w"> </span>-d<span class="w"> </span><span class="s1">'{"features":[...]}'</span><span class="w"> </span>-H<span class="w"> </span><span class="s1">'Content-Type: application/json'</span>
+</code></pre></div>
+<h2 id="common-failure-patterns">Common failure patterns<a class="headerlink" href="#common-failure-patterns" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Likely cause</th>
+<th>First check</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CrashLoopBackOff</td>
+<td>Bad dependency/model load failure</td>
+<td><code>kubectl logs --previous</code></td>
+</tr>
+<tr>
+<td>5xx from endpoint</td>
+<td>Scoring code exception</td>
+<td>container logs + payload schema</td>
+</tr>
+<tr>
+<td>Timeout errors</td>
+<td>Resource pressure or cold start</td>
+<td>CPU/memory, readiness probes</td>
+</tr>
+<tr>
+<td>Wrong predictions after release</td>
+<td>Model/version mismatch</td>
+<td>image tag + model registry version</td>
+</tr>
+</tbody>
+</table>
+<h2 id="sre-style-runbook-basics">SRE-style runbook basics<a class="headerlink" href="#sre-style-runbook-basics" title="Permanent link">¶</a></h2>
+<ul>
+<li>Define severity levels and escalation contacts.</li>
+<li>Keep rollback commands ready.</li>
+<li>Capture post-incident timeline and root cause.</li>
+<li>Convert incident learnings into tests/alerts.</li>
+</ul>
+<h2 id="incident-severity-matrix">Incident severity matrix<a class="headerlink" href="#incident-severity-matrix" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Severity</th>
+<th>Criteria</th>
+<th>Typical response target</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sev-1</td>
+<td>Production outage or major business impact</td>
+<td>Immediate response</td>
+</tr>
+<tr>
+<td>Sev-2</td>
+<td>Partial degradation with workaround</td>
+<td>&lt;= 1 hour</td>
+</tr>
+<tr>
+<td>Sev-3</td>
+<td>Non-critical defect or low-impact issue</td>
+<td>Planned fix</td>
+</tr>
+</tbody>
+</table>
+<h2 id="troubleshooting-decision-tree">Troubleshooting decision tree<a class="headerlink" href="#troubleshooting-decision-tree" title="Permanent link">¶</a></h2>
+<div class="mermaid">flowchart TD
+    A[Alert Triggered] --&gt; B{Endpoint reachable?}
+    B -- No --&gt; C[Check ingress/service/network policy]
+    B -- Yes --&gt; D{5xx errors?}
+    D -- Yes --&gt; E[Inspect app logs and previous container logs]
+    D -- No --&gt; F{Latency high?}
+    F -- Yes --&gt; G[Check CPU/memory, autoscaling, dependency calls]
+    F -- No --&gt; H{Prediction quality drop?}
+    H -- Yes --&gt; I[Check drift, schema changes, model version]
+    H -- No --&gt; J[Observe and close with notes]
+</div>
+<h2 id="what-to-capture-in-postmortem">What to capture in postmortem<a class="headerlink" href="#what-to-capture-in-postmortem" title="Permanent link">¶</a></h2>
+<ol>
+<li>Detection time and symptom timeline.</li>
+<li>Root cause and contributing factors.</li>
+<li>What worked/failed in response.</li>
+<li>Corrective actions and owners.</li>
+</ol>
+<h3 id="postmortem-template">Postmortem template<a class="headerlink" href="#postmortem-template" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>Content</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Incident title</td>
+<td>One-line description</td>
+</tr>
+<tr>
+<td>Date/time</td>
+<td>Detection → mitigation → full resolution</td>
+</tr>
+<tr>
+<td>Severity</td>
+<td>Sev-1 / 2 / 3 and impact scope</td>
+</tr>
+<tr>
+<td>Detection</td>
+<td>How was it found (alert, user report, monitoring)?</td>
+</tr>
+<tr>
+<td>Root cause</td>
+<td>Technical root cause (not blame)</td>
+</tr>
+<tr>
+<td>Contributing factors</td>
+<td>Infrastructure, process, or tooling gaps</td>
+</tr>
+<tr>
+<td>Timeline</td>
+<td>Minute-by-minute key actions</td>
+</tr>
+<tr>
+<td>Impact</td>
+<td>Customers / SLO breach duration / data gap</td>
+</tr>
+<tr>
+<td>What went well</td>
+<td>Positive signals in the response</td>
+</tr>
+<tr>
+<td>What went wrong</td>
+<td>Process or tooling failures</td>
+</tr>
+<tr>
+<td>Action items</td>
+<td>Specific, owned, time-bound fixes</td>
+</tr>
+</tbody>
+</table>
+<h3 id="turning-incidents-into-improvements">Turning incidents into improvements<a class="headerlink" href="#turning-incidents-into-improvements" title="Permanent link">¶</a></h3>
+<p>Every Sev-1 and Sev-2 incident should produce at least one concrete prevention action:</p>
+<table>
+<thead>
+<tr>
+<th>Root cause pattern</th>
+<th>Prevention action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Model version mismatch</td>
+<td>Add version hash check to deployment script</td>
+</tr>
+<tr>
+<td>Missing schema validation</td>
+<td>Add input schema check to scoring script</td>
+</tr>
+<tr>
+<td>No liveness probe</td>
+<td>Add readiness and liveness probes to deployment YAML</td>
+</tr>
+<tr>
+<td>Stale model drift</td>
+<td>Automate weekly drift check + alert</td>
+</tr>
+<tr>
+<td>Unreproducible environment</td>
+<td>Pin all dependencies + register environment version</td>
+</tr>
+</tbody>
+</table>
+<h2 id="quick-self-check">Quick self-check<a class="headerlink" href="#quick-self-check" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Question</th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Which command helps diagnose why a pod restarted?</td>
+<td><code>kubectl describe pod &lt;name&gt;</code> (events and last state) together with <code>kubectl logs --previous</code> to read the crashed container's output.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Why should you check <code>--previous</code> logs?</td>
+<td>A restarted container may be too young to have logs; <code>--previous</code> shows the output of the crashed instance, which contains the actual failure (e.g., an <code>init()</code> exception).</td>
+</tr>
+<tr>
+<td>3</td>
+<td>What is one sign of a model/version mismatch?</td>
+<td>Correct, healthy infrastructure but wrong predictions after a release – the deployed image tag points at a different model version than intended.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="deep-dive-every-concept-explained">Deep dive: every concept, explained<a class="headerlink" href="#deep-dive-every-concept-explained" title="Permanent link">¶</a></h2>
+<p>This section explains the Kubernetes primitives and failure modes behind the commands so the
+runbook becomes understandable rather than memorized.</p>
+<h3 id="the-kubernetes-objects-you-are-actually-debugging">The Kubernetes objects you are actually debugging<a class="headerlink" href="#the-kubernetes-objects-you-are-actually-debugging" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Object</th>
+<th>What it is</th>
+<th>Why it matters for ML serving</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Pod</strong></td>
+<td>Smallest deployable unit; one or more containers sharing network/storage</td>
+<td>Your scoring container runs here; pod health = endpoint health</td>
+</tr>
+<tr>
+<td><strong>Deployment</strong></td>
+<td>Controller that maintains N pod replicas</td>
+<td>Handles rolling updates and self-healing</td>
+</tr>
+<tr>
+<td><strong>Service</strong></td>
+<td>Stable virtual IP/DNS load-balancing across pods</td>
+<td>Clients hit the Service, not individual pods</td>
+</tr>
+<tr>
+<td><strong>Endpoints</strong></td>
+<td>The list of <em>ready</em> pod IPs behind a Service</td>
+<td>Empty endpoints = traffic has nowhere to go (a common "503")</td>
+</tr>
+<tr>
+<td><strong>Ingress</strong></td>
+<td>HTTP routing from outside the cluster to Services</td>
+<td>Where external URL → internal Service mapping lives</td>
+</tr>
+</tbody>
+</table>
+<p>The triage sequence in this module walks <em>outside-in</em> along this chain (ingress → service →
+endpoints → pod → container), because a request fails at whichever link is broken.</p>
+<h3 id="pod-lifecycle-and-what-the-states-mean">Pod lifecycle and what the states mean<a class="headerlink" href="#pod-lifecycle-and-what-the-states-mean" title="Permanent link">¶</a></h3>
+<p>A pod moves through phases, and the failing phase points at the cause:</p>
+<ul>
+<li><strong>Pending</strong> : scheduler cannot place the pod (insufficient CPU/memory quota, no matching node).</li>
+<li><strong>ContainerCreating</strong> : image is being pulled or a volume is mounting; a stall here usually
+  means a registry/auth or storage problem.</li>
+<li><strong>Running</strong> : containers started; the app may still be unhealthy if probes fail.</li>
+<li><strong>CrashLoopBackOff</strong> : the container starts, exits, and Kubernetes restarts it with increasing
+  backoff. For ML this almost always means <strong><code>init()</code> failed</strong>: a missing dependency or a model
+  that won't load. This is why <code>kubectl logs --previous</code> is essential : the current container may
+  be too young to have logs, so you read the <em>crashed</em> container's output.</li>
+</ul>
+<h3 id="liveness-vs-readiness-probes">Liveness vs readiness probes<a class="headerlink" href="#liveness-vs-readiness-probes" title="Permanent link">¶</a></h3>
+<ul>
+<li>A <strong>readiness probe</strong> decides whether a pod should receive traffic. Until it passes, the pod is
+  kept out of the Service's <strong>Endpoints</strong> list : which is why a slow model load (long cold start)
+  shows up as empty endpoints and timeouts rather than errors.</li>
+<li>A <strong>liveness probe</strong> decides whether to <em>restart</em> a stuck pod. A deadlocked scoring process with
+  no liveness probe will hang forever; with one, Kubernetes recycles it.</li>
+</ul>
+<p>Missing probes is a recurring root cause in the prevention table precisely because without them
+Kubernetes cannot tell a warming-up pod from a broken one.</p>
+<h3 id="mapping-the-common-failures-to-their-mechanism">Mapping the common failures to their mechanism<a class="headerlink" href="#mapping-the-common-failures-to-their-mechanism" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Underlying mechanism</th>
+<th>Why the listed check works</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>CrashLoopBackOff</code></td>
+<td><code>init()</code> raised (bad dep / model load)</td>
+<td><code>--previous</code> logs show the exception from the dead container</td>
+</tr>
+<tr>
+<td>5xx from endpoint</td>
+<td><code>run()</code> raised on a request</td>
+<td>Container logs + payload schema reveal the bad input or bug</td>
+</tr>
+<tr>
+<td>Timeouts</td>
+<td>Resource pressure or cold start</td>
+<td>CPU/memory + readiness probe state show saturation or slow start</td>
+</tr>
+<tr>
+<td>Wrong predictions after release</td>
+<td>Image tag points at the wrong model version</td>
+<td>Compare deployed image tag against the model-registry version</td>
+</tr>
+</tbody>
+</table>
+<h3 id="why-modelversion-mismatch-is-uniquely-an-ml-failure">Why model/version mismatch is uniquely an ML failure<a class="headerlink" href="#why-modelversion-mismatch-is-uniquely-an-ml-failure" title="Permanent link">¶</a></h3>
+<p>In ordinary microservices, "the code is the artifact". In ML, the <strong>model is a separate versioned
+artifact</strong> baked into (or mounted by) the image. A deploy can succeed, the service can be healthy,
+and predictions can still be silently wrong because the image references model <code>v2</code> while the
+intended one was <code>v3</code>. This is why the prevention action is a <strong>version-hash check</strong> at deploy
+time, and why lineage (from the environment module) matters: it lets you prove which model version
+is actually serving.</p>
+<h3 id="from-incident-to-prevention-the-reliability-flywheel">From incident to prevention : the reliability flywheel<a class="headerlink" href="#from-incident-to-prevention-the-reliability-flywheel" title="Permanent link">¶</a></h3>
+<p>The postmortem template and "incident → prevention" table encode an <strong>SRE</strong> principle: every
+Sev-1/Sev-2 must yield at least one durable safeguard (a probe, a schema check, a version
+assertion, an automated drift alert). Over time this converts painful one-off outages into
+permanent tests and alerts, steadily lowering the rate of repeat incidents : the operational
+counterpart to the validation gates and SLOs introduced earlier in the course.</p>
+<h2 id="quick-self-check-deep-dive">Quick self-check (deep dive)<a class="headerlink" href="#quick-self-check-deep-dive" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Question</th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Why is the "outside-in" triage order (ingress → service → endpoints → pod → container) more efficient than starting at the pod?</td>
+<td>A request fails at whichever link is broken, so following the chain from the outside isolates the broken link directly instead of guessing at the deepest layer first.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>A Service returns 503 but every pod shows <code>Running</code>. Which object would you inspect next, and what would empty contents tell you?</td>
+<td>Inspect the Service's <code>Endpoints</code>; an empty list means no pod is <code>Ready</code> (failing readiness probe / slow model load), so traffic has nowhere to go.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Why does <code>CrashLoopBackOff</code> for an ML container almost always point at <code>init()</code> rather than <code>run()</code>?</td>
+<td><code>init()</code> runs at container start and loads the model/dependencies; a missing dependency or unloadable model makes the container exit immediately and restart in a loop.</td>
+</tr>
+<tr>
+<td>4</td>
+<td>What is the difference between a readiness probe and a liveness probe, and which does a slow model load affect first?</td>
+<td>Readiness decides whether a pod receives traffic; liveness decides whether to restart a stuck pod. A slow model load affects readiness first (pod stays out of Endpoints until it passes).</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Why can a deployment be "healthy" yet still serve wrong predictions, and what single deploy-time check prevents it?</td>
+<td>The model is a separate versioned artifact, so a healthy service can reference the wrong model version; a version-hash check at deploy time prevents it.</td>
+</tr>
+</tbody>
+</table>
+<hr/>
+<h2 id="kubernetes-fundamentals-for-ml-engineers">Kubernetes fundamentals for ML engineers<a class="headerlink" href="#kubernetes-fundamentals-for-ml-engineers" title="Permanent link">¶</a></h2>
+<p>ML engineers interact with Kubernetes primarily through <code>kubectl</code> output and YAML manifests.
+This section explains the four core objects you will encounter when deploying and debugging ML
+endpoints — not just as definitions but as things you will read and diagnose in practice.</p>
+<h3 id="pods">Pods<a class="headerlink" href="#pods" title="Permanent link">¶</a></h3>
+<p>A <strong>Pod</strong> is the smallest deployable unit in Kubernetes. It wraps one or more containers that
+share a network namespace and storage volumes. For ML serving, a pod typically contains one
+scoring container (and sometimes an init container that performs model pre-checks).</p>
+<p>Reading <code>kubectl get pods</code> output:</p>
+<div class="highlight"><pre><span></span><code>NAME                            READY   STATUS    RESTARTS   AGE
+fraud-scorer-7d4b9f-xk2pq       1/1     Running   0          3d
+fraud-scorer-7d4b9f-mp9wz       1/1     Running   2          3d
+fraud-scorer-7d4b9f-nt8rs       0/1     Pending   0          5m
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>What it means</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>READY</code></td>
+<td><code>1/1</code> = all containers in the pod are ready. <code>0/1</code> = not ready (readiness probe failing or not yet started)</td>
+</tr>
+<tr>
+<td><code>STATUS</code></td>
+<td><code>Running</code> = at least one container is executing; <code>Pending</code> = not scheduled; <code>CrashLoopBackOff</code> = restarting repeatedly</td>
+</tr>
+<tr>
+<td><code>RESTARTS</code></td>
+<td>Non-zero restarts indicate liveness probe failures or container crashes</td>
+</tr>
+<tr>
+<td><code>AGE</code></td>
+<td>A very recent pod after a deployment rollout is the one most likely to have a new issue</td>
+</tr>
+</tbody>
+</table>
+<h3 id="deployments">Deployments<a class="headerlink" href="#deployments" title="Permanent link">¶</a></h3>
+<p>A <strong>Deployment</strong> tells Kubernetes how many pod replicas to maintain and what template to use.
+It handles rolling updates and self-healing. Reading <code>kubectl get deployment</code> output:</p>
+<div class="highlight"><pre><span></span><code>NAME            READY   UP-TO-DATE   AVAILABLE   AGE
+fraud-scorer    3/3     3            3           10d
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>What it means for ML</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>READY</code></td>
+<td><code>3/3</code> = all desired replicas are ready to serve traffic</td>
+</tr>
+<tr>
+<td><code>UP-TO-DATE</code></td>
+<td>Number of replicas that have the latest template (e.g., new model image); less than desired = rollout in progress</td>
+</tr>
+<tr>
+<td><code>AVAILABLE</code></td>
+<td>Replicas passing readiness probes; this is the number actually serving requests</td>
+</tr>
+</tbody>
+</table>
+<p>Inspecting the rollout status during a model update:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>rollout<span class="w"> </span>status<span class="w"> </span>deployment/fraud-scorer<span class="w"> </span>-n<span class="w"> </span>ml-serving
+<span class="c1"># Waiting for deployment "fraud-scorer" rollout to finish: 1 out of 3 new replicas have been updated...</span>
+</code></pre></div>
+<h3 id="services">Services<a class="headerlink" href="#services" title="Permanent link">¶</a></h3>
+<p>A <strong>Service</strong> provides a stable virtual IP and DNS name that load-balances across pod replicas.
+Clients send traffic to the Service, never to individual pods. Reading <code>kubectl get svc</code>:</p>
+<div class="highlight"><pre><span></span><code>NAME             TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)   AGE
+fraud-scorer     ClusterIP   10.96.44.120   &lt;none&gt;        80/TCP    10d
+fraud-scorer-lb  LoadBalancer 10.96.44.121  20.42.0.10   443/TCP   10d
+</code></pre></div>
+<p><code>ClusterIP</code> is internal-only; <code>LoadBalancer</code> has an external IP for outside-cluster access.</p>
+<h3 id="ingress">Ingress<a class="headerlink" href="#ingress" title="Permanent link">¶</a></h3>
+<p>An <strong>Ingress</strong> maps external HTTP(S) hostnames and paths to Services inside the cluster. It is
+where TLS termination and host-based routing live:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">networking.k8s.io/v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Ingress</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ml-ingress</span>
+<span class="w">  </span><span class="nt">annotations</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">nginx.ingress.kubernetes.io/proxy-read-timeout</span><span class="p">:</span><span class="w"> </span><span class="s">"30"</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">rules</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">host</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fraud-api.company.com</span>
+<span class="w">      </span><span class="nt">http</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">paths</span><span class="p">:</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/score</span>
+<span class="w">            </span><span class="nt">pathType</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Prefix</span>
+<span class="w">            </span><span class="nt">backend</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">service</span><span class="p">:</span>
+<span class="w">                </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fraud-scorer</span>
+<span class="w">                </span><span class="nt">port</span><span class="p">:</span>
+<span class="w">                  </span><span class="nt">number</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">80</span>
+</code></pre></div>
+<p>Reading <code>kubectl get ingress</code>:</p>
+<div class="highlight"><pre><span></span><code>NAME         CLASS   HOSTS                   ADDRESS        PORTS   AGE
+ml-ingress   nginx   fraud-api.company.com   20.42.0.10    80,443  10d
+</code></pre></div>
+<p>An empty <code>ADDRESS</code> field means the ingress controller did not assign an IP — the endpoint is
+unreachable from outside the cluster.</p>
+<h3 id="resource-requests-and-limits">Resource requests and limits<a class="headerlink" href="#resource-requests-and-limits" title="Permanent link">¶</a></h3>
+<p>Resource requests and limits are defined per container in the pod spec. They have outsized
+importance for ML workloads where models can be hundreds of MB to GB.</p>
+<div class="highlight"><pre><span></span><code><span class="nt">resources</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">requests</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="s">"2Gi"</span>
+<span class="w">    </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">"500m"</span>
+<span class="w">  </span><span class="nt">limits</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="s">"4Gi"</span>
+<span class="w">    </span><span class="nt">cpu</span><span class="p">:</span><span class="w"> </span><span class="s">"2"</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Meaning</th>
+<th>Effect if set wrong</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>requests.memory</code></td>
+<td>Minimum memory the scheduler reserves</td>
+<td>Too low: pod scheduled on a node with insufficient actual memory → OOMKill at runtime</td>
+</tr>
+<tr>
+<td><code>limits.memory</code></td>
+<td>Hard ceiling</td>
+<td>Too low: model doesn't fit → OOMKilled on load</td>
+</tr>
+<tr>
+<td><code>requests.cpu</code></td>
+<td>Scheduling weight</td>
+<td>Too low: pod may starve under load</td>
+</tr>
+<tr>
+<td><code>limits.cpu</code></td>
+<td>CPU throttle ceiling</td>
+<td>CPU throttling adds latency even when nodes have spare capacity</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Note - CPU limits and ML:</strong> Setting CPU limits too aggressively causes the Linux CFS scheduler
+to throttle the container mid-inference, adding unpredictable tail latency. A common production
+practice is to set CPU requests but leave CPU limits unset (or very generous), and rely on
+node auto-provisioning to prevent starvation.</p>
+</blockquote>
+<h3 id="namespaces">Namespaces<a class="headerlink" href="#namespaces" title="Permanent link">¶</a></h3>
+<p>Namespaces partition cluster resources and access controls. In ML platforms, common namespace
+conventions are:</p>
+<table>
+<thead>
+<tr>
+<th>Namespace</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ml-serving-prod</code></td>
+<td>Production inference endpoints</td>
+</tr>
+<tr>
+<td><code>ml-serving-staging</code></td>
+<td>Staging/canary endpoints</td>
+</tr>
+<tr>
+<td><code>ml-training</code></td>
+<td>Training job pods</td>
+</tr>
+<tr>
+<td><code>monitoring</code></td>
+<td>Prometheus, Grafana, alert manager</td>
+</tr>
+</tbody>
+</table>
+<p>Always specify <code>-n &lt;namespace&gt;</code> in <code>kubectl</code> commands or set your default namespace:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>config<span class="w"> </span>set-context<span class="w"> </span>--current<span class="w"> </span>--namespace<span class="o">=</span>ml-serving-prod
+</code></pre></div>
+<hr/>
+<h2 id="common-kubernetes-failure-modes-in-ml-explained">Common Kubernetes failure modes in ML, explained<a class="headerlink" href="#common-kubernetes-failure-modes-in-ml-explained" title="Permanent link">¶</a></h2>
+<p>Each failure mode has a characteristic symptom, a root cause, and a definitive diagnostic
+command sequence. Know all five.</p>
+<h3 id="oomkilled-memory-limit-exceeded">OOMKilled: memory limit exceeded<a class="headerlink" href="#oomkilled-memory-limit-exceeded" title="Permanent link">¶</a></h3>
+<p><strong>Symptom:</strong> Pod status shows <code>OOMKilled</code> or the restart count increments with no application
+error in logs.</p>
+<p><strong>Root cause:</strong> The container exceeded the <code>limits.memory</code> value. For ML, this almost always
+means the model artifact is larger than anticipated, or the scoring container accumulates memory
+during batch requests.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Confirm OOM</span>
+kubectl<span class="w"> </span>describe<span class="w"> </span>pod<span class="w"> </span>&lt;pod-name&gt;<span class="w"> </span>-n<span class="w"> </span>ml-serving-prod<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-A5<span class="w"> </span><span class="s2">"Last State"</span>
+<span class="c1"># Output:</span>
+<span class="c1"># Last State: Terminated</span>
+<span class="c1">#   Reason: OOMKilled</span>
+<span class="c1">#   Exit Code: 137</span>
+</code></pre></div>
+<p><strong>Fix:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Increase memory limit in deployment YAML</span>
+<span class="nt">resources</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">requests</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="s">"4Gi"</span>
+<span class="w">  </span><span class="nt">limits</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">memory</span><span class="p">:</span><span class="w"> </span><span class="s">"8Gi"</span>
+</code></pre></div>
+<p>To find the actual model memory footprint before deploying:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">tracemalloc</span>
+<span class="n">tracemalloc</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">joblib</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">"model.pkl"</span><span class="p">)</span>
+<span class="n">current</span><span class="p">,</span> <span class="n">peak</span> <span class="o">=</span> <span class="n">tracemalloc</span><span class="o">.</span><span class="n">get_traced_memory</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Model peak memory: </span><span class="si">{</span><span class="n">peak</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">1024</span><span class="o">**</span><span class="mi">2</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> MB"</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="imagepullbackoff-registry-authentication-failure">ImagePullBackOff: registry authentication failure<a class="headerlink" href="#imagepullbackoff-registry-authentication-failure" title="Permanent link">¶</a></h3>
+<p><strong>Symptom:</strong> Pod status <code>ImagePullBackOff</code> or <code>ErrImagePull</code>, container never starts.</p>
+<p><strong>Root cause:</strong> The node cannot pull the scoring container image, usually due to a missing or
+expired imagePullSecret, an incorrect image tag, or a private registry not listed in the
+pod spec.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Diagnose</span>
+kubectl<span class="w"> </span>describe<span class="w"> </span>pod<span class="w"> </span>&lt;pod-name&gt;<span class="w"> </span>-n<span class="w"> </span>ml-serving-prod
+<span class="c1"># Look for: "Failed to pull image ... unauthorized: ..."</span>
+
+<span class="c1"># Fix: create or refresh the registry secret</span>
+kubectl<span class="w"> </span>create<span class="w"> </span>secret<span class="w"> </span>docker-registry<span class="w"> </span>acr-secret<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--docker-server<span class="o">=</span>mlregistry.azurecr.io<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--docker-username<span class="o">=</span><span class="nv">$ACR_USERNAME</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--docker-password<span class="o">=</span><span class="nv">$ACR_PASSWORD</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-n<span class="w"> </span>ml-serving-prod
+
+<span class="c1"># Reference in deployment spec</span>
+imagePullSecrets:
+<span class="w">  </span>-<span class="w"> </span>name:<span class="w"> </span>acr-secret
+</code></pre></div>
+<blockquote>
+<p><strong>Tip - Use managed identity:</strong> Attach the AKS node pool's managed identity to the Azure
+Container Registry with <code>AcrPull</code> role. This eliminates static credentials entirely and
+prevents <code>ImagePullBackOff</code> from credential expiry.</p>
+</blockquote>
+<h3 id="initerror-init-container-failed">Init:Error: init container failed<a class="headerlink" href="#initerror-init-container-failed" title="Permanent link">¶</a></h3>
+<p><strong>Symptom:</strong> Pod status <code>Init:Error</code> or <code>Init:CrashLoopBackOff</code>. The main container never starts.</p>
+<p><strong>Root cause:</strong> An init container — typically used to download a model artifact from blob
+storage or run a migration — exited non-zero.</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>describe<span class="w"> </span>pod<span class="w"> </span>&lt;pod-name&gt;<span class="w"> </span>-n<span class="w"> </span>ml-serving-prod
+<span class="c1"># Look for init container "model-downloader" exit code</span>
+
+kubectl<span class="w"> </span>logs<span class="w"> </span>&lt;pod-name&gt;<span class="w"> </span>-c<span class="w"> </span>model-downloader<span class="w"> </span>-n<span class="w"> </span>ml-serving-prod
+<span class="c1"># Shows the actual error: 403 Forbidden, or model file not found</span>
+</code></pre></div>
+<p>Common causes and fixes:</p>
+<table>
+<thead>
+<tr>
+<th>Error</th>
+<th>Cause</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>403 Forbidden</code> on blob storage</td>
+<td>Managed identity not assigned Storage Blob Data Reader</td>
+<td>Assign RBAC role to pod identity</td>
+</tr>
+<tr>
+<td><code>model.pkl not found</code></td>
+<td>Wrong blob path or model version not registered</td>
+<td>Verify model version in registry; fix init container args</td>
+</tr>
+<tr>
+<td>Python import error</td>
+<td>Missing package in init container image</td>
+<td>Rebuild init container image with required packages</td>
+</tr>
+</tbody>
+</table>
+<h3 id="pending-quota-or-node-selector-mismatch">Pending: quota or node selector mismatch<a class="headerlink" href="#pending-quota-or-node-selector-mismatch" title="Permanent link">¶</a></h3>
+<p><strong>Symptom:</strong> Pod remains in <code>Pending</code> state indefinitely.</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>describe<span class="w"> </span>pod<span class="w"> </span>&lt;pod-name&gt;<span class="w"> </span>-n<span class="w"> </span>ml-serving-prod
+<span class="c1"># Look for: "0/5 nodes are available: 5 Insufficient memory" or</span>
+<span class="c1">#           "0/5 nodes are available: node(s) didn't match node selector"</span>
+</code></pre></div>
+<p><strong>Root causes:</strong></p>
+<ul>
+<li><strong>Resource quota exceeded:</strong> The namespace has a <code>ResourceQuota</code> that caps total memory/CPU.
+  Check: <code>kubectl describe resourcequota -n ml-serving-prod</code></li>
+<li><strong>Node selector mismatch:</strong> The deployment requests a node labeled <code>gpu=true</code> but no such
+  node exists in the pool. Check: <code>kubectl get nodes --show-labels</code></li>
+<li><strong>Taints without tolerations:</strong> GPU nodes are tainted; the pod spec is missing the toleration.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="c1"># Add toleration for GPU node taint</span>
+<span class="nt">tolerations</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="s">"nvidia.com/gpu"</span>
+<span class="w">    </span><span class="nt">operator</span><span class="p">:</span><span class="w"> </span><span class="s">"Exists"</span>
+<span class="w">    </span><span class="nt">effect</span><span class="p">:</span><span class="w"> </span><span class="s">"NoSchedule"</span>
+<span class="nt">nodeSelector</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">accelerator</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nvidia-a100</span>
+</code></pre></div>
+<h3 id="full-diagnosis-command-reference">Full diagnosis command reference<a class="headerlink" href="#full-diagnosis-command-reference" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># 1. Pod not Running — get the reason</span>
+kubectl<span class="w"> </span>describe<span class="w"> </span>pod<span class="w"> </span>&lt;pod-name&gt;<span class="w"> </span>-n<span class="w"> </span>&lt;ns&gt;<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s2">"Status|Reason|Message|Events"</span><span class="w"> </span>-A<span class="w"> </span><span class="m">3</span>
+
+<span class="c1"># 2. OOMKilled confirmation</span>
+kubectl<span class="w"> </span>get<span class="w"> </span>pod<span class="w"> </span>&lt;pod-name&gt;<span class="w"> </span>-n<span class="w"> </span>&lt;ns&gt;<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.status.containerStatuses[0].lastState.terminated}'</span>
+
+<span class="c1"># 3. ImagePullBackOff — see registry error</span>
+kubectl<span class="w"> </span>describe<span class="w"> </span>pod<span class="w"> </span>&lt;pod-name&gt;<span class="w"> </span>-n<span class="w"> </span>&lt;ns&gt;<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span><span class="s2">"Failed\|Error\|Back-off"</span>
+
+<span class="c1"># 4. Pending — find scheduling blocker</span>
+kubectl<span class="w"> </span>describe<span class="w"> </span>pod<span class="w"> </span>&lt;pod-name&gt;<span class="w"> </span>-n<span class="w"> </span>&lt;ns&gt;<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-A<span class="w"> </span><span class="m">10</span><span class="w"> </span><span class="s2">"Events:"</span>
+
+<span class="c1"># 5. Running but unhealthy — check readiness</span>
+kubectl<span class="w"> </span>get<span class="w"> </span>pod<span class="w"> </span>&lt;pod-name&gt;<span class="w"> </span>-n<span class="w"> </span>&lt;ns&gt;<span class="w"> </span>-o<span class="w"> </span><span class="nv">jsonpath</span><span class="o">=</span><span class="s1">'{.status.conditions}'</span>
+</code></pre></div>
+<hr/>
+<h2 id="observability-stack">Observability stack<a class="headerlink" href="#observability-stack" title="Permanent link">¶</a></h2>
+<p>A production ML endpoint requires more than pod logs. A full observability stack provides
+metrics, logs, and traces — the three pillars — so you can answer "what happened, when, and why"
+without SSH access to nodes.</p>
+<h3 id="prometheus-metrics">Prometheus metrics<a class="headerlink" href="#prometheus-metrics" title="Permanent link">¶</a></h3>
+<p>Prometheus scrapes metrics from instrumented endpoints. For ML scoring containers, expose
+custom metrics using the <code>prometheus_client</code> library:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">prometheus_client</span> <span class="kn">import</span> <span class="n">Counter</span><span class="p">,</span> <span class="n">Histogram</span><span class="p">,</span> <span class="n">start_http_server</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">PREDICTION_COUNTER</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="s2">"ml_predictions_total"</span><span class="p">,</span> <span class="s2">"Total predictions"</span><span class="p">,</span> <span class="p">[</span><span class="s2">"segment"</span><span class="p">,</span> <span class="s2">"class"</span><span class="p">])</span>
+<span class="n">INFERENCE_LATENCY</span> <span class="o">=</span> <span class="n">Histogram</span><span class="p">(</span>
+    <span class="s2">"ml_inference_duration_seconds"</span><span class="p">,</span>
+    <span class="s2">"Inference latency"</span><span class="p">,</span>
+    <span class="n">buckets</span><span class="o">=</span><span class="p">[</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.025</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">init</span><span class="p">():</span>
+    <span class="n">start_http_server</span><span class="p">(</span><span class="mi">8001</span><span class="p">)</span>  <span class="c1"># Prometheus scrapes :8001/metrics</span>
+    <span class="k">global</span> <span class="n">model</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">load_model</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="n">raw_data</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">raw_data</span><span class="p">)</span>
+    <span class="n">prediction</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">"features"</span><span class="p">]))</span>
+
+    <span class="n">duration</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span>
+    <span class="n">INFERENCE_LATENCY</span><span class="o">.</span><span class="n">observe</span><span class="p">(</span><span class="n">duration</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">prediction</span><span class="p">:</span>
+        <span class="n">PREDICTION_COUNTER</span><span class="o">.</span><span class="n">labels</span><span class="p">(</span><span class="n">segment</span><span class="o">=</span><span class="s2">"default"</span><span class="p">,</span> <span class="n">class</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">label</span><span class="p">))</span><span class="o">.</span><span class="n">inc</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s2">"prediction"</span><span class="p">:</span> <span class="n">prediction</span><span class="o">.</span><span class="n">tolist</span><span class="p">()})</span>
+</code></pre></div>
+<p>Prometheus ServiceMonitor (via Prometheus Operator):</p>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">monitoring.coreos.com/v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ServiceMonitor</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fraud-scorer-metrics</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">monitoring</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">selector</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">matchLabels</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fraud-scorer</span>
+<span class="w">  </span><span class="nt">endpoints</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">metrics</span>
+<span class="w">      </span><span class="nt">interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">15s</span>
+<span class="w">      </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/metrics</span>
+</code></pre></div>
+<h3 id="grafana-dashboards">Grafana dashboards<a class="headerlink" href="#grafana-dashboards" title="Permanent link">¶</a></h3>
+<p>A production ML Grafana dashboard should include these panels:</p>
+<table>
+<thead>
+<tr>
+<th>Panel</th>
+<th>Metric</th>
+<th>Alert threshold</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Request rate</td>
+<td><code>rate(ml_predictions_total[5m])</code></td>
+<td>&lt; 10% of baseline → upstream issue</td>
+</tr>
+<tr>
+<td>p50/p95/p99 latency</td>
+<td><code>histogram_quantile(0.95, ml_inference_duration_seconds_bucket)</code></td>
+<td>p95 &gt; 250 ms</td>
+</tr>
+<tr>
+<td>Error rate</td>
+<td><code>rate(http_requests_total{status=~"5.."}[5m]) / rate(http_requests_total[5m])</code></td>
+<td>&gt; 2%</td>
+</tr>
+<tr>
+<td>Pod restarts</td>
+<td><code>kube_pod_container_status_restarts_total</code></td>
+<td>&gt; 0 in last 30 min</td>
+</tr>
+<tr>
+<td>Memory utilization</td>
+<td><code>container_memory_working_set_bytes / container_spec_memory_limit_bytes</code></td>
+<td>&gt; 85%</td>
+</tr>
+<tr>
+<td>Prediction class distribution</td>
+<td><code>ml_predictions_total by (class)</code></td>
+<td>Any class drops to 0</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Note - Class distribution alert:</strong> Monitoring the distribution of predicted classes is
+a lightweight proxy for model quality. If a fraud model suddenly predicts 0 fraudulent
+transactions, the model has likely stopped working — this alert catches it before a business
+KPI review would.</p>
+</blockquote>
+<h3 id="jaeger-distributed-tracing">Jaeger distributed tracing<a class="headerlink" href="#jaeger-distributed-tracing" title="Permanent link">¶</a></h3>
+<p>For ML pipelines that call a feature store, cache, or downstream API, distributed tracing
+identifies which dependency is adding latency:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">opentelemetry</span> <span class="kn">import</span> <span class="n">trace</span>
+<span class="kn">from</span> <span class="nn">opentelemetry.exporter.jaeger.thrift</span> <span class="kn">import</span> <span class="n">JaegerExporter</span>
+<span class="kn">from</span> <span class="nn">opentelemetry.sdk.trace</span> <span class="kn">import</span> <span class="n">TracerProvider</span>
+<span class="kn">from</span> <span class="nn">opentelemetry.sdk.trace.export</span> <span class="kn">import</span> <span class="n">BatchSpanProcessor</span>
+
+<span class="n">provider</span> <span class="o">=</span> <span class="n">TracerProvider</span><span class="p">()</span>
+<span class="n">provider</span><span class="o">.</span><span class="n">add_span_processor</span><span class="p">(</span><span class="n">BatchSpanProcessor</span><span class="p">(</span><span class="n">JaegerExporter</span><span class="p">(</span>
+    <span class="n">agent_host_name</span><span class="o">=</span><span class="s2">"jaeger-agent.monitoring.svc.cluster.local"</span><span class="p">,</span>
+    <span class="n">agent_port</span><span class="o">=</span><span class="mi">6831</span>
+<span class="p">)))</span>
+<span class="n">trace</span><span class="o">.</span><span class="n">set_tracer_provider</span><span class="p">(</span><span class="n">provider</span><span class="p">)</span>
+<span class="n">tracer</span> <span class="o">=</span> <span class="n">trace</span><span class="o">.</span><span class="n">get_tracer</span><span class="p">(</span><span class="s2">"fraud-scorer"</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="n">raw_data</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">with</span> <span class="n">tracer</span><span class="o">.</span><span class="n">start_as_current_span</span><span class="p">(</span><span class="s2">"score-request"</span><span class="p">)</span> <span class="k">as</span> <span class="n">span</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">raw_data</span><span class="p">)</span>
+        <span class="n">span</span><span class="o">.</span><span class="n">set_attribute</span><span class="p">(</span><span class="s2">"batch_size"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">"features"</span><span class="p">]))</span>
+
+        <span class="k">with</span> <span class="n">tracer</span><span class="o">.</span><span class="n">start_as_current_span</span><span class="p">(</span><span class="s2">"feature-enrichment"</span><span class="p">):</span>
+            <span class="n">enriched</span> <span class="o">=</span> <span class="n">feature_store_client</span><span class="o">.</span><span class="n">get_features</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+        <span class="k">with</span> <span class="n">tracer</span><span class="o">.</span><span class="n">start_as_current_span</span><span class="p">(</span><span class="s2">"model-predict"</span><span class="p">):</span>
+            <span class="n">prediction</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">enriched</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s2">"prediction"</span><span class="p">:</span> <span class="n">prediction</span><span class="o">.</span><span class="n">tolist</span><span class="p">()})</span>
+</code></pre></div>
+<h3 id="azure-monitor-integration">Azure Monitor integration<a class="headerlink" href="#azure-monitor-integration" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Enable Container Insights on AKS cluster</span>
+az<span class="w"> </span>aks<span class="w"> </span>enable-addons<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--resource-group<span class="w"> </span>ml-rg<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--name<span class="w"> </span>ml-aks-cluster<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--addons<span class="w"> </span>monitoring<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--workspace-resource-id<span class="w"> </span>/subscriptions/&lt;sub&gt;/resourceGroups/ml-rg/providers/Microsoft.OperationalInsights/workspaces/ml-logs
+</code></pre></div>
+<p>Azure Monitor Container Insights provides:</p>
+<ul>
+<li><strong>Live log streaming</strong> from pods without <code>kubectl exec</code>.</li>
+<li><strong>Container CPU/memory</strong> metrics with historical retention.</li>
+<li><strong>Node health</strong> and pool-level metrics.</li>
+<li><strong>KQL queries</strong> over pod logs for structured log analysis:</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="n">ContainerLogV2</span>
+<span class="p">|</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">ContainerName</span><span class="w"> </span><span class="p">==</span><span class="w"> </span><span class="s">"fraud-scorer"</span>
+<span class="p">|</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">LogMessage</span><span class="w"> </span><span class="k">contains</span><span class="w"> </span><span class="s">"ERROR"</span>
+<span class="p">|</span><span class="w"> </span><span class="k">summarize</span><span class="w"> </span><span class="k">count</span><span class="p">()</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">bin</span><span class="p">(</span><span class="n">TimeGenerated</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="n">m</span><span class="p">)</span>
+<span class="p">|</span><span class="w"> </span><span class="k">render</span><span class="w"> </span><span class="n">timechart</span>
+</code></pre></div>
+<hr/>
+<h2 id="chaos-engineering-for-ml-endpoints">Chaos engineering for ML endpoints<a class="headerlink" href="#chaos-engineering-for-ml-endpoints" title="Permanent link">¶</a></h2>
+<p>Chaos engineering is the practice of deliberately injecting failures to verify that the system
+handles them gracefully. For ML endpoints, this is more important than for typical microservices
+because model inference adds unique failure modes (memory spikes during large batches, cold
+starts from model reloading) that only appear under realistic conditions.</p>
+<h3 id="why-chaos-testing-matters-for-ml">Why chaos testing matters for ML<a class="headerlink" href="#why-chaos-testing-matters-for-ml" title="Permanent link">¶</a></h3>
+<p>Standard functional tests check that the model returns correct predictions on valid inputs.
+They do not answer:</p>
+<ul>
+<li>What happens when a pod is killed mid-request?</li>
+<li>Does the service recover when a replica is suddenly unavailable?</li>
+<li>Does the autoscaler react before latency SLOs are breached during a traffic spike?</li>
+<li>What happens when the feature store is slow?</li>
+</ul>
+<p>Chaos engineering answers these questions before an on-call engineer discovers them at 2 am.</p>
+<h3 id="pod-disruption-budget">Pod disruption budget<a class="headerlink" href="#pod-disruption-budget" title="Permanent link">¶</a></h3>
+<p>A <strong>Pod Disruption Budget (PDB)</strong> sets a floor on the number of replicas that must remain
+available during voluntary disruptions (node drains, rolling updates):</p>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">policy/v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PodDisruptionBudget</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fraud-scorer-pdb</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ml-serving-prod</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">minAvailable</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<span class="w">  </span><span class="nt">selector</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">matchLabels</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">app</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fraud-scorer</span>
+</code></pre></div>
+<p>With this PDB, a <code>kubectl drain</code> operation on a node will not proceed if it would leave fewer
+than 2 replicas available. This prevents a node maintenance window from accidentally making
+the endpoint unavailable.</p>
+<h3 id="simulate-pod-kill">Simulate pod kill<a class="headerlink" href="#simulate-pod-kill" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Kill one replica and verify the service remains available</span>
+kubectl<span class="w"> </span>delete<span class="w"> </span>pod<span class="w"> </span>fraud-scorer-7d4b9f-xk2pq<span class="w"> </span>-n<span class="w"> </span>ml-serving-prod
+
+<span class="c1"># Simultaneously run load against the endpoint</span>
+ab<span class="w"> </span>-n<span class="w"> </span><span class="m">1000</span><span class="w"> </span>-c<span class="w"> </span><span class="m">10</span><span class="w"> </span>-H<span class="w"> </span><span class="s2">"Authorization: Bearer </span><span class="nv">$ENDPOINT_KEY</span><span class="s2">"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">   </span>-p<span class="w"> </span>payload.json<span class="w"> </span>-T<span class="w"> </span>application/json<span class="w"> </span><span class="se">\</span>
+<span class="w">   </span>https://fraud-api.company.com/score
+
+<span class="c1"># Verify: error rate should be &lt; 1% during the pod replacement window</span>
+</code></pre></div>
+<p>Expected behavior: Kubernetes immediately detects the missing pod via the Deployment controller,
+schedules a replacement, and traffic is routed to the remaining healthy replicas. The PDB
+ensures at least 2 replicas are always available.</p>
+<h3 id="simulate-high-load">Simulate high load<a class="headerlink" href="#simulate-high-load" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Use k6 for a realistic load ramp</span>
+cat<span class="w"> </span>&gt;<span class="w"> </span>load_test.js<span class="w"> </span><span class="s">&lt;&lt; 'EOF'</span>
+<span class="s">import http from "k6/http";</span>
+<span class="s">import { check, sleep } from "k6";</span>
+
+<span class="s">export const options = {</span>
+<span class="s">  stages: [</span>
+<span class="s">    { duration: "2m", target: 50 },   // ramp up</span>
+<span class="s">    { duration: "5m", target: 200 },  // sustained high load</span>
+<span class="s">    { duration: "2m", target: 0 },    // ramp down</span>
+<span class="s">  ],</span>
+<span class="s">  thresholds: {</span>
+<span class="s">    "http_req_duration": ["p(95)&lt;250"],</span>
+<span class="s">    "http_req_failed": ["rate&lt;0.02"],</span>
+<span class="s">  },</span>
+<span class="s">};</span>
+
+<span class="s">export default function () {</span>
+<span class="s">  const res = http.post(</span>
+<span class="s">    "https://fraud-api.company.com/score",</span>
+<span class="s">    JSON.stringify({ features: [[0.21, 1.4, 0.0, 7, 1, 0.55]] }),</span>
+<span class="s">    { headers: { "Content-Type": "application/json", Authorization: `Bearer ${__ENV.ENDPOINT_KEY}` } }</span>
+<span class="s">  );</span>
+<span class="s">  check(res, { "status 200": (r) =&gt; r.status === 200 });</span>
+<span class="s">  sleep(0.1);</span>
+<span class="s">}</span>
+<span class="s">EOF</span>
+
+k6<span class="w"> </span>run<span class="w"> </span>load_test.js
+</code></pre></div>
+<h3 id="circuit-breakers">Circuit breakers<a class="headerlink" href="#circuit-breakers" title="Permanent link">¶</a></h3>
+<p>A circuit breaker pattern prevents a degraded downstream dependency (e.g., a slow feature store)
+from cascading into a full endpoint failure. Implement using <code>pybreaker</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">pybreaker</span>
+
+<span class="n">feature_store_breaker</span> <span class="o">=</span> <span class="n">pybreaker</span><span class="o">.</span><span class="n">CircuitBreaker</span><span class="p">(</span>
+    <span class="n">fail_max</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>          <span class="c1"># open after 5 consecutive failures</span>
+    <span class="n">reset_timeout</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span>    <span class="c1"># try again after 30 s</span>
+<span class="p">)</span>
+
+<span class="nd">@feature_store_breaker</span>
+<span class="k">def</span> <span class="nf">get_features_safe</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">feature_store_client</span><span class="o">.</span><span class="n">get_features</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="n">raw_data</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">raw_data</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">enriched</span> <span class="o">=</span> <span class="n">get_features_safe</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">pybreaker</span><span class="o">.</span><span class="n">CircuitBreakerError</span><span class="p">:</span>
+        <span class="c1"># Fallback: use only request features, skip enrichment</span>
+        <span class="n">enriched</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">"features"</span><span class="p">]</span>
+
+    <span class="n">prediction</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">enriched</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s2">"prediction"</span><span class="p">:</span> <span class="n">prediction</span><span class="o">.</span><span class="n">tolist</span><span class="p">()})</span>
+</code></pre></div>
+<h3 id="what-chaos-engineering-validates-for-ml">What chaos engineering validates for ML<a class="headerlink" href="#what-chaos-engineering-validates-for-ml" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Chaos scenario</th>
+<th>What it validates</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pod kill</td>
+<td>PDB prevents total outage; Deployment self-heals</td>
+</tr>
+<tr>
+<td>Node drain</td>
+<td>Rolling update does not drop requests</td>
+</tr>
+<tr>
+<td>High load ramp</td>
+<td>Autoscaler reacts before p95 SLO breach</td>
+</tr>
+<tr>
+<td>Feature store latency injection</td>
+<td>Circuit breaker activates; fallback path works</td>
+</tr>
+<tr>
+<td>Model artifact unavailable at init</td>
+<td>Error is logged and pod enters CrashLoopBackOff (not silent wrong predictions)</td>
+</tr>
+<tr>
+<td>Large batch payload (1000 rows)</td>
+<td>OOM does not occur; batch size validation triggers</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Tip - Run chaos tests in staging:</strong> Always run chaos tests against the staging endpoint
+first. Validate that your PDB, autoscaler, and circuit breakers behave as expected before
+promoting to production. The blast radius of a failed chaos experiment in production is
+your entire user base.</p>
+</blockquote>
+<hr/>
+<h2 id="sre-practices-applied-to-ml">SRE practices applied to ML<a class="headerlink" href="#sre-practices-applied-to-ml" title="Permanent link">¶</a></h2>
+<p>Site Reliability Engineering (SRE) provides a principled framework for managing the operational
+lifecycle of ML systems. This section maps SRE concepts to ML-specific implementations.</p>
+<h3 id="sli-slo-and-sla-definitions">SLI, SLO, and SLA definitions<a class="headerlink" href="#sli-slo-and-sla-definitions" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Definition</th>
+<th>ML example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>SLI</strong> (Service Level Indicator)</td>
+<td>A quantitative measurement of a system behavior</td>
+<td>p95 inference latency; prediction AUC; error rate</td>
+</tr>
+<tr>
+<td><strong>SLO</strong> (Service Level Objective)</td>
+<td>A target value or range for an SLI</td>
+<td>p95 latency ≤ 250 ms; error rate ≤ 1%; AUC ≥ 0.82</td>
+</tr>
+<tr>
+<td><strong>SLA</strong> (Service Level Agreement)</td>
+<td>A contractual commitment, usually to customers</td>
+<td>99.9% availability; formal consequence if breached</td>
+</tr>
+</tbody>
+</table>
+<p>ML adds two SLIs that ordinary web services do not have:</p>
+<ul>
+<li><strong>Model quality SLI:</strong> Measured AUC or F1 on recent labeled production data.</li>
+<li><strong>Model freshness SLI:</strong> Age of the currently deployed model version (days since last retrain).</li>
+</ul>
+<h3 id="error-budget">Error budget<a class="headerlink" href="#error-budget" title="Permanent link">¶</a></h3>
+<p>The error budget is the amount of unreliability the SLO allows:</p>
+<div class="arithmatex">\[
+\text{Error budget} = 1 - \text{SLO}
+\]</div>
+<p>For an availability SLO of 99.9%, the error budget is 0.1% of time (~43.8 minutes/month).
+The error budget is the team's license to take risk (deploy new models, change infrastructure).
+When the budget is exhausted, no more risky changes until it recovers.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Simple error budget tracker</span>
+<span class="k">def</span> <span class="nf">compute_error_budget</span><span class="p">(</span><span class="n">slo_fraction</span><span class="p">,</span> <span class="n">requests_total</span><span class="p">,</span> <span class="n">errors_total</span><span class="p">):</span>
+    <span class="n">actual_success_rate</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="p">(</span><span class="n">errors_total</span> <span class="o">/</span> <span class="n">requests_total</span><span class="p">)</span>
+    <span class="n">budget_consumed</span> <span class="o">=</span> <span class="p">(</span><span class="n">slo_fraction</span> <span class="o">-</span> <span class="n">actual_success_rate</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">slo_fraction</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">budget_consumed</span><span class="p">)</span>  <span class="c1"># fraction of budget remaining</span>
+
+<span class="n">budget_remaining</span> <span class="o">=</span> <span class="n">compute_error_budget</span><span class="p">(</span>
+    <span class="n">slo_fraction</span><span class="o">=</span><span class="mf">0.999</span><span class="p">,</span>
+    <span class="n">requests_total</span><span class="o">=</span><span class="mi">10_000_000</span><span class="p">,</span>
+    <span class="n">errors_total</span><span class="o">=</span><span class="mi">12_000</span>  <span class="c1"># 0.12% error rate</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Error budget remaining: </span><span class="si">{</span><span class="n">budget_remaining</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="c1"># Error budget remaining: 0.0% (budget exhausted)</span>
+</code></pre></div>
+<h3 id="toil-reduction">Toil reduction<a class="headerlink" href="#toil-reduction" title="Permanent link">¶</a></h3>
+<p><strong>Toil</strong> is manual, repetitive, automatable work that grows linearly with scale. For ML operations,
+common toil sources and their automation:</p>
+<table>
+<thead>
+<tr>
+<th>Toil</th>
+<th>Automation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Manual model promotion after evaluation</td>
+<td>Champion-challenger pipeline with automated gate</td>
+</tr>
+<tr>
+<td>Checking drift dashboards daily</td>
+<td>Alerting rules trigger; humans only engage on alerts</td>
+</tr>
+<tr>
+<td>Rotating endpoint keys manually</td>
+<td>Azure Function triggered by Key Vault near-expiry event</td>
+</tr>
+<tr>
+<td>Running load tests before each release</td>
+<td>Load test step in CI/CD pipeline</td>
+</tr>
+<tr>
+<td>Updating monitoring thresholds when model retrained</td>
+<td>Thresholds stored as model metadata; monitoring job reads them</td>
+</tr>
+</tbody>
+</table>
+<p>SRE practice: engineers should spend no more than 50% of time on toil. The remainder goes to
+reducing the toil itself.</p>
+<h3 id="blameless-postmortems">Blameless postmortems<a class="headerlink" href="#blameless-postmortems" title="Permanent link">¶</a></h3>
+<p>A blameless postmortem focuses on <strong>system factors</strong>, not individual blame. The cognitive
+basis: humans make predictable mistakes when systems make it easy to make mistakes. The fix
+is the system design, not the person.</p>
+<p>Blameless postmortem principles:</p>
+<ol>
+<li><strong>Assume competence:</strong> The people involved made sensible decisions with the information available at the time.</li>
+<li><strong>Focus on contributing factors:</strong> What system conditions made the failure possible?</li>
+<li><strong>Produce durable action items:</strong> Each item must be specific, owned, and time-bound.</li>
+<li><strong>Share findings:</strong> Publish postmortems internally so others can learn.</li>
+</ol>
+<p>What a blameless postmortem does NOT include:</p>
+<ul>
+<li>Naming an individual as the root cause.</li>
+<li>Disciplinary language.</li>
+<li>"Human error" as a root cause without explaining the system conditions that made the error likely.</li>
+</ul>
+<h3 id="game-days">Game days<a class="headerlink" href="#game-days" title="Permanent link">¶</a></h3>
+<p>A <strong>game day</strong> is a structured, planned test of your incident response process. Unlike chaos
+engineering (which tests system resilience), a game day tests <em>people and process</em>:</p>
+<ul>
+<li>Can the on-call engineer find the runbook?</li>
+<li>Does the runbook still work after infrastructure changes?</li>
+<li>How long does escalation take in practice?</li>
+<li>Are the monitoring alerts actually firing to the right people?</li>
+</ul>
+<p>Game day template for an ML endpoint:</p>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Activity</th>
+<th>Duration</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Announce</td>
+<td>Notify all stakeholders; define scope</td>
+<td>30 min before</td>
+</tr>
+<tr>
+<td>Inject</td>
+<td>Inject a realistic failure (pod kill, bad model version)</td>
+<td>T+0</td>
+</tr>
+<tr>
+<td>Respond</td>
+<td>On-call team responds as if it were real</td>
+<td>T+0 to T+resolution</td>
+</tr>
+<tr>
+<td>Review</td>
+<td>Debrief: what worked, what was slow, what was missing</td>
+<td>Post-incident</td>
+</tr>
+<tr>
+<td>Improve</td>
+<td>Update runbooks, alerts, and automation based on gaps</td>
+<td>1 week after</td>
+</tr>
+</tbody>
+</table>
+<h3 id="runbook-automation">Runbook automation<a class="headerlink" href="#runbook-automation" title="Permanent link">¶</a></h3>
+<p>A runbook should be executable, not just documented. Convert manual steps to scripts:</p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+<span class="c1"># runbook: rollback-fraud-endpoint.sh</span>
+<span class="c1"># Use: When canary metrics degrade; rolls back to previous champion deployment.</span>
+
+<span class="nb">set</span><span class="w"> </span>-euo<span class="w"> </span>pipefail
+
+<span class="nv">ENDPOINT</span><span class="o">=</span><span class="s2">"</span><span class="si">${</span><span class="nv">1</span><span class="k">:-</span><span class="nv">fraud</span><span class="p">-endpoint</span><span class="si">}</span><span class="s2">"</span>
+<span class="nv">CHAMPION</span><span class="o">=</span><span class="s2">"</span><span class="si">${</span><span class="nv">2</span><span class="k">:-</span><span class="nv">blue</span><span class="si">}</span><span class="s2">"</span>
+<span class="nv">CANARY</span><span class="o">=</span><span class="s2">"</span><span class="si">${</span><span class="nv">3</span><span class="k">:-</span><span class="nv">canary</span><span class="si">}</span><span class="s2">"</span>
+<span class="nv">NAMESPACE</span><span class="o">=</span><span class="s2">"</span><span class="si">${</span><span class="nv">4</span><span class="k">:-</span><span class="nv">ml</span><span class="p">-serving-prod</span><span class="si">}</span><span class="s2">"</span>
+
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"[RUNBOOK] Rolling back </span><span class="nv">$ENDPOINT</span><span class="s2">: shifting all traffic to </span><span class="nv">$CHAMPION</span><span class="s2">"</span>
+
+az<span class="w"> </span>ml<span class="w"> </span>online-endpoint<span class="w"> </span>update<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--name<span class="w"> </span><span class="s2">"</span><span class="nv">$ENDPOINT</span><span class="s2">"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--traffic<span class="w"> </span><span class="s2">"</span><span class="nv">$CHAMPION</span><span class="s2">=100 </span><span class="nv">$CANARY</span><span class="s2">=0"</span>
+
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"[RUNBOOK] Verifying endpoint health..."</span>
+sleep<span class="w"> </span><span class="m">30</span>
+
+<span class="nv">STATUS</span><span class="o">=</span><span class="k">$(</span>az<span class="w"> </span>ml<span class="w"> </span>online-endpoint<span class="w"> </span>show<span class="w"> </span>-n<span class="w"> </span><span class="s2">"</span><span class="nv">$ENDPOINT</span><span class="s2">"</span><span class="w"> </span>--query<span class="w"> </span><span class="s2">"provisioning_state"</span><span class="w"> </span>-o<span class="w"> </span>tsv<span class="k">)</span>
+<span class="k">if</span><span class="w"> </span><span class="o">[</span><span class="w"> </span><span class="s2">"</span><span class="nv">$STATUS</span><span class="s2">"</span><span class="w"> </span>!<span class="o">=</span><span class="w"> </span><span class="s2">"Succeeded"</span><span class="w"> </span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="k">then</span>
+<span class="w">  </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"[RUNBOOK] ERROR: Endpoint provisioning state is </span><span class="nv">$STATUS</span><span class="s2">. Escalate to Sev-1."</span>
+<span class="w">  </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span>
+<span class="k">fi</span>
+
+<span class="nb">echo</span><span class="w"> </span><span class="s2">"[RUNBOOK] Rollback complete. Monitor for 15 minutes before closing incident."</span>
+</code></pre></div>
+<h3 id="on-call-rotation">On-call rotation<a class="headerlink" href="#on-call-rotation" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Practice</th>
+<th>Implementation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Primary + secondary rotation</td>
+<td>PagerDuty or OpsGenie rotation; secondary auto-escalates if primary does not acknowledge in 10 min</td>
+</tr>
+<tr>
+<td>Runbook ownership</td>
+<td>Each runbook has an owner responsible for keeping it current</td>
+</tr>
+<tr>
+<td>On-call handoff</td>
+<td>Written handoff with open incidents, recent deployments, and known risks</td>
+</tr>
+<tr>
+<td>Post-shift review</td>
+<td>Brief written summary of incidents and action items after each on-call week</td>
+</tr>
+<tr>
+<td>Toil tracking</td>
+<td>Log time spent on each on-call task; surface to engineering manager for prioritization</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Note - On-call health:</strong> SRE best practice caps on-call-induced interruptions at 2 per
+12-hour shift on average. If the ML endpoint is generating more pages than this, the team is
+in a toil spiral. The correct response is to dedicate a sprint to reducing alert noise and
+automating the most common runbook steps — not to simply staff more people.</p>
+</blockquote>
+<h2 id="quick-self-check-sre-and-chaos">Quick self-check (SRE and chaos)<a class="headerlink" href="#quick-self-check-sre-and-chaos" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Question</th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>A pod is <code>Pending</code> with "0/6 nodes available: 6 Insufficient memory" but the namespace ResourceQuota is not exhausted. What command do you run next and what do you look for?</td>
+<td>Run <code>kubectl describe nodes</code> (or check node allocatable vs requests) to see actual node memory pressure; the cluster lacks a node with enough free memory, so you scale the node pool or lower the pod's memory request.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>A Grafana panel shows the <code>fraud</code> prediction class dropping to 0 at 14:32 UTC. What three things would you check first, in order?</td>
+<td>Upstream feature/data pipeline health (nulls or schema change), a recent deployment or model-version change around 14:32, and input drift on key features feeding that class.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Your error budget is 75% consumed with 10 days left and a team wants to canary a new model. Should you approve, and what would change your answer?</td>
+<td>Be cautious: with only 25% budget left a risky deploy can exhaust it; approve only if the change is low-risk behind a tight canary with auto-rollback, or wait until the budget recovers.</td>
+</tr>
+<tr>
+<td>4</td>
+<td>A game day shows the on-call engineer took 22 minutes to find the rollback runbook. Name two concrete improvements to the runbook process.</td>
+<td>Make runbooks discoverable and linked directly from the alert, and convert manual steps into an executable, owned script that is tested regularly (e.g., during game days).</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Why is "human error" not an acceptable root cause in a blameless postmortem, and how would you reframe it?</td>
+<td>Systems make predictable mistakes easy, so blame hides the real cause; reframe "engineer ran the wrong command" as "the tool allowed an unguarded destructive command" – a missing confirmation/guardrail.</td>
+</tr>
+</tbody>
+</table>
+</article>
+</div>
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+</div>
+<button class="md-top md-icon" data-md-component="top" hidden="" type="button">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Back to top
+</button>
+</main>
+<footer class="md-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+<div class="md-copyright__highlight">
+      Copyright © 2026 <a href="https://github.com/Cloud2BR-MSFTLearningHub" rel="noopener" target="_blank">Cloud2BR MSFT Learning Hub</a>
+</div>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.expand", "navigation.top", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+<script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script src="../../assets/js/org-link.js"></script>
+<script type="module">import mermaid from "https://unpkg.com/mermaid@10.4.0/dist/mermaid.esm.min.mjs";
+mermaid.initialize({});</script></body>
+</html>

@@ -1,0 +1,2968 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Azure Machine Learning training from fundamentals to advanced MLOps.">
+      
+      
+      
+        <link rel="canonical" href="https://cloud2br-msftlearninghub.github.io/Azure-ML-Advanced/modules/01-math-prerequisites/">
+      
+      
+        <link rel="prev" href="../..">
+      
+      
+        <link rel="next" href="../02-e2e-overview/">
+      
+      
+        
+          <link rel="alternate" href="/Azure-ML-Advanced/" hreflang="en">
+        
+          <link rel="alternate" href="/Azure-ML-Advanced/es/" hreflang="es">
+        
+      
+      
+      <link rel="icon" href="../../assets/img/org-logo.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>01. Math Prerequisites - Azure Machine Learning: Advanced</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/css/custom.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#math-prerequisites-for-machine-learning" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Azure Machine Learning: Advanced" class="md-header__button md-logo" aria-label="Azure Machine Learning: Advanced" data-md-component="logo">
+      
+  <img src="../../assets/img/org-logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Azure Machine Learning: Advanced
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              01. Math Prerequisites
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="Select language">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="/Azure-ML-Advanced/" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="/Azure-ML-Advanced/es/" hreflang="es" class="md-select__link">
+              Español
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Azure Machine Learning: Advanced" class="md-nav__button md-logo" aria-label="Azure Machine Learning: Advanced" data-md-component="logo">
+      
+  <img src="../../assets/img/org-logo.png" alt="logo">
+
+    </a>
+    Azure Machine Learning: Advanced
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01. Math Prerequisites
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01. Math Prerequisites
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-mathematics-underlies-ml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Mathematics Underlies ML
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#probability-theory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Probability Theory
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Probability Theory">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-probability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is Probability?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#random-variables-and-distributions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Random Variables and Distributions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#joint-marginal-and-conditional-probability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Joint, Marginal, and Conditional Probability
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bayes-theorem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bayes' Theorem
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-distributions-for-ml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Distributions for ML
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#central-limit-theorem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Central Limit Theorem
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#information-theory-basics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Information Theory Basics
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#linear-algebra" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Linear Algebra
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Linear Algebra">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scalars-vectors-matrices-tensors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scalars, Vectors, Matrices, Tensors
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vector-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vector Operations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#matrix-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Matrix Operations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#linear-transformations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Linear Transformations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#eigenvalues-and-eigenvectors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Eigenvalues and Eigenvectors
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#matrix-decompositions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Matrix Decompositions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-linear-algebra-is-everywhere-in-ml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Linear Algebra is Everywhere in ML
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#calculus-and-optimization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Calculus and Optimization
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Calculus and Optimization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#functions-and-derivatives" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Functions and Derivatives
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#partial-derivatives-and-gradients" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Partial Derivatives and Gradients
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-chain-rule-backpropagation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Chain Rule (Backpropagation)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gradient-descent-derivation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gradient Descent Derivation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#convexity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Convexity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#taylor-series-approximation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Taylor Series Approximation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#statistics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Statistics
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Statistics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#descriptive-statistics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Descriptive Statistics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hypothesis-testing-basics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hypothesis Testing Basics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#confidence-intervals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Confidence Intervals
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#maximum-likelihood-estimation-mle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Maximum Likelihood Estimation (MLE)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#maximum-a-posteriori-map-estimation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Maximum A Posteriori (MAP) Estimation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-these-connect-to-ml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How These Connect to ML
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How These Connect to ML">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-supervised-learning-problem-as-optimization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Supervised Learning Problem as Optimization
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#notation-reference-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Notation Reference Table
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-self-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Self-Check
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-e2e-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02. End-to-End ML Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03. Introduction and Lifecycle
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-ml-foundations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04. ML Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-neural-networks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05. Neural Networks and Deep Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-azure-ml-environment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06. Azure ML Environment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-environment-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07. Environment Setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-data-preparation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08. Data Preparation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-model-types/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09. Model Types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-training-automl/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Training and AutoML
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11-performance-metrics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Performance Metrics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../12-results-explainability/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Results and Explainability
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13-deployment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Deployment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../14-deployment-debug-k8s/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. Deployment Debugging
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_16" >
+        
+          
+          <label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_16">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/model-math-deep-dive/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mathematical Model Deep Dive
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/cli-commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-mathematics-underlies-ml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Mathematics Underlies ML
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#probability-theory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Probability Theory
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Probability Theory">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-probability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What is Probability?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#random-variables-and-distributions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Random Variables and Distributions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#joint-marginal-and-conditional-probability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Joint, Marginal, and Conditional Probability
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bayes-theorem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bayes' Theorem
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-distributions-for-ml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Distributions for ML
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#central-limit-theorem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Central Limit Theorem
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#information-theory-basics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Information Theory Basics
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#linear-algebra" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Linear Algebra
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Linear Algebra">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scalars-vectors-matrices-tensors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scalars, Vectors, Matrices, Tensors
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vector-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vector Operations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#matrix-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Matrix Operations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#linear-transformations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Linear Transformations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#eigenvalues-and-eigenvectors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Eigenvalues and Eigenvectors
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#matrix-decompositions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Matrix Decompositions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-linear-algebra-is-everywhere-in-ml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Linear Algebra is Everywhere in ML
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#calculus-and-optimization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Calculus and Optimization
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Calculus and Optimization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#functions-and-derivatives" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Functions and Derivatives
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#partial-derivatives-and-gradients" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Partial Derivatives and Gradients
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-chain-rule-backpropagation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Chain Rule (Backpropagation)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gradient-descent-derivation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gradient Descent Derivation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#convexity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Convexity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#taylor-series-approximation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Taylor Series Approximation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#statistics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Statistics
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Statistics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#descriptive-statistics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Descriptive Statistics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hypothesis-testing-basics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hypothesis Testing Basics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#confidence-intervals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Confidence Intervals
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#maximum-likelihood-estimation-mle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Maximum Likelihood Estimation (MLE)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#maximum-a-posteriori-map-estimation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Maximum A Posteriori (MAP) Estimation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-these-connect-to-ml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How These Connect to ML
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How These Connect to ML">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-supervised-learning-problem-as-optimization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Supervised Learning Problem as Optimization
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#notation-reference-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Notation Reference Table
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-self-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Self-Check
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="math-prerequisites-for-machine-learning">Math Prerequisites for Machine Learning<a class="headerlink" href="#math-prerequisites-for-machine-learning" title="Permanent link">&para;</a></h1>
+<p>This module builds every mathematical foundation you need before tackling any other module
+in this course. It starts from basic algebra and works up to the graduate-level mathematics
+that underpins optimization, probability, and learning theory.</p>
+<p>No prior knowledge beyond high school algebra is required. By the end you will be able to
+read and derive the key equations in every other module.</p>
+<hr />
+<h2 id="why-mathematics-underlies-ml">Why Mathematics Underlies ML<a class="headerlink" href="#why-mathematics-underlies-ml" title="Permanent link">&para;</a></h2>
+<p>Machine learning is, at its core, <strong>applied mathematics</strong>. Every algorithm is a solution to a
+precisely stated optimization problem, and the language of that problem is mathematics.</p>
+<p>Consider what happens when you train a linear regression model:</p>
+<ol>
+<li>You represent your data as a matrix <span class="arithmatex">\(X \in \mathbb{R}^{N \times d}\)</span> — <strong>linear algebra</strong>.</li>
+<li>You define a loss function <span class="arithmatex">\(\mathcal{L}(\theta)\)</span> that measures how wrong your predictions are — <strong>calculus and probability</strong>.</li>
+<li>You minimize that loss by computing gradients and updating parameters — <strong>multivariate calculus</strong>.</li>
+<li>You evaluate whether the result is statistically meaningful — <strong>statistics</strong>.</li>
+</ol>
+<p>Strip away any one of those four pillars and the algorithm either breaks or becomes a black box
+you cannot reason about. When a model fails in production, the engineers who fix it are the ones
+who can trace the failure back to a mathematical cause: a gradient vanishing, a distribution shift,
+an objective that was not convex.</p>
+<blockquote>
+<p><strong>Note - The payoff:</strong> You do not need to derive everything from scratch every day. But understanding
+the math means you can read a paper, understand what a new optimizer does, debug a training
+instability, and choose the right regularizer. That is the difference between applying ML and
+understanding it.</p>
+</blockquote>
+<p>The table below maps each area of mathematics to the ML concepts it enables:</p>
+<table>
+<thead>
+<tr>
+<th>Math area</th>
+<th>What it enables in ML</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Linear algebra</td>
+<td>Feature representation, neural network layers, PCA, attention mechanisms</td>
+</tr>
+<tr>
+<td>Probability</td>
+<td>Loss functions, Bayesian inference, generative models, uncertainty</td>
+</tr>
+<tr>
+<td>Calculus</td>
+<td>Gradient descent, backpropagation, optimization algorithms</td>
+</tr>
+<tr>
+<td>Statistics</td>
+<td>Model evaluation, hypothesis testing, confidence intervals, MLE/MAP</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="probability-theory">Probability Theory<a class="headerlink" href="#probability-theory" title="Permanent link">&para;</a></h2>
+<h3 id="what-is-probability">What is Probability?<a class="headerlink" href="#what-is-probability" title="Permanent link">&para;</a></h3>
+<p>Probability is a number between 0 and 1 that quantifies <strong>how likely</strong> an event is to occur.</p>
+<p><strong>Sample space and events</strong></p>
+<ul>
+<li>The <strong>sample space</strong> <span class="arithmatex">\(\Omega\)</span> is the set of all possible outcomes. For a coin flip, <span class="arithmatex">\(\Omega = \{H, T\}\)</span>.</li>
+<li>An <strong>event</strong> <span class="arithmatex">\(A\)</span> is a subset of <span class="arithmatex">\(\Omega\)</span>. For a die, the event "even" is <span class="arithmatex">\(A = \{2, 4, 6\}\)</span>.</li>
+<li>The <strong>probability</strong> of event <span class="arithmatex">\(A\)</span> is written <span class="arithmatex">\(P(A)\)</span>.</li>
+</ul>
+<p><strong>Kolmogorov's axioms</strong> (the three rules everything else follows from):</p>
+<ol>
+<li>Non-negativity: <span class="arithmatex">\(P(A) \geq 0\)</span> for any event <span class="arithmatex">\(A\)</span>.</li>
+<li>Normalization: <span class="arithmatex">\(P(\Omega) = 1\)</span> (something must happen).</li>
+<li>Additivity: if <span class="arithmatex">\(A\)</span> and <span class="arithmatex">\(B\)</span> are mutually exclusive, <span class="arithmatex">\(P(A \cup B) = P(A) + P(B)\)</span>.</li>
+</ol>
+<p>From these three axioms alone, all of probability theory is derived.</p>
+<p><strong>Two interpretations of probability:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Interpretation</th>
+<th>"P(rain tomorrow) = 0.7" means...</th>
+<th>Used for...</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Frequentist</td>
+<td>In the long run, 70 % of similar days have rain</td>
+<td>Classical statistics, hypothesis testing</td>
+</tr>
+<tr>
+<td>Bayesian</td>
+<td>My degree of belief that it will rain is 70 %</td>
+<td>Bayesian inference, prior/posterior, uncertainty</td>
+</tr>
+</tbody>
+</table>
+<p>ML uses both. Cross-validation and p-values are frequentist. Bayesian neural networks and
+MAP estimation are Bayesian.</p>
+<blockquote>
+<p><strong>Note - Why this matters:</strong> The interpretation you choose affects how you report uncertainty.
+A frequentist confidence interval and a Bayesian credible interval have different meanings,
+even if they often produce similar numbers.</p>
+</blockquote>
+<hr />
+<h3 id="random-variables-and-distributions">Random Variables and Distributions<a class="headerlink" href="#random-variables-and-distributions" title="Permanent link">&para;</a></h3>
+<p>A <strong>random variable</strong> <span class="arithmatex">\(X\)</span> is a function that assigns a real number to each outcome in the
+sample space. It is the bridge between abstract probability and concrete numbers.</p>
+<p><strong>Discrete vs continuous:</strong></p>
+<ul>
+<li><strong>Discrete</strong> <span class="arithmatex">\(X\)</span> takes countable values (0, 1, 2, ...). Described by a <strong>probability mass function (PMF)</strong>:
+  <span class="arithmatex">\(P(X = k) = p_k\)</span>, where <span class="arithmatex">\(\sum_k p_k = 1\)</span>.</li>
+<li><strong>Continuous</strong> <span class="arithmatex">\(X\)</span> takes any real value in an interval. Described by a <strong>probability density function (PDF)</strong>:
+  <span class="arithmatex">\(f(x) \geq 0\)</span>, and <span class="arithmatex">\(\int_{-\infty}^{\infty} f(x)\, dx = 1\)</span>.</li>
+</ul>
+<p><strong>Cumulative Distribution Function (CDF):</strong> works for both types:</p>
+<div class="arithmatex">\[F(x) = P(X \leq x)\]</div>
+<p>For a continuous variable, <span class="arithmatex">\(F(x) = \int_{-\infty}^{x} f(t)\, dt\)</span>.</p>
+<p><img alt="Discrete PMF vs continuous PDF and CDF" src="../../assets/img/probability-distributions.svg" /></p>
+<blockquote>
+<p><strong>Note - Three views of a distribution:</strong> The PMF places probability on discrete points, the PDF spreads it as area under a curve, and the CDF accumulates that probability from 0 to 1.</p>
+</blockquote>
+<p><strong>Key distributions:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Distribution</th>
+<th>Type</th>
+<th>Parameters</th>
+<th>PMF / PDF</th>
+<th>ML use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bernoulli</td>
+<td>Discrete</td>
+<td><span class="arithmatex">\(p \in [0,1]\)</span></td>
+<td><span class="arithmatex">\(P(X=1)=p,\ P(X=0)=1-p\)</span></td>
+<td>Binary classification output</td>
+</tr>
+<tr>
+<td>Binomial</td>
+<td>Discrete</td>
+<td><span class="arithmatex">\(n, p\)</span></td>
+<td><span class="arithmatex">\(\binom{n}{k} p^k (1-p)^{n-k}\)</span></td>
+<td>Count of successes in <span class="arithmatex">\(n\)</span> trials</td>
+</tr>
+<tr>
+<td>Gaussian (Normal)</td>
+<td>Continuous</td>
+<td><span class="arithmatex">\(\mu, \sigma^2\)</span></td>
+<td><span class="arithmatex">\(\frac{1}{\sqrt{2\pi\sigma^2}} \exp\!\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)\)</span></td>
+<td>Residuals, weight initialization, noise</td>
+</tr>
+<tr>
+<td>Uniform</td>
+<td>Continuous</td>
+<td><span class="arithmatex">\(a, b\)</span></td>
+<td><span class="arithmatex">\(\frac{1}{b-a}\)</span> on <span class="arithmatex">\([a,b]\)</span></td>
+<td>Weight initialization, random search</td>
+</tr>
+<tr>
+<td>Poisson</td>
+<td>Discrete</td>
+<td><span class="arithmatex">\(\lambda &gt; 0\)</span></td>
+<td><span class="arithmatex">\(\frac{\lambda^k e^{-\lambda}}{k!}\)</span></td>
+<td>Count data, arrival rates, NLP token counts</td>
+</tr>
+<tr>
+<td>Categorical</td>
+<td>Discrete</td>
+<td><span class="arithmatex">\(p_1,\dots,p_K\)</span></td>
+<td><span class="arithmatex">\(P(X=k) = p_k\)</span></td>
+<td>Multiclass classification output</td>
+</tr>
+</tbody>
+</table>
+<p><img alt="The Gaussian distribution and empirical rule" src="../../assets/img/gaussian-distribution.svg" /></p>
+<blockquote>
+<p><strong>Note - The empirical rule:</strong> For any Gaussian, ~68% of values lie within ±1σ of the mean μ, ~95% within ±2σ, and ~99.7% within ±3σ.</p>
+</blockquote>
+<p><strong>Expectation</strong> — the long-run average value of a random variable:</p>
+<div class="arithmatex">\[E[X] = \sum_k k \cdot P(X=k) \quad \text{(discrete)}\]</div>
+<div class="arithmatex">\[E[X] = \int_{-\infty}^{\infty} x \cdot f(x)\, dx \quad \text{(continuous)}\]</div>
+<p><em>Worked example (discrete):</em> Let <span class="arithmatex">\(X\)</span> be a fair die. Then:</p>
+<div class="arithmatex">\[E[X] = 1 \cdot \frac{1}{6} + 2 \cdot \frac{1}{6} + 3 \cdot \frac{1}{6} + 4 \cdot \frac{1}{6} + 5 \cdot \frac{1}{6} + 6 \cdot \frac{1}{6} = \frac{21}{6} = 3.5\]</div>
+<p><strong>Variance</strong> — how spread out values are around the mean:</p>
+<div class="arithmatex">\[\text{Var}(X) = E\!\left[(X - E[X])^2\right] = E[X^2] - (E[X])^2\]</div>
+<p><strong>Standard deviation:</strong> <span class="arithmatex">\(\sigma = \sqrt{\text{Var}(X)}\)</span>. It has the same units as <span class="arithmatex">\(X\)</span>, making it more interpretable.</p>
+<p><em>Worked example:</em> For a Bernoulli<span class="arithmatex">\((p)\)</span> variable: <span class="arithmatex">\(E[X] = p\)</span>, <span class="arithmatex">\(E[X^2] = p\)</span>,
+so <span class="arithmatex">\(\text{Var}(X) = p - p^2 = p(1-p)\)</span>. Variance is maximized at <span class="arithmatex">\(p = 0.5\)</span> (maximum uncertainty).</p>
+<blockquote>
+<p><strong>Note - Why variance matters in ML:</strong> The bias-variance tradeoff is literally about the variance
+of your estimator across different training sets. High variance = overfitting. Understanding this
+mathematically lets you reason about regularization and ensemble methods.</p>
+</blockquote>
+<hr />
+<h3 id="joint-marginal-and-conditional-probability">Joint, Marginal, and Conditional Probability<a class="headerlink" href="#joint-marginal-and-conditional-probability" title="Permanent link">&para;</a></h3>
+<p>Real ML problems involve multiple random variables. We need to reason about their relationships.</p>
+<p><strong>Joint probability</strong> <span class="arithmatex">\(P(X, Y)\)</span> (or <span class="arithmatex">\(P(X=x, Y=y)\)</span>) is the probability that both <span class="arithmatex">\(X=x\)</span> and <span class="arithmatex">\(Y=y\)</span> occur simultaneously.</p>
+<p><strong>Marginal probability</strong> is obtained by summing (or integrating) out the other variable:</p>
+<div class="arithmatex">\[P(X = x) = \sum_y P(X = x, Y = y)\]</div>
+<p>This is called <strong>marginalization</strong> — you collapse one dimension of the joint distribution.</p>
+<p><strong>Conditional probability</strong> is the probability of <span class="arithmatex">\(X\)</span> given that you already know <span class="arithmatex">\(Y=y\)</span>:</p>
+<div class="arithmatex">\[P(X = x \mid Y = y) = \frac{P(X = x,\, Y = y)}{P(Y = y)}\]</div>
+<p><em>Worked example:</em> Suppose 100 emails: 40 spam, 60 not-spam. Of the 40 spam, 30 contain the word
+"free". What is <span class="arithmatex">\(P(\text{free} \mid \text{spam})\)</span>?</p>
+<div class="arithmatex">\[P(\text{free} \mid \text{spam}) = \frac{P(\text{free},\, \text{spam})}{P(\text{spam})} = \frac{30/100}{40/100} = \frac{30}{40} = 0.75\]</div>
+<p><strong>Independence:</strong> <span class="arithmatex">\(X\)</span> and <span class="arithmatex">\(Y\)</span> are independent if knowing <span class="arithmatex">\(Y\)</span> tells you nothing about <span class="arithmatex">\(X\)</span>:</p>
+<div class="arithmatex">\[X \perp Y \iff P(X, Y) = P(X) \cdot P(Y)\]</div>
+<p>Equivalently, <span class="arithmatex">\(P(X \mid Y) = P(X)\)</span>.</p>
+<p><strong>Chain rule of probability</strong> — factoring a joint distribution into conditionals:</p>
+<div class="arithmatex">\[P(X_1, X_2, X_3) = P(X_1) \cdot P(X_2 \mid X_1) \cdot P(X_3 \mid X_1, X_2)\]</div>
+<p>This generalizes to any number of variables and is the foundation of directed graphical models
+(Bayesian networks) used in causal ML.</p>
+<hr />
+<h3 id="bayes-theorem">Bayes' Theorem<a class="headerlink" href="#bayes-theorem" title="Permanent link">&para;</a></h3>
+<p>Bayes' theorem is the cornerstone of probabilistic machine learning. It tells you how to update
+your beliefs when you observe new evidence.</p>
+<p><strong>Derivation:</strong> Starting from the definition of conditional probability:</p>
+<div class="arithmatex">\[P(A \mid B) = \frac{P(A, B)}{P(B)}, \quad P(B \mid A) = \frac{P(A, B)}{P(A)}\]</div>
+<p>Solving both for <span class="arithmatex">\(P(A, B)\)</span> and equating:</p>
+<div class="arithmatex">\[\boxed{P(A \mid B) = \frac{P(B \mid A)\, P(A)}{P(B)}}\]</div>
+<p><strong>In ML terms, with parameter <span class="arithmatex">\(\theta\)</span> and data <span class="arithmatex">\(D\)</span>:</strong></p>
+<div class="arithmatex">\[P(\theta \mid D) = \frac{P(D \mid \theta)\, P(\theta)}{P(D)}\]</div>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Name</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(P(\theta)\)</span></td>
+<td>Prior</td>
+<td>Your belief about <span class="arithmatex">\(\theta\)</span> before seeing data</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(P(D \mid \theta)\)</span></td>
+<td>Likelihood</td>
+<td>How probable is the data if <span class="arithmatex">\(\theta\)</span> is true?</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(P(\theta \mid D)\)</span></td>
+<td>Posterior</td>
+<td>Updated belief about <span class="arithmatex">\(\theta\)</span> after data</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(P(D)\)</span></td>
+<td>Evidence (marginal likelihood)</td>
+<td>Normalizing constant; often intractable</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Intuitive example:</strong> Medical test. A disease affects 1 % of the population. A test is 99 %
+accurate (sensitivity 99 %, specificity 99 %). You test positive. What is the probability you
+have the disease?</p>
+<p>Let <span class="arithmatex">\(D\)</span> = disease, <span class="arithmatex">\(+\)</span> = positive test.</p>
+<ul>
+<li><span class="arithmatex">\(P(D) = 0.01\)</span>, <span class="arithmatex">\(P(\neg D) = 0.99\)</span></li>
+<li><span class="arithmatex">\(P(+ \mid D) = 0.99\)</span>, <span class="arithmatex">\(P(+ \mid \neg D) = 0.01\)</span></li>
+</ul>
+<div class="arithmatex">\[P(D \mid +) = \frac{0.99 \times 0.01}{0.99 \times 0.01 + 0.01 \times 0.99} = \frac{0.0099}{0.0198} = 0.5\]</div>
+<p>Only 50 %! The low base rate (<span class="arithmatex">\(P(D) = 0.01\)</span>) dominates. This is why screening tests on rare
+conditions generate many false positives — a critical insight for ML on imbalanced datasets.</p>
+<p><img alt="Bayes' theorem with the medical test example" src="../../assets/img/bayes-theorem.svg" /></p>
+<blockquote>
+<p><strong>Note - Why the posterior is only 50%:</strong> Among ~20 positive tests, about 10 come from the 10 truly diseased people and about 10 are false positives from the 990 healthy people, so a positive result is a coin flip.</p>
+</blockquote>
+<p><strong>MLE vs MAP:</strong></p>
+<ul>
+<li><strong>Maximum Likelihood Estimation (MLE):</strong> <span class="arithmatex">\(\hat{\theta}_{MLE} = \arg\max_\theta P(D \mid \theta)\)</span>. Ignores the prior.</li>
+<li><strong>Maximum A Posteriori (MAP):</strong> <span class="arithmatex">\(\hat{\theta}_{MAP} = \arg\max_\theta P(\theta \mid D) = \arg\max_\theta \left[\log P(D \mid \theta) + \log P(\theta)\right]\)</span>. Includes the prior — equivalent to regularization.</li>
+</ul>
+<hr />
+<h3 id="key-distributions-for-ml">Key Distributions for ML<a class="headerlink" href="#key-distributions-for-ml" title="Permanent link">&para;</a></h3>
+<p><strong>Gaussian (Normal) distribution:</strong> The most important distribution in statistics and ML.</p>
+<div class="arithmatex">\[\mathcal{N}(x;\, \mu,\, \sigma^2) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\!\left(-\frac{(x - \mu)^2}{2\sigma^2}\right)\]</div>
+<p>Properties:</p>
+<ul>
+<li>Symmetric bell curve centered at <span class="arithmatex">\(\mu\)</span>.</li>
+<li>68 % of mass within <span class="arithmatex">\(\mu \pm \sigma\)</span>; 95 % within <span class="arithmatex">\(\mu \pm 2\sigma\)</span>; 99.7 % within <span class="arithmatex">\(\mu \pm 3\sigma\)</span>.</li>
+<li>Sum of two Gaussians is Gaussian: if <span class="arithmatex">\(X \sim \mathcal{N}(\mu_1, \sigma_1^2)\)</span> and <span class="arithmatex">\(Y \sim \mathcal{N}(\mu_2, \sigma_2^2)\)</span>, then <span class="arithmatex">\(X + Y \sim \mathcal{N}(\mu_1 + \mu_2,\, \sigma_1^2 + \sigma_2^2)\)</span>.</li>
+<li>Fully characterized by just <span class="arithmatex">\(\mu\)</span> and <span class="arithmatex">\(\sigma^2\)</span>.</li>
+</ul>
+<p><strong>Standard Normal:</strong> <span class="arithmatex">\(Z = \frac{X - \mu}{\sigma} \sim \mathcal{N}(0, 1)\)</span>. This standardization (z-scoring) is feature normalization in ML.</p>
+<p><strong>Bernoulli distribution:</strong> Models a single binary outcome.</p>
+<div class="arithmatex">\[P(X=1) = p, \quad P(X=0) = 1-p, \quad E[X] = p, \quad \text{Var}(X) = p(1-p)\]</div>
+<p>In logistic regression, the model outputs <span class="arithmatex">\(\hat{p} = \sigma(w^\top x)\)</span> and the label distribution
+is <span class="arithmatex">\(y \sim \text{Bernoulli}(\hat{p})\)</span>.</p>
+<p><strong>Softmax and Categorical:</strong> For <span class="arithmatex">\(K\)</span>-class classification, the model outputs a vector of logits
+<span class="arithmatex">\(z = (z_1, \dots, z_K)\)</span>. The softmax function converts logits to probabilities:</p>
+<div class="arithmatex">\[\text{softmax}(z_k) = \frac{e^{z_k}}{\sum_{j=1}^K e^{z_j}}\]</div>
+<p>The output is a Categorical distribution. Each <span class="arithmatex">\(\text{softmax}(z_k) \geq 0\)</span> and they sum to 1.</p>
+<blockquote>
+<p><strong>Note - Numerical stability:</strong> In practice, compute <span class="arithmatex">\(\text{softmax}(z - \max(z))\)</span> to avoid
+overflow in <span class="arithmatex">\(e^{z_k}\)</span> when logits are large. This identity holds because the max cancels in
+numerator and denominator.</p>
+</blockquote>
+<hr />
+<h3 id="central-limit-theorem">Central Limit Theorem<a class="headerlink" href="#central-limit-theorem" title="Permanent link">&para;</a></h3>
+<p><strong>Statement:</strong> Let <span class="arithmatex">\(X_1, X_2, \dots, X_n\)</span> be independent, identically distributed random variables
+with mean <span class="arithmatex">\(\mu\)</span> and variance <span class="arithmatex">\(\sigma^2\)</span>. Then as <span class="arithmatex">\(n \to \infty\)</span>:</p>
+<div class="arithmatex">\[\bar{X}_n = \frac{1}{n}\sum_{i=1}^n X_i \xrightarrow{d} \mathcal{N}\!\left(\mu,\, \frac{\sigma^2}{n}\right)\]</div>
+<p>In words: the sample mean of <span class="arithmatex">\(n\)</span> observations is approximately Normally distributed, <strong>regardless
+of the original distribution</strong>, for large enough <span class="arithmatex">\(n\)</span>.</p>
+<p><strong>Why the Gaussian appears everywhere in ML:</strong></p>
+<ol>
+<li>Many real measurements are the sum of many small independent effects — hence Gaussian by the CLT.</li>
+<li>Maximum entropy: the Gaussian maximizes entropy among all distributions with fixed mean and variance — it is the "least informative" assumption.</li>
+<li>Conjugate prior for the mean: if your likelihood is Gaussian, your posterior is also Gaussian.</li>
+</ol>
+<p><strong>Why CLT matters for ML evaluation:</strong></p>
+<p>When you report a test accuracy of 0.87 over 1 000 test samples, the CLT tells you the sampling
+distribution of that accuracy estimate is approximately Normal. This lets you compute a
+confidence interval:</p>
+<div class="arithmatex">\[\text{CI}_{95\%} \approx \hat{p} \pm 1.96 \sqrt{\frac{\hat{p}(1-\hat{p})}{n}}\]</div>
+<p>For <span class="arithmatex">\(\hat{p} = 0.87\)</span>, <span class="arithmatex">\(n = 1000\)</span>: <span class="arithmatex">\(\text{CI} \approx 0.87 \pm 0.021 = (0.849,\, 0.891)\)</span>.</p>
+<p>Two models differing by less than this margin are statistically indistinguishable.</p>
+<hr />
+<h3 id="information-theory-basics">Information Theory Basics<a class="headerlink" href="#information-theory-basics" title="Permanent link">&para;</a></h3>
+<p>Information theory quantifies <strong>uncertainty</strong> and <strong>information content</strong> — the mathematical
+foundation of loss functions.</p>
+<p><strong>Entropy</strong> <span class="arithmatex">\(H(X)\)</span> measures the expected uncertainty of a random variable:</p>
+<div class="arithmatex">\[H(X) = -\sum_{k} P(X=k) \log_2 P(X=k)\]</div>
+<ul>
+<li>Entropy is 0 when one outcome is certain (<span class="arithmatex">\(P = 1\)</span>) — no surprise.</li>
+<li>Entropy is maximized when all outcomes are equally likely — maximum uncertainty.</li>
+<li>For a fair coin: <span class="arithmatex">\(H = -(0.5 \log_2 0.5 + 0.5 \log_2 0.5) = 1\)</span> bit.</li>
+<li>For a biased coin <span class="arithmatex">\(p = 0.9\)</span>: <span class="arithmatex">\(H = -(0.9 \log_2 0.9 + 0.1 \log_2 0.1) \approx 0.469\)</span> bits.</li>
+</ul>
+<p><strong>Cross-entropy</strong> <span class="arithmatex">\(H(p, q)\)</span> measures how well distribution <span class="arithmatex">\(q\)</span> approximates true distribution <span class="arithmatex">\(p\)</span>:</p>
+<div class="arithmatex">\[H(p, q) = -\sum_k p_k \log q_k\]</div>
+<p><strong>Why cross-entropy is the classification loss:</strong> If the true label distribution is
+<span class="arithmatex">\(p = (0, 1, 0)\)</span> (class 2 is correct) and our model outputs <span class="arithmatex">\(q = (0.1, 0.7, 0.2)\)</span>:</p>
+<div class="arithmatex">\[H(p, q) = -\log(0.7) \approx 0.357\]</div>
+<p>Minimizing cross-entropy pushes the model to assign high probability to the correct class,
+which is exactly what we want. Minimizing <span class="arithmatex">\(H(p, q)\)</span> is equivalent to maximizing
+log-likelihood.</p>
+<p><strong>KL divergence</strong> <span class="arithmatex">\(D_{KL}(p \| q)\)</span> measures how much <span class="arithmatex">\(q\)</span> diverges from <span class="arithmatex">\(p\)</span>:</p>
+<div class="arithmatex">\[D_{KL}(p \| q) = \sum_k p_k \log \frac{p_k}{q_k} = H(p, q) - H(p)\]</div>
+<p>Properties: <span class="arithmatex">\(D_{KL}(p \| q) \geq 0\)</span>, with equality iff <span class="arithmatex">\(p = q\)</span>. It is not symmetric:
+<span class="arithmatex">\(D_{KL}(p \| q) \neq D_{KL}(q \| p)\)</span>.</p>
+<p>KL divergence appears in variational autoencoders (VAEs) as the regularization term, and in
+reinforcement learning as a constraint on policy updates (PPO, TRPO).</p>
+<hr />
+<h2 id="linear-algebra">Linear Algebra<a class="headerlink" href="#linear-algebra" title="Permanent link">&para;</a></h2>
+<h3 id="scalars-vectors-matrices-tensors">Scalars, Vectors, Matrices, Tensors<a class="headerlink" href="#scalars-vectors-matrices-tensors" title="Permanent link">&para;</a></h3>
+<p>These are the four fundamental objects in ML computations.</p>
+<table>
+<thead>
+<tr>
+<th>Object</th>
+<th>Symbol</th>
+<th>Example dimensions</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Scalar</td>
+<td><span class="arithmatex">\(x \in \mathbb{R}\)</span></td>
+<td><span class="arithmatex">\(1 \times 1\)</span></td>
+<td>A single number: learning rate, loss value</td>
+</tr>
+<tr>
+<td>Vector</td>
+<td><span class="arithmatex">\(\mathbf{x} \in \mathbb{R}^d\)</span></td>
+<td><span class="arithmatex">\(d \times 1\)</span></td>
+<td>A feature vector with <span class="arithmatex">\(d\)</span> features</td>
+</tr>
+<tr>
+<td>Matrix</td>
+<td><span class="arithmatex">\(W \in \mathbb{R}^{m \times n}\)</span></td>
+<td><span class="arithmatex">\(m \times n\)</span></td>
+<td>A weight matrix; a dataset <span class="arithmatex">\(X \in \mathbb{R}^{N \times d}\)</span></td>
+</tr>
+<tr>
+<td>Tensor</td>
+<td><span class="arithmatex">\(\mathcal{T} \in \mathbb{R}^{d_1 \times d_2 \times d_3}\)</span></td>
+<td>arbitrary</td>
+<td>Image batch: <span class="arithmatex">\((B, H, W, C)\)</span></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Vector notation:</strong></p>
+<div class="arithmatex">\[\mathbf{x} = \begin{pmatrix} x_1 \\ x_2 \\ \vdots \\ x_d \end{pmatrix} \in \mathbb{R}^d\]</div>
+<p>By convention, vectors are column vectors unless stated otherwise.</p>
+<p><strong>Matrix notation:</strong></p>
+<div class="arithmatex">\[W = \begin{pmatrix} w_{11} &amp; w_{12} &amp; \cdots &amp; w_{1n} \\ w_{21} &amp; w_{22} &amp; \cdots &amp; w_{2n} \\ \vdots &amp; &amp; \ddots &amp; \vdots \\ w_{m1} &amp; w_{m2} &amp; \cdots &amp; w_{mn} \end{pmatrix} \in \mathbb{R}^{m \times n}\]</div>
+<p>The entry in row <span class="arithmatex">\(i\)</span>, column <span class="arithmatex">\(j\)</span> is <span class="arithmatex">\(W_{ij}\)</span> or <span class="arithmatex">\(w_{ij}\)</span>.</p>
+<hr />
+<h3 id="vector-operations">Vector Operations<a class="headerlink" href="#vector-operations" title="Permanent link">&para;</a></h3>
+<p><strong>Addition:</strong> Vectors of the same dimension add element-wise.</p>
+<div class="arithmatex">\[\mathbf{u} + \mathbf{v} = \begin{pmatrix} u_1 + v_1 \\ u_2 + v_2 \end{pmatrix}\]</div>
+<p><strong>Scalar multiplication:</strong> <span class="arithmatex">\(c \cdot \mathbf{x} = (c x_1, c x_2, \dots, c x_d)^\top\)</span>.</p>
+<p><strong>Dot product (inner product):</strong> Fundamental to everything in ML.</p>
+<div class="arithmatex">\[\mathbf{x} \cdot \mathbf{y} = \mathbf{x}^\top \mathbf{y} = \sum_{i=1}^d x_i y_i\]</div>
+<p><em>Worked example:</em> <span class="arithmatex">\(\mathbf{x} = (1, 2, 3)^\top\)</span>, <span class="arithmatex">\(\mathbf{y} = (4, 5, 6)^\top\)</span>:</p>
+<div class="arithmatex">\[\mathbf{x}^\top \mathbf{y} = 1 \cdot 4 + 2 \cdot 5 + 3 \cdot 6 = 4 + 10 + 18 = 32\]</div>
+<p>In linear regression, the prediction is <span class="arithmatex">\(\hat{y} = \mathbf{w}^\top \mathbf{x}\)</span> — a single dot product.</p>
+<p><strong>Geometric interpretation:</strong> <span class="arithmatex">\(\mathbf{x}^\top \mathbf{y} = \|\mathbf{x}\|_2 \|\mathbf{y}\|_2 \cos\theta\)</span>,
+where <span class="arithmatex">\(\theta\)</span> is the angle between the vectors.</p>
+<ul>
+<li><span class="arithmatex">\(\mathbf{x}^\top \mathbf{y} &gt; 0\)</span>: vectors point in a similar direction (angle <span class="arithmatex">\(&lt; 90°\)</span>).</li>
+<li><span class="arithmatex">\(\mathbf{x}^\top \mathbf{y} = 0\)</span>: vectors are <strong>orthogonal</strong> (perpendicular).</li>
+<li><span class="arithmatex">\(\mathbf{x}^\top \mathbf{y} &lt; 0\)</span>: vectors point in opposite directions.</li>
+</ul>
+<p><strong>Norms — measuring the size of a vector:</strong></p>
+<ul>
+<li><strong>L2 norm (Euclidean):</strong> <span class="arithmatex">\(\|\mathbf{x}\|_2 = \sqrt{\sum_{i=1}^d x_i^2}\)</span>. Most common.</li>
+<li><strong>L1 norm (Manhattan):</strong> <span class="arithmatex">\(\|\mathbf{x}\|_1 = \sum_{i=1}^d |x_i|\)</span>.</li>
+<li><strong>L<span class="arithmatex">\(\infty\)</span> norm:</strong> <span class="arithmatex">\(\|\mathbf{x}\|_\infty = \max_i |x_i|\)</span>.</li>
+</ul>
+<p><em>Example:</em> <span class="arithmatex">\(\mathbf{x} = (3, 4)^\top\)</span>: <span class="arithmatex">\(\|\mathbf{x}\|_2 = \sqrt{9+16} = 5\)</span>, <span class="arithmatex">\(\|\mathbf{x}\|_1 = 7\)</span>.</p>
+<p><strong>Cosine similarity</strong> measures direction, ignoring magnitude:</p>
+<div class="arithmatex">\[\text{cos\_sim}(\mathbf{x}, \mathbf{y}) = \frac{\mathbf{x}^\top \mathbf{y}}{\|\mathbf{x}\|_2 \|\mathbf{y}\|_2}\]</div>
+<p>This is the basis of text similarity, recommendation systems, and the attention mechanism in
+Transformers.</p>
+<blockquote>
+<p><strong>Note - L1 vs L2 regularization:</strong> L2 regularization penalizes <span class="arithmatex">\(\|\mathbf{w}\|_2^2\)</span> and
+produces small weights uniformly. L1 regularization penalizes <span class="arithmatex">\(\|\mathbf{w}\|_1\)</span> and
+produces <strong>sparse</strong> weights (many exactly zero), enabling feature selection.</p>
+</blockquote>
+<hr />
+<h3 id="matrix-operations">Matrix Operations<a class="headerlink" href="#matrix-operations" title="Permanent link">&para;</a></h3>
+<p><strong>Matrix multiplication:</strong> If <span class="arithmatex">\(A \in \mathbb{R}^{m \times n}\)</span> and <span class="arithmatex">\(B \in \mathbb{R}^{n \times p}\)</span>,
+their product <span class="arithmatex">\(C = AB \in \mathbb{R}^{m \times p}\)</span> has entries:</p>
+<div class="arithmatex">\[C_{ij} = \sum_{k=1}^n A_{ik} B_{kj}\]</div>
+<p>The inner dimensions must match: <span class="arithmatex">\(m \times \mathbf{n}\)</span> times <span class="arithmatex">\(\mathbf{n} \times p\)</span>.</p>
+<p><em>Worked example:</em></p>
+<div class="arithmatex">\[A = \begin{pmatrix} 1 &amp; 2 \\ 3 &amp; 4 \end{pmatrix}, \quad B = \begin{pmatrix} 5 &amp; 6 \\ 7 &amp; 8 \end{pmatrix}\]</div>
+<div class="arithmatex">\[AB = \begin{pmatrix} 1\cdot5 + 2\cdot7 &amp; 1\cdot6 + 2\cdot8 \\ 3\cdot5 + 4\cdot7 &amp; 3\cdot6 + 4\cdot8 \end{pmatrix} = \begin{pmatrix} 19 &amp; 22 \\ 43 &amp; 50 \end{pmatrix}\]</div>
+<p>Matrix multiplication is <strong>not commutative</strong>: <span class="arithmatex">\(AB \neq BA\)</span> in general.</p>
+<p><strong>Transpose:</strong> <span class="arithmatex">\((A^\top)_{ij} = A_{ji}\)</span>. Flips rows and columns. If <span class="arithmatex">\(A \in \mathbb{R}^{m \times n}\)</span>, then <span class="arithmatex">\(A^\top \in \mathbb{R}^{n \times m}\)</span>.</p>
+<p>Key identity: <span class="arithmatex">\((AB)^\top = B^\top A^\top\)</span>.</p>
+<p><strong>Identity matrix <span class="arithmatex">\(I\)</span>:</strong> A square matrix with 1s on the diagonal and 0s elsewhere. <span class="arithmatex">\(AI = IA = A\)</span>.</p>
+<p><strong>Inverse:</strong> The inverse of square matrix <span class="arithmatex">\(A\)</span> is <span class="arithmatex">\(A^{-1}\)</span> such that <span class="arithmatex">\(A A^{-1} = A^{-1} A = I\)</span>.
+Not every matrix has an inverse. A matrix is <strong>invertible</strong> (non-singular) iff its determinant is non-zero.</p>
+<p>The closed-form solution to linear regression uses the matrix inverse:</p>
+<div class="arithmatex">\[\hat{\mathbf{w}} = (X^\top X)^{-1} X^\top \mathbf{y}\]</div>
+<p>This is the <strong>Normal Equations</strong> — valid when <span class="arithmatex">\(X^\top X\)</span> is invertible (i.e., features are not linearly dependent).</p>
+<p><strong>Determinant:</strong> A scalar <span class="arithmatex">\(\det(A)\)</span> that encodes how a matrix scales volumes.</p>
+<ul>
+<li><span class="arithmatex">\(\det(A) = 0\)</span>: matrix is singular, not invertible, columns are linearly dependent.</li>
+<li><span class="arithmatex">\(|\det(A)| &gt; 1\)</span>: the transformation expands space.</li>
+<li><span class="arithmatex">\(|\det(A)| &lt; 1\)</span>: the transformation contracts space.</li>
+</ul>
+<hr />
+<h3 id="linear-transformations">Linear Transformations<a class="headerlink" href="#linear-transformations" title="Permanent link">&para;</a></h3>
+<p>A matrix <span class="arithmatex">\(A \in \mathbb{R}^{m \times n}\)</span> defines a <strong>linear transformation</strong> <span class="arithmatex">\(f(\mathbf{x}) = A\mathbf{x}\)</span>
+that maps vectors from <span class="arithmatex">\(\mathbb{R}^n\)</span> to <span class="arithmatex">\(\mathbb{R}^m\)</span>.</p>
+<p>Properties of linear transformations:</p>
+<ul>
+<li><span class="arithmatex">\(f(\mathbf{u} + \mathbf{v}) = f(\mathbf{u}) + f(\mathbf{v})\)</span> (additivity)</li>
+<li><span class="arithmatex">\(f(c\mathbf{u}) = c f(\mathbf{u})\)</span> (homogeneity)</li>
+</ul>
+<p>Geometrically, a <span class="arithmatex">\(2 \times 2\)</span> matrix can:</p>
+<ul>
+<li><strong>Rotate</strong> vectors (rotation matrix preserves lengths)</li>
+<li><strong>Scale</strong> vectors along axes (diagonal matrix)</li>
+<li><strong>Reflect</strong> vectors across an axis</li>
+<li><strong>Shear</strong> vectors (push rows of points sideways)</li>
+<li><strong>Project</strong> vectors onto a subspace</li>
+</ul>
+<p>In a neural network, each layer applies a linear transformation <span class="arithmatex">\(W\mathbf{x} + \mathbf{b}\)</span> followed by
+a non-linear activation. Without the non-linearity, stacking linear layers would still just be
+one big linear transformation — the network could not learn non-linear patterns.</p>
+<hr />
+<h3 id="eigenvalues-and-eigenvectors">Eigenvalues and Eigenvectors<a class="headerlink" href="#eigenvalues-and-eigenvectors" title="Permanent link">&para;</a></h3>
+<p>An <strong>eigenvector</strong> of matrix <span class="arithmatex">\(A\)</span> is a non-zero vector <span class="arithmatex">\(\mathbf{v}\)</span> that only gets <strong>scaled</strong> (not rotated)
+when multiplied by <span class="arithmatex">\(A\)</span>:</p>
+<div class="arithmatex">\[A\mathbf{v} = \lambda \mathbf{v}\]</div>
+<p>The scalar <span class="arithmatex">\(\lambda\)</span> is the corresponding <strong>eigenvalue</strong>. The eigenvector <span class="arithmatex">\(\mathbf{v}\)</span> points in a
+direction that <span class="arithmatex">\(A\)</span> does not change — it is a "preferred" direction of the transformation.</p>
+<p><strong>Finding eigenvalues:</strong> Rearranging <span class="arithmatex">\((A - \lambda I)\mathbf{v} = \mathbf{0}\)</span>; this has a non-zero
+solution iff <span class="arithmatex">\(\det(A - \lambda I) = 0\)</span>. This is the <strong>characteristic polynomial</strong>.</p>
+<p><em>Worked example:</em> Let <span class="arithmatex">\(A = \begin{pmatrix} 3 &amp; 1 \\ 0 &amp; 2 \end{pmatrix}\)</span>.</p>
+<div class="arithmatex">\[\det(A - \lambda I) = (3-\lambda)(2-\lambda) - 0 = \lambda^2 - 5\lambda + 6 = 0\]</div>
+<div class="arithmatex">\[\lambda_1 = 3, \quad \lambda_2 = 2\]</div>
+<p>For <span class="arithmatex">\(\lambda_1 = 3\)</span>: <span class="arithmatex">\((A - 3I)\mathbf{v} = \mathbf{0}\)</span> gives <span class="arithmatex">\(\mathbf{v}_1 = (1, 0)^\top\)</span>.
+For <span class="arithmatex">\(\lambda_2 = 2\)</span>: <span class="arithmatex">\((A - 2I)\mathbf{v} = \mathbf{0}\)</span> gives <span class="arithmatex">\(\mathbf{v}_2 = (1, -1)^\top\)</span>.</p>
+<p><strong>Connection to PCA:</strong> Principal Component Analysis finds the directions (principal components)
+of maximum variance in data. Those directions are exactly the eigenvectors of the
+<strong>covariance matrix</strong> <span class="arithmatex">\(\Sigma = \frac{1}{N} X^\top X\)</span>. The eigenvalue <span class="arithmatex">\(\lambda_i\)</span> tells you
+how much variance is explained by component <span class="arithmatex">\(i\)</span>.</p>
+<p><strong>Spectral theorem:</strong> A real symmetric matrix (like a covariance matrix) has:</p>
+<ul>
+<li>All real eigenvalues.</li>
+<li>Orthogonal eigenvectors.</li>
+<li>Can be written as <span class="arithmatex">\(A = Q \Lambda Q^\top\)</span> where <span class="arithmatex">\(Q\)</span> has eigenvectors as columns and <span class="arithmatex">\(\Lambda\)</span> is diagonal.</li>
+</ul>
+<hr />
+<h3 id="matrix-decompositions">Matrix Decompositions<a class="headerlink" href="#matrix-decompositions" title="Permanent link">&para;</a></h3>
+<p><strong>Singular Value Decomposition (SVD):</strong> Every matrix <span class="arithmatex">\(A \in \mathbb{R}^{m \times n}\)</span> can be factored as:</p>
+<div class="arithmatex">\[A = U \Sigma V^\top\]</div>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(U \in \mathbb{R}^{m \times m}\)</span>: orthogonal matrix; columns are <strong>left singular vectors</strong>.</li>
+<li><span class="arithmatex">\(\Sigma \in \mathbb{R}^{m \times n}\)</span>: diagonal matrix of <strong>singular values</strong> <span class="arithmatex">\(\sigma_1 \geq \sigma_2 \geq \cdots \geq 0\)</span>.</li>
+<li><span class="arithmatex">\(V \in \mathbb{R}^{n \times n}\)</span>: orthogonal matrix; columns are <strong>right singular vectors</strong>.</li>
+</ul>
+<p>The singular values <span class="arithmatex">\(\sigma_i\)</span> tell you how "important" each component is. Truncating to the
+top <span class="arithmatex">\(k\)</span> singular values gives the <strong>best rank-<span class="arithmatex">\(k\)</span> approximation</strong> of <span class="arithmatex">\(A\)</span>.</p>
+<p><strong>PCA via SVD:</strong> Center the data matrix <span class="arithmatex">\(X\)</span> (subtract column means), then compute the SVD.
+The top <span class="arithmatex">\(k\)</span> right singular vectors <span class="arithmatex">\(V_k\)</span> define the <span class="arithmatex">\(k\)</span> principal components.
+Projecting the data: <span class="arithmatex">\(Z = X V_k\)</span> gives you the <span class="arithmatex">\(k\)</span>-dimensional representation.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">-=</span> <span class="n">X</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>          <span class="c1"># center</span>
+<span class="n">U</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">Vt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">full_matrices</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">Z</span> <span class="o">=</span> <span class="n">X</span> <span class="o">@</span> <span class="n">Vt</span><span class="p">[:</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">T</span>             <span class="c1"># project onto first principal component</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Singular values:&quot;</span><span class="p">,</span> <span class="n">S</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Projected data:&quot;</span><span class="p">,</span> <span class="n">Z</span><span class="o">.</span><span class="n">ravel</span><span class="p">())</span>
+</code></pre></div>
+<p><strong>Why SVD matters in ML:</strong></p>
+<ul>
+<li><strong>PCA:</strong> dimensionality reduction, noise removal, visualization.</li>
+<li><strong>Collaborative filtering (recommender systems):</strong> matrix factorization of a user-item rating matrix.</li>
+<li><strong>Pseudoinverse:</strong> <span class="arithmatex">\(A^+ = V \Sigma^+ U^\top\)</span> solves least-squares systems stably.</li>
+<li><strong>Word embeddings:</strong> SVD on a co-occurrence matrix was the precursor to Word2Vec.</li>
+</ul>
+<hr />
+<h3 id="why-linear-algebra-is-everywhere-in-ml">Why Linear Algebra is Everywhere in ML<a class="headerlink" href="#why-linear-algebra-is-everywhere-in-ml" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>ML operation</th>
+<th>Linear algebra object</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Feature vector for one sample</td>
+<td><span class="arithmatex">\(\mathbf{x} \in \mathbb{R}^d\)</span></td>
+</tr>
+<tr>
+<td>Entire dataset</td>
+<td><span class="arithmatex">\(X \in \mathbb{R}^{N \times d}\)</span></td>
+</tr>
+<tr>
+<td>Neural network layer</td>
+<td><span class="arithmatex">\(\mathbf{h} = \sigma(W\mathbf{x} + \mathbf{b})\)</span>, matrix multiply</td>
+</tr>
+<tr>
+<td>Batch forward pass</td>
+<td><span class="arithmatex">\(H = \sigma(XW^\top + \mathbf{b})\)</span>, matrix multiply</td>
+</tr>
+<tr>
+<td>Feature normalization (z-score)</td>
+<td><span class="arithmatex">\(\mathbf{x} \leftarrow (\mathbf{x} - \boldsymbol{\mu}) / \boldsymbol{\sigma}\)</span>, vector operations</td>
+</tr>
+<tr>
+<td>Cosine similarity (attention)</td>
+<td><span class="arithmatex">\(\text{softmax}(QK^\top / \sqrt{d_k})\,V\)</span></td>
+</tr>
+<tr>
+<td>Dimensionality reduction (PCA)</td>
+<td>SVD of centered <span class="arithmatex">\(X\)</span></td>
+</tr>
+<tr>
+<td>Gram matrix (kernel SVM)</td>
+<td><span class="arithmatex">\(K = XX^\top\)</span></td>
+</tr>
+<tr>
+<td>L2 regularization penalty</td>
+<td><span class="arithmatex">\(\|\mathbf{w}\|_2^2 = \mathbf{w}^\top \mathbf{w}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>The Transformer's self-attention mechanism is entirely built from matrix multiplications and
+softmax. Understanding matrix shapes and products is what lets you debug shape errors in
+PyTorch or TensorFlow, which are among the most common errors in practice.</p>
+<hr />
+<h2 id="calculus-and-optimization">Calculus and Optimization<a class="headerlink" href="#calculus-and-optimization" title="Permanent link">&para;</a></h2>
+<h3 id="functions-and-derivatives">Functions and Derivatives<a class="headerlink" href="#functions-and-derivatives" title="Permanent link">&para;</a></h3>
+<p>A <strong>function</strong> <span class="arithmatex">\(f: \mathbb{R} \to \mathbb{R}\)</span> maps an input <span class="arithmatex">\(x\)</span> to an output <span class="arithmatex">\(f(x)\)</span>.</p>
+<p>The <strong>derivative</strong> <span class="arithmatex">\(f'(x)\)</span> (also written <span class="arithmatex">\(\frac{df}{dx}\)</span>) measures the <strong>instantaneous rate of change</strong>
+of <span class="arithmatex">\(f\)</span> at the point <span class="arithmatex">\(x\)</span> — how much the output changes for an infinitesimally small change in the input.</p>
+<p>Formally:</p>
+<div class="arithmatex">\[f'(x) = \lim_{h \to 0} \frac{f(x+h) - f(x)}{h}\]</div>
+<p>Geometrically, the derivative is the <strong>slope of the tangent line</strong> to the graph of <span class="arithmatex">\(f\)</span> at <span class="arithmatex">\(x\)</span>.</p>
+<p><strong>Basic differentiation rules:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Rule</th>
+<th>Formula</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Constant</td>
+<td><span class="arithmatex">\(\frac{d}{dx} c = 0\)</span></td>
+</tr>
+<tr>
+<td>Power</td>
+<td><span class="arithmatex">\(\frac{d}{dx} x^n = n x^{n-1}\)</span></td>
+</tr>
+<tr>
+<td>Sum</td>
+<td><span class="arithmatex">\(\frac{d}{dx}[f + g] = f' + g'\)</span></td>
+</tr>
+<tr>
+<td>Product</td>
+<td><span class="arithmatex">\(\frac{d}{dx}[fg] = f'g + fg'\)</span></td>
+</tr>
+<tr>
+<td>Chain rule</td>
+<td><span class="arithmatex">\(\frac{d}{dx}[f(g(x))] = f'(g(x)) \cdot g'(x)\)</span></td>
+</tr>
+<tr>
+<td>Exponential</td>
+<td><span class="arithmatex">\(\frac{d}{dx} e^x = e^x\)</span></td>
+</tr>
+<tr>
+<td>Log</td>
+<td><span class="arithmatex">\(\frac{d}{dx} \ln x = \frac{1}{x}\)</span></td>
+</tr>
+</tbody>
+</table>
+<p><em>Worked examples:</em></p>
+<ul>
+<li><span class="arithmatex">\(f(x) = x^3\)</span>: <span class="arithmatex">\(f'(x) = 3x^2\)</span>.</li>
+<li><span class="arithmatex">\(f(x) = 5x^2 + 3x + 7\)</span>: <span class="arithmatex">\(f'(x) = 10x + 3\)</span>.</li>
+<li><span class="arithmatex">\(f(x) = e^{-x^2}\)</span>: <span class="arithmatex">\(f'(x) = e^{-x^2} \cdot (-2x) = -2x e^{-x^2}\)</span> (chain rule).</li>
+</ul>
+<p><strong>Critical points:</strong> Where <span class="arithmatex">\(f'(x) = 0\)</span> (slope is zero). These are candidates for minima and maxima.
+A minimum has <span class="arithmatex">\(f''(x) &gt; 0\)</span> (curve is concave up); a maximum has <span class="arithmatex">\(f''(x) &lt; 0\)</span>.</p>
+<hr />
+<h3 id="partial-derivatives-and-gradients">Partial Derivatives and Gradients<a class="headerlink" href="#partial-derivatives-and-gradients" title="Permanent link">&para;</a></h3>
+<p>When a function has multiple inputs <span class="arithmatex">\(f(\theta_1, \theta_2, \dots, \theta_n)\)</span>, the
+<strong>partial derivative</strong> <span class="arithmatex">\(\frac{\partial f}{\partial \theta_i}\)</span> measures the rate of change
+with respect to <span class="arithmatex">\(\theta_i\)</span> while holding all other inputs constant.</p>
+<p><em>Worked example:</em> <span class="arithmatex">\(f(\theta_1, \theta_2) = \theta_1^2 + 3\theta_1\theta_2 + \theta_2^3\)</span>.</p>
+<div class="arithmatex">\[\frac{\partial f}{\partial \theta_1} = 2\theta_1 + 3\theta_2, \qquad \frac{\partial f}{\partial \theta_2} = 3\theta_1 + 3\theta_2^2\]</div>
+<p><strong>The gradient</strong> <span class="arithmatex">\(\nabla_\theta f\)</span> is the vector of all partial derivatives:</p>
+<div class="arithmatex">\[\nabla_\theta f = \begin{pmatrix} \frac{\partial f}{\partial \theta_1} \\ \frac{\partial f}{\partial \theta_2} \\ \vdots \\ \frac{\partial f}{\partial \theta_n} \end{pmatrix}\]</div>
+<p><strong>Key geometric fact:</strong> The gradient points in the direction of <strong>steepest increase</strong> of <span class="arithmatex">\(f\)</span>.
+Its negative, <span class="arithmatex">\(-\nabla_\theta f\)</span>, points in the direction of steepest <strong>decrease</strong> — and that
+is exactly the direction we move in gradient descent to minimize a loss function.</p>
+<p><strong>Gradient for the mean squared error loss:</strong></p>
+<div class="arithmatex">\[\mathcal{L}(\mathbf{w}) = \frac{1}{N}\sum_{i=1}^N (y_i - \mathbf{w}^\top \mathbf{x}_i)^2\]</div>
+<div class="arithmatex">\[\nabla_\mathbf{w} \mathcal{L} = -\frac{2}{N} \sum_{i=1}^N (y_i - \mathbf{w}^\top \mathbf{x}_i)\, \mathbf{x}_i = -\frac{2}{N} X^\top (\mathbf{y} - X\mathbf{w})\]</div>
+<p>Setting this to zero gives the Normal Equations, connecting calculus back to linear algebra.</p>
+<hr />
+<h3 id="the-chain-rule-backpropagation">The Chain Rule (Backpropagation)<a class="headerlink" href="#the-chain-rule-backpropagation" title="Permanent link">&para;</a></h3>
+<p>The chain rule is the mathematical engine of neural network training.</p>
+<p><strong>Univariate chain rule:</strong> If <span class="arithmatex">\(z = f(y)\)</span> and <span class="arithmatex">\(y = g(x)\)</span>, then:</p>
+<div class="arithmatex">\[\frac{dz}{dx} = \frac{dz}{dy} \cdot \frac{dy}{dx}\]</div>
+<p><strong>Multivariate chain rule:</strong> If <span class="arithmatex">\(z = f(y_1, y_2)\)</span> where <span class="arithmatex">\(y_1 = g_1(x)\)</span> and <span class="arithmatex">\(y_2 = g_2(x)\)</span>:</p>
+<div class="arithmatex">\[\frac{dz}{dx} = \frac{\partial z}{\partial y_1}\frac{dy_1}{dx} + \frac{\partial z}{\partial y_2}\frac{dy_2}{dx}\]</div>
+<p><strong>In a neural network:</strong> Consider a two-layer network:</p>
+<div class="arithmatex">\[\mathbf{h} = \sigma(W_1 \mathbf{x}),\quad \hat{y} = W_2 \mathbf{h},\quad \mathcal{L} = (\hat{y} - y)^2\]</div>
+<p>To update <span class="arithmatex">\(W_1\)</span>, we need <span class="arithmatex">\(\frac{\partial \mathcal{L}}{\partial W_1}\)</span>. Applying the chain rule:</p>
+<div class="arithmatex">\[\frac{\partial \mathcal{L}}{\partial W_1} = \frac{\partial \mathcal{L}}{\partial \hat{y}} \cdot \frac{\partial \hat{y}}{\partial \mathbf{h}} \cdot \frac{\partial \mathbf{h}}{\partial W_1}\]</div>
+<p><strong>Backpropagation</strong> is simply the efficient computation of this chain rule, passing gradients
+<strong>backward</strong> through the network from the loss to the parameters. Modern frameworks (PyTorch,
+TensorFlow) build a <strong>computational graph</strong> during the forward pass and traverse it in reverse
+during the backward pass.</p>
+<p><em>Why depth matters:</em> In a network with <span class="arithmatex">\(L\)</span> layers, the gradient of <span class="arithmatex">\(W_1\)</span> involves a product of
+<span class="arithmatex">\(L\)</span> Jacobians. If those Jacobians have small eigenvalues, gradients become exponentially small
+(<strong>vanishing gradients</strong>). If they are large, gradients explode. Batch normalization, residual
+connections, and careful initialization all exist to address this chain-rule consequence.</p>
+<hr />
+<h3 id="gradient-descent-derivation">Gradient Descent Derivation<a class="headerlink" href="#gradient-descent-derivation" title="Permanent link">&para;</a></h3>
+<p>We want to find parameters <span class="arithmatex">\(\theta\)</span> that minimize the loss <span class="arithmatex">\(\mathcal{L}(\theta)\)</span>:</p>
+<div class="arithmatex">\[\hat{\theta} = \arg\min_\theta \mathcal{L}(\theta)\]</div>
+<p><strong>Derivation from Taylor expansion:</strong> The first-order Taylor approximation of <span class="arithmatex">\(\mathcal{L}\)</span> near
+current parameters <span class="arithmatex">\(\theta_t\)</span> is:</p>
+<div class="arithmatex">\[\mathcal{L}(\theta_t + \Delta\theta) \approx \mathcal{L}(\theta_t) + \nabla_\theta \mathcal{L}(\theta_t)^\top \Delta\theta\]</div>
+<p>To decrease <span class="arithmatex">\(\mathcal{L}\)</span>, we want <span class="arithmatex">\(\nabla_\theta \mathcal{L}^\top \Delta\theta &lt; 0\)</span>. The direction
+that maximally decreases <span class="arithmatex">\(\mathcal{L}\)</span> per unit step is <span class="arithmatex">\(\Delta\theta = -\nabla_\theta \mathcal{L}\)</span>.
+Scaling by step size <span class="arithmatex">\(\eta\)</span> gives the <strong>gradient descent update rule</strong>:</p>
+<div class="arithmatex">\[\boxed{\theta_{t+1} = \theta_t - \eta\, \nabla_\theta \mathcal{L}(\theta_t)}\]</div>
+<p>where <span class="arithmatex">\(\eta &gt; 0\)</span> is the <strong>learning rate</strong>.</p>
+<p><strong>Variants of gradient descent:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Variant</th>
+<th>Update uses</th>
+<th>Pros</th>
+<th>Cons</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Batch GD</td>
+<td>All <span class="arithmatex">\(N\)</span> samples</td>
+<td>Exact gradient, stable</td>
+<td>Slow for large <span class="arithmatex">\(N\)</span></td>
+</tr>
+<tr>
+<td>Stochastic GD (SGD)</td>
+<td>1 random sample</td>
+<td>Fast updates, escapes local minima</td>
+<td>Noisy, unstable</td>
+</tr>
+<tr>
+<td>Mini-batch GD</td>
+<td><span class="arithmatex">\(B\)</span> samples (e.g., <span class="arithmatex">\(B=32\)</span>)</td>
+<td>Balance of speed and stability</td>
+<td>Choice of <span class="arithmatex">\(B\)</span> matters</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Learning rate intuition:</strong></p>
+<ul>
+<li>Too small <span class="arithmatex">\(\eta\)</span>: training is very slow; may get stuck.</li>
+<li>Too large <span class="arithmatex">\(\eta\)</span>: loss oscillates or diverges.</li>
+<li>Learning rate schedules (cosine decay, warmup) adapt <span class="arithmatex">\(\eta\)</span> over training.</li>
+</ul>
+<p><strong>Saddle points and local minima:</strong></p>
+<ul>
+<li>A <strong>local minimum</strong> has <span class="arithmatex">\(\nabla_\theta \mathcal{L} = 0\)</span> and a positive-definite Hessian.</li>
+<li>A <strong>saddle point</strong> has <span class="arithmatex">\(\nabla_\theta \mathcal{L} = 0\)</span> but the Hessian is indefinite (positive in some directions, negative in others).</li>
+<li>For deep networks, saddle points are more common than local minima. SGD noise helps escape them.</li>
+</ul>
+<hr />
+<h3 id="convexity">Convexity<a class="headerlink" href="#convexity" title="Permanent link">&para;</a></h3>
+<p>A function <span class="arithmatex">\(f\)</span> is <strong>convex</strong> if for any two points <span class="arithmatex">\(a, b\)</span> and any <span class="arithmatex">\(\lambda \in [0, 1]\)</span>:</p>
+<div class="arithmatex">\[f(\lambda a + (1-\lambda)b) \leq \lambda f(a) + (1-\lambda)f(b)\]</div>
+<p>Geometrically: the function lies <strong>below the chord</strong> connecting any two points on its graph.</p>
+<p><strong>Why convexity matters for optimization:</strong></p>
+<ul>
+<li>A convex function has <strong>no local minima that are not global minima</strong>.</li>
+<li>If <span class="arithmatex">\(f\)</span> is strictly convex, it has exactly one global minimum.</li>
+<li>Gradient descent on a convex function is guaranteed to converge to the global minimum.</li>
+</ul>
+<p><strong>Examples:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Convex?</th>
+<th>Reason</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(f(x) = x^2\)</span></td>
+<td>Yes</td>
+<td>Parabola opening upward</td>
+</tr>
+<tr>
+<td>MSE loss with linear model</td>
+<td>Yes</td>
+<td>Second derivative is positive semidefinite</td>
+</tr>
+<tr>
+<td>Cross-entropy loss with softmax</td>
+<td>Yes</td>
+<td>Log-sum-exp is convex</td>
+</tr>
+<tr>
+<td>Neural network loss</td>
+<td>No</td>
+<td>Multiple layers create non-convex landscape</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Note - Practical implication:</strong> Because neural network losses are non-convex, gradient descent
+finds a local minimum, not necessarily the global one. Remarkably, in practice this is not a
+problem — the local minima found by SGD tend to generalize well. This is an active area of
+theoretical research.</p>
+</blockquote>
+<hr />
+<h3 id="taylor-series-approximation">Taylor Series Approximation<a class="headerlink" href="#taylor-series-approximation" title="Permanent link">&para;</a></h3>
+<p>The Taylor series approximates a smooth function <span class="arithmatex">\(f\)</span> near a point <span class="arithmatex">\(a\)</span> using its derivatives:</p>
+<div class="arithmatex">\[f(x) \approx f(a) + f'(a)(x-a) + \frac{f''(a)}{2!}(x-a)^2 + \frac{f'''(a)}{3!}(x-a)^3 + \cdots\]</div>
+<p>The <strong>first-order approximation</strong> (linear) is what gradient descent uses.
+The <strong>second-order approximation</strong> (quadratic) uses the Hessian <span class="arithmatex">\(H = \nabla^2 \mathcal{L}\)</span>:</p>
+<div class="arithmatex">\[\mathcal{L}(\theta + \Delta\theta) \approx \mathcal{L}(\theta) + \nabla_\theta\mathcal{L}^\top \Delta\theta + \frac{1}{2}\Delta\theta^\top H\, \Delta\theta\]</div>
+<p><strong>Newton's method</strong> minimizes this quadratic approximation exactly:</p>
+<div class="arithmatex">\[\theta_{t+1} = \theta_t - H^{-1} \nabla_\theta \mathcal{L}(\theta_t)\]</div>
+<p>Newton's method converges faster than gradient descent (quadratic vs linear convergence) but
+requires computing and inverting the <span class="arithmatex">\(d \times d\)</span> Hessian — infeasible for neural networks
+with billions of parameters.</p>
+<p><strong>Adam optimizer</strong> is an approximate second-order method. It maintains running estimates of the
+first moment (mean of gradients, <span class="arithmatex">\(m_t\)</span>) and second moment (mean of squared gradients, <span class="arithmatex">\(v_t\)</span>)
+to adapt the learning rate per parameter:</p>
+<div class="arithmatex">\[\theta_{t+1} = \theta_t - \frac{\eta}{\sqrt{v_t} + \epsilon}\, m_t\]</div>
+<p>The <span class="arithmatex">\(v_t\)</span> term plays the role of diagonal curvature information (an approximation of <span class="arithmatex">\(H\)</span>), giving
+Adam its speed advantage over vanilla SGD.</p>
+<hr />
+<h2 id="statistics">Statistics<a class="headerlink" href="#statistics" title="Permanent link">&para;</a></h2>
+<h3 id="descriptive-statistics">Descriptive Statistics<a class="headerlink" href="#descriptive-statistics" title="Permanent link">&para;</a></h3>
+<p>Descriptive statistics summarize a dataset with a few representative numbers.</p>
+<p><strong>Measures of central tendency:</strong></p>
+<ul>
+<li><strong>Mean:</strong> <span class="arithmatex">\(\bar{x} = \frac{1}{N}\sum_{i=1}^N x_i\)</span>. Sensitive to outliers.</li>
+<li><strong>Median:</strong> The middle value when data is sorted. Robust to outliers.</li>
+<li><strong>Mode:</strong> The most frequently occurring value. Useful for categorical data.</li>
+</ul>
+<p><em>Example:</em> Salaries = <span class="arithmatex">\([30, 35, 40, 45, 500]\)</span> (in $000).</p>
+<ul>
+<li>Mean <span class="arithmatex">\(= 130\)</span>: dominated by the outlier.</li>
+<li>Median <span class="arithmatex">\(= 40\)</span>: a better representation of typical salary.</li>
+</ul>
+<p><strong>Measures of spread:</strong></p>
+<ul>
+<li><strong>Variance:</strong> <span class="arithmatex">\(s^2 = \frac{1}{N-1}\sum_{i=1}^N (x_i - \bar{x})^2\)</span>. The <span class="arithmatex">\(N-1\)</span> (Bessel's correction) makes it unbiased.</li>
+<li><strong>Standard deviation:</strong> <span class="arithmatex">\(s = \sqrt{s^2}\)</span>. Same units as the data.</li>
+<li><strong>Interquartile range (IQR):</strong> <span class="arithmatex">\(Q_3 - Q_1\)</span>. Robust to outliers.</li>
+<li><strong>Skewness:</strong> Measures asymmetry of the distribution.</li>
+<li>Positive skew: long right tail (income distribution).</li>
+<li>Negative skew: long left tail.</li>
+<li><strong>Kurtosis:</strong> Measures tail heaviness relative to Normal distribution.</li>
+</ul>
+<blockquote>
+<p><strong>Note - When to prefer median over mean:</strong> Whenever your data has heavy tails or outliers —
+house prices, incomes, response times. Report both, but use the median for "typical" values
+and the mean when you need to preserve total sums (e.g., total revenue).</p>
+</blockquote>
+<hr />
+<h3 id="hypothesis-testing-basics">Hypothesis Testing Basics<a class="headerlink" href="#hypothesis-testing-basics" title="Permanent link">&para;</a></h3>
+<p>Hypothesis testing is how we determine whether an observed difference is <strong>real</strong> or could
+have arisen by chance.</p>
+<p><strong>Framework:</strong></p>
+<ol>
+<li><strong>Null hypothesis <span class="arithmatex">\(H_0\)</span>:</strong> The default assumption (e.g., "the two models have equal accuracy").</li>
+<li><strong>Alternative hypothesis <span class="arithmatex">\(H_1\)</span>:</strong> What you want to demonstrate (e.g., "Model A is better than Model B").</li>
+<li>Compute a <strong>test statistic</strong> from the data.</li>
+<li>Compute the <strong>p-value</strong>: the probability of observing a test statistic at least as extreme as the one observed, assuming <span class="arithmatex">\(H_0\)</span> is true.</li>
+<li>If <span class="arithmatex">\(p &lt; \alpha\)</span> (significance level, typically 0.05), <strong>reject <span class="arithmatex">\(H_0\)</span></strong>.</li>
+</ol>
+<p><strong>Type I and Type II errors:</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><span class="arithmatex">\(H_0\)</span> is actually true</th>
+<th><span class="arithmatex">\(H_0\)</span> is actually false</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Reject <span class="arithmatex">\(H_0\)</span></td>
+<td><strong>Type I error</strong> (false positive) <span class="arithmatex">\(\alpha\)</span></td>
+<td>Correct (power)</td>
+</tr>
+<tr>
+<td>Fail to reject <span class="arithmatex">\(H_0\)</span></td>
+<td>Correct</td>
+<td><strong>Type II error</strong> (false negative) <span class="arithmatex">\(\beta\)</span></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><span class="arithmatex">\(\alpha\)</span> = P(Type I error) = significance level (you set this).</li>
+<li><span class="arithmatex">\(\beta\)</span> = P(Type II error); <strong>power</strong> = <span class="arithmatex">\(1 - \beta\)</span>.</li>
+</ul>
+<p><strong>In ML model comparison:</strong> When comparing two models on a test set, always use a statistical
+test (McNemar's test for classification, paired t-test for regression metrics) before claiming
+one model is better. A difference of 0.2 % in accuracy might not be statistically significant.</p>
+<hr />
+<h3 id="confidence-intervals">Confidence Intervals<a class="headerlink" href="#confidence-intervals" title="Permanent link">&para;</a></h3>
+<p>A <strong>95 % confidence interval</strong> for a parameter <span class="arithmatex">\(\mu\)</span> is an interval <span class="arithmatex">\([L, U]\)</span> constructed so that
+if you repeated the experiment many times, 95 % of the intervals would contain the true <span class="arithmatex">\(\mu\)</span>.</p>
+<blockquote>
+<p><strong>Note - Common misconception:</strong> A 95 % CI does NOT mean "there is a 95 % probability that
+the true value lies in this interval." The true value is fixed; the interval is random. The
+correct interpretation is about the procedure, not any single interval.</p>
+</blockquote>
+<p><strong>CI for a proportion (e.g., model accuracy):</strong></p>
+<p>Given <span class="arithmatex">\(n\)</span> test samples with accuracy <span class="arithmatex">\(\hat{p}\)</span>, the 95 % CI (Wald interval) is:</p>
+<div class="arithmatex">\[\hat{p} \pm 1.96 \sqrt{\frac{\hat{p}(1-\hat{p})}{n}}\]</div>
+<p><em>Worked example:</em> <span class="arithmatex">\(\hat{p} = 0.92\)</span>, <span class="arithmatex">\(n = 500\)</span>.</p>
+<div class="arithmatex">\[\text{SE} = \sqrt{\frac{0.92 \times 0.08}{500}} = \sqrt{0.0001472} \approx 0.01213\]</div>
+<div class="arithmatex">\[\text{CI}_{95\%} = 0.92 \pm 1.96 \times 0.01213 = 0.92 \pm 0.0238 = (0.896,\, 0.944)\]</div>
+<p><strong>Key takeaway for ML reports:</strong> Always report confidence intervals alongside point estimates.
+A model with 92 % ± 2.4 % accuracy on 500 samples could be anywhere from 89.6 % to 94.4 %
+on a new deployment — the point estimate alone is misleading.</p>
+<hr />
+<h3 id="maximum-likelihood-estimation-mle">Maximum Likelihood Estimation (MLE)<a class="headerlink" href="#maximum-likelihood-estimation-mle" title="Permanent link">&para;</a></h3>
+<p>MLE is the most fundamental method for fitting a probability model to data.</p>
+<p><strong>Setup:</strong> We have data <span class="arithmatex">\(D = \{x_1, x_2, \dots, x_N\}\)</span> drawn i.i.d. from a distribution with
+parameter <span class="arithmatex">\(\theta\)</span>. We want to find the <span class="arithmatex">\(\theta\)</span> that makes the observed data most probable.</p>
+<p><strong>Likelihood function:</strong></p>
+<div class="arithmatex">\[\mathcal{L}(\theta;\, D) = \prod_{i=1}^N P(x_i;\, \theta)\]</div>
+<p>Since products of small probabilities underflow numerically, we maximize the <strong>log-likelihood</strong>:</p>
+<div class="arithmatex">\[\ell(\theta) = \log \mathcal{L}(\theta;\, D) = \sum_{i=1}^N \log P(x_i;\, \theta)\]</div>
+<p>This is equivalent because <span class="arithmatex">\(\log\)</span> is monotone increasing.</p>
+<p><em>Worked example — MLE for a Gaussian:</em></p>
+<p>Given <span class="arithmatex">\(N\)</span> observations <span class="arithmatex">\(x_1, \dots, x_N \sim \mathcal{N}(\mu, \sigma^2)\)</span>:</p>
+<div class="arithmatex">\[\ell(\mu, \sigma^2) = -\frac{N}{2}\log(2\pi\sigma^2) - \frac{1}{2\sigma^2}\sum_{i=1}^N (x_i - \mu)^2\]</div>
+<p>Taking <span class="arithmatex">\(\frac{\partial \ell}{\partial \mu} = 0\)</span> gives <span class="arithmatex">\(\hat{\mu}_{MLE} = \frac{1}{N}\sum_i x_i = \bar{x}\)</span>.</p>
+<p>Taking <span class="arithmatex">\(\frac{\partial \ell}{\partial \sigma^2} = 0\)</span> gives <span class="arithmatex">\(\hat{\sigma}^2_{MLE} = \frac{1}{N}\sum_i (x_i - \bar{x})^2\)</span>.</p>
+<p><strong>Connection to loss minimization:</strong></p>
+<p>For classification with cross-entropy loss <span class="arithmatex">\(\mathcal{L}_{CE} = -\sum_i \log \hat{p}_{y_i}\)</span>:</p>
+<div class="arithmatex">\[\arg\min_\theta \mathcal{L}_{CE}(\theta) = \arg\max_\theta \sum_i \log P(y_i \mid x_i;\, \theta) = \hat{\theta}_{MLE}\]</div>
+<p>Minimizing cross-entropy loss <strong>is</strong> maximum likelihood estimation. This justifies why cross-entropy
+is the right loss for classification.</p>
+<p>For regression with MSE loss <span class="arithmatex">\(\mathcal{L}_{MSE} = \sum_i (y_i - \hat{y}_i)^2\)</span>:</p>
+<p>Minimizing MSE is equivalent to MLE under the assumption that residuals <span class="arithmatex">\(\epsilon_i = y_i - \hat{y}_i\)</span>
+are i.i.d. Gaussian.</p>
+<hr />
+<h3 id="maximum-a-posteriori-map-estimation">Maximum A Posteriori (MAP) Estimation<a class="headerlink" href="#maximum-a-posteriori-map-estimation" title="Permanent link">&para;</a></h3>
+<p>MAP extends MLE by incorporating a <strong>prior</strong> distribution over the parameters.</p>
+<div class="arithmatex">\[\hat{\theta}_{MAP} = \arg\max_\theta P(\theta \mid D) = \arg\max_\theta \left[\log P(D \mid \theta) + \log P(\theta)\right]\]</div>
+<p>The <span class="arithmatex">\(\log P(\theta)\)</span> term is a <strong>regularizer</strong>. Different priors lead to different regularizers:</p>
+<p><strong>Gaussian prior on weights</strong> <span class="arithmatex">\(\theta \sim \mathcal{N}(0, \tau^2 I)\)</span>:</p>
+<div class="arithmatex">\[\log P(\theta) = -\frac{1}{2\tau^2}\|\theta\|_2^2 + \text{const}\]</div>
+<p>MAP with Gaussian prior <span class="arithmatex">\(\Rightarrow\)</span> <strong>L2 regularization</strong> (Ridge regression, weight decay):</p>
+<div class="arithmatex">\[\hat{\theta}_{MAP} = \arg\min_\theta \left[\mathcal{L}_{MLE}(\theta) + \frac{\lambda}{2}\|\theta\|_2^2\right], \quad \lambda = \frac{1}{\tau^2}\]</div>
+<p><strong>Laplace prior on weights</strong> <span class="arithmatex">\(P(\theta_j) \propto e^{-|\theta_j|/b}\)</span>:</p>
+<div class="arithmatex">\[\log P(\theta) = -\frac{1}{b}\|\theta\|_1 + \text{const}\]</div>
+<p>MAP with Laplace prior <span class="arithmatex">\(\Rightarrow\)</span> <strong>L1 regularization</strong> (Lasso):</p>
+<div class="arithmatex">\[\hat{\theta}_{MAP} = \arg\min_\theta \left[\mathcal{L}_{MLE}(\theta) + \lambda\|\theta\|_1\right]\]</div>
+<p>L1 regularization produces sparse solutions because the Laplace prior has a sharp peak at zero,
+strongly encouraging parameters to be exactly zero.</p>
+<blockquote>
+<p><strong>Note - Regularization as prior knowledge:</strong> Every time you add L2 or L1 regularization, you
+are implicitly making a Bayesian claim: your weights are a priori centered at zero, with a
+Gaussian or Laplace spread controlled by <span class="arithmatex">\(\lambda\)</span>. Choosing <span class="arithmatex">\(\lambda\)</span> is choosing how
+strongly you believe weights should be small.</p>
+</blockquote>
+<hr />
+<h2 id="how-these-connect-to-ml">How These Connect to ML<a class="headerlink" href="#how-these-connect-to-ml" title="Permanent link">&para;</a></h2>
+<h3 id="the-supervised-learning-problem-as-optimization">The Supervised Learning Problem as Optimization<a class="headerlink" href="#the-supervised-learning-problem-as-optimization" title="Permanent link">&para;</a></h3>
+<p>Every supervised learning algorithm can be written as:</p>
+<div class="arithmatex">\[\hat{\theta} = \arg\min_\theta \underbrace{\frac{1}{N}\sum_{i=1}^N \mathcal{L}(f_\theta(x_i),\, y_i)}_{\text{empirical risk}} + \underbrace{\Omega(\theta)}_{\text{regularizer}}\]</div>
+<p>This is <strong>Empirical Risk Minimization (ERM)</strong> — the unifying framework of supervised learning.</p>
+<p>The four pillars of mathematics enter as follows:</p>
+<table>
+<thead>
+<tr>
+<th>Pillar</th>
+<th>Where it appears</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Linear algebra</strong></td>
+<td><span class="arithmatex">\(f_\theta(x) = \sigma(Wx + b)\)</span>: features are vectors, layers are matrix multiplications</td>
+</tr>
+<tr>
+<td><strong>Probability</strong></td>
+<td>The loss <span class="arithmatex">\(\mathcal{L}\)</span> is derived from a probabilistic model (MLE). Cross-entropy = negative log-likelihood</td>
+</tr>
+<tr>
+<td><strong>Calculus</strong></td>
+<td>We minimize <span class="arithmatex">\(\mathcal{L}\)</span> via gradient descent: <span class="arithmatex">\(\theta \leftarrow \theta - \eta \nabla_\theta \mathcal{L}\)</span></td>
+</tr>
+<tr>
+<td><strong>Statistics</strong></td>
+<td>We evaluate using test sets, confidence intervals, and hypothesis tests on held-out data</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Putting it all together — linear regression example:</strong></p>
+<ol>
+<li>Model: <span class="arithmatex">\(f_\theta(x) = \mathbf{w}^\top \mathbf{x} + b\)</span>. (Linear algebra — dot product)</li>
+<li>Loss: <span class="arithmatex">\(\mathcal{L}(\mathbf{w}) = \frac{1}{N}\|X\mathbf{w} - \mathbf{y}\|_2^2\)</span>. (Statistics — MLE under Gaussian noise)</li>
+<li>Gradient: <span class="arithmatex">\(\nabla_\mathbf{w} \mathcal{L} = \frac{2}{N}X^\top(X\mathbf{w} - \mathbf{y})\)</span>. (Calculus)</li>
+<li>Update: <span class="arithmatex">\(\mathbf{w} \leftarrow \mathbf{w} - \eta \nabla_\mathbf{w}\mathcal{L}\)</span>. (Calculus — gradient descent)</li>
+<li>Evaluation: report RMSE with 95 % confidence interval on a held-out test set. (Statistics)</li>
+</ol>
+<hr />
+<h3 id="notation-reference-table">Notation Reference Table<a class="headerlink" href="#notation-reference-table" title="Permanent link">&para;</a></h3>
+<p>The following table consolidates all symbols used across this course:</p>
+<table>
+<thead>
+<tr>
+<th>Symbol</th>
+<th>Meaning</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(N\)</span></td>
+<td>Number of training samples</td>
+<td><span class="arithmatex">\(N = 10{,}000\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(d\)</span></td>
+<td>Number of features (input dimension)</td>
+<td><span class="arithmatex">\(d = 128\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(K\)</span></td>
+<td>Number of classes</td>
+<td><span class="arithmatex">\(K = 10\)</span> (MNIST)</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(x_i \in \mathbb{R}^d\)</span></td>
+<td>Feature vector for sample <span class="arithmatex">\(i\)</span></td>
+<td>Pixel values flattened</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(y_i\)</span></td>
+<td>Label for sample <span class="arithmatex">\(i\)</span></td>
+<td>Integer class or real value</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(\hat{y}_i\)</span></td>
+<td>Model prediction for sample <span class="arithmatex">\(i\)</span></td>
+<td>Probability vector or scalar</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(X \in \mathbb{R}^{N \times d}\)</span></td>
+<td>Design matrix (all samples)</td>
+<td>Full dataset</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(\theta\)</span></td>
+<td>All model parameters</td>
+<td>Weights and biases</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(\mathbf{w} \in \mathbb{R}^d\)</span></td>
+<td>Weight vector</td>
+<td>Linear model coefficients</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(W \in \mathbb{R}^{m \times n}\)</span></td>
+<td>Weight matrix</td>
+<td>Neural network layer</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(b\)</span></td>
+<td>Bias term</td>
+<td>Intercept</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(\eta\)</span></td>
+<td>Learning rate</td>
+<td><span class="arithmatex">\(\eta = 0.001\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(\mathcal{L}\)</span></td>
+<td>Loss function</td>
+<td>Cross-entropy, MSE</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(\nabla_\theta \mathcal{L}\)</span></td>
+<td>Gradient of loss w.r.t. <span class="arithmatex">\(\theta\)</span></td>
+<td>Vector of partial derivatives</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(H\)</span></td>
+<td>Hessian matrix</td>
+<td>Matrix of second derivatives</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(\sigma(\cdot)\)</span></td>
+<td>Activation function</td>
+<td>Sigmoid, ReLU</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(\mu\)</span></td>
+<td>Mean</td>
+<td><span class="arithmatex">\(E[X]\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(\sigma^2\)</span></td>
+<td>Variance</td>
+<td><span class="arithmatex">\(\text{Var}(X)\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(\Sigma\)</span></td>
+<td>Covariance matrix</td>
+<td><span class="arithmatex">\(E[(X-\mu)(X-\mu)^\top]\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(P(A)\)</span></td>
+<td>Probability of event <span class="arithmatex">\(A\)</span></td>
+<td><span class="arithmatex">\(P(\text{spam}) = 0.3\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(P(A \mid B)\)</span></td>
+<td>Conditional probability</td>
+<td><span class="arithmatex">\(P(\text{spam} \mid \text{"free"})\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(\mathcal{N}(\mu, \sigma^2)\)</span></td>
+<td>Gaussian distribution</td>
+<td>Weight initialization</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(D_{KL}(p \| q)\)</span></td>
+<td>KL divergence from <span class="arithmatex">\(p\)</span> to <span class="arithmatex">\(q\)</span></td>
+<td>VAE regularization</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(H(p)\)</span></td>
+<td>Entropy of distribution <span class="arithmatex">\(p\)</span></td>
+<td>Information content</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(H(p, q)\)</span></td>
+<td>Cross-entropy</td>
+<td>Classification loss</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(\lambda\)</span></td>
+<td>Regularization strength</td>
+<td>L1/L2 penalty weight</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(\hat{\theta}\)</span></td>
+<td>Estimated parameter</td>
+<td>MLE or MAP solution</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(\arg\min_\theta\)</span></td>
+<td>Value of <span class="arithmatex">\(\theta\)</span> minimizing the expression</td>
+<td>Optimal parameters</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(\mathbb{R}^d\)</span></td>
+<td><span class="arithmatex">\(d\)</span>-dimensional real vector space</td>
+<td>Feature space</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(\|v\|_2\)</span></td>
+<td>L2 (Euclidean) norm</td>
+<td><span class="arithmatex">\(\sqrt{\sum v_i^2}\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(\|v\|_1\)</span></td>
+<td>L1 norm</td>
+<td>$\sum</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(A^\top\)</span></td>
+<td>Transpose of matrix <span class="arithmatex">\(A\)</span></td>
+<td>Flipped rows/columns</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(A^{-1}\)</span></td>
+<td>Inverse of matrix <span class="arithmatex">\(A\)</span></td>
+<td><span class="arithmatex">\((A^{-1}A = I)\)</span></td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(\det(A)\)</span></td>
+<td>Determinant of <span class="arithmatex">\(A\)</span></td>
+<td>Volume scaling factor</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="quick-self-check">Quick Self-Check<a class="headerlink" href="#quick-self-check" title="Permanent link">&para;</a></h2>
+<p>Test your understanding before moving on to the next module.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Question</th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>Probability</strong> — A dataset has 1 000 samples; 200 are class A, 800 are class B. A model predicts class A with probability 0.6 for a given sample. What is the cross-entropy loss for that sample if the true label is class A?</td>
+<td>Cross-entropy for a single sample with true class <span class="arithmatex">\(k\)</span> is <span class="arithmatex">\(-\log \hat{p}_k\)</span>, so <span class="arithmatex">\(-\log(0.6) \approx 0.511\)</span>.</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>Bayes' theorem</strong> — 5% of parts are defective; a sensor test has 90% sensitivity and 95% specificity. A part fails the test — what is the probability it is actually defective?</td>
+<td><span class="arithmatex">\(P(\text{defective} \mid \text{fail}) = \frac{0.90 \times 0.05}{0.90 \times 0.05 + 0.05 \times 0.95} = \frac{0.045}{0.045 + 0.0475} \approx 0.486\)</span> — only ~49%, because the low base rate dominates.</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Linear algebra</strong> — Compute the dot product <span class="arithmatex">\(\mathbf{w}^\top \mathbf{x}\)</span> for <span class="arithmatex">\(\mathbf{w} = (2, -1, 3)^\top\)</span> and <span class="arithmatex">\(\mathbf{x} = (1, 4, 2)^\top\)</span>, and the L2 norm of <span class="arithmatex">\(\mathbf{w}\)</span>.</td>
+<td><span class="arithmatex">\(\mathbf{w}^\top \mathbf{x} = 2 - 4 + 6 = 4\)</span>; <span class="arithmatex">\(\lVert\mathbf{w}\rVert_2 = \sqrt{4+1+9} = \sqrt{14} \approx 3.742\)</span>.</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Calculus — gradient</strong> — For <span class="arithmatex">\(\mathcal{L}(w) = (3 - 2w)^2\)</span>, compute <span class="arithmatex">\(\frac{d\mathcal{L}}{dw}\)</span>; at what <span class="arithmatex">\(w\)</span> is the gradient zero, and what is the loss there?</td>
+<td><span class="arithmatex">\(\frac{d\mathcal{L}}{dw} = -4(3 - 2w)\)</span>; it is zero at <span class="arithmatex">\(w = 1.5\)</span>, where <span class="arithmatex">\(\mathcal{L}(1.5) = 0\)</span>.</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>Gradient descent step</strong> — Starting from <span class="arithmatex">\(w_0 = 0\)</span>, <span class="arithmatex">\(\eta = 0.1\)</span>, and <span class="arithmatex">\(\mathcal{L}(w) = (3-2w)^2\)</span>, compute <span class="arithmatex">\(w_1\)</span> after one step.</td>
+<td><span class="arithmatex">\(\nabla \mathcal{L}(0) = -12\)</span>, so <span class="arithmatex">\(w_1 = 0 - 0.1 \times (-12) = 1.2\)</span>.</td>
+</tr>
+<tr>
+<td>6</td>
+<td><strong>MLE and regularization</strong> — For logistic regression, what changes mathematically going from no regularization, to L2, to L1?</td>
+<td>No regularization = pure MLE (maximize log-likelihood); L2 = MAP with a Gaussian prior (adds <span class="arithmatex">\(-\frac{\lambda}{2}\lVert w\rVert_2^2\)</span>, shrinks all weights toward zero); L1 = MAP with a Laplace prior (adds <span class="arithmatex">\(-\lambda\lVert w\rVert_1\)</span>, shrinks many weights exactly to zero).</td>
+</tr>
+<tr>
+<td>7</td>
+<td><strong>Information theory</strong> — A 3-class classifier outputs <span class="arithmatex">\([0.7, 0.2, 0.1]\)</span> for a sample whose true class is index 0. Compute the cross-entropy loss.</td>
+<td><span class="arithmatex">\(-\log(0.7) \approx 0.357\)</span>; only the probability assigned to the true class enters the cross-entropy for a one-hot label.</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 <a href="https://github.com/Cloud2BR-MSFTLearningHub" target="_blank" rel="noopener">Cloud2BR MSFT Learning Hub</a>
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.expand", "navigation.top", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../../assets/js/org-link.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,2657 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="Azure Machine Learning training from fundamentals to advanced MLOps." name="description"/>
+<link href="https://cloud2br-msftlearninghub.github.io/Azure-ML-Advanced/modules/09-model-types/" rel="canonical"/>
+<link href="../08-data-preparation/" rel="prev"/>
+<link href="../10-training-automl/" rel="next"/>
+<link href="/Azure-ML-Advanced/" hreflang="en" rel="alternate"/>
+<link href="/Azure-ML-Advanced/es/" hreflang="es" rel="alternate"/>
+<link href="../../assets/img/org-logo.png" rel="icon"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.7.6" name="generator"/>
+<title>09. Model Types - Azure Machine Learning: Advanced</title>
+<link href="../../assets/stylesheets/main.484c7ddc.min.css" rel="stylesheet"/>
+<link href="../../assets/stylesheets/palette.ab4e12ef.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../../assets/css/custom.css" rel="stylesheet"/>
+<script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+</head>
+<body data-md-color-accent="blue" data-md-color-primary="blue" data-md-color-scheme="default" dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#model-types">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header md-header--shadow" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="Azure Machine Learning: Advanced" class="md-header__button md-logo" data-md-component="logo" href="../.." title="Azure Machine Learning: Advanced">
+<img alt="logo" src="../../assets/img/org-logo.png"/>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            Azure Machine Learning: Advanced
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              09. Model Types
+            
+          </span>
+</div>
+</div>
+</div>
+<div class="md-header__option">
+<div class="md-select">
+<button aria-label="Select language" class="md-header__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"></path></svg>
+</button>
+<div class="md-select__inner">
+<ul class="md-select__list">
+<li class="md-select__item">
+<a class="md-select__link" href="/Azure-ML-Advanced/" hreflang="en">
+              English
+            </a>
+</li>
+<li class="md-select__item">
+<a class="md-select__link" href="/Azure-ML-Advanced/es/" hreflang="es">
+              Español
+            </a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Azure Machine Learning: Advanced" class="md-nav__button md-logo" data-md-component="logo" href="../.." title="Azure Machine Learning: Advanced">
+<img alt="logo" src="../../assets/img/org-logo.png"/>
+</a>
+    Azure Machine Learning: Advanced
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../..">
+<span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../01-math-prerequisites/">
+<span class="md-ellipsis">
+    
+  
+    01. Math Prerequisites
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../02-e2e-overview/">
+<span class="md-ellipsis">
+    
+  
+    02. End-to-End ML Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../03-introduction/">
+<span class="md-ellipsis">
+    
+  
+    03. Introduction and Lifecycle
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../04-ml-foundations/">
+<span class="md-ellipsis">
+    
+  
+    04. ML Foundations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../05-neural-networks/">
+<span class="md-ellipsis">
+    
+  
+    05. Neural Networks and Deep Learning
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../06-azure-ml-environment/">
+<span class="md-ellipsis">
+    
+  
+    06. Azure ML Environment
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../07-environment-setup/">
+<span class="md-ellipsis">
+    
+  
+    07. Environment Setup
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../08-data-preparation/">
+<span class="md-ellipsis">
+    
+  
+    08. Data Preparation
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+<span class="md-ellipsis">
+    
+  
+    09. Model Types
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
+<span class="md-ellipsis">
+    
+  
+    09. Model Types
+  
+
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#common-algorithms-by-task">
+<span class="md-ellipsis">
+      
+        Common algorithms by task
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#model-family-quick-guide">
+<span class="md-ellipsis">
+      
+        Model family quick guide
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#representative-mathematical-forms">
+<span class="md-ellipsis">
+      
+        Representative Mathematical Forms
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#practical-model-selection">
+<span class="md-ellipsis">
+      
+        Practical model selection
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#decision-tree-intuition">
+<span class="md-ellipsis">
+      
+        Decision tree intuition
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#gradient-boosting-mechanics">
+<span class="md-ellipsis">
+      
+        Gradient boosting mechanics
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#bias-variance-and-complexity">
+<span class="md-ellipsis">
+      
+        Bias, variance, and complexity
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#advanced-considerations">
+<span class="md-ellipsis">
+      
+        Advanced considerations
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#ensemble-methods-in-practice">
+<span class="md-ellipsis">
+      
+        Ensemble methods in practice
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#algorithm-complexity-and-latency-trade-off">
+<span class="md-ellipsis">
+      
+        Algorithm complexity and latency trade-off
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#deep-dive-every-concept-explained">
+<span class="md-ellipsis">
+      
+        Deep dive: every concept, explained
+      
+    </span>
+</a>
+<nav aria-label="Deep dive: every concept, explained" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#linear-and-logistic-models-the-interpretable-baseline">
+<span class="md-ellipsis">
+      
+        Linear and logistic models : the interpretable baseline
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#the-decision-threshold-tau-is-a-business-lever-not-a-constant">
+<span class="md-ellipsis">
+      
+        The decision threshold \(\tau\) is a business lever, not a constant
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#naive-bayes-and-the-independence-assumption">
+<span class="md-ellipsis">
+      
+        Naive Bayes and the independence assumption
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#trees-impurity-and-why-ensembles-beat-single-trees">
+<span class="md-ellipsis">
+      
+        Trees, impurity, and why ensembles beat single trees
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#the-boosting-hyperparameters-and-what-they-really-control">
+<span class="md-ellipsis">
+      
+        The boosting hyperparameters, and what they really control
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#bagging-vs-boosting-vs-stacking-one-sentence-each">
+<span class="md-ellipsis">
+      
+        Bagging vs boosting vs stacking : one sentence each
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#calibration-fairness-robustness-the-production-grade-concerns">
+<span class="md-ellipsis">
+      
+        Calibration, fairness, robustness : the production-grade concerns
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#why-latency-and-memory-belong-in-model-selection">
+<span class="md-ellipsis">
+      
+        Why latency and memory belong in model selection
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#a-model-selection-flowchart">
+<span class="md-ellipsis">
+      
+        A model-selection flowchart
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#when-to-actually-reach-for-deep-learning">
+<span class="md-ellipsis">
+      
+        When to actually reach for deep learning
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#quick-self-check">
+<span class="md-ellipsis">
+      
+        Quick self-check
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#support-vector-machines-full-derivation">
+<span class="md-ellipsis">
+      
+        Support Vector Machines: full derivation
+      
+    </span>
+</a>
+<nav aria-label="Support Vector Machines: full derivation" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#the-margin-maximization-problem">
+<span class="md-ellipsis">
+      
+        The margin maximization problem
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#soft-margin-extension">
+<span class="md-ellipsis">
+      
+        Soft-margin extension
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#lagrangian-and-kkt-conditions">
+<span class="md-ellipsis">
+      
+        Lagrangian and KKT conditions
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#dual-problem">
+<span class="md-ellipsis">
+      
+        Dual problem
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#kernel-trick">
+<span class="md-ellipsis">
+      
+        Kernel trick
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#when-svm-beats-tree-ensembles">
+<span class="md-ellipsis">
+      
+        When SVM beats tree ensembles
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#bayesian-methods">
+<span class="md-ellipsis">
+      
+        Bayesian methods
+      
+    </span>
+</a>
+<nav aria-label="Bayesian methods" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#bayesian-linear-regression">
+<span class="md-ellipsis">
+      
+        Bayesian linear regression
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#uncertainty-quantification">
+<span class="md-ellipsis">
+      
+        Uncertainty quantification
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#gaussian-processes-high-level">
+<span class="md-ellipsis">
+      
+        Gaussian processes (high level)
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#when-bayesian-methods-outperform-frequentist-approaches">
+<span class="md-ellipsis">
+      
+        When Bayesian methods outperform frequentist approaches
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#neural-networks-preview">
+<span class="md-ellipsis">
+      
+        Neural networks preview
+      
+    </span>
+</a>
+<nav aria-label="Neural networks preview" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#what-an-mlp-adds-over-logistic-regression">
+<span class="md-ellipsis">
+      
+        What an MLP adds over logistic regression
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#universal-approximation-theorem">
+<span class="md-ellipsis">
+      
+        Universal approximation theorem
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#anomaly-detection-models">
+<span class="md-ellipsis">
+      
+        Anomaly detection models
+      
+    </span>
+</a>
+<nav aria-label="Anomaly detection models" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#isolation-forest">
+<span class="md-ellipsis">
+      
+        Isolation Forest
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#one-class-svm">
+<span class="md-ellipsis">
+      
+        One-Class SVM
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#local-outlier-factor">
+<span class="md-ellipsis">
+      
+        Local Outlier Factor
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#autoencoder-reconstruction-error">
+<span class="md-ellipsis">
+      
+        Autoencoder reconstruction error
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#comparison-and-evaluation-challenge">
+<span class="md-ellipsis">
+      
+        Comparison and evaluation challenge
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#survival-analysis">
+<span class="md-ellipsis">
+      
+        Survival analysis
+      
+    </span>
+</a>
+<nav aria-label="Survival analysis" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#time-to-event-modeling">
+<span class="md-ellipsis">
+      
+        Time-to-event modeling
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#censoring">
+<span class="md-ellipsis">
+      
+        Censoring
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#kaplan-meier-estimator">
+<span class="md-ellipsis">
+      
+        Kaplan-Meier estimator
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cox-proportional-hazards-model">
+<span class="md-ellipsis">
+      
+        Cox proportional hazards model
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#applications">
+<span class="md-ellipsis">
+      
+        Applications
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#model-selection-framework-a-statistical-perspective">
+<span class="md-ellipsis">
+      
+        Model selection framework: a statistical perspective
+      
+    </span>
+</a>
+<nav aria-label="Model selection framework: a statistical perspective" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#paired-t-test-for-model-comparison">
+<span class="md-ellipsis">
+      
+        Paired t-test for model comparison
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#mcnemars-test-for-classifiers">
+<span class="md-ellipsis">
+      
+        McNemar's test for classifiers
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#delong-test-for-auc-comparison">
+<span class="md-ellipsis">
+      
+        DeLong test for AUC comparison
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#multiple-comparisons-problem">
+<span class="md-ellipsis">
+      
+        Multiple comparisons problem
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#why-you-need-holdout-data">
+<span class="md-ellipsis">
+      
+        Why you need holdout data
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#full-model-comparison-from-simple-to-complex">
+<span class="md-ellipsis">
+      
+        Full model comparison: from simple to complex
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../10-training-automl/">
+<span class="md-ellipsis">
+    
+  
+    10. Training and AutoML
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../11-performance-metrics/">
+<span class="md-ellipsis">
+    
+  
+    11. Performance Metrics
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../12-results-explainability/">
+<span class="md-ellipsis">
+    
+  
+    12. Results and Explainability
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../13-deployment/">
+<span class="md-ellipsis">
+    
+  
+    13. Deployment
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../14-deployment-debug-k8s/">
+<span class="md-ellipsis">
+    
+  
+    14. Deployment Debugging
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_16" type="checkbox"/>
+<label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="">
+<span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_16_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_16">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/model-math-deep-dive/">
+<span class="md-ellipsis">
+    
+  
+    Mathematical Model Deep Dive
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/cli-commands/">
+<span class="md-ellipsis">
+    
+  
+    CLI Commands
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/glossary/">
+<span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#common-algorithms-by-task">
+<span class="md-ellipsis">
+      
+        Common algorithms by task
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#model-family-quick-guide">
+<span class="md-ellipsis">
+      
+        Model family quick guide
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#representative-mathematical-forms">
+<span class="md-ellipsis">
+      
+        Representative Mathematical Forms
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#practical-model-selection">
+<span class="md-ellipsis">
+      
+        Practical model selection
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#decision-tree-intuition">
+<span class="md-ellipsis">
+      
+        Decision tree intuition
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#gradient-boosting-mechanics">
+<span class="md-ellipsis">
+      
+        Gradient boosting mechanics
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#bias-variance-and-complexity">
+<span class="md-ellipsis">
+      
+        Bias, variance, and complexity
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#advanced-considerations">
+<span class="md-ellipsis">
+      
+        Advanced considerations
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#ensemble-methods-in-practice">
+<span class="md-ellipsis">
+      
+        Ensemble methods in practice
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#algorithm-complexity-and-latency-trade-off">
+<span class="md-ellipsis">
+      
+        Algorithm complexity and latency trade-off
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#deep-dive-every-concept-explained">
+<span class="md-ellipsis">
+      
+        Deep dive: every concept, explained
+      
+    </span>
+</a>
+<nav aria-label="Deep dive: every concept, explained" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#linear-and-logistic-models-the-interpretable-baseline">
+<span class="md-ellipsis">
+      
+        Linear and logistic models : the interpretable baseline
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#the-decision-threshold-tau-is-a-business-lever-not-a-constant">
+<span class="md-ellipsis">
+      
+        The decision threshold \(\tau\) is a business lever, not a constant
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#naive-bayes-and-the-independence-assumption">
+<span class="md-ellipsis">
+      
+        Naive Bayes and the independence assumption
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#trees-impurity-and-why-ensembles-beat-single-trees">
+<span class="md-ellipsis">
+      
+        Trees, impurity, and why ensembles beat single trees
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#the-boosting-hyperparameters-and-what-they-really-control">
+<span class="md-ellipsis">
+      
+        The boosting hyperparameters, and what they really control
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#bagging-vs-boosting-vs-stacking-one-sentence-each">
+<span class="md-ellipsis">
+      
+        Bagging vs boosting vs stacking : one sentence each
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#calibration-fairness-robustness-the-production-grade-concerns">
+<span class="md-ellipsis">
+      
+        Calibration, fairness, robustness : the production-grade concerns
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#why-latency-and-memory-belong-in-model-selection">
+<span class="md-ellipsis">
+      
+        Why latency and memory belong in model selection
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#a-model-selection-flowchart">
+<span class="md-ellipsis">
+      
+        A model-selection flowchart
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#when-to-actually-reach-for-deep-learning">
+<span class="md-ellipsis">
+      
+        When to actually reach for deep learning
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#quick-self-check">
+<span class="md-ellipsis">
+      
+        Quick self-check
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#support-vector-machines-full-derivation">
+<span class="md-ellipsis">
+      
+        Support Vector Machines: full derivation
+      
+    </span>
+</a>
+<nav aria-label="Support Vector Machines: full derivation" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#the-margin-maximization-problem">
+<span class="md-ellipsis">
+      
+        The margin maximization problem
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#soft-margin-extension">
+<span class="md-ellipsis">
+      
+        Soft-margin extension
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#lagrangian-and-kkt-conditions">
+<span class="md-ellipsis">
+      
+        Lagrangian and KKT conditions
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#dual-problem">
+<span class="md-ellipsis">
+      
+        Dual problem
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#kernel-trick">
+<span class="md-ellipsis">
+      
+        Kernel trick
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#when-svm-beats-tree-ensembles">
+<span class="md-ellipsis">
+      
+        When SVM beats tree ensembles
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#bayesian-methods">
+<span class="md-ellipsis">
+      
+        Bayesian methods
+      
+    </span>
+</a>
+<nav aria-label="Bayesian methods" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#bayesian-linear-regression">
+<span class="md-ellipsis">
+      
+        Bayesian linear regression
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#uncertainty-quantification">
+<span class="md-ellipsis">
+      
+        Uncertainty quantification
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#gaussian-processes-high-level">
+<span class="md-ellipsis">
+      
+        Gaussian processes (high level)
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#when-bayesian-methods-outperform-frequentist-approaches">
+<span class="md-ellipsis">
+      
+        When Bayesian methods outperform frequentist approaches
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#neural-networks-preview">
+<span class="md-ellipsis">
+      
+        Neural networks preview
+      
+    </span>
+</a>
+<nav aria-label="Neural networks preview" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#what-an-mlp-adds-over-logistic-regression">
+<span class="md-ellipsis">
+      
+        What an MLP adds over logistic regression
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#universal-approximation-theorem">
+<span class="md-ellipsis">
+      
+        Universal approximation theorem
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#anomaly-detection-models">
+<span class="md-ellipsis">
+      
+        Anomaly detection models
+      
+    </span>
+</a>
+<nav aria-label="Anomaly detection models" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#isolation-forest">
+<span class="md-ellipsis">
+      
+        Isolation Forest
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#one-class-svm">
+<span class="md-ellipsis">
+      
+        One-Class SVM
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#local-outlier-factor">
+<span class="md-ellipsis">
+      
+        Local Outlier Factor
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#autoencoder-reconstruction-error">
+<span class="md-ellipsis">
+      
+        Autoencoder reconstruction error
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#comparison-and-evaluation-challenge">
+<span class="md-ellipsis">
+      
+        Comparison and evaluation challenge
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#survival-analysis">
+<span class="md-ellipsis">
+      
+        Survival analysis
+      
+    </span>
+</a>
+<nav aria-label="Survival analysis" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#time-to-event-modeling">
+<span class="md-ellipsis">
+      
+        Time-to-event modeling
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#censoring">
+<span class="md-ellipsis">
+      
+        Censoring
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#kaplan-meier-estimator">
+<span class="md-ellipsis">
+      
+        Kaplan-Meier estimator
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cox-proportional-hazards-model">
+<span class="md-ellipsis">
+      
+        Cox proportional hazards model
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#applications">
+<span class="md-ellipsis">
+      
+        Applications
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#model-selection-framework-a-statistical-perspective">
+<span class="md-ellipsis">
+      
+        Model selection framework: a statistical perspective
+      
+    </span>
+</a>
+<nav aria-label="Model selection framework: a statistical perspective" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#paired-t-test-for-model-comparison">
+<span class="md-ellipsis">
+      
+        Paired t-test for model comparison
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#mcnemars-test-for-classifiers">
+<span class="md-ellipsis">
+      
+        McNemar's test for classifiers
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#delong-test-for-auc-comparison">
+<span class="md-ellipsis">
+      
+        DeLong test for AUC comparison
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#multiple-comparisons-problem">
+<span class="md-ellipsis">
+      
+        Multiple comparisons problem
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#why-you-need-holdout-data">
+<span class="md-ellipsis">
+      
+        Why you need holdout data
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#full-model-comparison-from-simple-to-complex">
+<span class="md-ellipsis">
+      
+        Full model comparison: from simple to complex
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1 id="model-types">Model Types<a class="headerlink" href="#model-types" title="Permanent link">¶</a></h1>
+<p><img alt="Model implementation schema" src="../../assets/img/logic_schema_model_implementation.svg"/></p>
+<blockquote>
+<p><strong>Note - What this shows:</strong> A logical schema for implementing a model : from problem type to algorithm family to deployment
+constraints. Use it to trace how a business question narrows down to a specific model choice.</p>
+</blockquote>
+<p>This module connects algorithm families to problem types and deployment constraints.</p>
+<h2 id="common-algorithms-by-task">Common algorithms by task<a class="headerlink" href="#common-algorithms-by-task" title="Permanent link">¶</a></h2>
+<ul>
+<li>Classification: logistic regression, random forest, gradient boosting, SVM</li>
+<li>Regression: linear regression, random forest regressor, XGBoost</li>
+<li>Forecasting: AutoARIMA, Prophet, gradient boosting variants</li>
+</ul>
+<h2 id="model-family-quick-guide">Model family quick guide<a class="headerlink" href="#model-family-quick-guide" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Family</th>
+<th>Strength</th>
+<th>Weakness</th>
+<th>Typical use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Linear models</td>
+<td>Fast, interpretable</td>
+<td>Limited nonlinear capacity</td>
+<td>Baselines, tabular regression</td>
+</tr>
+<tr>
+<td>Tree ensembles</td>
+<td>Strong tabular performance</td>
+<td>Larger memory/latency</td>
+<td>Structured business data</td>
+</tr>
+<tr>
+<td>Kernel methods</td>
+<td>Good margin-based behavior</td>
+<td>Poor scaling on very large data</td>
+<td>Medium-size classification</td>
+</tr>
+<tr>
+<td>Neural networks</td>
+<td>High representational power</td>
+<td>Data and tuning intensive</td>
+<td>Vision, NLP, complex patterns</td>
+</tr>
+</tbody>
+</table>
+<p>Regularized objective:</p>
+<div class="arithmatex">\[
+\min_{\theta} \frac{1}{N}\sum_{i=1}^{N}\mathcal{L}(f_{\theta}(x_i), y_i) + \lambda R(\theta)
+\]</div>
+<h2 id="representative-mathematical-forms">Representative Mathematical Forms<a class="headerlink" href="#representative-mathematical-forms" title="Permanent link">¶</a></h2>
+<p>Logistic regression probability:</p>
+<div class="arithmatex">\[
+\hat{p}=\sigma(\theta^T x)=\frac{1}{1+e^{-\theta^T x}}
+\]</div>
+<p>Decision boundary interpretation:</p>
+<ul>
+<li>If <span class="arithmatex">\(\hat{p} &gt; \tau\)</span>, predict positive class.</li>
+<li>Threshold <span class="arithmatex">\(\tau\)</span> should be tuned by business cost trade-off.</li>
+</ul>
+<p>Naive Bayes decision rule:</p>
+<div class="arithmatex">\[
+P(y\mid x_1,\dots,x_n)\propto P(y)\prod_{i=1}^{n}P(x_i\mid y)
+\]</div>
+<p>Assumption note: Naive Bayes assumes feature conditional independence.</p>
+<p>Elastic Net objective:</p>
+<div class="arithmatex">\[
+\min_{\theta}\frac{1}{2N}\|y-X\theta\|_2^2+\lambda\left(\alpha\|\theta\|_1+\frac{1-\alpha}{2}\|\theta\|_2^2\right)
+\]</div>
+<p>LightGBM and gradient boosting models build additive trees:</p>
+<div class="arithmatex">\[
+F_m(x)=F_{m-1}(x)+\nu\,h_m(x)
+\]</div>
+<p>where <span class="arithmatex">\(h_m(x)\)</span> is the fitted weak learner at stage <span class="arithmatex">\(m\)</span> and <span class="arithmatex">\(\nu\)</span> is the learning rate.</p>
+<h2 id="practical-model-selection">Practical model selection<a class="headerlink" href="#practical-model-selection" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Constraint</th>
+<th>Preference</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Need explainability</td>
+<td>Linear models, shallow trees</td>
+</tr>
+<tr>
+<td>Best tabular accuracy</td>
+<td>Gradient boosting (LightGBM/XGBoost/CatBoost)</td>
+</tr>
+<tr>
+<td>Very low latency</td>
+<td>Linear or optimized tree model</td>
+</tr>
+<tr>
+<td>Limited training data</td>
+<td>Simpler regularized models</td>
+</tr>
+<tr>
+<td>High-dimensional sparse features</td>
+<td>Sparse linear models (SGDClassifier, Elastic Net)</td>
+</tr>
+<tr>
+<td>Mixed numeric + categorical</td>
+<td>Tree ensembles or CatBoost (native cat handling)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="decision-tree-intuition">Decision tree intuition<a class="headerlink" href="#decision-tree-intuition" title="Permanent link">¶</a></h2>
+<p>Decision trees split data by maximizing a purity measure at each node:</p>
+<div class="arithmatex">\[
+\text{Gini impurity} = 1 - \sum_{k=1}^{K} p_k^2
+\]</div>
+<div class="arithmatex">\[
+\text{Information gain} = H(S) - \sum_{v} \frac{|S_v|}{|S|} H(S_v)
+\]</div>
+<p>where <span class="arithmatex">\(H(S) = -\sum_k p_k \log_2 p_k\)</span> is the entropy of set <span class="arithmatex">\(S\)</span>.</p>
+<p>Deep trees overfit. Random forests average many trees trained on bootstrap samples and random feature subsets. This reduces variance without much increase in bias.</p>
+<h2 id="gradient-boosting-mechanics">Gradient boosting mechanics<a class="headerlink" href="#gradient-boosting-mechanics" title="Permanent link">¶</a></h2>
+<p>Gradient boosting builds trees iteratively to correct residual errors:</p>
+<table>
+<thead>
+<tr>
+<th>Iteration</th>
+<th>What is learned</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>Base prediction (mean or class frequency)</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Tree fitted to gradient of loss (first-order residuals)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Tree fitted to remaining residuals</td>
+</tr>
+<tr>
+<td>...</td>
+<td>Each step shrinks residuals towards zero</td>
+</tr>
+</tbody>
+</table>
+<p>Key hyperparameters that matter most:</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>n_estimators</code></td>
+<td>More trees = more capacity (risk: overfit without early stopping)</td>
+</tr>
+<tr>
+<td><code>learning_rate</code> (shrinkage <span class="arithmatex">\(\nu\)</span>)</td>
+<td>Smaller = more conservative, usually better with more trees</td>
+</tr>
+<tr>
+<td><code>max_depth</code> / <code>num_leaves</code></td>
+<td>Controls tree complexity (main overfit knob)</td>
+</tr>
+<tr>
+<td><code>min_child_samples</code></td>
+<td>Regularises leaf size</td>
+</tr>
+<tr>
+<td><code>subsample</code> / <code>colsample_bytree</code></td>
+<td>Stochastic column/row sampling, reduces variance</td>
+</tr>
+</tbody>
+</table>
+<h2 id="bias-variance-and-complexity">Bias, variance, and complexity<a class="headerlink" href="#bias-variance-and-complexity" title="Permanent link">¶</a></h2>
+<ul>
+<li>Increasing model complexity usually reduces bias but increases variance.</li>
+<li>Regularization, pruning, and early stopping are practical controls.</li>
+</ul>
+<h2 id="advanced-considerations">Advanced considerations<a class="headerlink" href="#advanced-considerations" title="Permanent link">¶</a></h2>
+<ul>
+<li>Calibration: predicted probabilities should reflect real event frequency.</li>
+<li>Fairness: evaluate group-wise performance, not only global score.</li>
+<li>Robustness: test under noise, missingness, and shifted distributions.</li>
+</ul>
+<h2 id="ensemble-methods-in-practice">Ensemble methods in practice<a class="headerlink" href="#ensemble-methods-in-practice" title="Permanent link">¶</a></h2>
+<p>Three main ensemble patterns beyond gradient boosting:</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Idea</th>
+<th>Benefit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bagging</td>
+<td>Train models on bootstrap samples, average predictions</td>
+<td>Reduces variance</td>
+</tr>
+<tr>
+<td>Boosting</td>
+<td>Train models sequentially, each correcting the last</td>
+<td>Reduces bias iteratively</td>
+</tr>
+<tr>
+<td>Stacking</td>
+<td>Train a meta-model on out-of-fold predictions of base models</td>
+<td>Often best final accuracy</td>
+</tr>
+</tbody>
+</table>
+<p>Stacking example (2-layer):</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">StackingClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<span class="kn">from</span> <span class="nn">lightgbm</span> <span class="kn">import</span> <span class="n">LGBMClassifier</span>
+
+<span class="n">estimators</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="s2">"rf"</span><span class="p">,</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">)),</span>
+    <span class="p">(</span><span class="s2">"lgbm"</span><span class="p">,</span> <span class="n">LGBMClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">200</span><span class="p">)),</span>
+<span class="p">]</span>
+<span class="n">stacker</span> <span class="o">=</span> <span class="n">StackingClassifier</span><span class="p">(</span><span class="n">estimators</span><span class="o">=</span><span class="n">estimators</span><span class="p">,</span> <span class="n">final_estimator</span><span class="o">=</span><span class="n">LogisticRegression</span><span class="p">())</span>
+<span class="n">stacker</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="algorithm-complexity-and-latency-trade-off">Algorithm complexity and latency trade-off<a class="headerlink" href="#algorithm-complexity-and-latency-trade-off" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Model type</th>
+<th>Inference latency</th>
+<th>Memory footprint</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Logistic regression</td>
+<td>Very low (us)</td>
+<td>Very small</td>
+<td>Single matrix multiply</td>
+</tr>
+<tr>
+<td>Shallow decision tree</td>
+<td>Low (us)</td>
+<td>Small</td>
+<td>Tree traversal</td>
+</tr>
+<tr>
+<td>Random forest (100 trees)</td>
+<td>Medium (ms)</td>
+<td>Medium</td>
+<td>N tree traversals</td>
+</tr>
+<tr>
+<td>LightGBM (1000 trees)</td>
+<td>Low-medium</td>
+<td>Medium</td>
+<td>Leaf-wise, well optimised</td>
+</tr>
+<tr>
+<td>Deep neural network</td>
+<td>High (ms-s on CPU)</td>
+<td>Large</td>
+<td>Batch inference preferred</td>
+</tr>
+</tbody>
+</table>
+<h2 id="deep-dive-every-concept-explained">Deep dive: every concept, explained<a class="headerlink" href="#deep-dive-every-concept-explained" title="Permanent link">¶</a></h2>
+<p>This section connects the equations above to the intuition and the engineering trade-offs.</p>
+<h3 id="linear-and-logistic-models-the-interpretable-baseline">Linear and logistic models : the interpretable baseline<a class="headerlink" href="#linear-and-logistic-models-the-interpretable-baseline" title="Permanent link">¶</a></h3>
+<p>A <strong>linear model</strong> predicts <span class="arithmatex">\(\hat y = \theta^T x\)</span>: each feature contributes a weighted vote, and
+the weight <span class="arithmatex">\(\theta_j\)</span> is directly readable as "effect of feature <span class="arithmatex">\(j\)</span>". <strong>Logistic regression</strong>
+wraps this in the <strong>sigmoid</strong> <span class="arithmatex">\(\sigma(z) = \tfrac{1}{1+e^{-z}}\)</span>, which squashes any real number
+into <span class="arithmatex">\((0,1)\)</span> so the output is a valid probability. The model is linear in <em>log-odds</em>: a unit
+change in <span class="arithmatex">\(x_j\)</span> multiplies the odds by <span class="arithmatex">\(e^{\theta_j}\)</span>. This transparency is why linear models
+remain the default baseline and the choice when regulators require explainable decisions.</p>
+<h3 id="the-decision-threshold-tau-is-a-business-lever-not-a-constant">The decision threshold <span class="arithmatex">\(\tau\)</span> is a business lever, not a constant<a class="headerlink" href="#the-decision-threshold-tau-is-a-business-lever-not-a-constant" title="Permanent link">¶</a></h3>
+<p>A classifier outputs a probability; turning it into a yes/no needs a <strong>threshold</strong> <span class="arithmatex">\(\tau\)</span>
+(default 0.5). Moving <span class="arithmatex">\(\tau\)</span> trades precision against recall: a fraud team that fears missed
+fraud lowers <span class="arithmatex">\(\tau\)</span> (catch more, accept more false alarms); a team that fears blocking good
+customers raises it. The right <span class="arithmatex">\(\tau\)</span> is set by the <em>relative cost</em> of the two error types, not
+by the algorithm : which is why thresholds are tuned after training, against business cost.</p>
+<h3 id="naive-bayes-and-the-independence-assumption">Naive Bayes and the independence assumption<a class="headerlink" href="#naive-bayes-and-the-independence-assumption" title="Permanent link">¶</a></h3>
+<p><span class="arithmatex">\(P(y\mid x) \propto P(y)\prod_i P(x_i\mid y)\)</span> comes straight from Bayes' rule, with one
+simplifying ("naive") assumption: features are <strong>conditionally independent given the class</strong>.
+This is almost never literally true, yet the model works surprisingly well for text/spam because
+it needs very little data and training is just counting frequencies. Knowing the assumption tells
+you its failure mode: strongly correlated features get their evidence double-counted.</p>
+<h3 id="trees-impurity-and-why-ensembles-beat-single-trees">Trees, impurity, and why ensembles beat single trees<a class="headerlink" href="#trees-impurity-and-why-ensembles-beat-single-trees" title="Permanent link">¶</a></h3>
+<p>A <strong>decision tree</strong> repeatedly splits the data to make each resulting group more "pure":</p>
+<ul>
+<li><strong>Gini impurity</strong> <span class="arithmatex">\(1-\sum_k p_k^2\)</span> and <strong>entropy</strong> <span class="arithmatex">\(-\sum_k p_k\log_2 p_k\)</span> both measure how
+  mixed a node's labels are; a split is chosen to reduce this the most (<strong>information gain</strong>).</li>
+<li>A single deep tree memorizes the training data → <strong>high variance / overfitting</strong>.</li>
+<li><strong>Random forests</strong> fix this by <strong>bagging</strong>: train many trees on bootstrap samples with random
+  feature subsets and average them. Averaging decorrelated trees cancels their individual errors,
+  cutting variance with little added bias.</li>
+<li><strong>Gradient boosting</strong> takes the opposite route: build trees <strong>sequentially</strong>, each one fitted
+  to the <em>residual errors</em> (the gradient of the loss) of the current ensemble. The update
+  <span class="arithmatex">\(F_m(x) = F_{m-1}(x) + \nu\,h_m(x)\)</span> adds each new weak learner scaled by the <strong>shrinkage</strong>
+<span class="arithmatex">\(\nu\)</span>. Small <span class="arithmatex">\(\nu\)</span> with many trees is the well-known recipe for top tabular accuracy.</li>
+</ul>
+<h3 id="the-boosting-hyperparameters-and-what-they-really-control">The boosting hyperparameters, and what they really control<a class="headerlink" href="#the-boosting-hyperparameters-and-what-they-really-control" title="Permanent link">¶</a></h3>
+<ul>
+<li><code>n_estimators</code> is <em>capacity</em>: more trees fit finer structure but overfit without early
+  stopping on a validation set.</li>
+<li><code>learning_rate</code> (<span class="arithmatex">\(\nu\)</span>) is <em>caution per step</em>: lower means each tree corrects less, so the
+  ensemble generalizes better : but needs proportionally more trees.</li>
+<li><code>max_depth</code> / <code>num_leaves</code> is the <em>main overfit knob</em>: it caps how complex any single tree can
+  get.</li>
+<li><code>subsample</code> / <code>colsample_bytree</code> inject <strong>stochasticity</strong> (row/column sampling) that
+  decorrelates trees and reduces variance, much like a random forest does.</li>
+</ul>
+<h3 id="bagging-vs-boosting-vs-stacking-one-sentence-each">Bagging vs boosting vs stacking : one sentence each<a class="headerlink" href="#bagging-vs-boosting-vs-stacking-one-sentence-each" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Bagging</strong> reduces <strong>variance</strong> by averaging independent models (random forest).</li>
+<li><strong>Boosting</strong> reduces <strong>bias</strong> by sequentially correcting mistakes (XGBoost/LightGBM).</li>
+<li><strong>Stacking</strong> trains a <strong>meta-model</strong> on the out-of-fold predictions of diverse base models to
+  exploit their complementary strengths : usually the highest accuracy, at the cost of complexity
+  and latency.</li>
+</ul>
+<h3 id="calibration-fairness-robustness-the-production-grade-concerns">Calibration, fairness, robustness : the production-grade concerns<a class="headerlink" href="#calibration-fairness-robustness-the-production-grade-concerns" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Calibration</strong>: a model is calibrated if, among predictions of "70% probability", about 70%
+  are actually positive. Boosted trees are often <em>mis-calibrated</em> and benefit from Platt scaling
+  or isotonic regression before probabilities are used in decisions.</li>
+<li><strong>Fairness</strong>: aggregate accuracy can hide that a model performs worse for a subgroup. Always
+  evaluate metrics <em>per segment</em>, not just globally.</li>
+<li><strong>Robustness</strong>: production data is noisier than training data; test the model under injected
+  noise, missing fields, and shifted distributions before trusting it.</li>
+</ul>
+<h3 id="why-latency-and-memory-belong-in-model-selection">Why latency and memory belong in model selection<a class="headerlink" href="#why-latency-and-memory-belong-in-model-selection" title="Permanent link">¶</a></h3>
+<p>The latency/footprint table above is a reminder that the "best" model is the one that meets
+<em>all</em> constraints. A 1000-tree ensemble that adds 30 ms per call may break a real-time SLA, while
+a single matrix-multiply logistic regression serves in microseconds. Accuracy is necessary but
+never sufficient : cost, latency, interpretability, and maintainability are co-equal selection
+criteria.</p>
+<h2 id="a-model-selection-flowchart">A model-selection flowchart<a class="headerlink" href="#a-model-selection-flowchart" title="Permanent link">¶</a></h2>
+<p>Most tabular model choices collapse to a few questions about data type, size, and constraints.
+This flow is a fast first pass; always confirm with a validated baseline.</p>
+<div class="mermaid">flowchart TD
+  A[What is the data?] --&gt; B{Structured<br/>tabular?}
+  B --&gt;|No: images/text/audio| C[Neural networks<br/>CNN / Transformer]
+  B --&gt;|Yes| D{Hard constraint:<br/>explainability or<br/>microsecond latency?}
+  D --&gt;|Yes| E[Linear / logistic<br/>or shallow tree]
+  D --&gt;|No| F{Enough data and<br/>accuracy is priority?}
+  F --&gt;|Yes| G[Gradient boosting<br/>LightGBM / XGBoost / CatBoost]
+  F --&gt;|Limited data| H[Regularized linear<br/>or small random forest]
+</div>
+<blockquote>
+<p><strong>Tip - Start simple, escalate with evidence:</strong> Always fit a cheap baseline (logistic
+regression or a small tree) first. Only move to boosting or deep learning when the baseline's
+error is genuinely the bottleneck and the extra accuracy is worth the added cost and latency.</p>
+</blockquote>
+<h2 id="when-to-actually-reach-for-deep-learning">When to actually reach for deep learning<a class="headerlink" href="#when-to-actually-reach-for-deep-learning" title="Permanent link">¶</a></h2>
+<p>Deep learning is not a default for tabular data; gradient boosting usually matches or beats it
+there at a fraction of the cost. Reach for neural networks when one of these holds:</p>
+<table>
+<thead>
+<tr>
+<th>Situation</th>
+<th>Why neural nets win</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Unstructured input (images, audio, raw text)</td>
+<td>They learn the feature representation automatically</td>
+</tr>
+<tr>
+<td>Very large datasets (millions+ examples)</td>
+<td>Capacity scales with data; boosting plateaus</td>
+</tr>
+<tr>
+<td>Complex feature interactions hand-engineering can't capture</td>
+<td>Deep layers compose features hierarchically</td>
+</tr>
+<tr>
+<td>Transfer learning from a pretrained model is available</td>
+<td>Fine-tuning beats training from scratch on small data</td>
+</tr>
+</tbody>
+</table>
+<h2 id="quick-self-check">Quick self-check<a class="headerlink" href="#quick-self-check" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Question</th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Why is logistic regression still the default baseline despite its simplicity?</td>
+<td>It is fast, interpretable, and well-calibrated, setting a strong reference that more complex models must beat.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>What does the shrinkage parameter <span class="arithmatex">\(\nu\)</span> (learning_rate) trade off in gradient boosting?</td>
+<td>Learning speed vs accuracy/overfitting: a smaller <span class="arithmatex">\(\nu\)</span> needs more trees but generalizes better.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>In one sentence each, how do bagging, boosting, and stacking differ?</td>
+<td>Bagging trains independent models in parallel on bootstraps and averages them to cut variance; boosting trains models sequentially, each correcting the previous one's errors to cut bias; stacking trains a meta-model on base learners' predictions.</td>
+</tr>
+<tr>
+<td>4</td>
+<td>A boosted model outputs "0.7" but only 50% of such cases are positive: what is wrong and how do you fix it?</td>
+<td>The model is miscalibrated; apply Platt scaling or isotonic regression to correct its probabilities.</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Name two reasons to choose a neural network over gradient boosting.</td>
+<td>Unstructured data such as images, text, or audio, and very large datasets where representation/transfer learning helps.</td>
+</tr>
+</tbody>
+</table>
+<hr/>
+<h2 id="support-vector-machines-full-derivation">Support Vector Machines: full derivation<a class="headerlink" href="#support-vector-machines-full-derivation" title="Permanent link">¶</a></h2>
+<h3 id="the-margin-maximization-problem">The margin maximization problem<a class="headerlink" href="#the-margin-maximization-problem" title="Permanent link">¶</a></h3>
+<p>A Support Vector Machine (SVM) finds the hyperplane that separates two classes with the
+<strong>maximum margin</strong> — the distance from the hyperplane to the nearest training point on each
+side. Maximizing the margin produces better generalization: the wider the street between classes,
+the less sensitive the decision boundary is to small perturbations in training data.</p>
+<p>For a binary classification problem with labels <span class="arithmatex">\(y_i \in \{-1, +1\}\)</span> and feature vectors <span class="arithmatex">\(x_i\)</span>,
+the <strong>primal formulation</strong> is:</p>
+<div class="arithmatex">\[
+\min_{w, b} \frac{1}{2}\|w\|^2 \quad \text{subject to} \quad y_i(w^T x_i + b) \geq 1 \quad \forall i
+\]</div>
+<p>The margin width is <span class="arithmatex">\(\frac{2}{\|w\|}\)</span>, so minimizing <span class="arithmatex">\(\|w\|^2\)</span> maximizes the margin. Points
+where the constraint is active (<span class="arithmatex">\(y_i(w^T x_i + b) = 1\)</span>) are the <strong>support vectors</strong> — they are
+the only training points that define the boundary.</p>
+<h3 id="soft-margin-extension">Soft-margin extension<a class="headerlink" href="#soft-margin-extension" title="Permanent link">¶</a></h3>
+<p>Real data is rarely linearly separable. The <strong>soft-margin SVM</strong> allows constraint violations
+via slack variables <span class="arithmatex">\(\xi_i \geq 0\)</span>:</p>
+<div class="arithmatex">\[
+\min_{w, b, \xi} \frac{1}{2}\|w\|^2 + C \sum_{i=1}^n \xi_i
+\quad \text{s.t.} \quad y_i(w^T x_i + b) \geq 1 - \xi_i, \quad \xi_i \geq 0
+\]</div>
+<p>The hyperparameter <span class="arithmatex">\(C\)</span> controls the trade-off: large <span class="arithmatex">\(C\)</span> penalizes misclassification heavily
+(low bias, high variance); small <span class="arithmatex">\(C\)</span> allows more violations for a wider margin (high bias, low
+variance).</p>
+<h3 id="lagrangian-and-kkt-conditions">Lagrangian and KKT conditions<a class="headerlink" href="#lagrangian-and-kkt-conditions" title="Permanent link">¶</a></h3>
+<p>Introduce Lagrange multipliers <span class="arithmatex">\(\alpha_i \geq 0\)</span> for each constraint. The Lagrangian is:</p>
+<div class="arithmatex">\[
+\mathcal{L}(w, b, \alpha) = \frac{1}{2}\|w\|^2 - \sum_{i=1}^n \alpha_i \left[y_i(w^T x_i + b) - 1\right]
+\]</div>
+<p>Setting <span class="arithmatex">\(\nabla_w \mathcal{L} = 0\)</span> gives <span class="arithmatex">\(w = \sum_i \alpha_i y_i x_i\)</span>, and
+<span class="arithmatex">\(\nabla_b \mathcal{L} = 0\)</span> gives <span class="arithmatex">\(\sum_i \alpha_i y_i = 0\)</span>.</p>
+<p>The <strong>KKT complementarity condition</strong> states <span class="arithmatex">\(\alpha_i [y_i(w^T x_i + b) - 1] = 0\)</span>. This means
+<span class="arithmatex">\(\alpha_i &gt; 0\)</span> only for support vectors — all other training points do not contribute to the
+decision boundary.</p>
+<h3 id="dual-problem">Dual problem<a class="headerlink" href="#dual-problem" title="Permanent link">¶</a></h3>
+<p>Substituting <span class="arithmatex">\(w = \sum_i \alpha_i y_i x_i\)</span> back into the Lagrangian and maximizing over
+<span class="arithmatex">\(\alpha\)</span> yields the <strong>dual formulation</strong>:</p>
+<div class="arithmatex">\[
+\max_{\alpha} \sum_{i=1}^n \alpha_i - \frac{1}{2} \sum_{i,j} \alpha_i \alpha_j y_i y_j x_i^T x_j
+\quad \text{s.t.} \quad 0 \leq \alpha_i \leq C, \quad \sum_i \alpha_i y_i = 0
+\]</div>
+<p>The dual is a quadratic program solved efficiently by algorithms like SMO (Sequential Minimal
+Optimization). Crucially, the objective depends only on <strong>dot products</strong> <span class="arithmatex">\(x_i^T x_j\)</span>.</p>
+<h3 id="kernel-trick">Kernel trick<a class="headerlink" href="#kernel-trick" title="Permanent link">¶</a></h3>
+<p>The dual's dependence on <span class="arithmatex">\(x_i^T x_j\)</span> enables the <strong>kernel trick</strong>: replace the inner product
+with a kernel function <span class="arithmatex">\(K(x, z)\)</span> that implicitly computes the dot product in a higher-dimensional
+(possibly infinite-dimensional) feature space <span class="arithmatex">\(\phi\)</span>:</p>
+<div class="arithmatex">\[
+K(x, z) = \phi(x)^T \phi(z)
+\]</div>
+<p>This allows SVMs to learn non-linear decision boundaries without ever explicitly computing <span class="arithmatex">\(\phi\)</span>.</p>
+<p><strong>Common kernels:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Kernel</th>
+<th>Formula</th>
+<th>When to use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Linear</td>
+<td><span class="arithmatex">\(x^T z\)</span></td>
+<td>Linearly separable, high-dimensional sparse features</td>
+</tr>
+<tr>
+<td>Polynomial (degree <span class="arithmatex">\(d\)</span>)</td>
+<td><span class="arithmatex">\((x^T z + c)^d\)</span></td>
+<td>Moderate nonlinearity, image features</td>
+</tr>
+<tr>
+<td>RBF (Gaussian)</td>
+<td><span class="arithmatex">\(\exp\!\left(-\gamma \|x - z\|^2\right)\)</span></td>
+<td>General-purpose nonlinear classification</td>
+</tr>
+<tr>
+<td>Sigmoid</td>
+<td><span class="arithmatex">\(\tanh(\kappa x^T z + c)\)</span></td>
+<td>Rarely preferred; neural-network analogy</td>
+</tr>
+</tbody>
+</table>
+<p>The <strong>RBF kernel</strong> is the most common default for nonlinear SVMs. The hyperparameter
+<span class="arithmatex">\(\gamma = \frac{1}{2\sigma^2}\)</span> controls the width of the Gaussian: high <span class="arithmatex">\(\gamma\)</span> means the
+kernel decays quickly (local decision boundary, high variance); low <span class="arithmatex">\(\gamma\)</span> means the boundary
+is smooth and global (lower variance).</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">SVC</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span>
+
+<span class="c1"># SVM is sensitive to scale: always standardize</span>
+<span class="n">svm_pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([</span>
+    <span class="p">(</span><span class="s2">"scaler"</span><span class="p">,</span> <span class="n">StandardScaler</span><span class="p">()),</span>
+    <span class="p">(</span><span class="s2">"svm"</span><span class="p">,</span> <span class="n">SVC</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="s2">"rbf"</span><span class="p">,</span> <span class="n">C</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="s2">"scale"</span><span class="p">,</span> <span class="n">probability</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+<span class="p">])</span>
+<span class="n">svm_pipeline</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">svm_pipeline</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">))</span>
+</code></pre></div>
+<h3 id="when-svm-beats-tree-ensembles">When SVM beats tree ensembles<a class="headerlink" href="#when-svm-beats-tree-ensembles" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>SVM advantage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>High-dimensional sparse features (text, genomics)</td>
+<td>Dual formulation is efficient in feature-sparse space</td>
+</tr>
+<tr>
+<td>Small-to-medium datasets (&lt; 50k rows)</td>
+<td>Maximum-margin solution generalizes well with limited data</td>
+</tr>
+<tr>
+<td>Non-linear boundary with RBF kernel</td>
+<td>Kernel implicitly enriches feature space cheaply</td>
+</tr>
+<tr>
+<td>Need a principled probabilistic output</td>
+<td>Platt scaling on top of SVM margins</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Note - Scaling is mandatory:</strong> SVMs minimize <span class="arithmatex">\(\|w\|^2\)</span>; a feature with magnitude 1000
+dominates one with magnitude 1. Always standardize before fitting an SVM.</p>
+</blockquote>
+<hr/>
+<h2 id="bayesian-methods">Bayesian methods<a class="headerlink" href="#bayesian-methods" title="Permanent link">¶</a></h2>
+<h3 id="bayesian-linear-regression">Bayesian linear regression<a class="headerlink" href="#bayesian-linear-regression" title="Permanent link">¶</a></h3>
+<p>In classical linear regression, <span class="arithmatex">\(\theta\)</span> is a point estimate. <strong>Bayesian linear regression</strong>
+treats <span class="arithmatex">\(\theta\)</span> as a random variable with a prior distribution, then updates it via Bayes'
+rule given the observed data:</p>
+<div class="arithmatex">\[
+P(\theta \mid X, y) = \frac{P(y \mid X, \theta)\, P(\theta)}{P(y \mid X)}
+\]</div>
+<p>With a Gaussian prior <span class="arithmatex">\(\theta \sim \mathcal{N}(0, \sigma_\theta^2 I)\)</span> and Gaussian likelihood,
+the posterior is also Gaussian (conjugacy), and the posterior mean reduces to the ridge
+regression estimate:</p>
+<div class="arithmatex">\[
+\hat{\theta}_{\text{MAP}} = (X^T X + \lambda I)^{-1} X^T y, \quad \lambda = \frac{\sigma^2}{\sigma_\theta^2}
+\]</div>
+<p>The <strong>posterior predictive distribution</strong> for a new point <span class="arithmatex">\(x^*\)</span> is:</p>
+<div class="arithmatex">\[
+p(y^* \mid x^*, X, y) = \mathcal{N}(x^{*T}\hat{\theta},\; \sigma^2 + x^{*T}(X^T X + \lambda I)^{-1} x^*)
+\]</div>
+<p>The second term in the variance is the <strong>epistemic uncertainty</strong> — it grows when <span class="arithmatex">\(x^*\)</span> is far
+from training data. This is what frequentist point estimates cannot provide.</p>
+<h3 id="uncertainty-quantification">Uncertainty quantification<a class="headerlink" href="#uncertainty-quantification" title="Permanent link">¶</a></h3>
+<p>The Bayesian framework naturally answers: "How confident are we in this prediction?" rather than
+just "What is our best prediction?" This matters enormously in:</p>
+<ul>
+<li><strong>Medical decisions</strong>: a prediction with high uncertainty should trigger human review.</li>
+<li><strong>Finance</strong>: model uncertainty informs position sizing.</li>
+<li><strong>Active learning</strong>: query the points where the model is most uncertain.</li>
+</ul>
+<h3 id="gaussian-processes-high-level">Gaussian processes (high level)<a class="headerlink" href="#gaussian-processes-high-level" title="Permanent link">¶</a></h3>
+<p>A <strong>Gaussian process (GP)</strong> generalizes Bayesian linear regression to non-parametric function
+estimation. A GP defines a distribution over <em>functions</em>, where any finite collection of
+function values is jointly Gaussian:</p>
+<div class="arithmatex">\[
+f(x) \sim \mathcal{GP}(m(x),\; k(x, x'))
+\]</div>
+<p>where <span class="arithmatex">\(m(x)\)</span> is the mean function (often 0) and <span class="arithmatex">\(k(x, x')\)</span> is the kernel (covariance) function
+specifying how function values at nearby points are correlated.</p>
+<p>The posterior GP given observations <span class="arithmatex">\((X, y)\)</span> gives both a mean prediction and a confidence
+interval at every input point. GPs are exact for small datasets (GP inference scales as <span class="arithmatex">\(O(n^3)\)</span>)
+and are the gold standard for Bayesian optimization of expensive black-box functions
+(e.g. hyperparameter search).</p>
+<h3 id="when-bayesian-methods-outperform-frequentist-approaches">When Bayesian methods outperform frequentist approaches<a class="headerlink" href="#when-bayesian-methods-outperform-frequentist-approaches" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Situation</th>
+<th>Why Bayesian wins</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Small datasets</td>
+<td>Prior regularizes and prevents overfitting</td>
+</tr>
+<tr>
+<td>Need calibrated uncertainty</td>
+<td>Posterior gives probability distribution, not just point estimate</td>
+</tr>
+<tr>
+<td>Sequential decision-making</td>
+<td>Posterior updates as new data arrives (online learning)</td>
+</tr>
+<tr>
+<td>Hyperparameter optimization</td>
+<td>Bayesian optimization (GP surrogate) is more sample-efficient than grid search</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Computational cost</strong> is the key limitation: exact Bayesian inference is often intractable for
+large models. Variational inference and MCMC methods provide approximations, but they add
+implementation complexity and computational overhead. For most large-scale tabular problems,
+gradient boosting with Platt-scaled probabilities is a practical substitute.</p>
+<hr/>
+<h2 id="neural-networks-preview">Neural networks preview<a class="headerlink" href="#neural-networks-preview" title="Permanent link">¶</a></h2>
+<h3 id="what-an-mlp-adds-over-logistic-regression">What an MLP adds over logistic regression<a class="headerlink" href="#what-an-mlp-adds-over-logistic-regression" title="Permanent link">¶</a></h3>
+<p>A <strong>multi-layer perceptron (MLP)</strong> extends logistic regression by stacking multiple linear
+transformations interleaved with non-linear activation functions:</p>
+<div class="arithmatex">\[
+h^{(1)} = \sigma(W^{(1)} x + b^{(1)}), \quad
+h^{(2)} = \sigma(W^{(2)} h^{(1)} + b^{(2)}), \quad \ldots
+\]</div>
+<p>where <span class="arithmatex">\(\sigma\)</span> is a non-linear activation (ReLU, sigmoid, tanh). Each layer learns a new
+<em>representation</em> of the input. Logistic regression is the special case of depth 0 hidden layers:
+it can only learn a linear boundary. An MLP with one hidden layer can learn any boundary that is
+expressible as a finite composition of linear thresholds.</p>
+<h3 id="universal-approximation-theorem">Universal approximation theorem<a class="headerlink" href="#universal-approximation-theorem" title="Permanent link">¶</a></h3>
+<p>The <strong>Universal Approximation Theorem</strong> (Cybenko, 1989; Hornik, 1991) states that a feedforward
+network with at least one hidden layer and a sufficiently large number of hidden units can
+approximate any continuous function on a compact subset of <span class="arithmatex">\(\mathbb{R}^n\)</span> to arbitrary
+precision, given enough capacity.</p>
+<p>This does <strong>not</strong> mean:</p>
+<ul>
+<li>That neural networks are always the right choice.</li>
+<li>That the network can be trained efficiently to find that approximation.</li>
+<li>That the approximation generalizes to unseen data without sufficient training examples.</li>
+</ul>
+<p>For tabular data, gradient boosting typically achieves competitive or superior performance at
+far lower computational cost. The universal approximation guarantee becomes practically relevant
+for unstructured data (images, audio, text) where hand-crafted features cannot capture the
+necessary structure.</p>
+<blockquote>
+<p><strong>Tip - Full neural network coverage:</strong> Deep architectures, backpropagation, convolutional
+networks, transformers, training regularization, and Azure ML GPU training are covered in full
+in the <a href="../05-neural-networks/">Neural Networks module</a>.</p>
+</blockquote>
+<hr/>
+<h2 id="anomaly-detection-models">Anomaly detection models<a class="headerlink" href="#anomaly-detection-models" title="Permanent link">¶</a></h2>
+<p>Anomaly detection identifies observations that deviate significantly from the expected pattern.
+It is a fundamentally different problem from supervised classification: in most real-world
+deployments, labeled anomaly examples are scarce or absent entirely.</p>
+<h3 id="isolation-forest">Isolation Forest<a class="headerlink" href="#isolation-forest" title="Permanent link">¶</a></h3>
+<p><strong>Isolation Forest</strong> (Liu et al., 2008) detects anomalies by random partitioning. The key
+insight: anomalies are rare and different, so they are isolated by fewer random splits than
+normal points.</p>
+<p><strong>Algorithm:</strong></p>
+<ol>
+<li>Build <span class="arithmatex">\(T\)</span> isolation trees, each by randomly selecting a feature and a random split value
+   within the feature's range.</li>
+<li>For each sample, record the path length <span class="arithmatex">\(h(x)\)</span> (number of splits) to isolate it.</li>
+<li>The <strong>anomaly score</strong> normalizes path length against the expected path length <span class="arithmatex">\(c(n)\)</span> for a
+   binary search tree over <span class="arithmatex">\(n\)</span> samples:</li>
+</ol>
+<div class="arithmatex">\[
+s(x, n) = 2^{-\frac{\mathbb{E}[h(x)]}{c(n)}}, \quad c(n) = 2H(n-1) - \frac{2(n-1)}{n}
+\]</div>
+<p>where <span class="arithmatex">\(H(k) = \ln k + 0.5772\)</span> (Euler-Mascheroni constant). Scores near 1 indicate anomalies;
+near 0.5 indicate normal points.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">IsolationForest</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">iso</span> <span class="o">=</span> <span class="n">IsolationForest</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">contamination</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">iso</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+
+<span class="n">scores</span> <span class="o">=</span> <span class="n">iso</span><span class="o">.</span><span class="n">decision_function</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>   <span class="c1"># higher = more normal</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="n">iso</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>             <span class="c1"># +1 = normal, -1 = anomaly</span>
+<span class="n">anomaly_count</span> <span class="o">=</span> <span class="p">(</span><span class="n">labels</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Detected anomalies: </span><span class="si">{</span><span class="n">anomaly_count</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">anomaly_count</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%)"</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="one-class-svm">One-Class SVM<a class="headerlink" href="#one-class-svm" title="Permanent link">¶</a></h3>
+<p><strong>One-Class SVM</strong> learns the smallest hypersphere (or half-space in kernel space) enclosing
+the training data. Points outside the boundary are flagged as anomalies.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">OneClassSVM</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span>
+
+<span class="n">ocsvm</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([</span>
+    <span class="p">(</span><span class="s2">"scaler"</span><span class="p">,</span> <span class="n">StandardScaler</span><span class="p">()),</span>
+    <span class="p">(</span><span class="s2">"ocsvm"</span><span class="p">,</span> <span class="n">OneClassSVM</span><span class="p">(</span><span class="n">nu</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">kernel</span><span class="o">=</span><span class="s2">"rbf"</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="s2">"scale"</span><span class="p">))</span>
+<span class="p">])</span>
+<span class="n">ocsvm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+<span class="n">preds</span> <span class="o">=</span> <span class="n">ocsvm</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>   <span class="c1"># +1 = normal, -1 = anomaly</span>
+</code></pre></div>
+<p>Best used when the normal data has a compact, relatively well-defined structure in feature space.
+Scales poorly with large datasets (quadratic in training examples).</p>
+<h3 id="local-outlier-factor">Local Outlier Factor<a class="headerlink" href="#local-outlier-factor" title="Permanent link">¶</a></h3>
+<p><strong>Local Outlier Factor (LOF)</strong> compares the local density of each point to the densities of
+its <span class="arithmatex">\(k\)</span> nearest neighbors. A point in a sparse neighborhood surrounded by dense neighbors is
+anomalous.</p>
+<div class="arithmatex">\[
+\text{LOF}_k(x) = \frac{\frac{1}{|N_k(x)|}\sum_{o \in N_k(x)} \text{lrd}_k(o)}{\text{lrd}_k(x)}
+\]</div>
+<p>where <span class="arithmatex">\(\text{lrd}_k\)</span> is the local reachability density. LOF &gt; 1 indicates the point is less
+dense than its neighbors (anomalous).</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">LocalOutlierFactor</span>
+
+<span class="n">lof</span> <span class="o">=</span> <span class="n">LocalOutlierFactor</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">contamination</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+<span class="n">preds</span> <span class="o">=</span> <span class="n">lof</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>   <span class="c1"># +1 = normal, -1 = anomaly</span>
+</code></pre></div>
+<p>LOF is transductive (no <code>predict</code> on unseen data); use <code>novelty=True</code> for an inductive version.</p>
+<h3 id="autoencoder-reconstruction-error">Autoencoder reconstruction error<a class="headerlink" href="#autoencoder-reconstruction-error" title="Permanent link">¶</a></h3>
+<p>An <strong>autoencoder</strong> is a neural network trained to reconstruct its input through a bottleneck
+layer. Normal data reconstructs well; anomalies have high reconstruction error because the
+bottleneck has not learned to represent their unusual structure.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
+
+<span class="k">class</span> <span class="nc">Autoencoder</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">input_dim</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">latent_dim</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">encoder</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">input_dim</span><span class="p">,</span> <span class="mi">64</span><span class="p">),</span> <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="n">latent_dim</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">decoder</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">latent_dim</span><span class="p">,</span> <span class="mi">64</span><span class="p">),</span> <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
+            <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="n">input_dim</span><span class="p">)</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">decoder</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">encoder</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+
+<span class="c1"># Anomaly score = mean squared reconstruction error per sample</span>
+<span class="k">def</span> <span class="nf">reconstruction_error</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X_tensor</span><span class="p">):</span>
+    <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
+        <span class="n">X_hat</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">X_tensor</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">((</span><span class="n">X_tensor</span> <span class="o">-</span> <span class="n">X_hat</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="comparison-and-evaluation-challenge">Comparison and evaluation challenge<a class="headerlink" href="#comparison-and-evaluation-challenge" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Training data</th>
+<th>Scales to large data</th>
+<th>Interpretability</th>
+<th>Best for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Isolation Forest</td>
+<td>Normal only</td>
+<td>Yes (<span class="arithmatex">\(O(n \log n)\)</span>)</td>
+<td>Medium (path length)</td>
+<td>General-purpose, fast baseline</td>
+</tr>
+<tr>
+<td>One-Class SVM</td>
+<td>Normal only</td>
+<td>No (<span class="arithmatex">\(O(n^2)\)</span>)</td>
+<td>Low</td>
+<td>Compact normal distributions</td>
+</tr>
+<tr>
+<td>LOF</td>
+<td>Normal only</td>
+<td>Medium</td>
+<td>Medium (density ratio)</td>
+<td>Density-based anomalies</td>
+</tr>
+<tr>
+<td>Autoencoder</td>
+<td>Normal only</td>
+<td>Yes (GPU)</td>
+<td>Low</td>
+<td>High-dimensional, sequential data</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Evaluation challenge:</strong> Without labels, standard classification metrics are undefined. Practical
+approaches include: (1) expert review of a sample of flagged anomalies, (2) precision at top-<span class="arithmatex">\(k\)</span>
+flagged examples, (3) retrospective labeling from incident records for a historical holdout.</p>
+<blockquote>
+<p><strong>Note - Contamination hyperparameter:</strong> Most methods require an estimate of the anomaly rate
+(<code>contamination</code>). If this is unknown, sweep over <code>[0.01, 0.05, 0.10]</code> and review the
+flagged examples with domain experts to calibrate.</p>
+</blockquote>
+<hr/>
+<h2 id="survival-analysis">Survival analysis<a class="headerlink" href="#survival-analysis" title="Permanent link">¶</a></h2>
+<h3 id="time-to-event-modeling">Time-to-event modeling<a class="headerlink" href="#time-to-event-modeling" title="Permanent link">¶</a></h3>
+<p>Survival analysis studies <em>how long until an event occurs</em>. Canonical applications include:
+time to customer churn, time to machine failure, time to loan default, and time to patient
+relapse. The "event" might be death, failure, or conversion — and the key challenge is
+<strong>censoring</strong>.</p>
+<h3 id="censoring">Censoring<a class="headerlink" href="#censoring" title="Permanent link">¶</a></h3>
+<p>A sample is <strong>right-censored</strong> if the event has not occurred by the end of the observation
+window. The customer who signed up 2 months ago and has not yet churned is censored: we know
+they survived at least 2 months, but we do not know when (or if) they will churn.</p>
+<p>Discarding censored examples — treating them as non-events — biases all estimates. Survival
+models handle censoring explicitly by incorporating the fact that these observations contribute
+"survived at least <span class="arithmatex">\(t\)</span>" information.</p>
+<h3 id="kaplan-meier-estimator">Kaplan-Meier estimator<a class="headerlink" href="#kaplan-meier-estimator" title="Permanent link">¶</a></h3>
+<p>The <strong>Kaplan-Meier (KM) estimator</strong> is the nonparametric estimate of the survival function
+<span class="arithmatex">\(S(t) = P(T &gt; t)\)</span>, i.e. the probability that an individual survives beyond time <span class="arithmatex">\(t\)</span>:</p>
+<div class="arithmatex">\[
+\hat{S}(t) = \prod_{t_i \leq t} \left(1 - \frac{d_i}{n_i}\right)
+\]</div>
+<p>where <span class="arithmatex">\(d_i\)</span> is the number of events at time <span class="arithmatex">\(t_i\)</span> and <span class="arithmatex">\(n_i\)</span> is the number of individuals at
+risk just before <span class="arithmatex">\(t_i\)</span>. The KM curve provides a visual summary of survival over time for a
+cohort, and the log-rank test compares curves across groups.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">lifelines</span> <span class="kn">import</span> <span class="n">KaplanMeierFitter</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">kmf</span> <span class="o">=</span> <span class="n">KaplanMeierFitter</span><span class="p">()</span>
+<span class="n">kmf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">durations</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">"tenure_days"</span><span class="p">],</span> <span class="n">event_observed</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="s2">"churned"</span><span class="p">])</span>
+
+<span class="n">kmf</span><span class="o">.</span><span class="n">plot_survival_function</span><span class="p">(</span><span class="n">ci_show</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">"Kaplan-Meier Survival Curve: Customer Churn"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">"Days since signup"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">"Survival probability S(t)"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Median survival time: </span><span class="si">{</span><span class="n">kmf</span><span class="o">.</span><span class="n">median_survival_time_</span><span class="si">}</span><span class="s2"> days"</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="cox-proportional-hazards-model">Cox proportional hazards model<a class="headerlink" href="#cox-proportional-hazards-model" title="Permanent link">¶</a></h3>
+<p>The <strong>Cox model</strong> is the most widely used semi-parametric regression model for survival data.
+It models the <strong>hazard function</strong> — the instantaneous rate of the event at time <span class="arithmatex">\(t\)</span> given
+survival to <span class="arithmatex">\(t\)</span>:</p>
+<div class="arithmatex">\[
+h(t \mid x) = h_0(t) \exp(\beta^T x)
+\]</div>
+<p>where <span class="arithmatex">\(h_0(t)\)</span> is the <strong>baseline hazard</strong> (left unspecified, making the model semi-parametric)
+and <span class="arithmatex">\(\exp(\beta^T x)\)</span> is the covariate effect. The model is "proportional hazards" because the
+hazard ratio between two individuals is constant over time:</p>
+<div class="arithmatex">\[
+\frac{h(t \mid x_1)}{h(t \mid x_2)} = \frac{\exp(\beta^T x_1)}{\exp(\beta^T x_2)} = \exp(\beta^T(x_1 - x_2))
+\]</div>
+<p>Coefficients <span class="arithmatex">\(\beta\)</span> are estimated by maximizing the <strong>partial likelihood</strong> (Cox, 1972), which
+removes <span class="arithmatex">\(h_0(t)\)</span> from the estimation.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">lifelines</span> <span class="kn">import</span> <span class="n">CoxPHFitter</span>
+
+<span class="n">cox</span> <span class="o">=</span> <span class="n">CoxPHFitter</span><span class="p">(</span><span class="n">penalizer</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">cox</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">df</span><span class="p">[[</span><span class="s2">"tenure_days"</span><span class="p">,</span> <span class="s2">"churned"</span><span class="p">,</span> <span class="s2">"feature_1"</span><span class="p">,</span> <span class="s2">"feature_2"</span><span class="p">,</span> <span class="s2">"feature_3"</span><span class="p">]],</span>
+        <span class="n">duration_col</span><span class="o">=</span><span class="s2">"tenure_days"</span><span class="p">,</span>
+        <span class="n">event_col</span><span class="o">=</span><span class="s2">"churned"</span><span class="p">)</span>
+
+<span class="n">cox</span><span class="o">.</span><span class="n">print_summary</span><span class="p">()</span>
+
+<span class="c1"># Predict expected survival time for new customers</span>
+<span class="n">cox</span><span class="o">.</span><span class="n">predict_median</span><span class="p">(</span><span class="n">df_new</span><span class="p">[[</span><span class="s2">"feature_1"</span><span class="p">,</span> <span class="s2">"feature_2"</span><span class="p">,</span> <span class="s2">"feature_3"</span><span class="p">]])</span>
+</code></pre></div>
+<p><strong>Interpreting coefficients:</strong> <span class="arithmatex">\(e^{\beta_j}\)</span> is the <strong>hazard ratio</strong> for a one-unit increase in
+feature <span class="arithmatex">\(j\)</span>. <span class="arithmatex">\(e^{\beta_j} = 1.5\)</span> means a 50% higher instantaneous event rate — a 50% higher
+risk at any time point.</p>
+<h3 id="applications">Applications<a class="headerlink" href="#applications" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Domain</th>
+<th>Outcome event</th>
+<th>Censoring reason</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SaaS / e-commerce</td>
+<td>Subscription cancellation</td>
+<td>Still active at analysis date</td>
+</tr>
+<tr>
+<td>Predictive maintenance</td>
+<td>Machine failure</td>
+<td>Machine still running</td>
+</tr>
+<tr>
+<td>Credit risk</td>
+<td>Loan default</td>
+<td>Loan paid off early</td>
+</tr>
+<tr>
+<td>Clinical trials</td>
+<td>Patient relapse</td>
+<td>Lost to follow-up or study end</td>
+</tr>
+</tbody>
+</table>
+<hr/>
+<h2 id="model-selection-framework-a-statistical-perspective">Model selection framework: a statistical perspective<a class="headerlink" href="#model-selection-framework-a-statistical-perspective" title="Permanent link">¶</a></h2>
+<p>Choosing between models based on a single holdout score is unreliable: the difference may be
+due to chance rather than genuine superiority. Statistical tests quantify whether observed
+performance differences exceed what random variation can explain.</p>
+<h3 id="paired-t-test-for-model-comparison">Paired t-test for model comparison<a class="headerlink" href="#paired-t-test-for-model-comparison" title="Permanent link">¶</a></h3>
+<p>When two models produce per-fold scores from the same cross-validation folds, use the
+<strong>paired t-test</strong> to test whether the mean difference is significantly different from zero.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># 5-fold CV AUC scores for two models</span>
+<span class="n">model_a_scores</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.812</span><span class="p">,</span> <span class="mf">0.819</span><span class="p">,</span> <span class="mf">0.804</span><span class="p">,</span> <span class="mf">0.821</span><span class="p">,</span> <span class="mf">0.809</span><span class="p">])</span>
+<span class="n">model_b_scores</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.825</span><span class="p">,</span> <span class="mf">0.831</span><span class="p">,</span> <span class="mf">0.818</span><span class="p">,</span> <span class="mf">0.835</span><span class="p">,</span> <span class="mf">0.822</span><span class="p">])</span>
+
+<span class="n">t_stat</span><span class="p">,</span> <span class="n">p_value</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">ttest_rel</span><span class="p">(</span><span class="n">model_a_scores</span><span class="p">,</span> <span class="n">model_b_scores</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"t=</span><span class="si">{</span><span class="n">t_stat</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">, p=</span><span class="si">{</span><span class="n">p_value</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="c1"># p &lt; 0.05 → reject H0: models perform equally</span>
+</code></pre></div>
+<blockquote>
+<p><strong>Note - 5x2 CV test:</strong> With only 5 folds, the paired t-test has low power. The <strong>5×2 CV
+paired t-test</strong> (Dietterich, 1998) runs 5 independent 2-fold splits and uses a
+variance-adjusted statistic with better Type I error control.</p>
+</blockquote>
+<h3 id="mcnemars-test-for-classifiers">McNemar's test for classifiers<a class="headerlink" href="#mcnemars-test-for-classifiers" title="Permanent link">¶</a></h3>
+<p>When comparing two classifiers on the same test set, <strong>McNemar's test</strong> uses the contingency
+table of disagreements rather than individual accuracy scores. It is more powerful than
+comparing accuracy directly because it conditions on the cases where models disagree.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">statsmodels.stats.contingency_tables</span> <span class="kn">import</span> <span class="n">mcnemar</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># n01: A wrong, B correct; n10: A correct, B wrong</span>
+<span class="n">n01</span> <span class="o">=</span> <span class="p">((</span><span class="n">preds_a</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">preds_b</span> <span class="o">==</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">n10</span> <span class="o">=</span> <span class="p">((</span><span class="n">preds_a</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">preds_b</span> <span class="o">==</span> <span class="mi">0</span><span class="p">))</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">mcnemar</span><span class="p">([[</span><span class="n">n10</span><span class="p">,</span> <span class="n">n01</span><span class="p">],</span> <span class="p">[</span><span class="n">n01</span><span class="p">,</span> <span class="n">n10</span><span class="p">]],</span> <span class="n">exact</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">correction</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"McNemar statistic=</span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">statistic</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">, p=</span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">pvalue</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="delong-test-for-auc-comparison">DeLong test for AUC comparison<a class="headerlink" href="#delong-test-for-auc-comparison" title="Permanent link">¶</a></h3>
+<p>When comparing ROC-AUC scores, the <strong>DeLong test</strong> accounts for the correlation between AUC
+estimates derived from the same test set — a critical correction that naive z-tests ignore.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Using the scikit-learn compatible implementation from 'compare_auc_delong_xu'</span>
+<span class="c1"># Install: pip install scipy</span>
+<span class="c1"># Reference: DeLong et al. (1988)</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+
+<span class="c1"># Approximate: use bootstrap to estimate AUC variance</span>
+<span class="k">def</span> <span class="nf">bootstrap_auc_diff</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">prob_a</span><span class="p">,</span> <span class="n">prob_b</span><span class="p">,</span> <span class="n">n_boot</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">roc_auc_score</span>
+    <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+    <span class="n">diffs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_boot</span><span class="p">):</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_true</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_true</span><span class="p">))</span>
+        <span class="n">diffs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">roc_auc_score</span><span class="p">(</span><span class="n">y_true</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">prob_a</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span> <span class="o">-</span>
+                     <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">y_true</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">prob_b</span><span class="p">[</span><span class="n">idx</span><span class="p">]))</span>
+    <span class="n">diffs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">diffs</span><span class="p">)</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="nb">min</span><span class="p">((</span><span class="n">diffs</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="p">(</span><span class="n">diffs</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">diffs</span><span class="p">),</span> <span class="n">p</span>
+
+<span class="n">diff</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">bootstrap_auc_diff</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">probs_a</span><span class="p">,</span> <span class="n">probs_b</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"AUC difference: </span><span class="si">{</span><span class="n">diff</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">, p-value: </span><span class="si">{</span><span class="n">p</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="multiple-comparisons-problem">Multiple comparisons problem<a class="headerlink" href="#multiple-comparisons-problem" title="Permanent link">¶</a></h3>
+<p>When comparing <span class="arithmatex">\(k &gt; 2\)</span> models, each pairwise test at <span class="arithmatex">\(\alpha = 0.05\)</span> has a 5% false positive
+rate. With 10 models, there are <span class="arithmatex">\(\binom{10}{2} = 45\)</span> pairwise tests — at <span class="arithmatex">\(\alpha=0.05\)</span>, you
+expect <span class="arithmatex">\(0.05 \times 45 \approx 2\)</span> false discoveries even if all models are equal.</p>
+<p><strong>Corrections:</strong></p>
+<ul>
+<li><strong>Bonferroni</strong>: divide <span class="arithmatex">\(\alpha\)</span> by the number of tests. Conservative; safe.</li>
+<li><strong>Holm-Bonferroni</strong>: stepwise version of Bonferroni; more powerful.</li>
+<li><strong>Friedman test + Nemenyi post-hoc</strong>: designed for comparing multiple classifiers across
+  datasets; the standard in ML benchmarking.</li>
+</ul>
+<h3 id="why-you-need-holdout-data">Why you need holdout data<a class="headerlink" href="#why-you-need-holdout-data" title="Permanent link">¶</a></h3>
+<p>Cross-validation scores estimate expected performance but are still influenced by the choices
+made during model development. Every time you look at CV scores and make a decision (feature,
+algorithm, hyperparameter), the CV scores become slightly optimistic. A <strong>held-out test set</strong>
+that is never examined until the final model is chosen provides the only truly unbiased estimate.</p>
+<blockquote>
+<p><strong>Note - No peeking:</strong> The test set must be used exactly once. If you tune based on test
+set feedback and then report the test score, you have implicitly overfit to the test set
+and the reported score is no longer unbiased.</p>
+</blockquote>
+<hr/>
+<h2 id="full-model-comparison-from-simple-to-complex">Full model comparison: from simple to complex<a class="headerlink" href="#full-model-comparison-from-simple-to-complex" title="Permanent link">¶</a></h2>
+<p>The table below summarizes the major algorithm families on dimensions that matter for real
+deployment decisions. Complexity is expressed in <span class="arithmatex">\(n\)</span> (training examples) and <span class="arithmatex">\(p\)</span> (features).</p>
+<table>
+<thead>
+<tr>
+<th>Algorithm</th>
+<th>Train complexity</th>
+<th>Inference complexity</th>
+<th>Memory</th>
+<th>Interpretability</th>
+<th>Min data</th>
+<th>Typical rank (tabular)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Logistic Regression</td>
+<td><span class="arithmatex">\(O(np)\)</span> per iteration</td>
+<td><span class="arithmatex">\(O(p)\)</span></td>
+<td>Very small</td>
+<td>High (coefficients)</td>
+<td>Low (100s)</td>
+<td>Baseline</td>
+</tr>
+<tr>
+<td>Naive Bayes</td>
+<td><span class="arithmatex">\(O(np)\)</span></td>
+<td><span class="arithmatex">\(O(p)\)</span></td>
+<td>Very small</td>
+<td>High (per-class probs)</td>
+<td>Very low</td>
+<td>Below baseline on complex data</td>
+</tr>
+<tr>
+<td>Decision Tree (single)</td>
+<td><span class="arithmatex">\(O(np \log n)\)</span></td>
+<td><span class="arithmatex">\(O(\log n)\)</span></td>
+<td>Small</td>
+<td>High (tree rules)</td>
+<td>Low</td>
+<td>Below RF/GBT</td>
+</tr>
+<tr>
+<td>Random Forest</td>
+<td><span class="arithmatex">\(O(T \cdot np \log n)\)</span></td>
+<td><span class="arithmatex">\(O(T \log n)\)</span></td>
+<td>Medium</td>
+<td>Medium (importance)</td>
+<td>Medium (1k+)</td>
+<td>Good</td>
+</tr>
+<tr>
+<td>Gradient Boosting (GBT)</td>
+<td><span class="arithmatex">\(O(T \cdot np \log n)\)</span></td>
+<td><span class="arithmatex">\(O(T \log n)\)</span></td>
+<td>Medium</td>
+<td>Medium (importance)</td>
+<td>Medium (1k+)</td>
+<td>Best on tabular</td>
+</tr>
+<tr>
+<td>SVM (linear kernel)</td>
+<td><span class="arithmatex">\(O(np)\)</span> – <span class="arithmatex">\(O(n^2p)\)</span></td>
+<td><span class="arithmatex">\(O(p)\)</span></td>
+<td>Small–medium</td>
+<td>Low</td>
+<td>Low–medium</td>
+<td>Competitive (sparse)</td>
+</tr>
+<tr>
+<td>SVM (RBF kernel)</td>
+<td><span class="arithmatex">\(O(n^2)\)</span> – <span class="arithmatex">\(O(n^3)\)</span></td>
+<td><span class="arithmatex">\(O(n_{\text{sv}} \cdot p)\)</span></td>
+<td>Large for big data</td>
+<td>Low</td>
+<td>Low</td>
+<td>Competitive (small data)</td>
+</tr>
+<tr>
+<td>Isolation Forest</td>
+<td><span class="arithmatex">\(O(T \cdot n \log n)\)</span></td>
+<td><span class="arithmatex">\(O(T \log n)\)</span></td>
+<td>Small</td>
+<td>Medium</td>
+<td>Low (unsupervised)</td>
+<td>Anomaly only</td>
+</tr>
+<tr>
+<td>MLP (shallow)</td>
+<td><span class="arithmatex">\(O(n \cdot p \cdot h)\)</span> per epoch</td>
+<td><span class="arithmatex">\(O(p \cdot h)\)</span></td>
+<td>Medium</td>
+<td>Low</td>
+<td>Medium (10k+)</td>
+<td>Below GBT on tabular</td>
+</tr>
+<tr>
+<td>Deep Neural Network</td>
+<td><span class="arithmatex">\(O(n \cdot \text{params})\)</span> per epoch</td>
+<td><span class="arithmatex">\(O(\text{params})\)</span></td>
+<td>Large</td>
+<td>Very low</td>
+<td>High (100k+)</td>
+<td>Best on unstructured</td>
+</tr>
+<tr>
+<td>Cox PH Model</td>
+<td><span class="arithmatex">\(O(n^2)\)</span> naive</td>
+<td><span class="arithmatex">\(O(p)\)</span></td>
+<td>Small</td>
+<td>High (hazard ratios)</td>
+<td>Medium</td>
+<td>Survival tasks</td>
+</tr>
+<tr>
+<td>Gaussian Process</td>
+<td><span class="arithmatex">\(O(n^3)\)</span></td>
+<td><span class="arithmatex">\(O(n^2)\)</span></td>
+<td>Large</td>
+<td>High (posterior)</td>
+<td>Very low</td>
+<td>Small data + uncertainty</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Key takeaways:</strong></p>
+<ul>
+<li>For <strong>tabular data with &gt; 1,000 examples and no latency constraint</strong>, gradient boosting
+  (LightGBM / XGBoost / CatBoost) is the default best starting point.</li>
+<li>For <strong>high-dimensional sparse features</strong> (text, genomics), linear models and SVMs often
+  match or beat tree methods at a fraction of the memory cost.</li>
+<li>For <strong>interpretability requirements</strong>, logistic regression and shallow decision trees
+  remain the only options that produce human-readable explanations by construction.</li>
+<li>For <strong>uncertainty quantification</strong>, Bayesian methods and Gaussian processes are necessary;
+  calibrated GBT probabilities are an acceptable approximation for most applications.</li>
+<li>For <strong>survival / time-to-event</strong> outcomes, Cox PH or accelerated failure time (AFT) models
+  are the correct tool; applying standard classifiers discards censoring information.</li>
+<li><strong>Deep learning dominates only on unstructured data</strong> or when dataset scale exceeds what
+  tree methods can effectively exploit (typically &gt; 1 million labeled examples for tabular).</li>
+</ul>
+<blockquote>
+<p><strong>Tip - Rank on your data, not on benchmarks:</strong> Published benchmark rankings shift
+significantly across dataset types and sizes. Always run a fast baseline (logistic
+regression or a 100-tree random forest) on your own data before committing to a complex
+model. The cost of running a baseline is an hour; the cost of training a deep net on the
+wrong problem is weeks.</p>
+</blockquote>
+</article>
+</div>
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+</div>
+<button class="md-top md-icon" data-md-component="top" hidden="" type="button">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Back to top
+</button>
+</main>
+<footer class="md-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+<div class="md-copyright__highlight">
+      Copyright © 2026 <a href="https://github.com/Cloud2BR-MSFTLearningHub" rel="noopener" target="_blank">Cloud2BR MSFT Learning Hub</a>
+</div>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.expand", "navigation.top", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+<script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script src="../../assets/js/org-link.js"></script>
+<script type="module">import mermaid from "https://unpkg.com/mermaid@10.4.0/dist/mermaid.esm.min.mjs";
+mermaid.initialize({});</script></body>
+</html>

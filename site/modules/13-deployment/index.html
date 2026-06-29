@@ -1,0 +1,2855 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="Azure Machine Learning training from fundamentals to advanced MLOps." name="description"/>
+<link href="https://cloud2br-msftlearninghub.github.io/Azure-ML-Advanced/modules/13-deployment/" rel="canonical"/>
+<link href="../12-results-explainability/" rel="prev"/>
+<link href="../14-deployment-debug-k8s/" rel="next"/>
+<link href="/Azure-ML-Advanced/" hreflang="en" rel="alternate"/>
+<link href="/Azure-ML-Advanced/es/" hreflang="es" rel="alternate"/>
+<link href="../../assets/img/org-logo.png" rel="icon"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.7.6" name="generator"/>
+<title>13. Deployment - Azure Machine Learning: Advanced</title>
+<link href="../../assets/stylesheets/main.484c7ddc.min.css" rel="stylesheet"/>
+<link href="../../assets/stylesheets/palette.ab4e12ef.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../../assets/css/custom.css" rel="stylesheet"/>
+<script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+</head>
+<body data-md-color-accent="blue" data-md-color-primary="blue" data-md-color-scheme="default" dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#deployment">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header md-header--shadow" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="Azure Machine Learning: Advanced" class="md-header__button md-logo" data-md-component="logo" href="../.." title="Azure Machine Learning: Advanced">
+<img alt="logo" src="../../assets/img/org-logo.png"/>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            Azure Machine Learning: Advanced
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              13. Deployment
+            
+          </span>
+</div>
+</div>
+</div>
+<div class="md-header__option">
+<div class="md-select">
+<button aria-label="Select language" class="md-header__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"></path></svg>
+</button>
+<div class="md-select__inner">
+<ul class="md-select__list">
+<li class="md-select__item">
+<a class="md-select__link" href="/Azure-ML-Advanced/" hreflang="en">
+              English
+            </a>
+</li>
+<li class="md-select__item">
+<a class="md-select__link" href="/Azure-ML-Advanced/es/" hreflang="es">
+              Español
+            </a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Azure Machine Learning: Advanced" class="md-nav__button md-logo" data-md-component="logo" href="../.." title="Azure Machine Learning: Advanced">
+<img alt="logo" src="../../assets/img/org-logo.png"/>
+</a>
+    Azure Machine Learning: Advanced
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../..">
+<span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../01-math-prerequisites/">
+<span class="md-ellipsis">
+    
+  
+    01. Math Prerequisites
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../02-e2e-overview/">
+<span class="md-ellipsis">
+    
+  
+    02. End-to-End ML Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../03-introduction/">
+<span class="md-ellipsis">
+    
+  
+    03. Introduction and Lifecycle
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../04-ml-foundations/">
+<span class="md-ellipsis">
+    
+  
+    04. ML Foundations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../05-neural-networks/">
+<span class="md-ellipsis">
+    
+  
+    05. Neural Networks and Deep Learning
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../06-azure-ml-environment/">
+<span class="md-ellipsis">
+    
+  
+    06. Azure ML Environment
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../07-environment-setup/">
+<span class="md-ellipsis">
+    
+  
+    07. Environment Setup
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../08-data-preparation/">
+<span class="md-ellipsis">
+    
+  
+    08. Data Preparation
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../09-model-types/">
+<span class="md-ellipsis">
+    
+  
+    09. Model Types
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../10-training-automl/">
+<span class="md-ellipsis">
+    
+  
+    10. Training and AutoML
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../11-performance-metrics/">
+<span class="md-ellipsis">
+    
+  
+    11. Performance Metrics
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../12-results-explainability/">
+<span class="md-ellipsis">
+    
+  
+    12. Results and Explainability
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+<span class="md-ellipsis">
+    
+  
+    13. Deployment
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
+<span class="md-ellipsis">
+    
+  
+    13. Deployment
+  
+
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#deployment-steps">
+<span class="md-ellipsis">
+      
+        Deployment steps
+      
+    </span>
+</a>
+<nav aria-label="Deployment steps" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#scoring-script-structure-azure-ml-sdk-v2">
+<span class="md-ellipsis">
+      
+        Scoring script structure (Azure ML SDK v2)
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#endpoint-types">
+<span class="md-ellipsis">
+      
+        Endpoint types
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#end-to-end-example-calling-a-deployed-model">
+<span class="md-ellipsis">
+      
+        End-to-end example: calling a deployed model
+      
+    </span>
+</a>
+<nav aria-label="End-to-end example: calling a deployed model" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-what-the-api-looks-like">
+<span class="md-ellipsis">
+      
+        1. What the API looks like
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-the-request-you-send">
+<span class="md-ellipsis">
+      
+        2. The request you send
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-how-to-call-it">
+<span class="md-ellipsis">
+      
+        3. How to call it
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#4-the-response-you-get-back">
+<span class="md-ellipsis">
+      
+        4. The response you get back
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#5-how-to-read-the-result">
+<span class="md-ellipsis">
+      
+        5. How to read the result
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#release-strategies">
+<span class="md-ellipsis">
+      
+        Release strategies
+      
+    </span>
+</a>
+<nav aria-label="Release strategies" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#when-to-use-each-strategy">
+<span class="md-ellipsis">
+      
+        When to use each strategy
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#configuring-canary-traffic-split-azure-ml-managed-online-endpoint">
+<span class="md-ellipsis">
+      
+        Configuring canary traffic split (Azure ML managed online endpoint)
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#reliability-checklist">
+<span class="md-ellipsis">
+      
+        Reliability checklist
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#security-checklist">
+<span class="md-ellipsis">
+      
+        Security checklist
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cicd-deployment-pipeline-recommended">
+<span class="md-ellipsis">
+      
+        CI/CD deployment pipeline (recommended)
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#capacity-planning-basics">
+<span class="md-ellipsis">
+      
+        Capacity planning basics
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#runtime-slislo-table">
+<span class="md-ellipsis">
+      
+        Runtime SLI/SLO table
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#quick-self-check">
+<span class="md-ellipsis">
+      
+        Quick self-check
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#deep-dive-every-concept-explained">
+<span class="md-ellipsis">
+      
+        Deep dive: every concept, explained
+      
+    </span>
+</a>
+<nav aria-label="Deep dive: every concept, explained" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#why-init-and-run-are-split">
+<span class="md-ellipsis">
+      
+        Why init() and run() are split
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#online-vs-batch-endpoints-matching-shape-to-workload">
+<span class="md-ellipsis">
+      
+        Online vs batch endpoints : matching shape to workload
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#release-strategies-and-the-risk-they-manage">
+<span class="md-ellipsis">
+      
+        Release strategies and the risk they manage
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#capacity-planning-where-the-replica-formula-comes-from">
+<span class="md-ellipsis">
+      
+        Capacity planning: where the replica formula comes from
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#slis-slos-and-why-model-freshness-is-one-of-them">
+<span class="md-ellipsis">
+      
+        SLIs, SLOs, and why model freshness is one of them
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#why-local-validation-precedes-cloud-deployment">
+<span class="md-ellipsis">
+      
+        Why local validation precedes cloud deployment
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#security-concepts-in-serving">
+<span class="md-ellipsis">
+      
+        Security concepts in serving
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#quick-self-check-deep-dive">
+<span class="md-ellipsis">
+      
+        Quick self-check (deep dive)
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#online-vs-batch-endpoints-deep-dive">
+<span class="md-ellipsis">
+      
+        Online vs batch endpoints: deep dive
+      
+    </span>
+</a>
+<nav aria-label="Online vs batch endpoints: deep dive" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#managed-online-endpoint-vs-kubernetes-online-endpoint">
+<span class="md-ellipsis">
+      
+        Managed online endpoint vs Kubernetes online endpoint
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#batch-endpoint-triggers">
+<span class="md-ellipsis">
+      
+        Batch endpoint triggers
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#managed-identity-and-traffic-rules">
+<span class="md-ellipsis">
+      
+        Managed identity and traffic rules
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#deployment-configuration-yaml-in-detail">
+<span class="md-ellipsis">
+      
+        Deployment configuration YAML in detail
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#request-path-sequence-diagram">
+<span class="md-ellipsis">
+      
+        Request path sequence diagram
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#autoscaling-and-load-management">
+<span class="md-ellipsis">
+      
+        Autoscaling and load management
+      
+    </span>
+</a>
+<nav aria-label="Autoscaling and load management" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#scale-out-trigger-logic">
+<span class="md-ellipsis">
+      
+        Scale-out trigger logic
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#autoscaling-yaml-for-azure-ml-managed-online-endpoint">
+<span class="md-ellipsis">
+      
+        Autoscaling YAML for Azure ML managed online endpoint
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#why-autoscaling-requires-stateless-scoring">
+<span class="md-ellipsis">
+      
+        Why autoscaling requires stateless scoring
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#model-serving-performance-optimization">
+<span class="md-ellipsis">
+      
+        Model serving performance optimization
+      
+    </span>
+</a>
+<nav aria-label="Model serving performance optimization" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#onnx-export-for-cross-framework-portability">
+<span class="md-ellipsis">
+      
+        ONNX export for cross-framework portability
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#model-quantization-int8">
+<span class="md-ellipsis">
+      
+        Model quantization: INT8
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#batching-at-inference-time">
+<span class="md-ellipsis">
+      
+        Batching at inference time
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#connection-pooling-and-dependency-caching">
+<span class="md-ellipsis">
+      
+        Connection pooling and dependency caching
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#multi-model-endpoints-and-model-routing">
+<span class="md-ellipsis">
+      
+        Multi-model endpoints and model routing
+      
+    </span>
+</a>
+<nav aria-label="Multi-model endpoints and model routing" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#when-to-use-multi-model-endpoints">
+<span class="md-ellipsis">
+      
+        When to use multi-model endpoints
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#routing-logic-in-scoring-script">
+<span class="md-ellipsis">
+      
+        Routing logic in scoring script
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#thread-safety-with-multiple-models">
+<span class="md-ellipsis">
+      
+        Thread safety with multiple models
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#deployment-security-hardening">
+<span class="md-ellipsis">
+      
+        Deployment security hardening
+      
+    </span>
+</a>
+<nav aria-label="Deployment security hardening" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#network-isolation">
+<span class="md-ellipsis">
+      
+        Network isolation
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#customer-managed-keys-cmk">
+<span class="md-ellipsis">
+      
+        Customer-managed keys (CMK)
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#pii-scrubbing-in-scoring-script">
+<span class="md-ellipsis">
+      
+        PII scrubbing in scoring script
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#input-validation-and-schema-enforcement">
+<span class="md-ellipsis">
+      
+        Input validation and schema enforcement
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#auth-key-rotation-policy">
+<span class="md-ellipsis">
+      
+        Auth key rotation policy
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#end-to-end-deployment-pipeline-cicd">
+<span class="md-ellipsis">
+      
+        End-to-end deployment pipeline (CI/CD)
+      
+    </span>
+</a>
+<nav aria-label="End-to-end deployment pipeline (CI/CD)" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#pipeline-architecture">
+<span class="md-ellipsis">
+      
+        Pipeline architecture
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#full-github-actions-yaml">
+<span class="md-ellipsis">
+      
+        Full GitHub Actions YAML
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#environment-promotion-gates">
+<span class="md-ellipsis">
+      
+        Environment promotion gates
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rollback-trigger">
+<span class="md-ellipsis">
+      
+        Rollback trigger
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#quick-self-check-advanced-deployment">
+<span class="md-ellipsis">
+      
+        Quick self-check (advanced deployment)
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../14-deployment-debug-k8s/">
+<span class="md-ellipsis">
+    
+  
+    14. Deployment Debugging
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_16" type="checkbox"/>
+<label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="">
+<span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_16_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_16">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/">
+<span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/model-math-deep-dive/">
+<span class="md-ellipsis">
+    
+  
+    Mathematical Model Deep Dive
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/cli-commands/">
+<span class="md-ellipsis">
+    
+  
+    CLI Commands
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/glossary/">
+<span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#deployment-steps">
+<span class="md-ellipsis">
+      
+        Deployment steps
+      
+    </span>
+</a>
+<nav aria-label="Deployment steps" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#scoring-script-structure-azure-ml-sdk-v2">
+<span class="md-ellipsis">
+      
+        Scoring script structure (Azure ML SDK v2)
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#endpoint-types">
+<span class="md-ellipsis">
+      
+        Endpoint types
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#end-to-end-example-calling-a-deployed-model">
+<span class="md-ellipsis">
+      
+        End-to-end example: calling a deployed model
+      
+    </span>
+</a>
+<nav aria-label="End-to-end example: calling a deployed model" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-what-the-api-looks-like">
+<span class="md-ellipsis">
+      
+        1. What the API looks like
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-the-request-you-send">
+<span class="md-ellipsis">
+      
+        2. The request you send
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-how-to-call-it">
+<span class="md-ellipsis">
+      
+        3. How to call it
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#4-the-response-you-get-back">
+<span class="md-ellipsis">
+      
+        4. The response you get back
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#5-how-to-read-the-result">
+<span class="md-ellipsis">
+      
+        5. How to read the result
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#release-strategies">
+<span class="md-ellipsis">
+      
+        Release strategies
+      
+    </span>
+</a>
+<nav aria-label="Release strategies" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#when-to-use-each-strategy">
+<span class="md-ellipsis">
+      
+        When to use each strategy
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#configuring-canary-traffic-split-azure-ml-managed-online-endpoint">
+<span class="md-ellipsis">
+      
+        Configuring canary traffic split (Azure ML managed online endpoint)
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#reliability-checklist">
+<span class="md-ellipsis">
+      
+        Reliability checklist
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#security-checklist">
+<span class="md-ellipsis">
+      
+        Security checklist
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cicd-deployment-pipeline-recommended">
+<span class="md-ellipsis">
+      
+        CI/CD deployment pipeline (recommended)
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#capacity-planning-basics">
+<span class="md-ellipsis">
+      
+        Capacity planning basics
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#runtime-slislo-table">
+<span class="md-ellipsis">
+      
+        Runtime SLI/SLO table
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#quick-self-check">
+<span class="md-ellipsis">
+      
+        Quick self-check
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#deep-dive-every-concept-explained">
+<span class="md-ellipsis">
+      
+        Deep dive: every concept, explained
+      
+    </span>
+</a>
+<nav aria-label="Deep dive: every concept, explained" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#why-init-and-run-are-split">
+<span class="md-ellipsis">
+      
+        Why init() and run() are split
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#online-vs-batch-endpoints-matching-shape-to-workload">
+<span class="md-ellipsis">
+      
+        Online vs batch endpoints : matching shape to workload
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#release-strategies-and-the-risk-they-manage">
+<span class="md-ellipsis">
+      
+        Release strategies and the risk they manage
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#capacity-planning-where-the-replica-formula-comes-from">
+<span class="md-ellipsis">
+      
+        Capacity planning: where the replica formula comes from
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#slis-slos-and-why-model-freshness-is-one-of-them">
+<span class="md-ellipsis">
+      
+        SLIs, SLOs, and why model freshness is one of them
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#why-local-validation-precedes-cloud-deployment">
+<span class="md-ellipsis">
+      
+        Why local validation precedes cloud deployment
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#security-concepts-in-serving">
+<span class="md-ellipsis">
+      
+        Security concepts in serving
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#quick-self-check-deep-dive">
+<span class="md-ellipsis">
+      
+        Quick self-check (deep dive)
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#online-vs-batch-endpoints-deep-dive">
+<span class="md-ellipsis">
+      
+        Online vs batch endpoints: deep dive
+      
+    </span>
+</a>
+<nav aria-label="Online vs batch endpoints: deep dive" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#managed-online-endpoint-vs-kubernetes-online-endpoint">
+<span class="md-ellipsis">
+      
+        Managed online endpoint vs Kubernetes online endpoint
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#batch-endpoint-triggers">
+<span class="md-ellipsis">
+      
+        Batch endpoint triggers
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#managed-identity-and-traffic-rules">
+<span class="md-ellipsis">
+      
+        Managed identity and traffic rules
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#deployment-configuration-yaml-in-detail">
+<span class="md-ellipsis">
+      
+        Deployment configuration YAML in detail
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#request-path-sequence-diagram">
+<span class="md-ellipsis">
+      
+        Request path sequence diagram
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#autoscaling-and-load-management">
+<span class="md-ellipsis">
+      
+        Autoscaling and load management
+      
+    </span>
+</a>
+<nav aria-label="Autoscaling and load management" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#scale-out-trigger-logic">
+<span class="md-ellipsis">
+      
+        Scale-out trigger logic
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#autoscaling-yaml-for-azure-ml-managed-online-endpoint">
+<span class="md-ellipsis">
+      
+        Autoscaling YAML for Azure ML managed online endpoint
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#why-autoscaling-requires-stateless-scoring">
+<span class="md-ellipsis">
+      
+        Why autoscaling requires stateless scoring
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#model-serving-performance-optimization">
+<span class="md-ellipsis">
+      
+        Model serving performance optimization
+      
+    </span>
+</a>
+<nav aria-label="Model serving performance optimization" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#onnx-export-for-cross-framework-portability">
+<span class="md-ellipsis">
+      
+        ONNX export for cross-framework portability
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#model-quantization-int8">
+<span class="md-ellipsis">
+      
+        Model quantization: INT8
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#batching-at-inference-time">
+<span class="md-ellipsis">
+      
+        Batching at inference time
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#connection-pooling-and-dependency-caching">
+<span class="md-ellipsis">
+      
+        Connection pooling and dependency caching
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#multi-model-endpoints-and-model-routing">
+<span class="md-ellipsis">
+      
+        Multi-model endpoints and model routing
+      
+    </span>
+</a>
+<nav aria-label="Multi-model endpoints and model routing" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#when-to-use-multi-model-endpoints">
+<span class="md-ellipsis">
+      
+        When to use multi-model endpoints
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#routing-logic-in-scoring-script">
+<span class="md-ellipsis">
+      
+        Routing logic in scoring script
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#thread-safety-with-multiple-models">
+<span class="md-ellipsis">
+      
+        Thread safety with multiple models
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#deployment-security-hardening">
+<span class="md-ellipsis">
+      
+        Deployment security hardening
+      
+    </span>
+</a>
+<nav aria-label="Deployment security hardening" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#network-isolation">
+<span class="md-ellipsis">
+      
+        Network isolation
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#customer-managed-keys-cmk">
+<span class="md-ellipsis">
+      
+        Customer-managed keys (CMK)
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#pii-scrubbing-in-scoring-script">
+<span class="md-ellipsis">
+      
+        PII scrubbing in scoring script
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#input-validation-and-schema-enforcement">
+<span class="md-ellipsis">
+      
+        Input validation and schema enforcement
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#auth-key-rotation-policy">
+<span class="md-ellipsis">
+      
+        Auth key rotation policy
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#end-to-end-deployment-pipeline-cicd">
+<span class="md-ellipsis">
+      
+        End-to-end deployment pipeline (CI/CD)
+      
+    </span>
+</a>
+<nav aria-label="End-to-end deployment pipeline (CI/CD)" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#pipeline-architecture">
+<span class="md-ellipsis">
+      
+        Pipeline architecture
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#full-github-actions-yaml">
+<span class="md-ellipsis">
+      
+        Full GitHub Actions YAML
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#environment-promotion-gates">
+<span class="md-ellipsis">
+      
+        Environment promotion gates
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rollback-trigger">
+<span class="md-ellipsis">
+      
+        Rollback trigger
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#quick-self-check-advanced-deployment">
+<span class="md-ellipsis">
+      
+        Quick self-check (advanced deployment)
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1 id="deployment">Deployment<a class="headerlink" href="#deployment" title="Permanent link">¶</a></h1>
+<p>This module covers the path from model artifact to production endpoint, including
+deployment patterns, release strategies, and operational safeguards.</p>
+<p><img alt="Training vs deployment model" src="../../assets/img/training_vs_deployment_model.svg"/></p>
+<blockquote>
+<p><strong>Note - What this shows:</strong> The contrast between the <em>training</em> model (offline, batch, optimized for accuracy) and the
+<em>deployment</em> model (online, stateless, optimized for latency). The same artifact serves two very
+different runtime contexts.</p>
+</blockquote>
+<p><img alt="ML deployment flow" src="../../assets/img/ml_deployment_flow.svg"/></p>
+<blockquote>
+<p><strong>Note - What this shows:</strong> The deployment flow from registered model to live endpoint. Each stage : package, validate
+locally, deploy, route traffic : is a checkpoint where a release can be caught before customers
+are affected.</p>
+</blockquote>
+<p><img alt="Deployment overview" src="../../assets/img/deployment_overview.svg"/></p>
+<blockquote>
+<p><strong>Note - What this shows:</strong> A high-level overview of deployment options (online vs batch endpoints). Choose by <em>who is
+waiting</em>: a user/app in real time → online endpoint; a whole table scored overnight → batch
+endpoint.</p>
+</blockquote>
+<h2 id="deployment-steps">Deployment steps<a class="headerlink" href="#deployment-steps" title="Permanent link">¶</a></h2>
+<ol>
+<li>Register model</li>
+<li>Build scoring script with init and run</li>
+<li>Create inference environment</li>
+<li>Validate local deployment</li>
+<li>Deploy to ACI or AKS</li>
+</ol>
+<h3 id="scoring-script-structure-azure-ml-sdk-v2">Scoring script structure (Azure ML SDK v2)<a class="headerlink" href="#scoring-script-structure-azure-ml-sdk-v2" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">joblib</span>
+<span class="kn">from</span> <span class="nn">azureml.core.model</span> <span class="kn">import</span> <span class="n">Model</span>
+
+<span class="k">def</span> <span class="nf">init</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">model</span>
+    <span class="n">model_path</span> <span class="o">=</span> <span class="n">Model</span><span class="o">.</span><span class="n">get_model_path</span><span class="p">(</span><span class="s2">"fraud-model"</span><span class="p">)</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">joblib</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">model_path</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="n">raw_data</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">raw_data</span><span class="p">)</span>
+    <span class="n">features</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">"features"</span><span class="p">])</span>
+    <span class="n">prediction</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
+    <span class="n">probability</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span>
+        <span class="s2">"prediction"</span><span class="p">:</span> <span class="n">prediction</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span>
+        <span class="s2">"probability"</span><span class="p">:</span> <span class="n">probability</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    <span class="p">})</span>
+</code></pre></div>
+<p>Key rules for a production-grade scoring script:</p>
+<ul>
+<li><code>init()</code> runs once at startup; load model here, not in <code>run()</code>.</li>
+<li><code>run()</code> is called for every request; keep it stateless.</li>
+<li>Validate input schema inside <code>run()</code> before calling the model.</li>
+<li>Never log raw PII; log hashed IDs and prediction metadata only.</li>
+</ul>
+<h2 id="endpoint-types">Endpoint types<a class="headerlink" href="#endpoint-types" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Best for</th>
+<th>Trade-off</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Online endpoint</td>
+<td>Real-time predictions</td>
+<td>Requires low-latency ops</td>
+</tr>
+<tr>
+<td>Batch endpoint</td>
+<td>Large offline scoring jobs</td>
+<td>Not real-time</td>
+</tr>
+</tbody>
+</table>
+<h2 id="end-to-end-example-calling-a-deployed-model">End-to-end example: calling a deployed model<a class="headerlink" href="#end-to-end-example-calling-a-deployed-model" title="Permanent link">¶</a></h2>
+<p>This walks through exactly what a deployed model looks like in practice : the API, what you send,
+how to call it, and what comes back : using the <code>fraud-endpoint</code> from the scoring script above.</p>
+<p><img alt="Calling a deployed model endpoint" src="../../assets/img/endpoint-request-response.svg"/></p>
+<blockquote>
+<p><strong>Note - How to read this diagram:</strong> The client sends an HTTPS <code>POST</code> with a JSON body of feature
+rows. The endpoint authenticates the call, validates the schema, and routes it to a warm replica.
+Inside, <code>init()</code> has already loaded the registered model once, so <code>run()</code> only does the fast
+prediction and returns a JSON body with the predicted class and per-class probability.</p>
+</blockquote>
+<h3 id="1-what-the-api-looks-like">1. What the API looks like<a class="headerlink" href="#1-what-the-api-looks-like" title="Permanent link">¶</a></h3>
+<p>After deployment, Azure ML gives you two things:</p>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Example</th>
+<th>Where to get it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Scoring URI</td>
+<td><code>https://fraud-endpoint.eastus.inference.ml.azure.com/score</code></td>
+<td><code>az ml online-endpoint show -n fraud-endpoint --query scoring_uri</code></td>
+</tr>
+<tr>
+<td>Auth key/token</td>
+<td><code>Bearer &lt;primary-key&gt;</code></td>
+<td><code>az ml online-endpoint get-credentials -n fraud-endpoint</code></td>
+</tr>
+</tbody>
+</table>
+<p>The contract is a simple HTTP POST:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Method</td>
+<td><code>POST</code></td>
+</tr>
+<tr>
+<td>Path</td>
+<td><code>/score</code></td>
+</tr>
+<tr>
+<td>Headers</td>
+<td><code>Content-Type: application/json</code>, <code>Authorization: Bearer &lt;key&gt;</code></td>
+</tr>
+<tr>
+<td>Body</td>
+<td>JSON object: <code>{"features": [[...], [...]]}</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="2-the-request-you-send">2. The request you send<a class="headerlink" href="#2-the-request-you-send" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">"features"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">[</span><span class="mf">0.21</span><span class="p">,</span><span class="w"> </span><span class="mf">1.4</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mf">0.55</span><span class="p">],</span>
+<span class="w">    </span><span class="p">[</span><span class="mf">1.02</span><span class="p">,</span><span class="w"> </span><span class="mf">0.3</span><span class="p">,</span><span class="w"> </span><span class="mf">2.1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.10</span><span class="p">]</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Each inner array is one record, with values in the <strong>exact same column order used during training</strong>.
+Here we send two transactions in a single call (batching reduces per-request overhead).</p>
+<h3 id="3-how-to-call-it">3. How to call it<a class="headerlink" href="#3-how-to-call-it" title="Permanent link">¶</a></h3>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio"/><input id="__tabbed_1_2" name="__tabbed_1" type="radio"/><input id="__tabbed_1_3" name="__tabbed_1" type="radio"/><div class="tabbed-labels"><label for="__tabbed_1_1">curl</label><label for="__tabbed_1_2">Python</label><label for="__tabbed_1_3">JavaScript</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span><span class="s2">"https://fraud-endpoint.eastus.inference.ml.azure.com/score"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">"Content-Type: application/json"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-H<span class="w"> </span><span class="s2">"Authorization: Bearer </span><span class="nv">$ENDPOINT_KEY</span><span class="s2">"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-d<span class="w"> </span><span class="s1">'{"features": [[0.21, 1.4, 0.0, 7, 1, 0.55], [1.02, 0.3, 2.1, 2, 0, 0.10]]}'</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s2">"https://fraud-endpoint.eastus.inference.ml.azure.com/score"</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">"Content-Type"</span><span class="p">:</span> <span class="s2">"application/json"</span><span class="p">,</span>
+    <span class="s2">"Authorization"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"Bearer </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">'ENDPOINT_KEY'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="n">payload</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"features"</span><span class="p">:</span> <span class="p">[[</span><span class="mf">0.21</span><span class="p">,</span> <span class="mf">1.4</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.55</span><span class="p">],</span>
+                        <span class="p">[</span><span class="mf">1.02</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">2.1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.10</span><span class="p">]]}</span>
+
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">proba</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="s2">"prediction"</span><span class="p">],</span> <span class="n">result</span><span class="p">[</span><span class="s2">"probability"</span><span class="p">])):</span>
+    <span class="n">confidence</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">proba</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"row </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">: class=</span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s2"> confidence=</span><span class="si">{</span><span class="n">confidence</span><span class="si">:</span><span class="s2">.0%</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><span class="kd">const</span><span class="w"> </span><span class="nx">res</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">fetch</span><span class="p">(</span><span class="s2">"https://fraud-endpoint.eastus.inference.ml.azure.com/score"</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">method</span><span class="o">:</span><span class="w"> </span><span class="s2">"POST"</span><span class="p">,</span>
+<span class="w">  </span><span class="nx">headers</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="s2">"Content-Type"</span><span class="o">:</span><span class="w"> </span><span class="s2">"application/json"</span><span class="p">,</span>
+<span class="w">    </span><span class="nx">Authorization</span><span class="o">:</span><span class="w"> </span><span class="sb">`Bearer </span><span class="si">${</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">ENDPOINT_KEY</span><span class="si">}</span><span class="sb">`</span><span class="p">,</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nx">body</span><span class="o">:</span><span class="w"> </span><span class="nb">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span>
+<span class="w">    </span><span class="nx">features</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">      </span><span class="p">[</span><span class="mf">0.21</span><span class="p">,</span><span class="w"> </span><span class="mf">1.4</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">7</span><span class="p">,</span><span class="w"> </span><span class="mf">1</span><span class="p">,</span><span class="w"> </span><span class="mf">0.55</span><span class="p">],</span>
+<span class="w">      </span><span class="p">[</span><span class="mf">1.02</span><span class="p">,</span><span class="w"> </span><span class="mf">0.3</span><span class="p">,</span><span class="w"> </span><span class="mf">2.1</span><span class="p">,</span><span class="w"> </span><span class="mf">2</span><span class="p">,</span><span class="w"> </span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.10</span><span class="p">],</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">  </span><span class="p">}),</span>
+<span class="p">});</span>
+<span class="kd">const</span><span class="w"> </span><span class="nx">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">();</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">result</span><span class="p">.</span><span class="nx">prediction</span><span class="p">,</span><span class="w"> </span><span class="nx">result</span><span class="p">.</span><span class="nx">probability</span><span class="p">);</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<h3 id="4-the-response-you-get-back">4. The response you get back<a class="headerlink" href="#4-the-response-you-get-back" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">"prediction"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">],</span>
+<span class="w">  </span><span class="nt">"probability"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">[</span><span class="mf">0.08</span><span class="p">,</span><span class="w"> </span><span class="mf">0.92</span><span class="p">],</span>
+<span class="w">    </span><span class="p">[</span><span class="mf">0.86</span><span class="p">,</span><span class="w"> </span><span class="mf">0.14</span><span class="p">]</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="5-how-to-read-the-result">5. How to read the result<a class="headerlink" href="#5-how-to-read-the-result" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Row</th>
+<th><code>prediction</code></th>
+<th><code>probability</code> <code>[P(class0), P(class1)]</code></th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td><code>1</code></td>
+<td><code>[0.08, 0.92]</code></td>
+<td>Flagged as <strong>fraud</strong> with 92% confidence</td>
+</tr>
+<tr>
+<td>1</td>
+<td><code>0</code></td>
+<td><code>[0.86, 0.14]</code></td>
+<td>Predicted <strong>legitimate</strong> with 86% confidence</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><code>prediction</code> is the model's chosen class per row (here <code>1 = fraud</code>, <code>0 = legitimate</code>).</li>
+<li><code>probability</code> gives the confidence per class; the values in each row sum to <code>1.0</code>.</li>
+<li>Your application decides the <strong>action threshold</strong>: e.g. auto-block at <code>P(fraud) &gt;= 0.90</code>, send to
+  manual review between <code>0.50</code> and <code>0.90</code>, and allow below <code>0.50</code>. The model returns scores; the
+  business rule turns them into decisions.</li>
+</ul>
+<blockquote>
+<p><strong>Tip - Handle errors in the client:</strong> Expect non-<code>200</code> responses too : <code>401/403</code> (bad or expired
+key), <code>400</code> (schema/shape mismatch), <code>429</code> (throttling, back off and retry), and <code>503</code> (replica
+cold-start or overload). Always set a timeout and a small retry with backoff, as noted in the
+reliability checklist below.</p>
+</blockquote>
+<h2 id="release-strategies">Release strategies<a class="headerlink" href="#release-strategies" title="Permanent link">¶</a></h2>
+<p><img alt="Blue-green, canary, and shadow release strategies" src="../../assets/img/release-strategies.svg"/></p>
+<blockquote>
+<p><strong>Tip - How to choose:</strong> All three protect the live model (v1) while validating a new one (v2). <strong>Blue-green</strong> flips 100%
+of traffic at once and rolls back by flipping back : simplest, but the blast radius is the whole
+user base for the moment of the switch. <strong>Canary</strong> sends a small slice (e.g. 5%) to v2 and ramps
+up only while metrics stay healthy : the safest progressive rollout. <strong>Shadow</strong> mirrors real
+traffic to v2 but discards its responses, so you can test on production load with zero customer
+impact before any real cutover.</p>
+</blockquote>
+<ul>
+<li>Blue/green: switch traffic to a fully prepared new version.</li>
+<li>Canary: send a small percentage of traffic to new version first.</li>
+<li>Shadow: mirror traffic for observation without serving responses.</li>
+</ul>
+<h3 id="when-to-use-each-strategy">When to use each strategy<a class="headerlink" href="#when-to-use-each-strategy" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Strategy</th>
+<th>Use when</th>
+<th>Risk level</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Blue/green</td>
+<td>Rollback must be instant; new version is well-tested</td>
+<td>Low (with rollback ready)</td>
+</tr>
+<tr>
+<td>Canary</td>
+<td>Need to validate new model on real traffic at low exposure</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>Shadow</td>
+<td>Need to compare new model with zero customer exposure</td>
+<td>Very low (no production impact)</td>
+</tr>
+<tr>
+<td>Rolling update</td>
+<td>Stateless microservice with no model-specific state</td>
+<td>Low</td>
+</tr>
+</tbody>
+</table>
+<h3 id="configuring-canary-traffic-split-azure-ml-managed-online-endpoint">Configuring canary traffic split (Azure ML managed online endpoint)<a class="headerlink" href="#configuring-canary-traffic-split-azure-ml-managed-online-endpoint" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># deployment.yml</span>
+<span class="nt">$schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://azuremlschemas.azureedge.net/latest/managedOnlineDeployment.schema.json</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">blue</span>
+<span class="nt">endpoint_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fraud-endpoint</span>
+<span class="nt">model</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">azureml:fraud-model:3</span>
+<span class="nt">code_configuration</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">code</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./src</span>
+<span class="w">  </span><span class="nt">scoring_script</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">score.py</span>
+<span class="nt">environment</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">azureml:fraud-infer:2</span>
+<span class="nt">instance_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Standard_DS2_v2</span>
+<span class="nt">instance_count</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+</code></pre></div>
+<p>After deploying both <code>blue</code> and <code>green</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Route 10% traffic to canary (green)</span>
+az<span class="w"> </span>ml<span class="w"> </span>online-endpoint<span class="w"> </span>update<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--name<span class="w"> </span>fraud-endpoint<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--traffic<span class="w"> </span><span class="s2">"blue=90 green=10"</span>
+</code></pre></div>
+<h2 id="reliability-checklist">Reliability checklist<a class="headerlink" href="#reliability-checklist" title="Permanent link">¶</a></h2>
+<ol>
+<li>Health probes and liveness checks configured.</li>
+<li>Request/response schema validation in scoring script.</li>
+<li>Timeouts and retries defined at client and service layer.</li>
+<li>Rollback criteria defined before release.</li>
+</ol>
+<h2 id="security-checklist">Security checklist<a class="headerlink" href="#security-checklist" title="Permanent link">¶</a></h2>
+<ul>
+<li>Enforce auth keys/tokens and rotate credentials.</li>
+<li>Restrict network exposure (private endpoints when possible).</li>
+<li>Log access and prediction metadata for audits.</li>
+</ul>
+<h2 id="cicd-deployment-pipeline-recommended">CI/CD deployment pipeline (recommended)<a class="headerlink" href="#cicd-deployment-pipeline-recommended" title="Permanent link">¶</a></h2>
+<div class="mermaid">flowchart LR
+  A[Train + Register Model] --&gt; B[Package Scoring Image]
+  B --&gt; C[Security/Dependency Scan]
+  C --&gt; D[Deploy to Staging Endpoint]
+  D --&gt; E[Functional + Load Tests]
+  E --&gt; F[Approval Gate]
+  F --&gt; G[Canary/Blue-Green to Production]
+  G --&gt; H[Post-Deploy Monitoring]
+</div>
+<h2 id="capacity-planning-basics">Capacity planning basics<a class="headerlink" href="#capacity-planning-basics" title="Permanent link">¶</a></h2>
+<p>Required replica estimate:</p>
+<div class="arithmatex">\[
+R \approx \left\lceil \frac{QPS\cdot t_{p95}}{u}\right\rceil
+\]</div>
+<p>where:</p>
+<ul>
+<li><span class="arithmatex">\(QPS\)</span>: expected requests per second</li>
+<li><span class="arithmatex">\(t_{p95}\)</span>: p95 service time (seconds)</li>
+<li><span class="arithmatex">\(u\)</span>: target utilization per replica (e.g., 0.6 to 0.8)</li>
+</ul>
+<h2 id="runtime-slislo-table">Runtime SLI/SLO table<a class="headerlink" href="#runtime-slislo-table" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>SLI</th>
+<th>Typical SLO</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Availability</td>
+<td>&gt;= 99.9%</td>
+</tr>
+<tr>
+<td>p95 latency</td>
+<td>&lt;= 250 ms</td>
+</tr>
+<tr>
+<td>Error rate</td>
+<td>&lt;= 1%</td>
+</tr>
+<tr>
+<td>Freshness of model version</td>
+<td>&lt;= 30 days (policy dependent)</td>
+</tr>
+</tbody>
+</table>
+<div class="mermaid">flowchart LR
+  A[Register] --&gt; B[Score Script]
+  B --&gt; C[Inference Config]
+  C --&gt; D[Local Test]
+  D --&gt; E[ACI or AKS]
+</div>
+<h2 id="quick-self-check">Quick self-check<a class="headerlink" href="#quick-self-check" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Question</th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>When is a batch endpoint better than an online endpoint?</td>
+<td>When no user is waiting on the response: high-throughput, offline scoring of large datasets (e.g., scoring an entire table overnight).</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Why run a local validation step before cloud deployment?</td>
+<td>It catches cheap, common failures (bad dependencies, model-load errors, schema mismatches) in seconds, before paying for cloud provisioning or risking a failed production rollout.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>What is the advantage of a canary release?</td>
+<td>It routes a small slice of real traffic to the new version and watches metrics before ramping up, limiting blast radius and catching problems offline tests miss.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="deep-dive-every-concept-explained">Deep dive: every concept, explained<a class="headerlink" href="#deep-dive-every-concept-explained" title="Permanent link">¶</a></h2>
+<p>This section explains the deployment concepts so each operational choice has a clear rationale.</p>
+<h3 id="why-init-and-run-are-split">Why <code>init()</code> and <code>run()</code> are split<a class="headerlink" href="#why-init-and-run-are-split" title="Permanent link">¶</a></h3>
+<p>The scoring script has two functions by design:</p>
+<ul>
+<li><strong><code>init()</code></strong> runs <strong>once</strong> when the container starts. Loading the model (often hundreds of MB)
+  is expensive, so doing it here : into a global : means it happens a single time, not per request.</li>
+<li><strong><code>run()</code></strong> executes <strong>per request</strong> and must be <strong>stateless</strong>: no shared mutable state between
+  calls, so concurrent requests cannot corrupt each other. Statelessness is also what makes the
+  service horizontally scalable : any replica can handle any request.</li>
+</ul>
+<p>This separation directly determines latency: model load is a one-time <strong>cold-start</strong> cost;
+<code>run()</code> is the <strong>warm</strong> per-request path you optimize.</p>
+<h3 id="online-vs-batch-endpoints-matching-shape-to-workload">Online vs batch endpoints : matching shape to workload<a class="headerlink" href="#online-vs-batch-endpoints-matching-shape-to-workload" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Dimension</th>
+<th>Online endpoint</th>
+<th>Batch endpoint</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Trigger</td>
+<td>Synchronous HTTP request</td>
+<td>Scheduled / on-demand job</td>
+</tr>
+<tr>
+<td>Latency goal</td>
+<td>Milliseconds per request</td>
+<td>Throughput over millions of rows</td>
+</tr>
+<tr>
+<td>Scaling</td>
+<td>Keep replicas warm</td>
+<td>Spin up, process, scale to zero</td>
+</tr>
+<tr>
+<td>Use when</td>
+<td>A user/app waits for the answer</td>
+<td>Scoring a whole table overnight</td>
+</tr>
+</tbody>
+</table>
+<p>The decision is about <em>who is waiting</em>: a checkout fraud check needs an online endpoint; scoring
+yesterday's entire transaction log is cheaper and simpler as a batch job.</p>
+<h3 id="release-strategies-and-the-risk-they-manage">Release strategies and the risk they manage<a class="headerlink" href="#release-strategies-and-the-risk-they-manage" title="Permanent link">¶</a></h3>
+<p>All three strategies exist to limit the blast radius of a bad model:</p>
+<ul>
+<li><strong>Blue/green</strong> keeps the old version (blue) fully running while the new (green) is prepared,
+  then flips 100% of traffic at once. Rollback is instant : flip back. Best when you trust the new
+  version and need zero-downtime cutover.</li>
+<li><strong>Canary</strong> routes a <em>small</em> slice (e.g. 10%) to the new version and watches metrics before
+  ramping up. It validates on <strong>real traffic</strong> at controlled exposure : the safest way to catch
+  problems that offline tests miss.</li>
+<li><strong>Shadow</strong> sends a copy of traffic to the new model but discards its responses, so it is
+  evaluated against production inputs with <strong>zero customer impact</strong>. Ideal for high-stakes models
+  where even 10% exposure is too risky.</li>
+</ul>
+<p>The Azure traffic-split (<code>blue=90 green=10</code>) is the concrete mechanism that implements canary on a
+managed online endpoint.</p>
+<h3 id="capacity-planning-where-the-replica-formula-comes-from">Capacity planning: where the replica formula comes from<a class="headerlink" href="#capacity-planning-where-the-replica-formula-comes-from" title="Permanent link">¶</a></h3>
+<p><span class="arithmatex">\(R \approx \lceil \tfrac{QPS\cdot t_{p95}}{u}\rceil\)</span> is <strong>Little's Law</strong> applied to serving.
+<span class="arithmatex">\(QPS\cdot t_{p95}\)</span> is the average number of requests <em>in flight</em> at any moment (arrival rate times
+service time); dividing by target utilization <span class="arithmatex">\(u\)</span> (e.g. 0.7, leaving headroom for bursts and
+tail latency) gives the replica count, rounded up. Using <span class="arithmatex">\(t_{p95}\)</span> rather than the mean sizes the
+fleet for realistic worst-case service time, so the SLO holds under load rather than only on
+average.</p>
+<h3 id="slis-slos-and-why-model-freshness-is-one-of-them">SLIs, SLOs, and why model freshness is one of them<a class="headerlink" href="#slis-slos-and-why-model-freshness-is-one-of-them" title="Permanent link">¶</a></h3>
+<p>An <strong>SLI</strong> is a measured signal (availability, p95 latency, error rate); an <strong>SLO</strong> attaches a
+target ("p95 ≤ 250 ms"). Including <strong>model-version freshness</strong> as an SLO is what distinguishes ML
+serving from ordinary web serving : a perfectly available endpoint serving a stale, drifted model
+is still failing its job. This connects deployment health back to the drift monitoring from the
+previous module.</p>
+<h3 id="why-local-validation-precedes-cloud-deployment">Why local validation precedes cloud deployment<a class="headerlink" href="#why-local-validation-precedes-cloud-deployment" title="Permanent link">¶</a></h3>
+<p>Validating the scoring container locally catches the cheap, common failures : bad dependencies,
+model-load errors, schema mismatches : in seconds, before paying for cloud provisioning and
+before risking a failed production rollout. It is the deployment analog of running unit tests
+before merging: fail fast, fail cheap.</p>
+<h3 id="security-concepts-in-serving">Security concepts in serving<a class="headerlink" href="#security-concepts-in-serving" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Auth keys/tokens</strong> ensure only authorized callers reach the endpoint; <strong>rotating</strong> them
+  limits damage from a leaked credential.</li>
+<li><strong>Private endpoints</strong> keep traffic off the public internet for regulated data.</li>
+<li>Logging <strong>prediction metadata but never raw PII</strong> (log hashed IDs, not personal fields) gives
+  auditability without creating a data-protection liability : the same principle the scoring-script
+  rules enforce.</li>
+</ul>
+<h2 id="quick-self-check-deep-dive">Quick self-check (deep dive)<a class="headerlink" href="#quick-self-check-deep-dive" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Question</th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Why is the model loaded in <code>init()</code> and not in <code>run()</code>?</td>
+<td><code>init()</code> runs once at container startup, so the expensive model load happens a single time instead of on every request.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>What property must <code>run()</code> have to allow horizontal scaling, and why?</td>
+<td>It must be stateless (no shared mutable state), so any replica can handle any request and concurrent requests cannot corrupt each other.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Compare canary and shadow releases: which exposes customers to the new model, and which does not?</td>
+<td>Canary exposes customers (a small slice of real traffic hits the new model); shadow does not, because its responses are discarded for zero customer impact.</td>
+</tr>
+<tr>
+<td>4</td>
+<td>In the replica formula <span class="arithmatex">\(R \approx \lceil QPS \cdot t_{p95} / u \rceil\)</span>, why use p95 service time instead of the mean?</td>
+<td>p95 sizes the fleet for realistic worst-case service time, so the SLO holds under load rather than only on average.</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Why is model-version freshness treated as an SLO alongside latency and availability?</td>
+<td>A perfectly available endpoint serving a stale, drifted model is still failing its job, so freshness is a quality target just like latency and availability.</td>
+</tr>
+</tbody>
+</table>
+<hr/>
+<h2 id="online-vs-batch-endpoints-deep-dive">Online vs batch endpoints: deep dive<a class="headerlink" href="#online-vs-batch-endpoints-deep-dive" title="Permanent link">¶</a></h2>
+<p>Azure ML offers two endpoint families. Choosing the wrong one at the start of a project is an
+expensive mistake to reverse, so this section provides the full decision criteria and
+configuration detail.</p>
+<h3 id="managed-online-endpoint-vs-kubernetes-online-endpoint">Managed online endpoint vs Kubernetes online endpoint<a class="headerlink" href="#managed-online-endpoint-vs-kubernetes-online-endpoint" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Dimension</th>
+<th>Managed online endpoint</th>
+<th>Kubernetes online endpoint</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Infrastructure management</td>
+<td>Azure-managed (fully serverless)</td>
+<td>Customer-managed AKS cluster</td>
+</tr>
+<tr>
+<td>Traffic splitting</td>
+<td>Native (percentage-based per deployment)</td>
+<td>Via Kubernetes Service/Ingress rules</td>
+</tr>
+<tr>
+<td>Custom networking</td>
+<td>Private endpoint supported</td>
+<td>Full VNet integration and custom CNI</td>
+</tr>
+<tr>
+<td>GPU support</td>
+<td>Available (A100, V100 instance types)</td>
+<td>Any GPU node pool in AKS</td>
+</tr>
+<tr>
+<td>Observability</td>
+<td>Azure Monitor + built-in metrics</td>
+<td>Bring-your-own Prometheus/Grafana</td>
+</tr>
+<tr>
+<td>Cost model</td>
+<td>Pay per instance-hour + reserved</td>
+<td>AKS node pool cost (always-on)</td>
+</tr>
+<tr>
+<td>Best for</td>
+<td>Teams that want zero cluster ops</td>
+<td>Platform teams with existing AKS governance</td>
+</tr>
+</tbody>
+</table>
+<h3 id="batch-endpoint-triggers">Batch endpoint triggers<a class="headerlink" href="#batch-endpoint-triggers" title="Permanent link">¶</a></h3>
+<p>Batch endpoints process large data volumes asynchronously. They support two trigger modes:</p>
+<ul>
+<li><strong>On-demand invocation</strong> via <code>az ml batch-endpoint invoke</code> or SDK call.</li>
+<li><strong>Scheduled invocation</strong> via an Azure ML schedule job linked to the batch endpoint.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="c1"># On-demand batch invocation</span>
+az<span class="w"> </span>ml<span class="w"> </span>batch-endpoint<span class="w"> </span>invoke<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--name<span class="w"> </span>fraud-batch-endpoint<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--input<span class="w"> </span>azureml:transactions-nov:1<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--mini-batch-size<span class="w"> </span><span class="m">100</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--instance-count<span class="w"> </span><span class="m">5</span>
+</code></pre></div>
+<h3 id="managed-identity-and-traffic-rules">Managed identity and traffic rules<a class="headerlink" href="#managed-identity-and-traffic-rules" title="Permanent link">¶</a></h3>
+<p>Managed online endpoints support <strong>system-assigned managed identity</strong> to authenticate against
+Azure services (Key Vault, Storage, ACR) without credentials in code.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># endpoint.yml</span>
+<span class="nt">$schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://azuremlschemas.azureedge.net/latest/managedOnlineEndpoint.schema.json</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fraud-endpoint</span>
+<span class="nt">auth_mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">key</span>
+<span class="nt">identity</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">system_assigned</span>
+</code></pre></div>
+<p>Traffic rules allow multiple simultaneous deployments with controlled splits:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Split traffic 90/10 between blue and green deployments</span>
+az<span class="w"> </span>ml<span class="w"> </span>online-endpoint<span class="w"> </span>update<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--name<span class="w"> </span>fraud-endpoint<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--traffic<span class="w"> </span><span class="s2">"blue=90 green=10"</span>
+
+<span class="c1"># Mirror traffic to shadow deployment (no response served from shadow)</span>
+az<span class="w"> </span>ml<span class="w"> </span>online-endpoint<span class="w"> </span>update<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--name<span class="w"> </span>fraud-endpoint<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--traffic<span class="w"> </span><span class="s2">"blue=100"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--mirror-traffic<span class="w"> </span><span class="s2">"shadow=50"</span>
+</code></pre></div>
+<h3 id="deployment-configuration-yaml-in-detail">Deployment configuration YAML in detail<a class="headerlink" href="#deployment-configuration-yaml-in-detail" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># deployment_blue.yml</span>
+<span class="nt">$schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://azuremlschemas.azureedge.net/latest/managedOnlineDeployment.schema.json</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">blue</span>
+<span class="nt">endpoint_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fraud-endpoint</span>
+<span class="nt">model</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">azureml:fraud-model:5</span>
+<span class="nt">code_configuration</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">code</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./src</span>
+<span class="w">  </span><span class="nt">scoring_script</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">score.py</span>
+<span class="nt">environment</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">azureml:fraud-infer:3</span>
+<span class="nt">instance_type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Standard_DS3_v2</span>
+<span class="nt">instance_count</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<span class="nt">request_settings</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">request_timeout_ms</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3000</span>
+<span class="w">  </span><span class="nt">max_concurrent_requests_per_instance</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
+<span class="w">  </span><span class="nt">max_queue_wait_ms</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">500</span>
+<span class="nt">liveness_probe</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">initial_delay</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30</span>
+<span class="w">  </span><span class="nt">period</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
+<span class="w">  </span><span class="nt">timeout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<span class="w">  </span><span class="nt">success_threshold</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">  </span><span class="nt">failure_threshold</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30</span>
+<span class="nt">readiness_probe</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">initial_delay</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30</span>
+<span class="w">  </span><span class="nt">period</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
+<span class="w">  </span><span class="nt">timeout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<span class="w">  </span><span class="nt">success_threshold</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">  </span><span class="nt">failure_threshold</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
+<span class="nt">data_collector</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">collections</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">request</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="nt">response</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</code></pre></div>
+<h3 id="request-path-sequence-diagram">Request path sequence diagram<a class="headerlink" href="#request-path-sequence-diagram" title="Permanent link">¶</a></h3>
+<div class="mermaid">sequenceDiagram
+    participant C as Client
+    participant AG as Azure API Gateway
+    participant LB as Load Balancer
+    participant R1 as Replica 1 (blue)
+    participant R2 as Replica 2 (blue)
+    participant M as Model Registry
+
+    Note over R1,R2: init() called once at startup
+    R1-&gt;&gt;M: Pull model artifact
+    R2-&gt;&gt;M: Pull model artifact
+
+    C-&gt;&gt;AG: POST /score (Bearer token)
+    AG-&gt;&gt;AG: Authenticate key/token
+    AG-&gt;&gt;LB: Forward request
+    LB-&gt;&gt;R1: Route to least-loaded replica
+    R1-&gt;&gt;R1: Validate input schema
+    R1-&gt;&gt;R1: run() — model.predict()
+    R1-&gt;&gt;LB: 200 OK + JSON response
+    LB-&gt;&gt;AG: Forward response
+    AG-&gt;&gt;C: 200 OK + JSON response
+
+    Note over AG: Logs request metadata (no PII)
+</div>
+<hr/>
+<h2 id="autoscaling-and-load-management">Autoscaling and load management<a class="headerlink" href="#autoscaling-and-load-management" title="Permanent link">¶</a></h2>
+<p>Autoscaling prevents both over-provisioning (wasting money) and under-provisioning (causing
+timeouts). Azure ML managed online endpoints use <strong>Horizontal Pod Autoscaling (HPA)</strong> backed by
+Azure Monitor metrics.</p>
+<h3 id="scale-out-trigger-logic">Scale-out trigger logic<a class="headerlink" href="#scale-out-trigger-logic" title="Permanent link">¶</a></h3>
+<p>The autoscaler monitors two primary signals:</p>
+<ul>
+<li><strong>CPU utilization</strong> — scale out when average CPU across replicas exceeds a target percentage.</li>
+<li><strong>Request queue depth</strong> — scale out when pending requests exceed a threshold, even before CPU
+  is fully saturated. This is critical for models with variable inference latency.</li>
+</ul>
+<p>The scale-out decision uses the formula:</p>
+<div class="arithmatex">\[
+N_{\text{target}} = \left\lceil N_{\text{current}} \times \frac{\text{current metric}}{\text{target metric}} \right\rceil
+\]</div>
+<p>Example: 3 replicas at 85% CPU with a 60% target → target = <span class="arithmatex">\(\lceil 3 \times 85/60 \rceil = 5\)</span> replicas.</p>
+<h3 id="autoscaling-yaml-for-azure-ml-managed-online-endpoint">Autoscaling YAML for Azure ML managed online endpoint<a class="headerlink" href="#autoscaling-yaml-for-azure-ml-managed-online-endpoint" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># autoscale_policy.yml — applied via az ml online-deployment update</span>
+<span class="nt">$schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://azuremlschemas.azureedge.net/latest/managedOnlineDeployment.schema.json</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">blue</span>
+<span class="nt">endpoint_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fraud-endpoint</span>
+<span class="nt">scale_settings</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">target_utilization</span>
+<span class="w">  </span><span class="nt">min_instances</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<span class="w">  </span><span class="nt">max_instances</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
+<span class="w">  </span><span class="nt">target_utilization_percentage</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">70</span>
+<span class="w">  </span><span class="nt">polling_interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30</span>
+<span class="w">  </span><span class="nt">cooldown_period</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">120</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Recommended value</th>
+<th>Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>min_instances</code></td>
+<td>≥ 2</td>
+<td>Survive a single replica failure without downtime</td>
+</tr>
+<tr>
+<td><code>max_instances</code></td>
+<td>Cost ceiling / burst capacity</td>
+<td>Cap spend; set based on quota</td>
+</tr>
+<tr>
+<td><code>target_utilization_percentage</code></td>
+<td>60–75%</td>
+<td>Leave headroom for request bursts and tail latency</td>
+</tr>
+<tr>
+<td><code>cooldown_period</code></td>
+<td>120 s</td>
+<td>Prevent oscillation (scale-in too fast after brief burst)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="why-autoscaling-requires-stateless-scoring">Why autoscaling requires stateless scoring<a class="headerlink" href="#why-autoscaling-requires-stateless-scoring" title="Permanent link">¶</a></h3>
+<p>The autoscaler can add or remove replicas at any time. If a replica holds state (open
+database connections per request, cached per-user context), routing a request to a new replica
+would lose that state. <strong>Statelessness</strong> — every replica handles every request independently
+using only the loaded model and the request payload — is the architectural prerequisite that
+makes horizontal scaling correct and safe.</p>
+<blockquote>
+<p><strong>Tip - Pre-warm replicas:</strong> Set <code>min_instances</code> to the number that handles your sustained
+non-peak traffic. This avoids cold-start latency spikes at the beginning of business hours
+when traffic ramps up faster than the autoscaler can provision.</p>
+</blockquote>
+<hr/>
+<h2 id="model-serving-performance-optimization">Model serving performance optimization<a class="headerlink" href="#model-serving-performance-optimization" title="Permanent link">¶</a></h2>
+<p>Latency and throughput are engineering problems with concrete techniques. This section covers
+the five most impactful optimizations in order of implementation effort.</p>
+<h3 id="onnx-export-for-cross-framework-portability">ONNX export for cross-framework portability<a class="headerlink" href="#onnx-export-for-cross-framework-portability" title="Permanent link">¶</a></h3>
+<p><strong>ONNX (Open Neural Network Exchange)</strong> is a vendor-neutral model format. Exporting to ONNX
+decouples the serving runtime from the training framework, enabling use of ONNX Runtime — a
+highly optimized inference engine — regardless of whether the model was trained in PyTorch,
+scikit-learn, or LightGBM.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Export LightGBM to ONNX</span>
+<span class="kn">from</span> <span class="nn">skl2onnx</span> <span class="kn">import</span> <span class="n">convert_sklearn</span>
+<span class="kn">from</span> <span class="nn">skl2onnx.common.data_types</span> <span class="kn">import</span> <span class="n">FloatTensorType</span>
+<span class="kn">import</span> <span class="nn">onnx</span>
+
+<span class="n">initial_type</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">"float_input"</span><span class="p">,</span> <span class="n">FloatTensorType</span><span class="p">([</span><span class="kc">None</span><span class="p">,</span> <span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]]))]</span>
+<span class="n">onnx_model</span> <span class="o">=</span> <span class="n">convert_sklearn</span><span class="p">(</span><span class="n">lgbm_pipeline</span><span class="p">,</span> <span class="n">initial_types</span><span class="o">=</span><span class="n">initial_type</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">"model.onnx"</span><span class="p">,</span> <span class="s2">"wb"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">onnx_model</span><span class="o">.</span><span class="n">SerializeToString</span><span class="p">())</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="c1"># Serve with ONNX Runtime in scoring script</span>
+<span class="kn">import</span> <span class="nn">onnxruntime</span> <span class="k">as</span> <span class="nn">rt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="k">def</span> <span class="nf">init</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">session</span>
+    <span class="n">model_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"AZUREML_MODEL_DIR"</span><span class="p">),</span> <span class="s2">"model.onnx"</span><span class="p">)</span>
+    <span class="n">opts</span> <span class="o">=</span> <span class="n">rt</span><span class="o">.</span><span class="n">SessionOptions</span><span class="p">()</span>
+    <span class="n">opts</span><span class="o">.</span><span class="n">intra_op_num_threads</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="n">session</span> <span class="o">=</span> <span class="n">rt</span><span class="o">.</span><span class="n">InferenceSession</span><span class="p">(</span><span class="n">model_path</span><span class="p">,</span> <span class="n">opts</span><span class="p">,</span> <span class="n">providers</span><span class="o">=</span><span class="p">[</span><span class="s2">"CPUExecutionProvider"</span><span class="p">])</span>
+
+<span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="n">raw_data</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">raw_data</span><span class="p">)</span>
+    <span class="n">features</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">"features"</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+    <span class="n">input_name</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">get_inputs</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">name</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="p">{</span><span class="n">input_name</span><span class="p">:</span> <span class="n">features</span><span class="p">})</span>
+    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s2">"prediction"</span><span class="p">:</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()})</span>
+</code></pre></div>
+<p>Typical latency improvement from switching to ONNX Runtime: <strong>20–60%</strong> on CPU, depending on
+model complexity.</p>
+<h3 id="model-quantization-int8">Model quantization: INT8<a class="headerlink" href="#model-quantization-int8" title="Permanent link">¶</a></h3>
+<p><strong>Quantization</strong> reduces model weight precision from FP32 to INT8, shrinking model size by
+approximately 4× and reducing inference latency by 2–3× on supported hardware, at the cost of
+a small accuracy drop (typically &lt; 1% on well-calibrated models).</p>
+<div class="arithmatex">\[
+x_q = \text{round}\!\left(\frac{x}{s}\right) + z
+\]</div>
+<p>where <span class="arithmatex">\(s\)</span> is the scale factor and <span class="arithmatex">\(z\)</span> is the zero point, computed from the weight distribution.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Dynamic quantization (no calibration data needed)</span>
+<span class="kn">from</span> <span class="nn">onnxruntime.quantization</span> <span class="kn">import</span> <span class="n">quantize_dynamic</span><span class="p">,</span> <span class="n">QuantType</span>
+
+<span class="n">quantize_dynamic</span><span class="p">(</span>
+    <span class="n">model_input</span><span class="o">=</span><span class="s2">"model.onnx"</span><span class="p">,</span>
+    <span class="n">model_output</span><span class="o">=</span><span class="s2">"model_int8.onnx"</span><span class="p">,</span>
+    <span class="n">weight_type</span><span class="o">=</span><span class="n">QuantType</span><span class="o">.</span><span class="n">QInt8</span>
+<span class="p">)</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Format</th>
+<th>Model size</th>
+<th>Latency</th>
+<th>Accuracy impact</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FP32 (original)</td>
+<td>100%</td>
+<td>Baseline</td>
+<td>None</td>
+</tr>
+<tr>
+<td>FP16</td>
+<td>~50%</td>
+<td>~10–20% faster</td>
+<td>Negligible</td>
+</tr>
+<tr>
+<td>INT8</td>
+<td>~25%</td>
+<td>~50–70% faster</td>
+<td>&lt; 1% on most tabular</td>
+</tr>
+</tbody>
+</table>
+<h3 id="batching-at-inference-time">Batching at inference time<a class="headerlink" href="#batching-at-inference-time" title="Permanent link">¶</a></h3>
+<p>Batching multiple requests together amortizes fixed per-call overhead (memory allocation,
+ONNX session setup, feature preprocessing) across many rows.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Enable micro-batching in deployment</span>
+<span class="nt">request_settings</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">max_concurrent_requests_per_instance</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20</span>
+<span class="w">  </span><span class="nt">request_timeout_ms</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5000</span>
+</code></pre></div>
+<p>For batch-tolerant applications, implement <strong>client-side batching</strong>: accumulate requests for
+up to 50 ms and send them as a single payload. The scoring script then vectorizes the call:</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="n">raw_data</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">raw_data</span><span class="p">)</span>
+    <span class="c1"># Accepts a list of feature rows; vectorize in one call</span>
+    <span class="n">features</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">"features"</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>  <span class="c1"># shape: (N, D)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">session</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="p">{</span><span class="n">input_name</span><span class="p">:</span> <span class="n">features</span><span class="p">})</span>
+    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s2">"prediction"</span><span class="p">:</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()})</span>
+</code></pre></div>
+<h3 id="connection-pooling-and-dependency-caching">Connection pooling and dependency caching<a class="headerlink" href="#connection-pooling-and-dependency-caching" title="Permanent link">¶</a></h3>
+<p>If the scoring script calls downstream services (feature store, database), open the connection
+in <code>init()</code> and reuse it across requests. Creating a new connection per request adds 20–200 ms
+and exhausts database connection limits under load.</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">init</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">model</span><span class="p">,</span> <span class="n">feature_store_client</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">load_model</span><span class="p">()</span>
+    <span class="n">feature_store_client</span> <span class="o">=</span> <span class="n">FeatureStoreClient</span><span class="p">(</span>
+        <span class="n">endpoint</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">"FEATURE_STORE_URI"</span><span class="p">],</span>
+        <span class="n">credential</span><span class="o">=</span><span class="n">DefaultAzureCredential</span><span class="p">(),</span>
+        <span class="n">pool_maxsize</span><span class="o">=</span><span class="mi">20</span>
+    <span class="p">)</span>
+</code></pre></div>
+<blockquote>
+<p><strong>Note - Profiling inference latency:</strong> Use <code>az ml online-endpoint get-logs</code> combined with
+custom timing logs in <code>run()</code> to identify which step dominates latency (feature fetch, model
+predict, serialization). Fix the dominant bottleneck first; optimizing a 2 ms step when feature
+fetch takes 150 ms yields negligible improvement.</p>
+</blockquote>
+<hr/>
+<h2 id="multi-model-endpoints-and-model-routing">Multi-model endpoints and model routing<a class="headerlink" href="#multi-model-endpoints-and-model-routing" title="Permanent link">¶</a></h2>
+<p>A single scoring endpoint can serve multiple models — for example, one model per customer
+segment, geography, or product line. This reduces endpoint proliferation while maintaining
+segment-specific accuracy.</p>
+<h3 id="when-to-use-multi-model-endpoints">When to use multi-model endpoints<a class="headerlink" href="#when-to-use-multi-model-endpoints" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Pattern</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10+ segment models, same features, same schema</td>
+<td>Load all models in <code>init()</code>; route in <code>run()</code></td>
+</tr>
+<tr>
+<td>Models differ by input schema</td>
+<td>Separate endpoints (schema mismatch breaks batching)</td>
+</tr>
+<tr>
+<td>A/B testing two algorithms</td>
+<td>Multi-model with random routing + logging</td>
+</tr>
+<tr>
+<td>Latency-critical path</td>
+<td>Single model (multiple model loads increase cold-start)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="routing-logic-in-scoring-script">Routing logic in scoring script<a class="headerlink" href="#routing-logic-in-scoring-script" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">joblib</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">_models</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">_lock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">init</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">_models</span>
+    <span class="n">model_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"AZUREML_MODEL_DIR"</span><span class="p">)</span>
+    <span class="c1"># Load all segment models at startup</span>
+    <span class="k">for</span> <span class="n">segment</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"retail"</span><span class="p">,</span> <span class="s2">"corporate"</span><span class="p">,</span> <span class="s2">"sme"</span><span class="p">]:</span>
+        <span class="n">model_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">model_dir</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"fraud_model_</span><span class="si">{</span><span class="n">segment</span><span class="si">}</span><span class="s2">.pkl"</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">model_path</span><span class="p">):</span>
+            <span class="n">_models</span><span class="p">[</span><span class="n">segment</span><span class="p">]</span> <span class="o">=</span> <span class="n">joblib</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">model_path</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="n">raw_data</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">raw_data</span><span class="p">)</span>
+    <span class="n">segment</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"segment"</span><span class="p">,</span> <span class="s2">"retail"</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="n">_lock</span><span class="p">:</span>
+        <span class="c1"># Read is safe without a lock for already-loaded models,</span>
+        <span class="c1"># but use lock if lazy-loading is added later</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">_models</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">segment</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">model</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s2">"error"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"Unknown segment: </span><span class="si">{</span><span class="n">segment</span><span class="si">}</span><span class="s2">"</span><span class="p">}),</span> <span class="mi">400</span>
+
+    <span class="n">features</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">"features"</span><span class="p">])</span>
+    <span class="n">prediction</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s2">"prediction"</span><span class="p">:</span> <span class="n">prediction</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="s2">"segment"</span><span class="p">:</span> <span class="n">segment</span><span class="p">})</span>
+</code></pre></div>
+<h3 id="thread-safety-with-multiple-models">Thread safety with multiple models<a class="headerlink" href="#thread-safety-with-multiple-models" title="Permanent link">¶</a></h3>
+<p>When models are fully loaded in <code>init()</code> and only read (not mutated) in <code>run()</code>, concurrent
+access is safe without a lock. A lock is required only if:</p>
+<ul>
+<li>Models are <strong>lazy-loaded</strong> on first request for a segment (mutable <code>_models</code> dict).</li>
+<li>The model uses <strong>stateful inference</strong> (e.g., an RNN with a carry state per sequence).</li>
+</ul>
+<p>The pattern above uses <code>threading.Lock()</code> defensively in case lazy-loading is added later,
+with negligible overhead because the critical section only resolves the dict lookup.</p>
+<blockquote>
+<p><strong>Note - Memory budget:</strong> Each model loaded in <code>init()</code> consumes RAM continuously. For
+instance types with 8 GB RAM, loading 20 × 300 MB models will OOMKill the container. Profile
+total model size before choosing the instance type, or implement LRU eviction for rarely
+used segment models.</p>
+</blockquote>
+<hr/>
+<h2 id="deployment-security-hardening">Deployment security hardening<a class="headerlink" href="#deployment-security-hardening" title="Permanent link">¶</a></h2>
+<p>Security for ML endpoints goes beyond standard API security because the model artifact itself
+and the input/output data carry unique risks.</p>
+<h3 id="network-isolation">Network isolation<a class="headerlink" href="#network-isolation" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Private endpoint for managed online endpoint</span>
+<span class="l l-Scalar l-Scalar-Plain">az ml online-endpoint create \</span>
+<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">--file endpoint.yml \</span>
+<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">--set public_network_access=disabled \</span>
+<span class="w">  </span><span class="l l-Scalar l-Scalar-Plain">--set egress_public_network_access=disabled</span>
+</code></pre></div>
+<p>With <code>public_network_access=disabled</code>, the endpoint is accessible only from within the
+virtual network via a private endpoint. Combine with a Network Security Group rule that
+allows only the application subnet to reach the private endpoint.</p>
+<h3 id="customer-managed-keys-cmk">Customer-managed keys (CMK)<a class="headerlink" href="#customer-managed-keys-cmk" title="Permanent link">¶</a></h3>
+<p>By default, Azure ML encrypts stored artifacts with Microsoft-managed keys. For regulated
+workloads, use CMK with Azure Key Vault:</p>
+<div class="highlight"><pre><span></span><code>az<span class="w"> </span>ml<span class="w"> </span>workspace<span class="w"> </span>update<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--name<span class="w"> </span>ml-workspace<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--resource-group<span class="w"> </span>ml-rg<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--encryption-key-identifier<span class="w"> </span><span class="s2">"https://kv-mlops.vault.azure.net/keys/ml-cmk/abc123"</span>
+</code></pre></div>
+<h3 id="pii-scrubbing-in-scoring-script">PII scrubbing in scoring script<a class="headerlink" href="#pii-scrubbing-in-scoring-script" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">hashlib</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="n">raw_data</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">raw_data</span><span class="p">)</span>
+
+    <span class="c1"># Validate required fields (reject at boundary, not deep in logic)</span>
+    <span class="k">if</span> <span class="s2">"features"</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">"features"</span><span class="p">],</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s2">"error"</span><span class="p">:</span> <span class="s2">"Invalid request schema"</span><span class="p">}),</span> <span class="mi">400</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">"features"</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">"features"</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">1000</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s2">"error"</span><span class="p">:</span> <span class="s2">"Batch size must be between 1 and 1000"</span><span class="p">}),</span> <span class="mi">400</span>
+
+    <span class="c1"># Log hashed ID, never raw customer fields</span>
+    <span class="n">customer_id</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"customer_id"</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span>
+    <span class="n">hashed_id</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">customer_id</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()[:</span><span class="mi">12</span><span class="p">]</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">"Scoring request cid=</span><span class="si">%s</span><span class="s2"> batch_size=</span><span class="si">%d</span><span class="s2">"</span><span class="p">,</span> <span class="n">hashed_id</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">"features"</span><span class="p">]))</span>
+
+    <span class="n">features</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">"features"</span><span class="p">])</span>
+    <span class="n">prediction</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s2">"prediction"</span><span class="p">:</span> <span class="n">prediction</span><span class="o">.</span><span class="n">tolist</span><span class="p">()})</span>
+</code></pre></div>
+<h3 id="input-validation-and-schema-enforcement">Input validation and schema enforcement<a class="headerlink" href="#input-validation-and-schema-enforcement" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">validator</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="k">class</span> <span class="nc">ScoringRequest</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="n">features</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]]</span>
+
+    <span class="nd">@validator</span><span class="p">(</span><span class="s2">"features"</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">validate_shape</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">v</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"features list must not be empty"</span><span class="p">)</span>
+        <span class="n">n_cols</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">n_cols</span> <span class="o">!=</span> <span class="mi">6</span><span class="p">:</span>  <span class="c1"># expected feature count</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Expected 6 features per row, got </span><span class="si">{</span><span class="n">n_cols</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1000</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Maximum batch size is 1000"</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">v</span>
+
+<span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="n">raw_data</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">request</span> <span class="o">=</span> <span class="n">ScoringRequest</span><span class="o">.</span><span class="n">parse_raw</span><span class="p">(</span><span class="n">raw_data</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s2">"error"</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)}),</span> <span class="mi">400</span>
+
+    <span class="n">features</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">features</span><span class="p">)</span>
+    <span class="n">prediction</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">features</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s2">"prediction"</span><span class="p">:</span> <span class="n">prediction</span><span class="o">.</span><span class="n">tolist</span><span class="p">()})</span>
+</code></pre></div>
+<h3 id="auth-key-rotation-policy">Auth key rotation policy<a class="headerlink" href="#auth-key-rotation-policy" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Regenerate primary key (invalidates current primary; secondary key continues to work)</span>
+az<span class="w"> </span>ml<span class="w"> </span>online-endpoint<span class="w"> </span>regenerate-keys<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--name<span class="w"> </span>fraud-endpoint<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--key-type<span class="w"> </span>primary
+
+<span class="c1"># Update application secrets in Key Vault</span>
+az<span class="w"> </span>keyvault<span class="w"> </span>secret<span class="w"> </span><span class="nb">set</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--vault-name<span class="w"> </span>kv-mlops<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--name<span class="w"> </span>fraud-endpoint-key<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--value<span class="w"> </span><span class="s2">"</span><span class="k">$(</span>az<span class="w"> </span>ml<span class="w"> </span>online-endpoint<span class="w"> </span>get-credentials<span class="w"> </span>-n<span class="w"> </span>fraud-endpoint<span class="w"> </span>--query<span class="w"> </span>primaryKey<span class="w"> </span>-o<span class="w"> </span>tsv<span class="k">)</span><span class="s2">"</span>
+</code></pre></div>
+<blockquote>
+<p><strong>Tip - Rotation cadence:</strong> Rotate keys on a 90-day cycle at minimum. Automate rotation using
+an Azure Function triggered by an Event Grid event from Key Vault's near-expiry notification.
+Always update the secondary key first, then the primary, to avoid a brief auth outage.</p>
+</blockquote>
+<hr/>
+<h2 id="end-to-end-deployment-pipeline-cicd">End-to-end deployment pipeline (CI/CD)<a class="headerlink" href="#end-to-end-deployment-pipeline-cicd" title="Permanent link">¶</a></h2>
+<p>A fully automated CI/CD pipeline eliminates manual deployment steps, enforces quality gates,
+and provides a documented audit trail from code commit to production endpoint.</p>
+<h3 id="pipeline-architecture">Pipeline architecture<a class="headerlink" href="#pipeline-architecture" title="Permanent link">¶</a></h3>
+<div class="mermaid">flowchart LR
+    A[Git Push to main] --&gt; B[Train on latest data]
+    B --&gt; C[Evaluate: AUC vs champion]
+    C --&gt;|AUC improved| D[Register model in registry]
+    C --&gt;|No improvement| Z[Fail pipeline: no deploy]
+    D --&gt; E[Build + scan scoring image]
+    E --&gt; F[Deploy to staging endpoint]
+    F --&gt; G[Functional tests]
+    G --&gt; H[Load test: p95 &lt; 250 ms at 100 RPS]
+    H --&gt;|Pass| I[Manual approval gate]
+    H --&gt;|Fail| Z2[Fail pipeline: perf regression]
+    I --&gt; J[Canary deploy to production — 10%]
+    J --&gt; K[Monitor for 24 h: AUC + error rate]
+    K --&gt;|Stable| L[Ramp to 100% — promote]
+    K --&gt;|Degraded| M[Rollback: traffic back to champion]
+</div>
+<h3 id="full-github-actions-yaml">Full GitHub Actions YAML<a class="headerlink" href="#full-github-actions-yaml" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># .github/workflows/deploy.yml</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Train-Evaluate-Deploy</span>
+
+<span class="nt">on</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">push</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">branches</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">main</span><span class="p p-Indicator">]</span>
+<span class="w">  </span><span class="nt">workflow_dispatch</span><span class="p">:</span>
+
+<span class="nt">env</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">AZURE_ML_WORKSPACE</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ml-workspace</span>
+<span class="w">  </span><span class="nt">AZURE_RESOURCE_GROUP</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ml-rg</span>
+<span class="w">  </span><span class="nt">ENDPOINT_NAME</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fraud-endpoint</span>
+
+<span class="nt">jobs</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">train-and-evaluate</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
+<span class="w">    </span><span class="nt">outputs</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">model_version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ steps.register.outputs.model_version }}</span>
+<span class="w">      </span><span class="nt">promoted</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ steps.evaluate.outputs.promoted }}</span>
+<span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v4</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">azure/login@v2</span>
+<span class="w">        </span><span class="nt">with</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">creds</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ secrets.AZURE_CREDENTIALS }}</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Submit training job</span>
+<span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">          </span><span class="no">az ml job create -f jobs/train.yml \</span>
+<span class="w">            </span><span class="no">--workspace-name $AZURE_ML_WORKSPACE \</span>
+<span class="w">            </span><span class="no">--resource-group $AZURE_RESOURCE_GROUP \</span>
+<span class="w">            </span><span class="no">--stream</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Evaluate vs champion</span>
+<span class="w">        </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">evaluate</span>
+<span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">          </span><span class="no">RESULT=$(python scripts/evaluate_champion_challenger.py)</span>
+<span class="w">          </span><span class="no">echo "promoted=$RESULT" &gt;&gt; "$GITHUB_OUTPUT"</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Register model</span>
+<span class="w">        </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">register</span>
+<span class="w">        </span><span class="nt">if</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">steps.evaluate.outputs.promoted == 'true'</span>
+<span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">          </span><span class="no">VERSION=$(az ml model create -f model/model.yml \</span>
+<span class="w">            </span><span class="no">--workspace-name $AZURE_ML_WORKSPACE \</span>
+<span class="w">            </span><span class="no">--resource-group $AZURE_RESOURCE_GROUP \</span>
+<span class="w">            </span><span class="no">--query version -o tsv)</span>
+<span class="w">          </span><span class="no">echo "model_version=$VERSION" &gt;&gt; "$GITHUB_OUTPUT"</span>
+
+<span class="w">  </span><span class="nt">deploy-staging</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">needs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">train-and-evaluate</span>
+<span class="w">    </span><span class="nt">if</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">needs.train-and-evaluate.outputs.promoted == 'true'</span>
+<span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
+<span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v4</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">azure/login@v2</span>
+<span class="w">        </span><span class="nt">with</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">creds</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ secrets.AZURE_CREDENTIALS }}</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Deploy to staging</span>
+<span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">          </span><span class="no">az ml online-deployment create \</span>
+<span class="w">            </span><span class="no">--file deployments/staging.yml \</span>
+<span class="w">            </span><span class="no">--workspace-name $AZURE_ML_WORKSPACE \</span>
+<span class="w">            </span><span class="no">--resource-group $AZURE_RESOURCE_GROUP</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Run functional tests</span>
+<span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">python tests/test_endpoint.py --env staging</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Run load test</span>
+<span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">          </span><span class="no">python tests/load_test.py \</span>
+<span class="w">            </span><span class="no">--endpoint staging-fraud-endpoint \</span>
+<span class="w">            </span><span class="no">--rps 100 \</span>
+<span class="w">            </span><span class="no">--duration 120 \</span>
+<span class="w">            </span><span class="no">--p95-threshold 250</span>
+
+<span class="w">  </span><span class="nt">promote-to-production</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">needs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">deploy-staging</span>
+<span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
+<span class="w">    </span><span class="nt">environment</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">production</span>
+<span class="w">      </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://fraud-endpoint.eastus.inference.ml.azure.com</span>
+<span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v4</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">azure/login@v2</span>
+<span class="w">        </span><span class="nt">with</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">creds</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ secrets.AZURE_CREDENTIALS }}</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Canary deploy — 10%</span>
+<span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">          </span><span class="no">az ml online-deployment create \</span>
+<span class="w">            </span><span class="no">--file deployments/canary.yml \</span>
+<span class="w">            </span><span class="no">--workspace-name $AZURE_ML_WORKSPACE \</span>
+<span class="w">            </span><span class="no">--resource-group $AZURE_RESOURCE_GROUP</span>
+<span class="w">          </span><span class="no">az ml online-endpoint update \</span>
+<span class="w">            </span><span class="no">--name $ENDPOINT_NAME \</span>
+<span class="w">            </span><span class="no">--traffic "blue=90 canary=10"</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Wait and validate canary (24 h)</span>
+<span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">python scripts/monitor_canary.py --duration 86400 --fail-on-degradation</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Promote canary to 100%</span>
+<span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">          </span><span class="no">az ml online-endpoint update \</span>
+<span class="w">            </span><span class="no">--name $ENDPOINT_NAME \</span>
+<span class="w">            </span><span class="no">--traffic "canary=100"</span>
+<span class="w">          </span><span class="no">az ml online-deployment delete \</span>
+<span class="w">            </span><span class="no">--name blue \</span>
+<span class="w">            </span><span class="no">--endpoint-name $ENDPOINT_NAME \</span>
+<span class="w">            </span><span class="no">--yes</span>
+</code></pre></div>
+<h3 id="environment-promotion-gates">Environment promotion gates<a class="headerlink" href="#environment-promotion-gates" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Gate</th>
+<th>Check</th>
+<th>Failure action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Champion-challenger eval</td>
+<td>Challenger AUC ≥ champion AUC + 0.005</td>
+<td>Abort pipeline, keep champion</td>
+</tr>
+<tr>
+<td>Staging functional test</td>
+<td>All test cases pass</td>
+<td>Abort, notify team</td>
+</tr>
+<tr>
+<td>Staging load test</td>
+<td>p95 &lt; 250 ms @ 100 RPS</td>
+<td>Abort, log perf regression</td>
+</tr>
+<tr>
+<td>Manual approval</td>
+<td>Human sign-off in GitHub environment</td>
+<td>Block until approved or rejected</td>
+</tr>
+<tr>
+<td>Canary health check</td>
+<td>Error rate &lt; 2% and AUC within 3% of baseline</td>
+<td>Auto-rollback if degraded</td>
+</tr>
+</tbody>
+</table>
+<h3 id="rollback-trigger">Rollback trigger<a class="headerlink" href="#rollback-trigger" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># scripts/monitor_canary.py — simplified rollback logic</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+
+<span class="k">def</span> <span class="nf">get_canary_metrics</span><span class="p">(</span><span class="n">endpoint</span><span class="p">):</span>
+    <span class="c1"># Query Azure Monitor for error rate and AUC over last 30 min</span>
+    <span class="o">...</span>
+
+<span class="k">def</span> <span class="nf">rollback</span><span class="p">(</span><span class="n">endpoint</span><span class="p">):</span>
+    <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span>
+        <span class="s2">"az"</span><span class="p">,</span> <span class="s2">"ml"</span><span class="p">,</span> <span class="s2">"online-endpoint"</span><span class="p">,</span> <span class="s2">"update"</span><span class="p">,</span>
+        <span class="s2">"--name"</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">,</span>
+        <span class="s2">"--traffic"</span><span class="p">,</span> <span class="s2">"blue=100 canary=0"</span>
+    <span class="p">],</span> <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">monitor_canary</span><span class="p">(</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">duration_s</span><span class="p">,</span> <span class="n">fail_on_degradation</span><span class="p">):</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="k">while</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span> <span class="o">&lt;</span> <span class="n">duration_s</span><span class="p">:</span>
+        <span class="n">metrics</span> <span class="o">=</span> <span class="n">get_canary_metrics</span><span class="p">(</span><span class="n">endpoint</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">metrics</span><span class="p">[</span><span class="s2">"error_rate"</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.02</span> <span class="ow">or</span> <span class="n">metrics</span><span class="p">[</span><span class="s2">"auc_delta"</span><span class="p">]</span> <span class="o">&lt;</span> <span class="o">-</span><span class="mf">0.03</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Canary degraded: </span><span class="si">{</span><span class="n">metrics</span><span class="si">}</span><span class="s2">. Rolling back."</span><span class="p">)</span>
+            <span class="n">rollback</span><span class="p">(</span><span class="n">endpoint</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">fail_on_degradation</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">SystemExit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">300</span><span class="p">)</span>  <span class="c1"># check every 5 minutes</span>
+</code></pre></div>
+<blockquote>
+<p><strong>Note - Immutable deployments:</strong> Never mutate a running deployment. Instead, create a new
+deployment with the updated artifact and shift traffic. This ensures every production state
+is reproducible and rollback is always available by shifting traffic back to the previous
+named deployment.</p>
+</blockquote>
+<h2 id="quick-self-check-advanced-deployment">Quick self-check (advanced deployment)<a class="headerlink" href="#quick-self-check-advanced-deployment" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Question</th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>You need to serve 15 segment-specific models from a single endpoint. What instance memory must you budget for, and what is the thread-safety risk to address?</td>
+<td>Budget RAM at least equal to all 15 models resident simultaneously (15 × per-model size) to avoid an OOMKill; the thread-safety risk is the mutable <code>_models</code> dict under lazy-loading, which must be guarded with a lock.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>A managed online endpoint returns 429 errors during a traffic spike before the autoscaler adds replicas. Which two autoscaler parameters control responsiveness, and how would you tune them?</td>
+<td><code>polling_interval</code> (how often the autoscaler checks) and <code>cooldown_period</code> (delay before further scaling): lower both so it detects and reacts to the spike faster, and lower <code>target_utilization_percentage</code> to leave more headroom.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Staging functional tests pass but the load test reports p95 = 380 ms. What are the three most likely causes and which ONNX/batching technique addresses each?</td>
+<td>Slow model predict → export to ONNX Runtime; large FP32 weights/compute → INT8 quantization; fixed per-request overhead → micro-batching (vectorized batch scoring).</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Why is <code>public_network_access=disabled</code> alone insufficient for full network isolation, and what additional resource is required?</td>
+<td>It only blocks public inbound access; full isolation also needs a private endpoint in the VNet (plus NSG rules and <code>egress_public_network_access=disabled</code>) so traffic stays on the private network.</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Why is monitoring the AUC delta during canary the right signal, and what would be wrong with monitoring accuracy instead?</td>
+<td>AUC measures ranking quality independent of threshold and class balance; accuracy is misleading on imbalanced fraud data, where predicting all-negative scores high accuracy yet is useless.</td>
+</tr>
+</tbody>
+</table>
+</article>
+</div>
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+</div>
+<button class="md-top md-icon" data-md-component="top" hidden="" type="button">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Back to top
+</button>
+</main>
+<footer class="md-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+<div class="md-copyright__highlight">
+      Copyright © 2026 <a href="https://github.com/Cloud2BR-MSFTLearningHub" rel="noopener" target="_blank">Cloud2BR MSFT Learning Hub</a>
+</div>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.expand", "navigation.top", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+<script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script src="../../assets/js/org-link.js"></script>
+<script type="module">import mermaid from "https://unpkg.com/mermaid@10.4.0/dist/mermaid.esm.min.mjs";
+mermaid.initialize({});</script></body>
+</html>

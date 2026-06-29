@@ -1,0 +1,2738 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Azure Machine Learning training from fundamentals to advanced MLOps.">
+      
+      
+      
+        <link rel="canonical" href="https://cloud2br-msftlearninghub.github.io/Azure-ML-Advanced/modules/10-training-automl/">
+      
+      
+        <link rel="prev" href="../09-model-types/">
+      
+      
+        <link rel="next" href="../11-performance-metrics/">
+      
+      
+        
+          <link rel="alternate" href="/Azure-ML-Advanced/" hreflang="en">
+        
+          <link rel="alternate" href="/Azure-ML-Advanced/es/" hreflang="es">
+        
+      
+      
+      <link rel="icon" href="../../assets/img/org-logo.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>10. Training and AutoML - Azure Machine Learning: Advanced</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/css/custom.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#training-and-automl" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Azure Machine Learning: Advanced" class="md-header__button md-logo" aria-label="Azure Machine Learning: Advanced" data-md-component="logo">
+      
+  <img src="../../assets/img/org-logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Azure Machine Learning: Advanced
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              10. Training and AutoML
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="Select language">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="/Azure-ML-Advanced/" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="/Azure-ML-Advanced/es/" hreflang="es" class="md-select__link">
+              Español
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Azure Machine Learning: Advanced" class="md-nav__button md-logo" aria-label="Azure Machine Learning: Advanced" data-md-component="logo">
+      
+  <img src="../../assets/img/org-logo.png" alt="logo">
+
+    </a>
+    Azure Machine Learning: Advanced
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-math-prerequisites/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01. Math Prerequisites
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-e2e-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02. End-to-End ML Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03. Introduction and Lifecycle
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-ml-foundations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04. ML Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-neural-networks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05. Neural Networks and Deep Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-azure-ml-environment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06. Azure ML Environment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-environment-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07. Environment Setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-data-preparation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08. Data Preparation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-model-types/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09. Model Types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Training and AutoML
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Training and AutoML
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#learning-goals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Learning goals
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#automl-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AutoML workflow
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-automl-does-behind-the-scenes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What AutoML does behind the scenes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What AutoML does behind the scenes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#automl-algorithm-candidates-tabular-classification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AutoML algorithm candidates (tabular classification)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#automl-vs-manual-training-when-to-use-which" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AutoML vs manual training: when to use which
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compute-and-performance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Compute and performance
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#minimal-automl-configuration-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Minimal AutoML configuration checklist
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Minimal AutoML configuration checklist">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#minimal-automl-code-example-azure-sdk-v2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Minimal AutoML code example (Azure SDK v2)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-mistakes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common mistakes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#search-space-design-important" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Search-space design (important)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#validation-strategy-choices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Validation strategy choices
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#experiment-tracking-fields-to-persist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Experiment tracking fields to persist
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#candidate-selection-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Candidate selection policy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#promotion-gates-dev-to-prod" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Promotion gates (dev to prod)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-self-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick self-check
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deep-dive-every-concept-explained" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deep dive: every concept, explained
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deep dive: every concept, explained">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-automl-actually-searches" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What AutoML actually searches
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#featurization-demystified" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Featurization, demystified
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cross-validation-inside-automl-and-why-it-ranks-models-fairly" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cross-validation inside AutoML and why it ranks models fairly
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#primary-metric-aligning-the-optimizer-with-the-business" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Primary metric: aligning the optimizer with the business
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ensembles-why-the-winner-is-often-a-votingensemble" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ensembles: why the winner is often a VotingEnsemble
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#concurrency-budget-and-the-costtime-trade-off" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Concurrency, budget, and the cost/time trade-off
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-multi-objective-selection-score-explained" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The multi-objective selection score, explained
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-experiment-tracking-metadata-is-non-negotiable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why experiment tracking metadata is non-negotiable
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hyperparameter-optimization-hpo-in-depth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hyperparameter optimization (HPO) in depth
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Hyperparameter optimization (HPO) in depth">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#grid-search-random-search-and-why-random-wins" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Grid search, random search, and why random wins
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bayesian-optimization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bayesian optimization
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hyperdrive-in-azure-ml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HyperDrive in Azure ML
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#neural-architecture-search-nas-briefly" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Neural architecture search (NAS) briefly
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#experiment-tracking-best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Experiment tracking best practices
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#model-checkpointing-and-resuming" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Model checkpointing and resuming
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#distributed-training-in-depth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Distributed training in depth
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-full-automl-lifecycle-production-scenario" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The full AutoML lifecycle: production scenario
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11-performance-metrics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Performance Metrics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../12-results-explainability/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Results and Explainability
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13-deployment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Deployment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../14-deployment-debug-k8s/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. Deployment Debugging
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_16" >
+        
+          
+          <label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_16">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/model-math-deep-dive/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mathematical Model Deep Dive
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/cli-commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI Commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#learning-goals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Learning goals
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#automl-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AutoML workflow
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#what-automl-does-behind-the-scenes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What AutoML does behind the scenes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What AutoML does behind the scenes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#automl-algorithm-candidates-tabular-classification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AutoML algorithm candidates (tabular classification)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#automl-vs-manual-training-when-to-use-which" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AutoML vs manual training: when to use which
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compute-and-performance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Compute and performance
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#minimal-automl-configuration-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Minimal AutoML configuration checklist
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Minimal AutoML configuration checklist">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#minimal-automl-code-example-azure-sdk-v2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Minimal AutoML code example (Azure SDK v2)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#common-mistakes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common mistakes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#search-space-design-important" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Search-space design (important)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#validation-strategy-choices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Validation strategy choices
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#experiment-tracking-fields-to-persist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Experiment tracking fields to persist
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#candidate-selection-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Candidate selection policy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#promotion-gates-dev-to-prod" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Promotion gates (dev to prod)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-self-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick self-check
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deep-dive-every-concept-explained" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deep dive: every concept, explained
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Deep dive: every concept, explained">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-automl-actually-searches" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What AutoML actually searches
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#featurization-demystified" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Featurization, demystified
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cross-validation-inside-automl-and-why-it-ranks-models-fairly" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cross-validation inside AutoML and why it ranks models fairly
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#primary-metric-aligning-the-optimizer-with-the-business" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Primary metric: aligning the optimizer with the business
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ensembles-why-the-winner-is-often-a-votingensemble" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ensembles: why the winner is often a VotingEnsemble
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#concurrency-budget-and-the-costtime-trade-off" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Concurrency, budget, and the cost/time trade-off
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-multi-objective-selection-score-explained" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The multi-objective selection score, explained
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-experiment-tracking-metadata-is-non-negotiable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why experiment tracking metadata is non-negotiable
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hyperparameter-optimization-hpo-in-depth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hyperparameter optimization (HPO) in depth
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Hyperparameter optimization (HPO) in depth">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#grid-search-random-search-and-why-random-wins" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Grid search, random search, and why random wins
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bayesian-optimization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bayesian optimization
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hyperdrive-in-azure-ml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HyperDrive in Azure ML
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#neural-architecture-search-nas-briefly" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Neural architecture search (NAS) briefly
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#experiment-tracking-best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Experiment tracking best practices
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#model-checkpointing-and-resuming" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Model checkpointing and resuming
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#distributed-training-in-depth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Distributed training in depth
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-full-automl-lifecycle-production-scenario" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The full AutoML lifecycle: production scenario
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="training-and-automl">Training and AutoML<a class="headerlink" href="#training-and-automl" title="Permanent link">&para;</a></h1>
+<p>This module explains how models are trained in Azure ML, what AutoML does in the backend,
+and how to move from baseline experiments to reliable model selection.</p>
+<h2 id="learning-goals">Learning goals<a class="headerlink" href="#learning-goals" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Understand manual training vs AutoML.</li>
+<li>Configure an AutoML run with useful constraints.</li>
+<li>Interpret run outputs and choose a production candidate.</li>
+</ol>
+<p><img alt="AutoML diagram" src="../../assets/img/automl_diagram.svg" /></p>
+<blockquote>
+<p><strong>Note - What this shows:</strong> The AutoML loop: try algorithm + hyperparameter combinations, score each with cross-validation,
+and rank by the primary metric. AutoML does not invent algorithms : it allocates a fixed search
+budget across known ones.</p>
+</blockquote>
+<p><img alt="AutoML process expectations" src="../../assets/img/automl_process_what_to_expect.svg" /></p>
+<blockquote>
+<p><strong>Tip - What to expect:</strong> Early trials are weak baselines; quality climbs as the search explores, and the final winner is
+often a voting/stack ensemble of the best runs. Budget enough iterations before trusting the
+leaderboard.</p>
+</blockquote>
+<p><img alt="Detailed ML-based time-series forecast steps" src="../../assets/img/Detailed-steps-of-ML-based-time-series-forecast.svg" /></p>
+<blockquote>
+<p><strong>Note - What this shows:</strong> The detailed steps of an ML-based time-series forecast. Note the <em>rolling-origin</em> validation:
+plain k-fold would leak future values, so temporal data is validated by advancing through time.</p>
+</blockquote>
+<h2 id="automl-workflow">AutoML workflow<a class="headerlink" href="#automl-workflow" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Choose task type</li>
+<li>Provide training data</li>
+<li>Select compute target</li>
+<li>Set metric and constraints</li>
+<li>Submit run and compare candidates</li>
+</ol>
+<h2 id="what-automl-does-behind-the-scenes">What AutoML does behind the scenes<a class="headerlink" href="#what-automl-does-behind-the-scenes" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Tries multiple algorithms and hyperparameters.</li>
+<li>Runs cross-validation/validation scoring.</li>
+<li>Applies feature transformations when configured.</li>
+<li>Logs metrics, artifacts, and lineage.</li>
+<li>Returns best run/model based on chosen primary metric.</li>
+</ul>
+<h3 id="automl-algorithm-candidates-tabular-classification">AutoML algorithm candidates (tabular classification)<a class="headerlink" href="#automl-algorithm-candidates-tabular-classification" title="Permanent link">&para;</a></h3>
+<p>AutoML typically evaluates some or all of the following:</p>
+<table>
+<thead>
+<tr>
+<th>Candidate model</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LightGBM</td>
+<td>Often best on tabular; fast and memory-efficient</td>
+</tr>
+<tr>
+<td>XGBoost</td>
+<td>Strong competition; more hyperparams</td>
+</tr>
+<tr>
+<td>LogisticRegression</td>
+<td>Fast baseline; reveals if linear structure is sufficient</td>
+</tr>
+<tr>
+<td>RandomForest</td>
+<td>Good stability, less tuning</td>
+</tr>
+<tr>
+<td>ExtraTrees</td>
+<td>Faster training variant of random forest</td>
+</tr>
+<tr>
+<td>Voting Ensemble</td>
+<td>AutoML-specific ensemble of top runs</td>
+</tr>
+<tr>
+<td>Stack Ensemble</td>
+<td>AutoML-specific meta-model over top runs</td>
+</tr>
+</tbody>
+</table>
+<p>The <code>VotingEnsemble</code> or <code>StackEnsemble</code> at the end is AutoML's way of squeezing extra performance beyond single models, they are often the final winner.</p>
+<h2 id="automl-vs-manual-training-when-to-use-which">AutoML vs manual training: when to use which<a class="headerlink" href="#automl-vs-manual-training-when-to-use-which" title="Permanent link">&para;</a></h2>
+<p>AutoML is a powerful default, but it is not always the right tool. The choice is about how much
+domain control you need versus how much search you want automated.</p>
+<table>
+<thead>
+<tr>
+<th>Use AutoML when</th>
+<th>Prefer manual training when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>You need a strong baseline fast</td>
+<td>You have a specific architecture in mind (e.g. a custom neural net)</td>
+</tr>
+<tr>
+<td>The problem is standard tabular/forecasting</td>
+<td>You need full control of the training loop or loss</td>
+</tr>
+<tr>
+<td>You want leakage-safe featurization handled for you</td>
+<td>You require bespoke feature engineering or custom CV logic</td>
+</tr>
+<tr>
+<td>You want many algorithms compared objectively</td>
+<td>Compute budget is tight and the model family is already decided</td>
+</tr>
+</tbody>
+</table>
+<p>In practice many teams use both: AutoML to discover a strong candidate and validate the
+achievable accuracy, then a hand-built pipeline to refine, optimize latency, and productionize it.</p>
+<h2 id="compute-and-performance">Compute and performance<a class="headerlink" href="#compute-and-performance" title="Permanent link">&para;</a></h2>
+<p>Performance relation:</p>
+<p>$$
+\text{Performance}=\frac{1}{\text{Execution Time}}
+$$
+Execution time is affected by:</p>
+<ul>
+<li>Data volume and feature dimensionality</li>
+<li>Algorithm complexity</li>
+<li>Compute size (CPU/GPU, memory)</li>
+<li>Parallelization and max concurrent iterations</li>
+</ul>
+<h2 id="minimal-automl-configuration-checklist">Minimal AutoML configuration checklist<a class="headerlink" href="#minimal-automl-configuration-checklist" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Why it matters</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>task</td>
+<td>Defines candidate model family</td>
+</tr>
+<tr>
+<td>primary metric</td>
+<td>Aligns optimization with business objective</td>
+</tr>
+<tr>
+<td>iterations/timeout</td>
+<td>Controls search budget</td>
+</tr>
+<tr>
+<td>cross-validation</td>
+<td>Improves robustness of ranking</td>
+</tr>
+<tr>
+<td>featurization settings</td>
+<td>Impacts model quality and reproducibility</td>
+</tr>
+</tbody>
+</table>
+<h3 id="minimal-automl-code-example-azure-sdk-v2">Minimal AutoML code example (Azure SDK v2)<a class="headerlink" href="#minimal-automl-code-example-azure-sdk-v2" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">azure.ai.ml</span> <span class="kn">import</span> <span class="n">MLClient</span><span class="p">,</span> <span class="n">automl</span>
+<span class="kn">from</span> <span class="nn">azure.ai.ml.entities</span> <span class="kn">import</span> <span class="n">AmlCompute</span>
+<span class="kn">from</span> <span class="nn">azure.identity</span> <span class="kn">import</span> <span class="n">DefaultAzureCredential</span>
+
+<span class="n">ml_client</span> <span class="o">=</span> <span class="n">MLClient</span><span class="p">(</span>
+    <span class="n">credential</span><span class="o">=</span><span class="n">DefaultAzureCredential</span><span class="p">(),</span>
+    <span class="n">subscription_id</span><span class="o">=</span><span class="s2">&quot;&lt;sub-id&gt;&quot;</span><span class="p">,</span>
+    <span class="n">resource_group_name</span><span class="o">=</span><span class="s2">&quot;&lt;rg&gt;&quot;</span><span class="p">,</span>
+    <span class="n">workspace_name</span><span class="o">=</span><span class="s2">&quot;&lt;ws&gt;&quot;</span>
+<span class="p">)</span>
+
+<span class="n">classification_job</span> <span class="o">=</span> <span class="n">automl</span><span class="o">.</span><span class="n">classification</span><span class="p">(</span>
+    <span class="n">compute</span><span class="o">=</span><span class="s2">&quot;cpu-cluster&quot;</span><span class="p">,</span>
+    <span class="n">experiment_name</span><span class="o">=</span><span class="s2">&quot;fraud-automl&quot;</span><span class="p">,</span>
+    <span class="n">training_data</span><span class="o">=</span><span class="n">ml_client</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;fraud-train&quot;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s2">&quot;1&quot;</span><span class="p">),</span>
+    <span class="n">target_column_name</span><span class="o">=</span><span class="s2">&quot;is_fraud&quot;</span><span class="p">,</span>
+    <span class="n">primary_metric</span><span class="o">=</span><span class="s2">&quot;AUC_weighted&quot;</span><span class="p">,</span>
+    <span class="n">n_cross_validations</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">enable_model_explainability</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">timeout_minutes</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span>
+    <span class="n">max_concurrent_trials</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">returned_job</span> <span class="o">=</span> <span class="n">ml_client</span><span class="o">.</span><span class="n">jobs</span><span class="o">.</span><span class="n">create_or_update</span><span class="p">(</span><span class="n">classification_job</span><span class="p">)</span>
+</code></pre></div>
+<p>Key flags:
+- <code>AUC_weighted</code> is safer than <code>accuracy</code> for fraud (imbalanced classes).
+- <code>enable_model_explainability=True</code> generates SHAP-based feature importance.
+- <code>max_concurrent_trials</code> should match compute cluster core count.</p>
+<h2 id="common-mistakes">Common mistakes<a class="headerlink" href="#common-mistakes" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Choosing accuracy for imbalanced classification.</li>
+<li>Running too few iterations and over-trusting the first winner.</li>
+<li>Ignoring latency/cost while selecting best score.</li>
+</ul>
+<h2 id="search-space-design-important">Search-space design (important)<a class="headerlink" href="#search-space-design-important" title="Permanent link">&para;</a></h2>
+<p>AutoML quality depends on search space, not only iteration count.</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Too narrow</th>
+<th>Too wide</th>
+<th>Practical approach</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Model families</td>
+<td>Misses better model type</td>
+<td>Wastes budget</td>
+<td>Start broad, prune after baseline</td>
+</tr>
+<tr>
+<td>Learning rate</td>
+<td>Can miss convergence sweet spot</td>
+<td>Slow exploration</td>
+<td>Use log-scale ranges</td>
+</tr>
+<tr>
+<td>Tree depth/leaves</td>
+<td>Underfit risk</td>
+<td>Overfit + latency risk</td>
+<td>Constrain by latency budget</td>
+</tr>
+<tr>
+<td>Regularization</td>
+<td>Under-regularized noise fit</td>
+<td>Over-regularized underfit</td>
+<td>Tune with CV and holdout checks</td>
+</tr>
+</tbody>
+</table>
+<h2 id="validation-strategy-choices">Validation strategy choices<a class="headerlink" href="#validation-strategy-choices" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Context</th>
+<th>Validation approach</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Standard tabular</td>
+<td>K-fold cross-validation</td>
+</tr>
+<tr>
+<td>Temporal forecasting</td>
+<td>Rolling-origin validation</td>
+</tr>
+<tr>
+<td>Grouped entities</td>
+<td>GroupKFold-like entity splits</td>
+</tr>
+</tbody>
+</table>
+<h2 id="experiment-tracking-fields-to-persist">Experiment tracking fields to persist<a class="headerlink" href="#experiment-tracking-fields-to-persist" title="Permanent link">&para;</a></h2>
+<p>Minimum metadata for reproducibility:</p>
+<ul>
+<li>Run ID, parent run ID</li>
+<li>Code snapshot/version</li>
+<li>Dataset asset version</li>
+<li>Environment version</li>
+<li>Feature set/hash</li>
+<li>Hyperparameters</li>
+<li>Metrics by split</li>
+<li>Output model URI/version</li>
+</ul>
+<h2 id="candidate-selection-policy">Candidate selection policy<a class="headerlink" href="#candidate-selection-policy" title="Permanent link">&para;</a></h2>
+<p>Select deployment candidate using multi-objective criteria:</p>
+<div class="arithmatex">\[
+\text{Score}_{deploy}=w_1\cdot\text{Quality}-w_2\cdot\text{Latency}-w_3\cdot\text{Cost}+w_4\cdot\text{Stability}
+\]</div>
+<p>where weights <span class="arithmatex">\(w_i\)</span> reflect business priorities.</p>
+<h2 id="promotion-gates-dev-to-prod">Promotion gates (dev to prod)<a class="headerlink" href="#promotion-gates-dev-to-prod" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Offline metric threshold met.</li>
+<li>Inference latency under SLO on representative hardware.</li>
+<li>Security scan and dependency policy passed.</li>
+<li>Explainability/fairness review completed.</li>
+<li>Approval workflow sign-off recorded.</li>
+</ol>
+<h2 id="quick-self-check">Quick self-check<a class="headerlink" href="#quick-self-check" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Question</th>
+<th>Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Why is primary metric choice critical in AutoML?</td>
+<td>It defines the objective AutoML optimizes; the wrong metric (e.g. accuracy on imbalanced data) makes AutoML select the wrong model.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>What trade-off does max concurrent iterations control?</td>
+<td>Parallelism vs cost and search quality: more concurrency finishes faster but uses more compute and gives the optimizer fewer prior results to learn from.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Why should deployment constraints be considered during model selection?</td>
+<td>The model must meet production latency, size, and interpretability limits; the most accurate model is useless if it cannot be deployed within those constraints.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="deep-dive-every-concept-explained">Deep dive: every concept, explained<a class="headerlink" href="#deep-dive-every-concept-explained" title="Permanent link">&para;</a></h2>
+<p>This section explains what AutoML automates, what it does <em>not</em>, and why each control exists.</p>
+<h3 id="what-automl-actually-searches">What AutoML actually searches<a class="headerlink" href="#what-automl-actually-searches" title="Permanent link">&para;</a></h3>
+<p>AutoML is structured search over three coupled choices: <strong>featurization</strong> (how raw columns
+become model inputs), <strong>algorithm</strong> (which model family), and <strong>hyperparameters</strong> (the settings
+within that family). Conceptually it is solving an outer optimization:</p>
+<div class="arithmatex">\[
+\min_{a \in \text{algorithms},\; h \in \text{hyperparams}(a)}\; \text{ValidationLoss}(a, h)
+\]</div>
+<p>It does not invent new algorithms : it intelligently <em>allocates a fixed budget</em> of trials across
+known ones, using results so far to decide what to try next. This is why "search-space design"
+matters more than raw iteration count: a good space contains the winning region; a bad one never
+does.</p>
+<h3 id="featurization-demystified">Featurization, demystified<a class="headerlink" href="#featurization-demystified" title="Permanent link">&para;</a></h3>
+<p>When enabled, AutoML automatically handles missing-value imputation, categorical encoding,
+text vectorization, and feature scaling : the same steps from the data-preparation module, applied
+consistently inside cross-validation folds so they do not leak. The benefit is leakage-safe,
+reproducible preprocessing; the cost is less manual control, which is why <code>featurization</code> settings
+are explicit and logged for reproducibility.</p>
+<h3 id="cross-validation-inside-automl-and-why-it-ranks-models-fairly">Cross-validation inside AutoML and why it ranks models fairly<a class="headerlink" href="#cross-validation-inside-automl-and-why-it-ranks-models-fairly" title="Permanent link">&para;</a></h3>
+<p><code>n_cross_validations=5</code> means every candidate is scored on 5 rotating validation folds and the
+results averaged. This reduces the chance that one lucky split crowns the wrong model. For
+<strong>temporal</strong> data, plain k-fold leaks the future, so <strong>rolling-origin</strong> validation is used
+instead; for <strong>grouped</strong> entities (e.g. multiple rows per customer), group-aware splits prevent
+the same entity appearing in both train and validation.</p>
+<h3 id="primary-metric-aligning-the-optimizer-with-the-business">Primary metric: aligning the optimizer with the business<a class="headerlink" href="#primary-metric-aligning-the-optimizer-with-the-business" title="Permanent link">&para;</a></h3>
+<p>AutoML optimizes exactly one <strong>primary metric</strong>, so choosing it <em>is</em> choosing what "best" means.
+On imbalanced problems, <code>accuracy</code> is misleading (a model predicting "never fraud" scores 99%),
+so <code>AUC_weighted</code> or <code>average_precision</code> are used instead. The lesson generalizes: the optimizer
+will ruthlessly exploit whatever metric you give it, so the metric must encode the real cost
+structure.</p>
+<h3 id="ensembles-why-the-winner-is-often-a-votingensemble">Ensembles: why the winner is often a <code>VotingEnsemble</code><a class="headerlink" href="#ensembles-why-the-winner-is-often-a-votingensemble" title="Permanent link">&para;</a></h3>
+<p>After trying individual models, AutoML builds two meta-models:</p>
+<ul>
+<li><strong>Voting ensemble</strong> : averages the predictions of the top runs. Diverse models make
+  <em>uncorrelated</em> errors, so the average is more accurate and stable than any single member.</li>
+<li><strong>Stack ensemble</strong> : trains a small meta-model on the base models' out-of-fold predictions to
+  learn <em>how</em> to combine them.</li>
+</ul>
+<p>These usually win because combining diverse learners reduces variance : the same bagging/stacking
+principle from the model-types module, applied automatically.</p>
+<h3 id="concurrency-budget-and-the-costtime-trade-off">Concurrency, budget, and the cost/time trade-off<a class="headerlink" href="#concurrency-budget-and-the-costtime-trade-off" title="Permanent link">&para;</a></h3>
+<p><code>max_concurrent_trials</code> controls how many candidates train in parallel; setting it to the
+cluster's node count keeps compute busy and shortens wall-clock time, but does <strong>not</strong> reduce
+total compute cost (you pay for the same number of trials, just faster). <code>timeout_minutes</code> and
+iteration caps bound the search <strong>budget</strong> : the central knob trading off thoroughness against
+time and money.</p>
+<h3 id="the-multi-objective-selection-score-explained">The multi-objective selection score, explained<a class="headerlink" href="#the-multi-objective-selection-score-explained" title="Permanent link">&para;</a></h3>
+<p>The candidate score <span class="arithmatex">\(\text{Score}_{deploy}=w_1\text{Quality}-w_2\text{Latency}-w_3\text{Cost}+w_4\text{Stability}\)</span>
+formalizes a real-world truth: the deployable model maximizes quality <em>and</em> stability while being
+penalized for latency and cost. The weights <span class="arithmatex">\(w_i\)</span> encode business priorities : a real-time API
+weights latency heavily; a nightly batch job weights it near zero. AutoML ranks by the primary
+metric, but the <em>human</em> promotion decision should use this fuller objective, which is exactly why
+the <strong>promotion gates</strong> check latency-under-SLO, security, and fairness, not just offline score.</p>
+<h3 id="why-experiment-tracking-metadata-is-non-negotiable">Why experiment tracking metadata is non-negotiable<a class="headerlink" href="#why-experiment-tracking-metadata-is-non-negotiable" title="Permanent link">&para;</a></h3>
+<p>The list of fields to persist (run ID, data version, environment version, feature hash,
+hyperparameters, per-split metrics, model URI) is what makes a result <strong>reproducible</strong> and
+<strong>auditable</strong>. If you cannot answer "which data, code, and environment produced this model?", you
+cannot debug a regression, pass an audit, or safely retrain : so this metadata is the backbone of
+MLOps, not optional bookkeeping.</p>
+<h2 id="hyperparameter-optimization-hpo-in-depth">Hyperparameter optimization (HPO) in depth<a class="headerlink" href="#hyperparameter-optimization-hpo-in-depth" title="Permanent link">&para;</a></h2>
+<p>Hyperparameter optimization is the process of searching for the configuration of a model (learning
+rate, tree depth, regularization strength, etc.) that minimizes validation loss. Unlike model
+parameters (weights learned during gradient descent), hyperparameters are set <em>before</em> training
+and cannot be learned by the standard optimization algorithm.</p>
+<h3 id="grid-search-random-search-and-why-random-wins">Grid search, random search, and why random wins<a class="headerlink" href="#grid-search-random-search-and-why-random-wins" title="Permanent link">&para;</a></h3>
+<p><strong>Grid search</strong> enumerates every combination of a discrete hyperparameter grid. If you have 5
+values for learning rate and 5 for regularization, grid search runs 25 trials. For 10 hyperparameters
+with 5 values each, it runs <span class="arithmatex">\(5^{10} \approx 10^7\)</span> trials: computationally infeasible.</p>
+<p><strong>Random search</strong> (Bergstra &amp; Bengio, 2012) samples each hyperparameter independently from a
+distribution over its range. The critical insight is <strong>low effective dimensionality</strong>: in practice,
+model performance is sensitive to only a small number of hyperparameters at a time. When 8 of 10
+hyperparameters barely affect the loss, grid search wastes most of its budget varying those 8,
+whereas random search covers the 2 that matter across many more distinct values.</p>
+<blockquote>
+<p><strong>Note - Bergstra &amp; Bengio result:</strong> Random search matches or beats grid search in the same number of trials
+because it never "wastes" a trial by duplicating a value of an unimportant hyperparameter.
+For a budget of <span class="arithmatex">\(n\)</span> trials, random search explores <span class="arithmatex">\(n\)</span> distinct values of every hyperparameter;
+grid search explores only <span class="arithmatex">\(n^{1/d}\)</span> values per dimension in a <span class="arithmatex">\(d\)</span>-dimensional grid.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Complexity</th>
+<th>Handles continuous ranges</th>
+<th>Parallelizable</th>
+<th>Adapts to results</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Grid search</td>
+<td>Exponential in <span class="arithmatex">\(d\)</span></td>
+<td>No (requires discretization)</td>
+<td>Yes</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Random search</td>
+<td>Linear in budget</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Bayesian optimization</td>
+<td>Sub-linear in practice</td>
+<td>Yes</td>
+<td>Partially</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Practical rule:</strong> For budgets under ~20 trials and fewer than 4 hyperparameters, grid search is
+fine. For larger spaces, use random search as the baseline and Bayesian as the upgrade.</p>
+<h3 id="bayesian-optimization">Bayesian optimization<a class="headerlink" href="#bayesian-optimization" title="Permanent link">&para;</a></h3>
+<p>Bayesian optimization is <strong>sequential model-based optimization (SMBO)</strong>. It maintains a
+probabilistic <strong>surrogate model</strong> of the true objective function (expensive to evaluate) and uses
+it to decide <em>where to sample next</em> by balancing exploration (trying uncertain regions) and
+exploitation (trying regions predicted to be good).</p>
+<p><strong>Gaussian process (GP) surrogate:</strong></p>
+<p>A GP places a distribution over functions. After observing evaluations at points
+<span class="arithmatex">\(x_1, \ldots, x_n\)</span>, the GP posterior gives a predicted mean <span class="arithmatex">\(\mu(x)\)</span> and uncertainty <span class="arithmatex">\(\sigma(x)\)</span>
+at any new point <span class="arithmatex">\(x\)</span>. This uncertainty is the key asset: it quantifies where the model is
+confident vs. where it needs more data.</p>
+<p><strong>Acquisition functions</strong> guide the next query point. The most common is <strong>Expected Improvement (EI)</strong>:</p>
+<div class="arithmatex">\[
+\text{EI}(x) = \mathbb{E}[\max(f(x) - f^+, 0)]
+\]</div>
+<p>where <span class="arithmatex">\(f^+\)</span> is the best observed value so far. EI is high where the surrogate predicts a value
+above <span class="arithmatex">\(f^+\)</span> or where uncertainty is high. Evaluated in closed form under the GP:</p>
+<div class="arithmatex">\[
+\text{EI}(x) = (\mu(x) - f^+)\Phi(Z) + \sigma(x)\phi(Z), \quad Z = \frac{\mu(x) - f^+}{\sigma(x)}
+\]</div>
+<p>where <span class="arithmatex">\(\Phi\)</span> is the standard normal CDF and <span class="arithmatex">\(\phi\)</span> is the PDF.</p>
+<p><strong>Tree-structured Parzen Estimator (TPE)</strong> is an alternative used by Hyperopt and Azure ML. Instead
+of fitting a single GP, TPE models two densities:</p>
+<ul>
+<li><span class="arithmatex">\(l(x)\)</span>: distribution of hyperparameters that produced <em>good</em> results (below a quantile threshold <span class="arithmatex">\(\gamma\)</span>)</li>
+<li><span class="arithmatex">\(g(x)\)</span>: distribution of hyperparameters that produced <em>bad</em> results</li>
+</ul>
+<p>The acquisition is maximized by sampling from <span class="arithmatex">\(l(x)/g(x)\)</span>, which is fast even for high-dimensional,
+conditional, and categorical spaces — making TPE practical where GP struggles.</p>
+<blockquote>
+<p><strong>Tip - When Bayesian beats random:</strong> The advantage of Bayesian optimization grows with evaluation cost. When a
+single trial takes hours (deep learning training), saving 30% of trials matters enormously.
+When a trial takes seconds, random search is often sufficient and simpler.</p>
+</blockquote>
+<p><strong>How Azure ML HPO uses Bayesian optimization:</strong></p>
+<p>Azure ML HyperDrive supports <code>BayesianParameterSampling</code>, which uses TPE internally. After each
+completed trial the surrogate is updated and the next candidate is chosen to maximize EI. Azure ML
+runs the acquisition step server-side so the user only specifies the search space and budget.</p>
+<h3 id="hyperdrive-in-azure-ml">HyperDrive in Azure ML<a class="headerlink" href="#hyperdrive-in-azure-ml" title="Permanent link">&para;</a></h3>
+<p>HyperDrive is Azure ML's native HPO service. It wraps any training script and manages the trial
+lifecycle: sampling, launching, monitoring, early termination, and result aggregation.</p>
+<p><strong>Full HyperDrive example (Azure SDK v2 compatible pattern):</strong></p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">azure.ai.ml</span> <span class="kn">import</span> <span class="n">MLClient</span><span class="p">,</span> <span class="n">command</span>
+<span class="kn">from</span> <span class="nn">azure.ai.ml.sweep</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Choice</span><span class="p">,</span> <span class="n">Uniform</span><span class="p">,</span> <span class="n">LogUniform</span><span class="p">,</span>
+    <span class="n">BayesianParameterSampling</span><span class="p">,</span>
+    <span class="n">BanditPolicy</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">azure.identity</span> <span class="kn">import</span> <span class="n">DefaultAzureCredential</span>
+
+<span class="n">ml_client</span> <span class="o">=</span> <span class="n">MLClient</span><span class="p">(</span>
+    <span class="n">credential</span><span class="o">=</span><span class="n">DefaultAzureCredential</span><span class="p">(),</span>
+    <span class="n">subscription_id</span><span class="o">=</span><span class="s2">&quot;&lt;sub-id&gt;&quot;</span><span class="p">,</span>
+    <span class="n">resource_group_name</span><span class="o">=</span><span class="s2">&quot;&lt;rg&gt;&quot;</span><span class="p">,</span>
+    <span class="n">workspace_name</span><span class="o">=</span><span class="s2">&quot;&lt;ws&gt;&quot;</span>
+<span class="p">)</span>
+
+<span class="c1"># Base training command</span>
+<span class="n">base_command</span> <span class="o">=</span> <span class="n">command</span><span class="p">(</span>
+    <span class="n">code</span><span class="o">=</span><span class="s2">&quot;./src&quot;</span><span class="p">,</span>
+    <span class="n">command</span><span class="o">=</span><span class="p">(</span>
+        <span class="s2">&quot;python train.py &quot;</span>
+        <span class="s2">&quot;--learning_rate ${{search_space.learning_rate}} &quot;</span>
+        <span class="s2">&quot;--num_leaves ${{search_space.num_leaves}} &quot;</span>
+        <span class="s2">&quot;--min_data_in_leaf ${{search_space.min_data_in_leaf}}&quot;</span>
+    <span class="p">),</span>
+    <span class="n">environment</span><span class="o">=</span><span class="s2">&quot;azureml:lightgbm-env:1&quot;</span><span class="p">,</span>
+    <span class="n">compute</span><span class="o">=</span><span class="s2">&quot;cpu-cluster&quot;</span><span class="p">,</span>
+    <span class="n">inputs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;train_data&quot;</span><span class="p">:</span> <span class="n">ml_client</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;fraud-train&quot;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s2">&quot;1&quot;</span><span class="p">)},</span>
+<span class="p">)</span>
+
+<span class="c1"># Define search space</span>
+<span class="n">sweep_job</span> <span class="o">=</span> <span class="n">base_command</span><span class="o">.</span><span class="n">sweep</span><span class="p">(</span>
+    <span class="n">sampling_algorithm</span><span class="o">=</span><span class="n">BayesianParameterSampling</span><span class="p">(),</span>
+    <span class="n">search_space</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;learning_rate&quot;</span><span class="p">:</span> <span class="n">LogUniform</span><span class="p">(</span><span class="n">min_value</span><span class="o">=-</span><span class="mi">4</span><span class="p">,</span> <span class="n">max_value</span><span class="o">=-</span><span class="mi">1</span><span class="p">),</span>  <span class="c1"># 10^-4 to 10^-1</span>
+        <span class="s2">&quot;num_leaves&quot;</span><span class="p">:</span> <span class="n">Choice</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="mi">31</span><span class="p">,</span> <span class="mi">63</span><span class="p">,</span> <span class="mi">127</span><span class="p">,</span> <span class="mi">255</span><span class="p">]),</span>
+        <span class="s2">&quot;min_data_in_leaf&quot;</span><span class="p">:</span> <span class="n">Choice</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">]),</span>
+    <span class="p">},</span>
+    <span class="n">primary_metric</span><span class="o">=</span><span class="s2">&quot;val_auc&quot;</span><span class="p">,</span>
+    <span class="n">goal</span><span class="o">=</span><span class="s2">&quot;Maximize&quot;</span><span class="p">,</span>
+    <span class="n">max_total_trials</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span>
+    <span class="n">max_concurrent_trials</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+    <span class="n">early_termination_policy</span><span class="o">=</span><span class="n">BanditPolicy</span><span class="p">(</span>
+        <span class="n">evaluation_interval</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+        <span class="n">slack_factor</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+        <span class="n">delay_evaluation</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+    <span class="p">),</span>
+<span class="p">)</span>
+
+<span class="n">returned_sweep</span> <span class="o">=</span> <span class="n">ml_client</span><span class="o">.</span><span class="n">jobs</span><span class="o">.</span><span class="n">create_or_update</span><span class="p">(</span><span class="n">sweep_job</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Parameter sampling methods compared:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Strategy</th>
+<th>Use when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>RandomParameterSampling</code></td>
+<td>Independent uniform/log-uniform draws</td>
+<td>Fast baseline; always works; supports early stopping</td>
+</tr>
+<tr>
+<td><code>BayesianParameterSampling</code></td>
+<td>TPE-guided sequential sampling</td>
+<td>Expensive trials; continuous search spaces</td>
+</tr>
+<tr>
+<td><code>GridParameterSampling</code></td>
+<td>Exhaustive enumeration</td>
+<td>Small discrete grids; need full coverage</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Note - Bayesian limitation:</strong> <code>BayesianParameterSampling</code> does not support early termination policies in Azure ML
+because the surrogate model relies on <em>completed</em> trial results to fit the next point. Terminating
+trials early produces incomplete information that degrades the surrogate fit.</p>
+</blockquote>
+<p><strong>Early termination policies:</strong></p>
+<ul>
+<li><strong>Bandit policy:</strong> Terminates a trial at evaluation interval <span class="arithmatex">\(k\)</span> if its primary metric is not within
+  <code>slack_factor</code> (relative) or <code>slack_amount</code> (absolute) of the best run so far. Aggressive but
+  effective: cuts clearly bad trials early.</li>
+<li><strong>Median stopping policy:</strong> Terminates a trial if its running average is below the median of all
+  completed trials at the same step. More conservative; useful when training curves are noisy.</li>
+<li><strong>Truncation selection:</strong> Terminates the bottom <span class="arithmatex">\(X\%\)</span> of runs at each interval.</li>
+<li><strong>No policy (None):</strong> Every trial runs to completion. Use only when trials are cheap or when
+  using Bayesian sampling.</li>
+</ul>
+<p><strong>How HyperDrive connects to AutoML:</strong></p>
+<p>AutoML internally uses a HyperDrive-like search to tune the hyperparameters of each candidate
+algorithm. When you set <code>max_concurrent_trials</code> in an AutoML job, that setting maps directly to
+HyperDrive's concurrency. Advanced users can run HyperDrive <em>after</em> AutoML: use AutoML to identify
+the best algorithm family, then run a focused HyperDrive sweep on that family's full hyperparameter
+space for an extra performance gain.</p>
+<h2 id="neural-architecture-search-nas-briefly">Neural architecture search (NAS) briefly<a class="headerlink" href="#neural-architecture-search-nas-briefly" title="Permanent link">&para;</a></h2>
+<p>Neural architecture search extends the AutoML idea from <em>which hyperparameters</em> to <em>what network
+structure</em>. Instead of tuning learning rate and dropout, NAS searches over the architecture itself:
+number of layers, layer widths, skip connections, attention head counts, activation functions.</p>
+<p><strong>Two main paradigms:</strong></p>
+<ul>
+<li><strong>Differentiable NAS (DARTS):</strong> Relaxes the discrete architecture choice into a continuous weight
+  over candidate operations. The architecture parameters are optimized jointly with the network
+  weights via gradient descent, making NAS trainable on a single GPU.</li>
+<li><strong>Evolutionary / population-based NAS:</strong> Maintains a population of architectures, applies
+  mutation and selection operators, and evaluates fitness by training each candidate. Expensive
+  but effective; used in AmoebaNet and EfficientNet discovery.</li>
+</ul>
+<blockquote>
+<p><strong>Note - NAS vs AutoML:</strong> AutoML searches over <em>fixed</em> algorithm families (LightGBM, logistic regression, etc.).
+NAS searches over the <em>space of possible neural network topologies</em>. NAS is therefore the
+extension of the AutoML idea to deep learning architectures, but it requires orders of magnitude
+more compute.</p>
+</blockquote>
+<p><strong>Azure ML support for NAS:</strong></p>
+<p>Azure ML does not expose a first-party NAS interface, but it supports NAS workflows through:</p>
+<ul>
+<li>HyperDrive with conditional search spaces (architecture choices as categorical hyperparameters).</li>
+<li>Integration with Neural Network Intelligence (NNI), an open-source NAS toolkit from Microsoft
+  Research, deployable on Azure ML compute clusters.</li>
+<li>Custom training loops using PyTorch or TensorFlow with HyperDrive for parameter-efficient
+  architecture search (e.g. weight sharing).</li>
+</ul>
+<h2 id="experiment-tracking-best-practices">Experiment tracking best practices<a class="headerlink" href="#experiment-tracking-best-practices" title="Permanent link">&para;</a></h2>
+<p>Experiment tracking is the discipline of logging every trial's inputs, configuration, and outputs
+so that results are reproducible, comparable, and auditable. In Azure ML, the standard is
+<strong>MLflow</strong>, which is natively integrated and requires no extra infrastructure.</p>
+<p><strong>MLflow integration with Azure ML:</strong></p>
+<p>Azure ML automatically configures an MLflow tracking URI pointing to your workspace. Any training
+script that calls the MLflow API will log to Azure ML without extra setup:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">mlflow</span>
+<span class="kn">import</span> <span class="nn">mlflow.sklearn</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">GradientBoostingClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">roc_auc_score</span>
+
+<span class="c1"># Azure ML sets MLFLOW_TRACKING_URI automatically on compute</span>
+<span class="n">mlflow</span><span class="o">.</span><span class="n">set_experiment</span><span class="p">(</span><span class="s2">&quot;fraud-detection-v2&quot;</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">start_run</span><span class="p">(</span><span class="n">run_name</span><span class="o">=</span><span class="s2">&quot;gbm-baseline&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">run</span><span class="p">:</span>
+    <span class="c1"># Log hyperparameters</span>
+    <span class="n">mlflow</span><span class="o">.</span><span class="n">log_params</span><span class="p">({</span>
+        <span class="s2">&quot;n_estimators&quot;</span><span class="p">:</span> <span class="mi">200</span><span class="p">,</span>
+        <span class="s2">&quot;max_depth&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+        <span class="s2">&quot;learning_rate&quot;</span><span class="p">:</span> <span class="mf">0.05</span><span class="p">,</span>
+        <span class="s2">&quot;subsample&quot;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span>
+    <span class="p">})</span>
+
+    <span class="n">model</span> <span class="o">=</span> <span class="n">GradientBoostingClassifier</span><span class="p">(</span>
+        <span class="n">n_estimators</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+        <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">subsample</span><span class="o">=</span><span class="mf">0.8</span>
+    <span class="p">)</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+    <span class="c1"># Log metrics</span>
+    <span class="n">val_auc</span> <span class="o">=</span> <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">y_val</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_val</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">])</span>
+    <span class="n">mlflow</span><span class="o">.</span><span class="n">log_metric</span><span class="p">(</span><span class="s2">&quot;val_auc&quot;</span><span class="p">,</span> <span class="n">val_auc</span><span class="p">)</span>
+
+    <span class="c1"># Log artifact (feature importance plot, confusion matrix, etc.)</span>
+    <span class="n">mlflow</span><span class="o">.</span><span class="n">log_artifact</span><span class="p">(</span><span class="s2">&quot;confusion_matrix.png&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Log the model itself (enables one-step registration)</span>
+    <span class="n">mlflow</span><span class="o">.</span><span class="n">sklearn</span><span class="o">.</span><span class="n">log_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">artifact_path</span><span class="o">=</span><span class="s2">&quot;model&quot;</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Run ID: </span><span class="si">{</span><span class="n">run</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">run_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Comparing runs in the Azure ML UI:</strong></p>
+<p>Navigate to <strong>Experiments → [experiment name] → Runs</strong> in Azure ML Studio. Select multiple runs
+and click <strong>Compare</strong> to view a parallel-coordinates chart of hyperparameters vs. metrics. This
+view reveals which hyperparameters correlate most strongly with performance.</p>
+<p><strong>Retrieve best run programmatically:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">azure.ai.ml</span> <span class="kn">import</span> <span class="n">MLClient</span>
+<span class="kn">from</span> <span class="nn">azure.identity</span> <span class="kn">import</span> <span class="n">DefaultAzureCredential</span>
+
+<span class="n">ml_client</span> <span class="o">=</span> <span class="n">MLClient</span><span class="p">(</span>
+    <span class="n">credential</span><span class="o">=</span><span class="n">DefaultAzureCredential</span><span class="p">(),</span>
+    <span class="n">subscription_id</span><span class="o">=</span><span class="s2">&quot;&lt;sub-id&gt;&quot;</span><span class="p">,</span>
+    <span class="n">resource_group_name</span><span class="o">=</span><span class="s2">&quot;&lt;rg&gt;&quot;</span><span class="p">,</span>
+    <span class="n">workspace_name</span><span class="o">=</span><span class="s2">&quot;&lt;ws&gt;&quot;</span>
+<span class="p">)</span>
+
+<span class="c1"># For a completed sweep job</span>
+<span class="n">sweep_job</span> <span class="o">=</span> <span class="n">ml_client</span><span class="o">.</span><span class="n">jobs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;sweep-job-name&quot;</span><span class="p">)</span>
+<span class="n">best_child_run_id</span> <span class="o">=</span> <span class="n">sweep_job</span><span class="o">.</span><span class="n">properties</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;best_child_run_id&quot;</span><span class="p">)</span>
+
+<span class="c1"># Retrieve the run and its metrics</span>
+<span class="kn">import</span> <span class="nn">mlflow</span>
+<span class="n">mlflow</span><span class="o">.</span><span class="n">set_tracking_uri</span><span class="p">(</span><span class="n">ml_client</span><span class="o">.</span><span class="n">workspaces</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ml_client</span><span class="o">.</span><span class="n">workspace_name</span><span class="p">)</span><span class="o">.</span><span class="n">mlflow_tracking_uri</span><span class="p">)</span>
+
+<span class="n">best_run</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">get_run</span><span class="p">(</span><span class="n">best_child_run_id</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">best_run</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">metrics</span><span class="p">)</span>   <span class="c1"># {&#39;val_auc&#39;: 0.9412, ...}</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">best_run</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">params</span><span class="p">)</span>    <span class="c1"># {&#39;learning_rate&#39;: &#39;0.05&#39;, ...}</span>
+
+<span class="c1"># Download the best model</span>
+<span class="n">mlflow</span><span class="o">.</span><span class="n">artifacts</span><span class="o">.</span><span class="n">download_artifacts</span><span class="p">(</span>
+    <span class="n">run_id</span><span class="o">=</span><span class="n">best_child_run_id</span><span class="p">,</span>
+    <span class="n">artifact_path</span><span class="o">=</span><span class="s2">&quot;model&quot;</span><span class="p">,</span>
+    <span class="n">dst_path</span><span class="o">=</span><span class="s2">&quot;./best_model&quot;</span>
+<span class="p">)</span>
+</code></pre></div>
+<blockquote>
+<p><strong>Tip - MLflow as the standard:</strong> MLflow is the de facto standard for ML experiment tracking because it is framework-agnostic,
+open source, and natively integrated into Azure ML, Databricks, and many CI/CD platforms.
+Writing MLflow-idiomatic logging code means your training scripts are portable across
+environments without modification.</p>
+</blockquote>
+<h2 id="model-checkpointing-and-resuming">Model checkpointing and resuming<a class="headerlink" href="#model-checkpointing-and-resuming" title="Permanent link">&para;</a></h2>
+<p>Long training runs — multi-hour deep learning jobs, large AutoML sweeps — are vulnerable to
+preemption (spot VM reclamation), hardware failures, and out-of-memory errors. Without
+checkpointing, any interruption discards all progress and forces a full restart.</p>
+<p><strong>Why checkpoint periodically:</strong></p>
+<p>A checkpoint is a serialized snapshot of model weights, optimizer state, learning rate scheduler
+state, and the current epoch/step counter. With a checkpoint every <span class="arithmatex">\(k\)</span> epochs, the worst-case
+loss on failure is <span class="arithmatex">\(k\)</span> epochs of compute rather than the entire run.</p>
+<p><strong>Saving state during long training (PyTorch example):</strong></p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="k">def</span> <span class="nf">save_checkpoint</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">scheduler</span><span class="p">,</span> <span class="n">epoch</span><span class="p">,</span> <span class="n">val_loss</span><span class="p">,</span> <span class="n">checkpoint_dir</span><span class="p">):</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">checkpoint_dir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">checkpoint_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">checkpoint_dir</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;checkpoint_epoch_</span><span class="si">{</span><span class="n">epoch</span><span class="si">}</span><span class="s2">.pt&quot;</span><span class="p">)</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">({</span>
+        <span class="s2">&quot;epoch&quot;</span><span class="p">:</span> <span class="n">epoch</span><span class="p">,</span>
+        <span class="s2">&quot;model_state_dict&quot;</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">state_dict</span><span class="p">(),</span>
+        <span class="s2">&quot;optimizer_state_dict&quot;</span><span class="p">:</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">state_dict</span><span class="p">(),</span>
+        <span class="s2">&quot;scheduler_state_dict&quot;</span><span class="p">:</span> <span class="n">scheduler</span><span class="o">.</span><span class="n">state_dict</span><span class="p">(),</span>
+        <span class="s2">&quot;val_loss&quot;</span><span class="p">:</span> <span class="n">val_loss</span><span class="p">,</span>
+    <span class="p">},</span> <span class="n">checkpoint_path</span><span class="p">)</span>
+    <span class="c1"># Keep only the latest 3 checkpoints to save disk space</span>
+    <span class="n">existing</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">checkpoint_dir</span><span class="p">)</span> <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;checkpoint_epoch_&quot;</span><span class="p">)],</span>
+        <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="p">)</span>
+    <span class="k">for</span> <span class="n">old</span> <span class="ow">in</span> <span class="n">existing</span><span class="p">[:</span><span class="o">-</span><span class="mi">3</span><span class="p">]:</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">checkpoint_dir</span><span class="p">,</span> <span class="n">old</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">checkpoint_path</span>
+
+<span class="c1"># In the training loop</span>
+<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start_epoch</span><span class="p">,</span> <span class="n">num_epochs</span><span class="p">):</span>
+    <span class="n">train_one_epoch</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">train_loader</span><span class="p">)</span>
+    <span class="n">val_loss</span> <span class="o">=</span> <span class="n">evaluate</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">val_loader</span><span class="p">)</span>
+    <span class="n">scheduler</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">val_loss</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">epoch</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">checkpoint_interval</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">save_checkpoint</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">scheduler</span><span class="p">,</span> <span class="n">epoch</span><span class="p">,</span> <span class="n">val_loss</span><span class="p">,</span> <span class="s2">&quot;./outputs/checkpoints&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Resuming from checkpoint after preemption:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">load_checkpoint</span><span class="p">(</span><span class="n">checkpoint_path</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">scheduler</span><span class="p">):</span>
+    <span class="n">checkpoint</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">checkpoint_path</span><span class="p">,</span> <span class="n">map_location</span><span class="o">=</span><span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">checkpoint</span><span class="p">[</span><span class="s2">&quot;model_state_dict&quot;</span><span class="p">])</span>
+    <span class="n">optimizer</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">checkpoint</span><span class="p">[</span><span class="s2">&quot;optimizer_state_dict&quot;</span><span class="p">])</span>
+    <span class="n">scheduler</span><span class="o">.</span><span class="n">load_state_dict</span><span class="p">(</span><span class="n">checkpoint</span><span class="p">[</span><span class="s2">&quot;scheduler_state_dict&quot;</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">checkpoint</span><span class="p">[</span><span class="s2">&quot;epoch&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">checkpoint</span><span class="p">[</span><span class="s2">&quot;val_loss&quot;</span><span class="p">]</span>
+
+<span class="c1"># At job start: check for existing checkpoint</span>
+<span class="n">checkpoint_dir</span> <span class="o">=</span> <span class="s2">&quot;./outputs/checkpoints&quot;</span>
+<span class="n">start_epoch</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">checkpoint_dir</span><span class="p">)</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">checkpoint_dir</span><span class="p">):</span>
+    <span class="n">latest</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">checkpoint_dir</span><span class="p">))[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">start_epoch</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">load_checkpoint</span><span class="p">(</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">checkpoint_dir</span><span class="p">,</span> <span class="n">latest</span><span class="p">),</span>
+        <span class="n">model</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">scheduler</span>
+    <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Resuming from epoch </span><span class="si">{</span><span class="n">start_epoch</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Spot VM + checkpointing = cheap training:</strong></p>
+<p>Azure ML Spot (low-priority) compute instances cost 60–80% less than on-demand but can be
+preempted with ~30 seconds notice. With robust checkpointing every 1–2 epochs:</p>
+<ol>
+<li>The job resumes automatically on a new node (configure with <code>max_run_duration_seconds</code> and
+   retry policies).</li>
+<li>At most 1–2 epochs of work are lost per preemption.</li>
+<li>Total cost savings over a multi-day training job typically outweigh the overhead of occasional
+   restarts.</li>
+</ol>
+<blockquote>
+<p><strong>Note - Azure ML outputs folder:</strong> When running on Azure ML compute, write checkpoints to <code>./outputs/</code> or <code>./logs/</code>. These
+directories are automatically synced to Azure Blob Storage, making checkpoints available even
+after the compute node is released. Restart jobs can then download the latest checkpoint
+from the run's artifact store before resuming.</p>
+</blockquote>
+<h2 id="distributed-training-in-depth">Distributed training in depth<a class="headerlink" href="#distributed-training-in-depth" title="Permanent link">&para;</a></h2>
+<p>Distributed training parallelizes the compute required to train large models across multiple GPUs
+or nodes. Two key techniques that make modern large-model training practical are gradient
+accumulation and mixed-precision training.</p>
+<p><strong>Gradient accumulation:</strong></p>
+<p>When a batch does not fit in GPU memory, gradient accumulation simulates a larger effective batch
+by accumulating gradients over <span class="arithmatex">\(k\)</span> micro-batches before calling <code>optimizer.step()</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="n">accumulation_steps</span> <span class="o">=</span> <span class="mi">8</span>   <span class="c1"># Effective batch size = micro_batch_size * 8</span>
+<span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">train_loader</span><span class="p">):</span>
+    <span class="n">outputs</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">criterion</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span> <span class="o">/</span> <span class="n">accumulation_steps</span>
+    <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>   <span class="c1"># Accumulate gradients</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">accumulation_steps</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+        <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+</code></pre></div>
+<p>This gives the stability benefits of large-batch training (smoother gradients, lower variance)
+without requiring proportionally larger GPU memory.</p>
+<p><strong>Mixed-precision training (FP16 / BF16):</strong></p>
+<p>Standard training uses 32-bit floats (FP32) for both weights and activations. Mixed-precision
+training uses 16-bit formats for most operations and FP32 only where needed for numerical
+stability:</p>
+<ul>
+<li><strong>FP16 (half precision):</strong> Range <span class="arithmatex">\(\approx 6 \times 10^{-8}\)</span> to <span class="arithmatex">\(65504\)</span>. Fast on tensor cores; requires
+  loss scaling to avoid underflow of small gradients.</li>
+<li><strong>BF16 (bfloat16):</strong> Same exponent range as FP32, reduced mantissa. More numerically stable than
+  FP16; available on NVIDIA Ampere+ (A100, H100) and all Google TPUs. Preferred for large models.</li>
+</ul>
+<p><strong>Why it works — FP16 multiply, FP32 accumulate:</strong></p>
+<p>Matrix multiply operations compute in FP16 (fast, using Tensor Cores on NVIDIA GPUs) but
+accumulate partial sums into FP32 registers. This avoids catastrophic cancellation in the
+accumulation while still getting the Tensor Core speedup. The result:</p>
+<ul>
+<li><span class="arithmatex">\(\approx 2\times\)</span> memory saving (16-bit activations halve activation memory)</li>
+<li><span class="arithmatex">\(\approx 2\times\)</span> throughput (Tensor Cores operate at 2<span class="arithmatex">\(\times\)</span> to 8<span class="arithmatex">\(\times\)</span> higher FLOPs/s in FP16/BF16)</li>
+<li>Model weights are maintained in FP32 (a "master copy") and cast to FP16 for forward/backward</li>
+</ul>
+<p><strong><code>torch.autocast</code> in PyTorch:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">torch.cuda.amp</span> <span class="kn">import</span> <span class="n">autocast</span><span class="p">,</span> <span class="n">GradScaler</span>
+
+<span class="n">scaler</span> <span class="o">=</span> <span class="n">GradScaler</span><span class="p">()</span>   <span class="c1"># Required for FP16 to handle gradient underflow</span>
+
+<span class="k">for</span> <span class="n">inputs</span><span class="p">,</span> <span class="n">labels</span> <span class="ow">in</span> <span class="n">train_loader</span><span class="p">:</span>
+    <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+    <span class="k">with</span> <span class="n">autocast</span><span class="p">(</span><span class="n">device_type</span><span class="o">=</span><span class="s2">&quot;cuda&quot;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">float16</span><span class="p">):</span>
+        <span class="n">outputs</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="n">criterion</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+    <span class="n">scaler</span><span class="o">.</span><span class="n">scale</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+    <span class="n">scaler</span><span class="o">.</span><span class="n">unscale_</span><span class="p">(</span><span class="n">optimizer</span><span class="p">)</span>
+    <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">clip_grad_norm_</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">max_norm</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+    <span class="n">scaler</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">optimizer</span><span class="p">)</span>
+    <span class="n">scaler</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+</code></pre></div>
+<blockquote>
+<p><strong>Tip - BF16 simplification:</strong> With BF16 (on Ampere+ GPUs), <code>GradScaler</code> is not needed because BF16 has the same
+exponent range as FP32 and does not underflow. Use <code>autocast(dtype=torch.bfloat16)</code> and
+omit the scaler entirely for cleaner code on modern hardware.</p>
+</blockquote>
+<p><strong>Azure ML distributed training configuration:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">azure.ai.ml</span> <span class="kn">import</span> <span class="n">MLClient</span><span class="p">,</span> <span class="n">command</span>
+<span class="kn">from</span> <span class="nn">azure.ai.ml.entities</span> <span class="kn">import</span> <span class="n">MpiDistribution</span>
+
+<span class="n">distributed_job</span> <span class="o">=</span> <span class="n">command</span><span class="p">(</span>
+    <span class="n">code</span><span class="o">=</span><span class="s2">&quot;./src&quot;</span><span class="p">,</span>
+    <span class="n">command</span><span class="o">=</span><span class="s2">&quot;python train_distributed.py --epochs 50 --batch_size 64&quot;</span><span class="p">,</span>
+    <span class="n">environment</span><span class="o">=</span><span class="s2">&quot;azureml:pytorch-gpu-env:3&quot;</span><span class="p">,</span>
+    <span class="n">compute</span><span class="o">=</span><span class="s2">&quot;gpu-cluster&quot;</span><span class="p">,</span>
+    <span class="n">distribution</span><span class="o">=</span><span class="n">MpiDistribution</span><span class="p">(</span><span class="n">process_count_per_instance</span><span class="o">=</span><span class="mi">4</span><span class="p">),</span>  <span class="c1"># 4 GPUs per node</span>
+    <span class="n">instance_count</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>      <span class="c1"># 2 nodes = 8 GPUs total</span>
+    <span class="n">inputs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;train_data&quot;</span><span class="p">:</span> <span class="n">ml_client</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;imagenet-subset&quot;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s2">&quot;1&quot;</span><span class="p">)},</span>
+<span class="p">)</span>
+<span class="n">ml_client</span><span class="o">.</span><span class="n">jobs</span><span class="o">.</span><span class="n">create_or_update</span><span class="p">(</span><span class="n">distributed_job</span><span class="p">)</span>
+</code></pre></div>
+<p>Azure ML supports <code>MpiDistribution</code> (classic MPI, PyTorch DDP), <code>PyTorchDistribution</code>
+(native PyTorch elastic training), and <code>TensorFlowDistribution</code>. For most PyTorch workloads,
+<code>PyTorchDistribution</code> with <code>process_count_per_instance</code> matching the GPU count per node is
+the recommended setup.</p>
+<h2 id="the-full-automl-lifecycle-production-scenario">The full AutoML lifecycle: production scenario<a class="headerlink" href="#the-full-automl-lifecycle-production-scenario" title="Permanent link">&para;</a></h2>
+<p>This section walks through an end-to-end production scenario: starting from a registered data
+asset, running AutoML, selecting the best model, registering it, evaluating it against
+promotion gates, and promoting it to a production endpoint.</p>
+<p><strong>Overview of stages:</strong></p>
+<div class="highlight"><pre><span></span><code>Data asset (versioned)
+    → AutoML job (classification / regression / forecasting)
+    → Best run identified (primary metric + multi-objective selection)
+    → Model registered in Azure ML Model Registry
+    → Evaluation pipeline (offline quality + fairness + latency)
+    → Promotion decision (promotion gates met?)
+    → Deployed to managed online endpoint (blue/green)
+</code></pre></div>
+<p><strong>Stage 1 — Register the training data asset:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">azure.ai.ml.entities</span> <span class="kn">import</span> <span class="n">Data</span>
+<span class="kn">from</span> <span class="nn">azure.ai.ml.constants</span> <span class="kn">import</span> <span class="n">AssetTypes</span>
+
+<span class="n">train_data</span> <span class="o">=</span> <span class="n">Data</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;fraud-train&quot;</span><span class="p">,</span>
+    <span class="n">version</span><span class="o">=</span><span class="s2">&quot;3&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Fraud detection training set, Q1 2025, deduplicated&quot;</span><span class="p">,</span>
+    <span class="n">path</span><span class="o">=</span><span class="s2">&quot;azureml://datastores/training_data/paths/fraud/train_v3/&quot;</span><span class="p">,</span>
+    <span class="nb">type</span><span class="o">=</span><span class="n">AssetTypes</span><span class="o">.</span><span class="n">MLTABLE</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">ml_client</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">create_or_update</span><span class="p">(</span><span class="n">train_data</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Stage 2 — Submit the AutoML job:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">azure.ai.ml</span> <span class="kn">import</span> <span class="n">automl</span>
+
+<span class="n">classification_job</span> <span class="o">=</span> <span class="n">automl</span><span class="o">.</span><span class="n">classification</span><span class="p">(</span>
+    <span class="n">compute</span><span class="o">=</span><span class="s2">&quot;cpu-cluster&quot;</span><span class="p">,</span>
+    <span class="n">experiment_name</span><span class="o">=</span><span class="s2">&quot;fraud-automl-prod&quot;</span><span class="p">,</span>
+    <span class="n">training_data</span><span class="o">=</span><span class="n">ml_client</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;fraud-train&quot;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s2">&quot;3&quot;</span><span class="p">),</span>
+    <span class="n">target_column_name</span><span class="o">=</span><span class="s2">&quot;is_fraud&quot;</span><span class="p">,</span>
+    <span class="n">primary_metric</span><span class="o">=</span><span class="s2">&quot;AUC_weighted&quot;</span><span class="p">,</span>
+    <span class="n">n_cross_validations</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">enable_model_explainability</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">timeout_minutes</span><span class="o">=</span><span class="mi">120</span><span class="p">,</span>
+    <span class="n">max_concurrent_trials</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+    <span class="n">max_trials</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+    <span class="n">featurization</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">returned_job</span> <span class="o">=</span> <span class="n">ml_client</span><span class="o">.</span><span class="n">jobs</span><span class="o">.</span><span class="n">create_or_update</span><span class="p">(</span><span class="n">classification_job</span><span class="p">)</span>
+<span class="n">ml_client</span><span class="o">.</span><span class="n">jobs</span><span class="o">.</span><span class="n">stream</span><span class="p">(</span><span class="n">returned_job</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>   <span class="c1"># Block until complete</span>
+</code></pre></div>
+<p><strong>Stage 3 — Retrieve and register the best model:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Get the best child run</span>
+<span class="n">best_run</span> <span class="o">=</span> <span class="n">ml_client</span><span class="o">.</span><span class="n">jobs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">returned_job</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;_best_child&quot;</span><span class="p">)</span>
+
+<span class="c1"># Register with lineage metadata</span>
+<span class="kn">from</span> <span class="nn">azure.ai.ml.entities</span> <span class="kn">import</span> <span class="n">Model</span>
+<span class="kn">from</span> <span class="nn">azure.ai.ml.constants</span> <span class="kn">import</span> <span class="n">ModelType</span>
+
+<span class="n">registered_model</span> <span class="o">=</span> <span class="n">ml_client</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">create_or_update</span><span class="p">(</span>
+    <span class="n">Model</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;fraud-classifier&quot;</span><span class="p">,</span>
+        <span class="n">version</span><span class="o">=</span><span class="s2">&quot;5&quot;</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;AutoML best model, Q1 2025 data, AUC_weighted=0.9521&quot;</span><span class="p">,</span>
+        <span class="n">path</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;azureml://jobs/</span><span class="si">{</span><span class="n">best_run</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">/outputs/mlflow-model/&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="n">ModelType</span><span class="o">.</span><span class="n">MLFLOW_MODEL</span><span class="p">,</span>
+        <span class="n">tags</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;experiment&quot;</span><span class="p">:</span> <span class="n">returned_job</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="s2">&quot;data_version&quot;</span><span class="p">:</span> <span class="s2">&quot;3&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;primary_metric&quot;</span><span class="p">:</span> <span class="s2">&quot;AUC_weighted&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;metric_value&quot;</span><span class="p">:</span> <span class="s2">&quot;0.9521&quot;</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Registered: </span><span class="si">{</span><span class="n">registered_model</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">registered_model</span><span class="o">.</span><span class="n">version</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Stage 4 — Evaluate against promotion gates:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">mlflow</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+<span class="c1"># Load model and run on held-out test set</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">sklearn</span><span class="o">.</span><span class="n">load_model</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;models:/fraud-classifier/5&quot;</span><span class="p">)</span>
+<span class="n">y_pred_proba</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_test</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">]</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">roc_auc_score</span>
+<span class="kn">from</span> <span class="nn">sklearn.inspection</span> <span class="kn">import</span> <span class="n">permutation_importance</span>
+
+<span class="n">test_auc</span> <span class="o">=</span> <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_proba</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Test AUC: </span><span class="si">{</span><span class="n">test_auc</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Promotion gate 1: offline quality</span>
+<span class="k">assert</span> <span class="n">test_auc</span> <span class="o">&gt;=</span> <span class="mf">0.94</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;AUC </span><span class="si">{</span><span class="n">test_auc</span><span class="si">}</span><span class="s2"> below threshold 0.94&quot;</span>
+
+<span class="c1"># Promotion gate 2: latency check (batch inference on 1k records)</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="n">sample</span> <span class="o">=</span> <span class="n">X_test</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">1000</span><span class="p">]</span>
+<span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
+<span class="n">latency_ms</span> <span class="o">=</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">latency_ms</span> <span class="o">&lt;</span> <span class="mf">5.0</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Latency </span><span class="si">{</span><span class="n">latency_ms</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">ms exceeds 5ms SLO&quot;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;All promotion gates passed.&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Stage 5 — Deploy to managed online endpoint:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">azure.ai.ml.entities</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">ManagedOnlineEndpoint</span><span class="p">,</span> <span class="n">ManagedOnlineDeployment</span><span class="p">,</span> <span class="n">Model</span>
+<span class="p">)</span>
+
+<span class="n">endpoint</span> <span class="o">=</span> <span class="n">ManagedOnlineEndpoint</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;fraud-endpoint&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Fraud detection production endpoint&quot;</span><span class="p">,</span>
+    <span class="n">auth_mode</span><span class="o">=</span><span class="s2">&quot;key&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">ml_client</span><span class="o">.</span><span class="n">online_endpoints</span><span class="o">.</span><span class="n">begin_create_or_update</span><span class="p">(</span><span class="n">endpoint</span><span class="p">)</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+
+<span class="n">deployment</span> <span class="o">=</span> <span class="n">ManagedOnlineDeployment</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;fraud-v5-blue&quot;</span><span class="p">,</span>
+    <span class="n">endpoint_name</span><span class="o">=</span><span class="s2">&quot;fraud-endpoint&quot;</span><span class="p">,</span>
+    <span class="n">model</span><span class="o">=</span><span class="n">registered_model</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+    <span class="n">instance_type</span><span class="o">=</span><span class="s2">&quot;Standard_DS3_v2&quot;</span><span class="p">,</span>
+    <span class="n">instance_count</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">ml_client</span><span class="o">.</span><span class="n">online_deployments</span><span class="o">.</span><span class="n">begin_create_or_update</span><span class="p">(</span><span class="n">deployment</span><span class="p">)</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+
+<span class="c1"># Route 100% traffic to the new deployment</span>
+<span class="n">endpoint</span><span class="o">.</span><span class="n">traffic</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;fraud-v5-blue&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">}</span>
+<span class="n">ml_client</span><span class="o">.</span><span class="n">online_endpoints</span><span class="o">.</span><span class="n">begin_create_or_update</span><span class="p">(</span><span class="n">endpoint</span><span class="p">)</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Deployment complete. Endpoint ready.&quot;</span><span class="p">)</span>
+</code></pre></div>
+<blockquote>
+<p><strong>Tip - Decision checkpoints:</strong> At each stage, pause and validate before proceeding. Common failure modes:
+test AUC significantly below validation AUC (data leakage), latency in production higher than
+on dev hardware (different instance types), or fairness disparity across demographic segments
+that appeared only on the test set. Catching these before promotion is the purpose of the
+evaluation pipeline.</p>
+</blockquote>
+<p><strong>Full lifecycle summary:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Tool</th>
+<th>Decision checkpoint</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Data registration</td>
+<td>Azure ML Data SDK</td>
+<td>Schema and row-count validation</td>
+</tr>
+<tr>
+<td>AutoML job</td>
+<td><code>automl.classification()</code></td>
+<td>Primary metric beats baseline</td>
+</tr>
+<tr>
+<td>Best run selection</td>
+<td>Primary metric + multi-objective score</td>
+<td>Latency and stability within budget</td>
+</tr>
+<tr>
+<td>Model registration</td>
+<td><code>ml_client.models</code></td>
+<td>Metadata completeness check</td>
+</tr>
+<tr>
+<td>Evaluation pipeline</td>
+<td>sklearn + custom assertions</td>
+<td>All promotion gates met</td>
+</tr>
+<tr>
+<td>Deployment</td>
+<td><code>ManagedOnlineDeployment</code></td>
+<td>Canary traffic test passes</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 <a href="https://github.com/Cloud2BR-MSFTLearningHub" target="_blank" rel="noopener">Cloud2BR MSFT Learning Hub</a>
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.expand", "navigation.top", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../../assets/js/org-link.js"></script>
+      
+    
+  </body>
+</html>

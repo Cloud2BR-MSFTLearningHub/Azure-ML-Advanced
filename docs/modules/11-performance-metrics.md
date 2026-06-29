@@ -29,12 +29,10 @@ $$
 
 ### Reading the confusion matrix
 
-```
-Actual \\ Predicted |  Positive  |  Negative
----------------------|------------|----------
-       Positive      |   TP       |   FN
-       Negative      |   FP       |   TN
-```
+| Actual \ Predicted | Positive | Negative |
+|---|---|---|
+| Positive | TP | FN |
+| Negative | FP | TN |
 
 | Cell | Meaning | Example (fraud model) |
 |---|---|---|
@@ -964,4 +962,3 @@ print(f"NDCG@10: {ndcg_score(y_relevance, y_score_matrix, k=10):.4f}")
 | Using default `f1_score(average='binary')` for multi-class | Error or wrong metric | Specify `average='macro'/'micro'/'weighted'` |
 | Not checking empirical coverage of prediction intervals | Overconfident intervals | Validate coverage on held-out test set |
 | Reporting a metric without specifying the averaging method | Ambiguous results | Always state macro/micro/weighted |
-

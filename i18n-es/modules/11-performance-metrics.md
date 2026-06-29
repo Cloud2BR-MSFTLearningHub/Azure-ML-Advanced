@@ -27,12 +27,10 @@ $$
 
 ### Leyendo la matriz de confusión
 
-```
-Real \\ Predicho    |  Positivo  |  Negativo
----------------------|------------|----------
-       Positivo      |   TP       |   FN
-       Negativo      |   FP       |   TN
-```
+| Real \ Predicho | Positivo | Negativo |
+|---|---|---|
+| Positivo | TP | FN |
+| Negativo | FP | TN |
 
 | Celda | Significado | Ejemplo (modelo de fraude) |
 |---|---|---|

@@ -1,0 +1,3524 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Capacitación de Azure Machine Learning desde fundamentos hasta MLOps avanzado.">
+      
+      
+      
+        <link rel="canonical" href="https://cloud2br-msftlearninghub.github.io/Azure-ML-Advanced/es/modules/07-environment-setup/">
+      
+      
+        <link rel="prev" href="../06-azure-ml-environment/">
+      
+      
+        <link rel="next" href="../08-data-preparation/">
+      
+      
+        
+          <link rel="alternate" href="/Azure-ML-Advanced/" hreflang="en">
+        
+          <link rel="alternate" href="/Azure-ML-Advanced/es/" hreflang="es">
+        
+      
+      
+      <link rel="icon" href="../../assets/img/org-logo.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>07. Configuración del Entorno - Azure Machine Learning: Advanced</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/css/custom.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#configuracion-del-entorno" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href="../.." title="Azure Machine Learning: Advanced" class="md-header__button md-logo" aria-label="Azure Machine Learning: Advanced" data-md-component="logo">
+      
+  <img src="../../assets/img/org-logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Azure Machine Learning: Advanced
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              07. Configuración del Entorno
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="Seleccionar idioma">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="/Azure-ML-Advanced/" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="/Azure-ML-Advanced/es/" hreflang="es" class="md-select__link">
+              Español
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Azure Machine Learning: Advanced" class="md-nav__button md-logo" aria-label="Azure Machine Learning: Advanced" data-md-component="logo">
+      
+  <img src="../../assets/img/org-logo.png" alt="logo">
+
+    </a>
+    Azure Machine Learning: Advanced
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-math-prerequisites/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01. Prerrequisitos Matemáticos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-e2e-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02. Visión General de Extremo a Extremo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03. Introducción y Ciclo de Vida
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-ml-foundations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04. Fundamentos de ML
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-neural-networks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05. Redes Neuronales y Deep Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-azure-ml-environment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06. Entorno de Azure ML
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07. Configuración del Entorno
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07. Configuración del Entorno
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#por-que-importa-la-reproducibilidad-del-entorno" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Por qué importa la reproducibilidad del entorno
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuracion-tipica-desde-cero" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuración típica (desde cero)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lista-de-verificacion-de-validacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lista de verificación de validación
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fallos-comunes-de-configuracion-y-soluciones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fallos comunes de configuración y soluciones
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#registro-del-entorno-en-azure-ml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Registro del entorno en Azure ML
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#analisis-a-fondo-cada-concepto-explicado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Análisis a fondo: cada concepto, explicado
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Análisis a fondo: cada concepto, explicado">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-contiene-realmente-un-entorno" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué contiene realmente un "entorno"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conda-vs-pip-vs-los-archivos-de-entorno" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        conda vs pip vs los archivos de entorno
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#por-que-python-m-pip-en-lugar-de-pip-simple" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Por qué python -m pip en lugar de pip simple
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fijado-archivos-de-bloqueo-y-determinismo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fijado, archivos de bloqueo y determinismo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#registrar-un-entorno-en-azure-ml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Registrar un entorno en Azure ML
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conda-vs-pip-vs-docker-cuando-usar-cada-uno" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conda vs pip vs Docker: cuándo usar cada uno
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#el-equivalente-moderno-del-sdk-v2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        El equivalente moderno del SDK v2
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#script-de-verificacion-de-extremo-a-extremo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Script de verificación de extremo a extremo
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verificacion-rapida" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verificación rápida
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fundamentos-de-la-contenerizacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fundamentos de la contenerización
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Fundamentos de la contenerización">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-es-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Qué es Docker?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dockerfile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dockerfile
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#por-que-los-contenedores-resuelven-el-problema-funciona-en-mi-maquina" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Por qué los contenedores resuelven el problema "funciona en mi máquina"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#relacion-entre-docker-y-los-entornos-de-azure-ml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Relación entre Docker y los entornos de Azure ML
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#los-entornos-curados-de-azure-ml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Los entornos curados de Azure ML
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Los entornos curados de Azure ML">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-son" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué son
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entornos-curados-comunes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entornos curados comunes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#listar-y-fijar-entornos-curados" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Listar y fijar entornos curados
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cuando-usar-curado-vs-personalizado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cuándo usar curado vs personalizado
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gestion-avanzada-de-conda-y-pip" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gestión avanzada de conda y pip
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Gestión avanzada de conda y pip">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#canales-de-conda" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Canales de conda
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conda-forge-vs-defaults" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        conda-forge vs defaults
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conflictos-del-solucionador-de-dependencias" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conflictos del solucionador de dependencias
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#instalaciones-editables-de-pip" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Instalaciones editables de pip
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#extras_require" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        extras_require
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#depurar-el-infierno-de-dependencias" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Depurar el infierno de dependencias
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pipeline-de-validacion-del-entorno" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pipeline de validación del entorno
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Pipeline de validación del entorno">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pruebas-automatizadas-de-entornos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pruebas automatizadas de entornos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#probar-importaciones-de-paquetes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Probar importaciones de paquetes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pruebas-de-afirmacion-de-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pruebas de afirmación de versión
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#como-construir-una-prueba-de-humo-para-un-entorno-de-ml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cómo construir una prueba de humo para un entorno de ML
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuracion-del-entorno-gpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuración del entorno GPU
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuración del entorno GPU">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#por-que-la-configuracion-del-entorno-gpu-es-mas-dificil" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Por qué la configuración del entorno GPU es más difícil
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#matriz-de-compatibilidad-de-versiones-de-cuda" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Matriz de compatibilidad de versiones de CUDA
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cudnn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        cuDNN
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#como-azure-ml-maneja-cuda-automaticamente" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cómo Azure ML maneja CUDA automáticamente
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#construir-un-entorno-gpu-personalizado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Construir un entorno GPU personalizado
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verificar-la-disponibilidad-de-gpu-en-tiempo-de-ejecucion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verificar la disponibilidad de GPU en tiempo de ejecución
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gestion-de-secretos-y-credenciales" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gestión de secretos y credenciales
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Gestión de secretos y credenciales">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nunca-pongas-credenciales-en-el-codigo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Nunca pongas credenciales en el código
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#integracion-con-azure-key-vault" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Integración con Azure Key Vault
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#identidad-administrada-para-el-acceso-a-datos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Identidad administrada para el acceso a datos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#variables-de-entorno-para-secretos-en-el-desarrollo-local" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Variables de entorno para secretos en el desarrollo local
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cadena-de-defaultazurecredential" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cadena de DefaultAzureCredential
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ejemplo-de-trabajo-completo-entorno-de-proyecto-completo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejemplo de trabajo completo: entorno de proyecto completo
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Ejemplo de trabajo completo: entorno de proyecto completo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#estructura-del-proyecto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Estructura del proyecto
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#environmentyml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        environment.yml
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#requirementstxt-bloqueado-para-auditoria-de-pip" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        requirements.txt (bloqueado, para auditoría de pip)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#register_envpy-script-de-registro-del-entorno" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        register_env.py — script de registro del entorno
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ejecucion-de-validacion-completa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejecución de validación completa
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#esqueleto-de-trainpy-mostrando-patrones-de-secretos-y-mlflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Esqueleto de train.py (mostrando patrones de secretos y MLflow)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-data-preparation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08. Preparación de Datos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-model-types/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09. Tipos de Modelos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-training-automl/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Entrenamiento y AutoML
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11-performance-metrics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Métricas de Rendimiento
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../12-results-explainability/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Resultados y Explicabilidad
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13-deployment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Despliegue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../14-deployment-debug-k8s/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. Depuración de Despliegue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_16" >
+        
+          
+          <label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Referencia
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_16">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Referencia
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visión General
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/model-math-deep-dive/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Análisis Matemático Profundo de Modelos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/cli-commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comandos CLI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glosario
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#por-que-importa-la-reproducibilidad-del-entorno" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Por qué importa la reproducibilidad del entorno
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuracion-tipica-desde-cero" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuración típica (desde cero)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lista-de-verificacion-de-validacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lista de verificación de validación
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fallos-comunes-de-configuracion-y-soluciones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fallos comunes de configuración y soluciones
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#registro-del-entorno-en-azure-ml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Registro del entorno en Azure ML
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#analisis-a-fondo-cada-concepto-explicado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Análisis a fondo: cada concepto, explicado
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Análisis a fondo: cada concepto, explicado">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-contiene-realmente-un-entorno" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué contiene realmente un "entorno"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conda-vs-pip-vs-los-archivos-de-entorno" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        conda vs pip vs los archivos de entorno
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#por-que-python-m-pip-en-lugar-de-pip-simple" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Por qué python -m pip en lugar de pip simple
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fijado-archivos-de-bloqueo-y-determinismo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fijado, archivos de bloqueo y determinismo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#registrar-un-entorno-en-azure-ml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Registrar un entorno en Azure ML
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conda-vs-pip-vs-docker-cuando-usar-cada-uno" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conda vs pip vs Docker: cuándo usar cada uno
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#el-equivalente-moderno-del-sdk-v2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        El equivalente moderno del SDK v2
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#script-de-verificacion-de-extremo-a-extremo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Script de verificación de extremo a extremo
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verificacion-rapida" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verificación rápida
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fundamentos-de-la-contenerizacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fundamentos de la contenerización
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Fundamentos de la contenerización">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-es-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ¿Qué es Docker?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dockerfile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dockerfile
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#por-que-los-contenedores-resuelven-el-problema-funciona-en-mi-maquina" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Por qué los contenedores resuelven el problema "funciona en mi máquina"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#relacion-entre-docker-y-los-entornos-de-azure-ml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Relación entre Docker y los entornos de Azure ML
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#los-entornos-curados-de-azure-ml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Los entornos curados de Azure ML
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Los entornos curados de Azure ML">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#que-son" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Qué son
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entornos-curados-comunes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entornos curados comunes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#listar-y-fijar-entornos-curados" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Listar y fijar entornos curados
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cuando-usar-curado-vs-personalizado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cuándo usar curado vs personalizado
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gestion-avanzada-de-conda-y-pip" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gestión avanzada de conda y pip
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Gestión avanzada de conda y pip">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#canales-de-conda" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Canales de conda
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conda-forge-vs-defaults" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        conda-forge vs defaults
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conflictos-del-solucionador-de-dependencias" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conflictos del solucionador de dependencias
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#instalaciones-editables-de-pip" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Instalaciones editables de pip
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#extras_require" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        extras_require
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#depurar-el-infierno-de-dependencias" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Depurar el infierno de dependencias
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pipeline-de-validacion-del-entorno" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pipeline de validación del entorno
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Pipeline de validación del entorno">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pruebas-automatizadas-de-entornos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pruebas automatizadas de entornos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#probar-importaciones-de-paquetes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Probar importaciones de paquetes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pruebas-de-afirmacion-de-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pruebas de afirmación de versión
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#como-construir-una-prueba-de-humo-para-un-entorno-de-ml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cómo construir una prueba de humo para un entorno de ML
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#configuracion-del-entorno-gpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuración del entorno GPU
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuración del entorno GPU">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#por-que-la-configuracion-del-entorno-gpu-es-mas-dificil" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Por qué la configuración del entorno GPU es más difícil
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#matriz-de-compatibilidad-de-versiones-de-cuda" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Matriz de compatibilidad de versiones de CUDA
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cudnn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        cuDNN
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#como-azure-ml-maneja-cuda-automaticamente" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cómo Azure ML maneja CUDA automáticamente
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#construir-un-entorno-gpu-personalizado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Construir un entorno GPU personalizado
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verificar-la-disponibilidad-de-gpu-en-tiempo-de-ejecucion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verificar la disponibilidad de GPU en tiempo de ejecución
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gestion-de-secretos-y-credenciales" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gestión de secretos y credenciales
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Gestión de secretos y credenciales">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nunca-pongas-credenciales-en-el-codigo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Nunca pongas credenciales en el código
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#integracion-con-azure-key-vault" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Integración con Azure Key Vault
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#identidad-administrada-para-el-acceso-a-datos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Identidad administrada para el acceso a datos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#variables-de-entorno-para-secretos-en-el-desarrollo-local" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Variables de entorno para secretos en el desarrollo local
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cadena-de-defaultazurecredential" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cadena de DefaultAzureCredential
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ejemplo-de-trabajo-completo-entorno-de-proyecto-completo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejemplo de trabajo completo: entorno de proyecto completo
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Ejemplo de trabajo completo: entorno de proyecto completo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#estructura-del-proyecto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Estructura del proyecto
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#environmentyml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        environment.yml
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#requirementstxt-bloqueado-para-auditoria-de-pip" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        requirements.txt (bloqueado, para auditoría de pip)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#register_envpy-script-de-registro-del-entorno" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        register_env.py — script de registro del entorno
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ejecucion-de-validacion-completa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejecución de validación completa
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#esqueleto-de-trainpy-mostrando-patrones-de-secretos-y-mlflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Esqueleto de train.py (mostrando patrones de secretos y MLflow)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="configuracion-del-entorno">Configuración del entorno<a class="headerlink" href="#configuracion-del-entorno" title="Permanent link">&para;</a></h1>
+<p>Este módulo ayuda a las personas principiantes a construir un entorno de ejecución reproducible desde cero. La reproducibilidad es
+crítica porque el comportamiento del modelo depende de las versiones de los paquetes, las bibliotecas del sistema operativo y los detalles del entorno
+de ejecución de Python.</p>
+<h2 id="por-que-importa-la-reproducibilidad-del-entorno">Por qué importa la reproducibilidad del entorno<a class="headerlink" href="#por-que-importa-la-reproducibilidad-del-entorno" title="Permanent link">&para;</a></h2>
+<ul>
+<li>El mismo código puede producir resultados diferentes con versiones distintas de dependencias.</li>
+<li>El entrenamiento y la inferencia deben compartir bibliotecas compatibles.</li>
+<li>Los equipos necesitan reconstrucciones deterministas para auditorías y recuperación ante incidentes.</li>
+</ul>
+<p>Los diagramas siguientes muestran cómo se organizan los activos de Azure ML y cómo se reutilizan
+los entornos en el entrenamiento y la inferencia.</p>
+<p><img alt="Taxonomía del área de trabajo de Azure ML" src="../../assets/img/azure-machine-learning-taxonomy.svg" /></p>
+<blockquote>
+<p><strong>Nota - Qué muestra esto:</strong> Nuevamente la taxonomía del área de trabajo, aquí para enfatizar <em>dónde viven los entornos</em>. El entorno que
+construyes localmente se convierte en un activo registrado y versionado dentro de esta estructura para que los trabajos remotos puedan
+reutilizarlo.</p>
+</blockquote>
+<p><img alt="Taxonomía del entorno de Azure ML" src="../../assets/img/azure-ml-environment-taxonomy.svg" /></p>
+<blockquote>
+<p><strong>Nota - Qué muestra esto:</strong> Cómo una definición de entorno fluye tanto hacia los trabajos de entrenamiento como de inferencia. Fijarla una vez y
+reutilizarla es el mecanismo central detrás de las ejecuciones reproducibles y las reconstrucciones deterministas.</p>
+</blockquote>
+<h2 id="configuracion-tipica-desde-cero">Configuración típica (desde cero)<a class="headerlink" href="#configuracion-tipica-desde-cero" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><span class="go">conda env create --name aml-env --file ./dependencies/environment.yml --force</span>
+<span class="go">conda activate aml-env</span>
+<span class="go">pip install -r ./dependencies/requirements.txt</span>
+</code></pre></div>
+<h2 id="lista-de-verificacion-de-validacion">Lista de verificación de validación<a class="headerlink" href="#lista-de-verificacion-de-validacion" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Confirma que las bibliotecas críticas están instaladas.</li>
+<li>Confirma que la versión de Python es la que espera tu proyecto.</li>
+<li>Confirma que el kernel del notebook apunta al mismo entorno.</li>
+</ol>
+<p>Validación:</p>
+<div class="highlight"><pre><span></span><code><span class="go">pip show scikit-learn</span>
+<span class="go">pip show azureml-sdk</span>
+<span class="go">conda env list</span>
+</code></pre></div>
+<p>Registro opcional del kernel:</p>
+<div class="highlight"><pre><span></span><code><span class="go">python -m ipykernel install --user --name aml-env --display-name &quot;AML Env&quot;</span>
+</code></pre></div>
+<h2 id="fallos-comunes-de-configuracion-y-soluciones">Fallos comunes de configuración y soluciones<a class="headerlink" href="#fallos-comunes-de-configuracion-y-soluciones" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Síntoma</th>
+<th>Causa probable</th>
+<th>Solución</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Error de importación de paquete</td>
+<td>Dependencia faltante o discrepancia de versión</td>
+<td>Reinstalar la versión fijada desde requirements</td>
+</tr>
+<tr>
+<td>Resultados diferentes entre máquinas</td>
+<td>Dependencias sin fijar</td>
+<td>Fijar versiones en los archivos de entorno</td>
+</tr>
+<tr>
+<td>Notebook usa el intérprete equivocado</td>
+<td>Discrepancia de kernel</td>
+<td>Volver a seleccionar el kernel y reiniciar</td>
+</tr>
+<tr>
+<td><code>conda activate</code> no tiene efecto</td>
+<td>Conda no inicializado en el shell</td>
+<td>Ejecutar <code>conda init bash</code> (o <code>zsh</code>), luego reabrir la terminal</td>
+</tr>
+<tr>
+<td>pip instala en el entorno equivocado</td>
+<td>Virtualenv activo pero pip resuelve globalmente</td>
+<td>Usar <code>python -m pip install</code> en lugar de <code>pip</code> simple</td>
+</tr>
+<tr>
+<td>El trabajo de Azure ML usa la imagen equivocada</td>
+<td>Entorno no registrado antes de enviar el trabajo</td>
+<td>Registrar el entorno primero o usar <code>Environment.from_conda_specification</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="registro-del-entorno-en-azure-ml">Registro del entorno en Azure ML<a class="headerlink" href="#registro-del-entorno-en-azure-ml" title="Permanent link">&para;</a></h2>
+<p>Registrar un entorno local en Azure ML para que pueda usarse en trabajos de entrenamiento remotos:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">azureml.core</span> <span class="kn">import</span> <span class="n">Workspace</span><span class="p">,</span> <span class="n">Environment</span>
+
+<span class="n">ws</span> <span class="o">=</span> <span class="n">Workspace</span><span class="o">.</span><span class="n">from_config</span><span class="p">()</span>
+<span class="n">env</span> <span class="o">=</span> <span class="n">Environment</span><span class="o">.</span><span class="n">from_conda_specification</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;fraud-train&quot;</span><span class="p">,</span>
+    <span class="n">file_path</span><span class="o">=</span><span class="s2">&quot;./environment.yml&quot;</span>
+<span class="p">)</span>
+<span class="n">env</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">workspace</span><span class="o">=</span><span class="n">ws</span><span class="p">)</span>
+</code></pre></div>
+<p>Después del registro, refiérete a él en la configuración del trabajo por nombre y versión:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">azureml.core</span> <span class="kn">import</span> <span class="n">ScriptRunConfig</span>
+<span class="kn">from</span> <span class="nn">azureml.core.runconfig</span> <span class="kn">import</span> <span class="n">RunConfiguration</span>
+
+<span class="n">rc</span> <span class="o">=</span> <span class="n">RunConfiguration</span><span class="p">()</span>
+<span class="n">rc</span><span class="o">.</span><span class="n">environment</span> <span class="o">=</span> <span class="n">Environment</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ws</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;fraud-train&quot;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s2">&quot;1&quot;</span><span class="p">)</span>
+
+<span class="n">config</span> <span class="o">=</span> <span class="n">ScriptRunConfig</span><span class="p">(</span>
+    <span class="n">source_directory</span><span class="o">=</span><span class="s2">&quot;./src&quot;</span><span class="p">,</span>
+    <span class="n">script</span><span class="o">=</span><span class="s2">&quot;train.py&quot;</span><span class="p">,</span>
+    <span class="n">run_config</span><span class="o">=</span><span class="n">rc</span><span class="p">,</span>
+    <span class="n">compute_target</span><span class="o">=</span><span class="s2">&quot;gpu-cluster&quot;</span>
+<span class="p">)</span>
+</code></pre></div>
+<h2 id="analisis-a-fondo-cada-concepto-explicado">Análisis a fondo: cada concepto, explicado<a class="headerlink" href="#analisis-a-fondo-cada-concepto-explicado" title="Permanent link">&para;</a></h2>
+<p>Esta sección explica las piezas móviles de un entorno reproducible y por qué cada una puede
+cambiar silenciosamente el comportamiento del modelo.</p>
+<h3 id="que-contiene-realmente-un-entorno">Qué contiene realmente un "entorno"<a class="headerlink" href="#que-contiene-realmente-un-entorno" title="Permanent link">&para;</a></h3>
+<p>Un entorno de ML es una pila de capas, y una discrepancia en <em>cualquier</em> capa puede cambiar los resultados:</p>
+<table>
+<thead>
+<tr>
+<th>Capa</th>
+<th>Ejemplo</th>
+<th>Fallo si se desvía</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bibliotecas del sistema operativo</td>
+<td>glibc, CUDA, BLAS</td>
+<td>Diferencias numéricas, fallos en operaciones de GPU</td>
+</tr>
+<tr>
+<td>Entorno de ejecución del lenguaje</td>
+<td>Python 3.10 vs 3.11</td>
+<td>Rupturas de sintaxis/ABI, los modelos serializados no cargan</td>
+</tr>
+<tr>
+<td>Paquetes</td>
+<td>scikit-learn 1.3 vs 1.4</td>
+<td>Valores predeterminados distintos → predicciones distintas</td>
+</tr>
+<tr>
+<td>Semillas aleatorias</td>
+<td>Semilla de NumPy/PyTorch</td>
+<td>Ejecuciones de entrenamiento no deterministas</td>
+</tr>
+</tbody>
+</table>
+<p>La reproducibilidad significa fijar <em>todos</em> estos elementos, por lo que Azure ML los empaqueta en un único
+<strong>entorno versionado</strong> (una imagen de contenedor) en lugar de depender de lo que esté instalado en una
+máquina.</p>
+<h3 id="conda-vs-pip-vs-los-archivos-de-entorno">conda vs pip vs los archivos de entorno<a class="headerlink" href="#conda-vs-pip-vs-los-archivos-de-entorno" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>conda</strong> gestiona <em>tanto</em> Python como las dependencias de sistema no relacionadas con Python (CUDA, MKL, compiladores),
+  por lo que es preferible para el entorno base en ciencia de datos.</li>
+<li><strong>pip</strong> instala paquetes de Python desde PyPI; no gestiona bibliotecas del sistema.</li>
+<li><code>environment.yml</code> declara el entorno de conda (canales + paquetes); <code>requirements.txt</code>
+  fija los paquetes de pip instalados <em>dentro</em> de ese entorno. Usar ambos permite que conda gestione la pesada
+  capa del sistema y que pip gestione los paquetes puros de Python.</li>
+</ul>
+<h3 id="por-que-python-m-pip-en-lugar-de-pip-simple">Por qué <code>python -m pip</code> en lugar de <code>pip</code> simple<a class="headerlink" href="#por-que-python-m-pip-en-lugar-de-pip-simple" title="Permanent link">&para;</a></h3>
+<p><code>pip</code> es solo un script que apunta a <em>algún</em> Python. Si existen varios Python, el <code>pip</code> simple puede
+instalar en el equivocado. <code>python -m pip</code> ejecuta pip <em>como un módulo del intérprete exacto que
+invocaste</em>, garantizando que el paquete quede en el entorno que crees. La misma lógica
+se aplica a <code>python -m ipykernel install</code>, que registra <em>este</em> intérprete como un kernel de
+notebook, evitando el error común de "el notebook usa el entorno equivocado".</p>
+<h3 id="fijado-archivos-de-bloqueo-y-determinismo">Fijado, archivos de bloqueo y determinismo<a class="headerlink" href="#fijado-archivos-de-bloqueo-y-determinismo" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Fijar</strong> significa especificar versiones exactas (<code>scikit-learn==1.3.2</code>) en lugar de rangos
+  (<code>scikit-learn&gt;=1.3</code>). Los rangos permiten que una reconstrucción extraiga silenciosamente un paquete más nuevo cuyos
+  valores predeterminados cambiados alteran las predicciones.</li>
+<li>Un <strong>archivo de bloqueo</strong> captura el <em>árbol de dependencias resuelto completo</em> (incluidas las
+  dependencias transitivas) para que una reconstrucción sea reproducible bit a bit. Esto es en lo que confían los auditores
+  y los responsables de incidentes para recrear un modelo pasado de forma exacta.</li>
+</ul>
+<h3 id="registrar-un-entorno-en-azure-ml">Registrar un entorno en Azure ML<a class="headerlink" href="#registrar-un-entorno-en-azure-ml" title="Permanent link">&para;</a></h3>
+<p><code>Environment.from_conda_specification(...).register(workspace=ws)</code> construye una imagen de contenedor a partir de
+tu especificación y la almacena como un activo <em>versionado</em> en el área de trabajo. La ventaja: la <strong>misma imagen</strong>
+se reutiliza en los trabajos de entrenamiento remotos y en el despliegue de inferencia, eliminando el sesgo entre
+entrenamiento y servicio. Referenciarla por <code>name</code> + <code>version</code> en <code>ScriptRunConfig</code> hace que la ejecución sea totalmente reproducible:
+el registro de la ejecución apunta entonces a una versión de entorno inmutable, no a una máquina local mutable.</p>
+<h2 id="conda-vs-pip-vs-docker-cuando-usar-cada-uno">Conda vs pip vs Docker: cuándo usar cada uno<a class="headerlink" href="#conda-vs-pip-vs-docker-cuando-usar-cada-uno" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Herramienta</th>
+<th>Mejor para</th>
+<th>Evitar cuando</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Conda</td>
+<td>Dependencias mixtas de Python + bibliotecas nativas</td>
+<td>Proyectos simples puros de Python</td>
+</tr>
+<tr>
+<td>pip + venv</td>
+<td>Proyectos puros de Python</td>
+<td>Dependencias complejas de C/CUDA</td>
+</tr>
+<tr>
+<td>Docker</td>
+<td>Reproducibilidad completa del sistema</td>
+<td>El equipo no está familiarizado con contenedores</td>
+</tr>
+<tr>
+<td>Imágenes curadas de Azure ML</td>
+<td>Frameworks estándar (PyTorch, TF)</td>
+<td>Bibliotecas de sistema personalizadas de bajo nivel</td>
+</tr>
+</tbody>
+</table>
+<p>Estas referencias ayudan al dimensionar el cómputo y al comprender los conceptos de memoria/representación
+numérica que afectan las decisiones de rendimiento.</p>
+<p><img alt="Mediciones de datos binarias vs decimales" src="../../assets/img/binary_vs_decimal_data_measurements.svg" /></p>
+<blockquote>
+<p><strong>Nota - Qué muestra esto:</strong> La diferencia entre medidas binarias (1 KiB = 1024 bytes) y decimales (1 KB = 1000 bytes).
+Importa al dimensionar conjuntos de datos, memoria y cómputo: una discrepancia explica muchas sorpresas del tipo "¿por qué mis datos
+son más grandes de lo esperado?".</p>
+</blockquote>
+<p><img alt="Resumen de los sistemas numéricos" src="../../assets/img/summary_of_number_system.svg" /></p>
+<blockquote>
+<p><strong>Nota - Qué muestra esto:</strong> Un resumen de los sistemas numéricos (binario, decimal, hexadecimal). Conocimiento de fondo útil al leer
+direcciones de memoria, tamaños de bytes y formatos de datos codificados durante la depuración del entorno y los datos.</p>
+</blockquote>
+<h2 id="el-equivalente-moderno-del-sdk-v2">El equivalente moderno del SDK v2<a class="headerlink" href="#el-equivalente-moderno-del-sdk-v2" title="Permanent link">&para;</a></h2>
+<p>Los fragmentos de registro anteriores usan el SDK v1 (<code>azureml.core</code>). Los proyectos nuevos deberían preferir el
+SDK v2 (<code>azure-ai-ml</code>), que modela el entorno como un objeto declarativo y es la base de
+la CLI v2 y los flujos de trabajo YAML usados en todo este centro. Los conceptos son idénticos: fijar dependencias,
+construir una imagen versionada, reutilizarla en todas partes.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">azure.ai.ml</span> <span class="kn">import</span> <span class="n">MLClient</span>
+<span class="kn">from</span> <span class="nn">azure.ai.ml.entities</span> <span class="kn">import</span> <span class="n">Environment</span>
+<span class="kn">from</span> <span class="nn">azure.identity</span> <span class="kn">import</span> <span class="n">DefaultAzureCredential</span>
+
+<span class="n">ml_client</span> <span class="o">=</span> <span class="n">MLClient</span><span class="o">.</span><span class="n">from_config</span><span class="p">(</span><span class="n">DefaultAzureCredential</span><span class="p">())</span>
+
+<span class="n">env</span> <span class="o">=</span> <span class="n">Environment</span><span class="p">(</span>
+    <span class="n">name</span><span class="o">=</span><span class="s2">&quot;fraud-train&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Pinned training/inference environment&quot;</span><span class="p">,</span>
+    <span class="n">conda_file</span><span class="o">=</span><span class="s2">&quot;./environment.yml&quot;</span><span class="p">,</span>
+    <span class="n">image</span><span class="o">=</span><span class="s2">&quot;mcr.microsoft.com/azureml/openmpi4.1.0-ubuntu20.04:latest&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="n">ml_client</span><span class="o">.</span><span class="n">environments</span><span class="o">.</span><span class="n">create_or_update</span><span class="p">(</span><span class="n">env</span><span class="p">)</span>
+</code></pre></div>
+<p>El mismo entorno puede declararse como YAML y controlarse por versiones junto a tu código, lo cual
+es el patrón recomendado para pipelines auditables al estilo GitOps:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># environment.yml (activo de CLI v2 de Azure ML)</span>
+<span class="nt">$schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://azuremlschemas.azureedge.net/latest/environment.schema.json</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fraud-train</span>
+<span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mcr.microsoft.com/azureml/openmpi4.1.0-ubuntu20.04:latest</span>
+<span class="nt">conda_file</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./conda.yml</span>
+<span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Entorno fijado de entrenamiento/inferencia</span>
+</code></pre></div>
+<blockquote>
+<p><strong>Consejo - v1 vs v2:</strong> Si ves <code>from azureml.core import ...</code> estás en el SDK v1; si ves
+<code>from azure.ai.ml import ...</code> estás en v2. Elige uno por proyecto y sé consistente. v2 es la
+opción orientada al futuro y se alinea con los ejemplos de CLI/YAML en los módulos de despliegue.</p>
+</blockquote>
+<h2 id="script-de-verificacion-de-extremo-a-extremo">Script de verificación de extremo a extremo<a class="headerlink" href="#script-de-verificacion-de-extremo-a-extremo" title="Permanent link">&para;</a></h2>
+<p>Ejecuta este corto script después de construir un entorno para fallar rápidamente en los problemas más comunes:
+versión de Python incorrecta, bibliotecas faltantes y semillas no deterministas. Detectar estos problemas localmente es
+mucho más barato que descubrirlos dentro de un trabajo remoto.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">importlib</span>
+
+<span class="c1"># 1) La versión de Python debe coincidir con lo que el proyecto fija</span>
+<span class="k">assert</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;Expected Python 3.10, got </span><span class="si">{</span><span class="n">sys</span><span class="o">.</span><span class="n">version</span><span class="si">}</span><span class="s2">&quot;</span>
+
+<span class="c1"># 2) Las bibliotecas críticas deben importarse en las versiones fijadas</span>
+<span class="n">expected</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;sklearn&quot;</span><span class="p">:</span> <span class="s2">&quot;1.3.0&quot;</span><span class="p">,</span> <span class="s2">&quot;pandas&quot;</span><span class="p">:</span> <span class="s2">&quot;2.0.3&quot;</span><span class="p">,</span> <span class="s2">&quot;lightgbm&quot;</span><span class="p">:</span> <span class="s2">&quot;4.0.0&quot;</span><span class="p">}</span>
+<span class="k">for</span> <span class="n">mod</span><span class="p">,</span> <span class="n">want</span> <span class="ow">in</span> <span class="n">expected</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">got</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span><span class="o">.</span><span class="n">__version__</span>
+    <span class="k">assert</span> <span class="n">got</span> <span class="o">==</span> <span class="n">want</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">mod</span><span class="si">}</span><span class="s2">: expected </span><span class="si">{</span><span class="n">want</span><span class="si">}</span><span class="s2">, got </span><span class="si">{</span><span class="n">got</span><span class="si">}</span><span class="s2">&quot;</span>
+
+<span class="c1"># 3) Las semillas deben hacer que una ejecución sea reproducible</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">first</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">first</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">3</span><span class="p">)),</span> <span class="s2">&quot;Seeding is not deterministic&quot;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Environment verification passed.&quot;</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="verificacion-rapida">Verificación rápida<a class="headerlink" href="#verificacion-rapida" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Pregunta</th>
+<th>Respuesta</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>¿Por qué el entrenamiento y la inferencia deben compartir un entorno fijado?</td>
+<td>Para que las versiones exactas de las bibliotecas usadas en el entrenamiento se reproduzcan en el servicio, eliminando el desajuste entrenamiento/servicio y toda una clase de errores por incompatibilidad de versiones.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>¿Qué comando muestra todos los entornos de conda?</td>
+<td><code>conda env list</code> (equivalente a <code>conda info --envs</code>).</td>
+</tr>
+<tr>
+<td>3</td>
+<td>¿Cuándo deberías registrar un kernel de Jupyter?</td>
+<td>Cuando quieras que un entorno conda/virtual concreto sea seleccionable como kernel de notebook, con <code>python -m ipykernel install --user --name ...</code>, evitando el error de "el notebook usa el entorno equivocado".</td>
+</tr>
+<tr>
+<td>4</td>
+<td>¿Cómo determinas si un fragmento de código usa el SDK v1 o v2?</td>
+<td>Por los imports: <code>from azureml.core import ...</code> es v1, mientras que <code>from azure.ai.ml import ...</code> (con <code>MLClient</code>) es v2.</td>
+</tr>
+<tr>
+<td>5</td>
+<td>¿Qué capas de dependencias (SO, tiempo de ejecución, paquetes, semillas) deben fijarse para la reproducibilidad completa?</td>
+<td>Todas: el SO/imagen base, el tiempo de ejecución del lenguaje (versión de Python), los paquetes (versiones exactas) y las semillas aleatorias.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="fundamentos-de-la-contenerizacion">Fundamentos de la contenerización<a class="headerlink" href="#fundamentos-de-la-contenerizacion" title="Permanent link">&para;</a></h2>
+<h3 id="que-es-docker">¿Qué es Docker?<a class="headerlink" href="#que-es-docker" title="Permanent link">&para;</a></h3>
+<p><strong>Docker</strong> es una plataforma para empaquetar una aplicación y todas sus dependencias — bibliotecas del SO,
+tiempo de ejecución del lenguaje, paquetes de Python, archivos de configuración — en una única unidad portátil
+llamada <strong>imagen de contenedor</strong>. Un contenedor es una instancia en ejecución de una imagen. La idea clave es
+que la imagen es <strong>inmutable y autocontenida</strong>: una vez construida, se comporta de forma idéntica en
+un laptop de desarrollador, un agente de CI/CD y un clúster de cómputo de Azure ML.</p>
+<h3 id="dockerfile">Dockerfile<a class="headerlink" href="#dockerfile" title="Permanent link">&para;</a></h3>
+<p>Un <code>Dockerfile</code> es un archivo de texto que define las capas de una imagen de contenedor:</p>
+<div class="highlight"><pre><span></span><code><span class="c"># Dockerfile de ejemplo para un trabajo de entrenamiento de Azure ML</span>
+<span class="k">FROM</span><span class="w"> </span><span class="s">mcr.microsoft.com/azureml/openmpi4.1.0-cuda11.8-cudnn8-ubuntu22.04:latest</span>
+
+<span class="c"># Dependencias del sistema</span>
+<span class="k">RUN</span><span class="w"> </span>apt-get<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>--no-install-recommends<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>libgomp1<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="o">&amp;&amp;</span><span class="w"> </span>rm<span class="w"> </span>-rf<span class="w"> </span>/var/lib/apt/lists/*
+
+<span class="c"># Copiar e instalar dependencias de Python</span>
+<span class="k">COPY</span><span class="w"> </span>requirements.txt<span class="w"> </span>/tmp/requirements.txt
+<span class="k">RUN</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--no-cache-dir<span class="w"> </span>-r<span class="w"> </span>/tmp/requirements.txt
+
+<span class="c"># Copiar código de entrenamiento (para imágenes de inferencia; omitir para entrenamiento donde el código se monta)</span>
+<span class="k">COPY</span><span class="w"> </span>src/<span class="w"> </span>/app/src/
+<span class="k">WORKDIR</span><span class="w"> </span><span class="s">/app</span>
+</code></pre></div>
+<p>Cada instrucción <code>RUN</code>, <code>COPY</code> y <code>FROM</code> crea una nueva <strong>capa</strong>. Docker almacena en caché las capas, de modo que
+reconstruir después de cambiar solo <code>requirements.txt</code> solo vuelve a ejecutar la capa de instalación de pip — la capa
+del SO se reutiliza desde la caché, haciendo que las compilaciones iterativas sean rápidas.</p>
+<h3 id="por-que-los-contenedores-resuelven-el-problema-funciona-en-mi-maquina">Por qué los contenedores resuelven el problema "funciona en mi máquina"<a class="headerlink" href="#por-que-los-contenedores-resuelven-el-problema-funciona-en-mi-maquina" title="Permanent link">&para;</a></h3>
+<p>El problema clásico: un modelo entrenado en el MacBook de un desarrollador se comporta de forma diferente cuando se despliega
+en un servidor Linux por diferentes implementaciones de BLAS, diferentes versiones de glibc o un numpy
+diferente instalado silenciosamente por un paquete en conflicto.</p>
+<p>Los contenedores eliminan esto empaquetando el <strong>entorno de ejecución completo</strong> como un artefacto versionado.
+Cuando dices "este modelo se ejecuta en la imagen <code>fraud-train:1.4.2</code>", es una especificación exacta y reproducible,
+no una lista de instrucciones que podrían seguirse de forma diferente en diferentes máquinas.</p>
+<h3 id="relacion-entre-docker-y-los-entornos-de-azure-ml">Relación entre Docker y los entornos de Azure ML<a class="headerlink" href="#relacion-entre-docker-y-los-entornos-de-azure-ml" title="Permanent link">&para;</a></h3>
+<p>Los objetos de <strong>entorno</strong> de Azure ML son esencialmente una abstracción administrada sobre las imágenes de Docker:</p>
+<table>
+<thead>
+<tr>
+<th>Concepto de Azure ML</th>
+<th>Concepto de Docker</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Environment(image=..., conda_file=...)</code></td>
+<td><code>FROM base_image</code> + <code>RUN conda env create</code></td>
+</tr>
+<tr>
+<td><code>ml_client.environments.create_or_update(env)</code></td>
+<td><code>docker build</code> + <code>docker push</code> a ACR</td>
+</tr>
+<tr>
+<td><code>azureml:fraud-train@latest</code> en un trabajo</td>
+<td><code>image: myacr.azurecr.io/fraud-train:latest</code></td>
+</tr>
+<tr>
+<td>Versión del entorno</td>
+<td>Etiqueta de imagen</td>
+</tr>
+</tbody>
+</table>
+<p>Cuando registras un entorno de Azure ML, la plataforma construye la imagen de Docker y la envía al
+<strong>Azure Container Registry</strong> del área de trabajo. Cada trabajo que referencia esa versión de entorno
+extrae la misma imagen exacta: sin ambigüedad, sin drift.</p>
+<blockquote>
+<p><strong>Nota - Raramente escribes Dockerfiles en bruto en Azure ML:</strong> Azure ML maneja el proceso de construcción de Docker
+por ti cuando proporcionas un <code>conda_file</code> o <code>pip_requirements</code>. Solo escribes un
+Dockerfile personalizado cuando necesitas bibliotecas del sistema que no son de Python que conda no puede instalar (por ejemplo,
+drivers de GPU propietarios o extensiones C compiladas).</p>
+</blockquote>
+<hr />
+<h2 id="los-entornos-curados-de-azure-ml">Los entornos curados de Azure ML<a class="headerlink" href="#los-entornos-curados-de-azure-ml" title="Permanent link">&para;</a></h2>
+<h3 id="que-son">Qué son<a class="headerlink" href="#que-son" title="Permanent link">&para;</a></h3>
+<p>Los <strong>entornos curados</strong> de Azure ML son imágenes de contenedor preconstruidas y mantenidas por Microsoft para los
+frameworks de ML más comunes. Se prueban en la infraestructura de Azure ML, se envían con el
+SDK <code>azureml-mlflow</code> preinstalado para el registro automático y se actualizan con cada versión del framework.
+Usar un entorno curado es el camino más rápido de cero a un trabajo de entrenamiento funcional.</p>
+<h3 id="entornos-curados-comunes">Entornos curados comunes<a class="headerlink" href="#entornos-curados-comunes" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Nombre</th>
+<th>Framework</th>
+<th>Caso de uso típico</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>AzureML-sklearn-1.5-ubuntu22.04-py310-cpu</code></td>
+<td>scikit-learn 1.5</td>
+<td>ML clásico, datos tabulares</td>
+</tr>
+<tr>
+<td><code>AzureML-pytorch-2.2-ubuntu22.04-py310-cuda121-gpu</code></td>
+<td>PyTorch 2.2</td>
+<td>Aprendizaje profundo, CV, NLP</td>
+</tr>
+<tr>
+<td><code>AzureML-tensorflow-2.16-ubuntu22.04-py311-cuda121-gpu</code></td>
+<td>TensorFlow 2.16</td>
+<td>Aprendizaje profundo, Keras</td>
+</tr>
+<tr>
+<td><code>AzureML-lightgbm-3.3-ubuntu20.04-py38-cpu</code></td>
+<td>LightGBM 3.3</td>
+<td>Gradient boosting, datos estructurados</td>
+</tr>
+<tr>
+<td><code>AzureML-automl</code></td>
+<td>Dependencias de AutoML</td>
+<td>Ejecuciones de AutoML de Azure ML</td>
+</tr>
+<tr>
+<td><code>AzureML-responsibleai-0.25-ubuntu22.04-py38-cpu</code></td>
+<td>RAI Toolbox</td>
+<td>Equidad, explicabilidad</td>
+</tr>
+</tbody>
+</table>
+<h3 id="listar-y-fijar-entornos-curados">Listar y fijar entornos curados<a class="headerlink" href="#listar-y-fijar-entornos-curados" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Listar todos los entornos curados</span>
+az<span class="w"> </span>ml<span class="w"> </span>environment<span class="w"> </span>list<span class="w"> </span>--workspace-name<span class="w"> </span>my-workspace<span class="w"> </span>--resource-group<span class="w"> </span>my-rg<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--query<span class="w"> </span><span class="s2">&quot;[?contains(tags.type, &#39;curated&#39;)].[name, version]&quot;</span><span class="w"> </span>-o<span class="w"> </span>table
+
+<span class="c1"># Obtener la especificación completa de un entorno curado específico</span>
+az<span class="w"> </span>ml<span class="w"> </span>environment<span class="w"> </span>show<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--name<span class="w"> </span>AzureML-sklearn-1.5-ubuntu22.04-py310-cpu<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--version<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--workspace-name<span class="w"> </span>my-workspace<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--resource-group<span class="w"> </span>my-rg
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="c1"># Usar un entorno curado en un trabajo (SDK v2)</span>
+<span class="kn">from</span> <span class="nn">azure.ai.ml</span> <span class="kn">import</span> <span class="n">command</span>
+<span class="kn">from</span> <span class="nn">azure.ai.ml.entities</span> <span class="kn">import</span> <span class="n">ResourceConfiguration</span>
+
+<span class="n">job</span> <span class="o">=</span> <span class="n">command</span><span class="p">(</span>
+    <span class="n">code</span><span class="o">=</span><span class="s2">&quot;./src&quot;</span><span class="p">,</span>
+    <span class="n">command</span><span class="o">=</span><span class="s2">&quot;python train.py --data ${{inputs.training_data}}&quot;</span><span class="p">,</span>
+    <span class="n">inputs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;training_data&quot;</span><span class="p">:</span> <span class="n">Input</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s2">&quot;uri_folder&quot;</span><span class="p">)},</span>
+    <span class="n">environment</span><span class="o">=</span><span class="s2">&quot;azureml://registries/azureml/environments/AzureML-sklearn-1.5-ubuntu22.04-py310-cpu/versions/1&quot;</span><span class="p">,</span>
+    <span class="n">compute</span><span class="o">=</span><span class="s2">&quot;cpu-cluster&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+<blockquote>
+<p><strong>Consejo - Fija la versión:</strong> Siempre fija la <strong>versión</strong> del entorno curado (no <code>@latest</code>) en los
+pipelines de producción. Microsoft actualiza los entornos curados; extraer <code>@latest</code> en dos ejecuciones
+separadas por una actualización puede producir diferentes conjuntos de dependencias y resultados no reproducibles.</p>
+</blockquote>
+<h3 id="cuando-usar-curado-vs-personalizado">Cuándo usar curado vs personalizado<a class="headerlink" href="#cuando-usar-curado-vs-personalizado" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Situación</th>
+<th>Recomendación</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Framework estándar (PyTorch, TF, sklearn)</td>
+<td>Comenzar con el curado; añadir extras de pip si es necesario</td>
+</tr>
+<tr>
+<td>Necesito un paquete que no está en la imagen curada</td>
+<td>Heredar de la imagen curada, añadir paquetes pip/conda</td>
+</tr>
+<tr>
+<td>Necesito una versión de paquete anterior específica</td>
+<td>Construir un entorno personalizado desde cero</td>
+</tr>
+<tr>
+<td>Necesito una biblioteca del sistema propietaria</td>
+<td>Dockerfile personalizado</td>
+</tr>
+<tr>
+<td>Tiempo de construcción más rápido posible</td>
+<td>Curado (preconstruido, sin paso de construcción)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="gestion-avanzada-de-conda-y-pip">Gestión avanzada de conda y pip<a class="headerlink" href="#gestion-avanzada-de-conda-y-pip" title="Permanent link">&para;</a></h2>
+<h3 id="canales-de-conda">Canales de conda<a class="headerlink" href="#canales-de-conda" title="Permanent link">&para;</a></h3>
+<p>Un <strong>canal de conda</strong> es un servidor de repositorio que aloja paquetes de conda. El canal predeterminado es
+<code>defaults</code> (Anaconda). <strong>conda-forge</strong> es un canal mantenido por la comunidad con una cobertura de paquetes más amplia
+y a menudo más actualizada:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># conda.yml con prioridad de canal explícita</span>
+<span class="nt">channels</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">conda-forge</span><span class="w">      </span><span class="c1"># verificado primero</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">defaults</span><span class="w">         </span><span class="c1"># respaldo</span>
+<span class="nt">dependencies</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">python=3.10.*</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">numpy=1.26.*</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">scikit-learn=1.5.*</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pip</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">azureml-mlflow==1.57.*</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">lightgbm==4.3.*</span>
+</code></pre></div>
+<p>Establecer <code>channel_priority: strict</code> en <code>.condarc</code> evita que conda mezcle paquetes de
+diferentes canales con versiones de biblioteca C potencialmente incompatibles:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># ~/.condarc</span>
+<span class="nt">channel_priority</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">strict</span>
+</code></pre></div>
+<h3 id="conda-forge-vs-defaults">conda-forge vs defaults<a class="headerlink" href="#conda-forge-vs-defaults" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Los paquetes de <strong>conda-forge</strong> son construidos por la comunidad y a menudo tienen versiones más recientes.</li>
+<li>Los paquetes de <strong>defaults</strong> son construidos por Anaconda Inc. y pueden estar desfasados pero están probados de forma más conservadora.</li>
+<li><strong>Mezclar canales sin prioridad estricta</strong> es una fuente común de errores <code>GLIBC_2.x not found</code>
+  porque los paquetes de diferentes canales pueden estar compilados contra diferentes versiones de bibliotecas del sistema.</li>
+</ul>
+<blockquote>
+<p><strong>Nota - Regla general:</strong> Elige un canal principal (<code>conda-forge</code> para la mayoría del trabajo de ciencia de datos,
+<code>defaults</code> para entornos corporativos con licencias de Anaconda) y úsalo de forma consistente. Solo mezcla
+canales cuando un paquete está disponible en uno pero no en el otro, y siempre prueba el entorno
+combinado antes de confirmarlo.</p>
+</blockquote>
+<h3 id="conflictos-del-solucionador-de-dependencias">Conflictos del solucionador de dependencias<a class="headerlink" href="#conflictos-del-solucionador-de-dependencias" title="Permanent link">&para;</a></h3>
+<p>El solucionador de conda (y el resolutor de pip) debe encontrar un conjunto de versiones de paquetes que satisfaga todas las
+restricciones declaradas simultáneamente. Con cientos de paquetes esto se convierte en un problema de satisfacción de
+restricciones NP-difícil. Síntomas de fallo del solucionador:</p>
+<div class="highlight"><pre><span></span><code>UnsatisfiableError: The following specifications were found to be incompatible with each other:
+  - scikit-learn==1.5.0 -&gt; numpy[version=&#39;&gt;=1.17.3,&lt;2.0a0&#39;]
+  - numpy==2.0.0
+</code></pre></div>
+<p><strong>Pasos de depuración:</strong>
+1. Lee el mensaje de error: suele nombrar la cadena de restricciones en conflicto.
+2. Relaja la restricción más ajustada a un rango compatible.
+3. Usa <code>conda install --dry-run</code> para probar sin confirmar.
+4. Usa <code>mamba</code> (un solucionador de conda más rápido) que da mejores diagnósticos de conflicto.
+5. Si conda está atascado, intenta crear el entorno solo con los paquetes principales primero, luego
+   añadir extras de forma incremental.</p>
+<h3 id="instalaciones-editables-de-pip">Instalaciones editables de pip<a class="headerlink" href="#instalaciones-editables-de-pip" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Instalar tu propio paquete en modo editable (los cambios en src/ se reflejan inmediatamente)</span>
+pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>./my_package<span class="o">[</span>dev,test<span class="o">]</span>
+</code></pre></div>
+<p>Una <strong>instalación editable</strong> (<code>-e</code>) no copia archivos a <code>site-packages</code>; añade un archivo <code>.pth</code>
+que apunta Python a tu directorio de código fuente. Este es el patrón correcto para desarrollar una biblioteca de utilidades
+compartida junto con un script de entrenamiento: los cambios se recogen sin reinstalar.</p>
+<h3 id="extras_require">extras_require<a class="headerlink" href="#extras_require" title="Permanent link">&para;</a></h3>
+<p>En <code>setup.py</code> o <code>pyproject.toml</code>, los <strong>extras</strong> permiten a los usuarios instalar grupos de dependencias opcionales:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># pyproject.toml</span>
+<span class="k">[project.optional-dependencies]</span>
+<span class="n">dev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;pytest&gt;=7.0&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;black&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;mypy&quot;</span><span class="p">]</span>
+<span class="n">gpu</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;torch&gt;=2.0+cu121&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;triton&quot;</span><span class="p">]</span>
+<span class="n">all</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;my-package[dev,gpu]&quot;</span><span class="p">]</span>
+</code></pre></div>
+<p>En Azure ML, podrías usar esto para mantener un paquete base ligero e instalar extras de GPU solo
+en el cómputo GPU:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># conda.yml para entorno de entrenamiento GPU</span>
+<span class="nt">dependencies</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">python=3.10.*</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pip</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-ml-lib[gpu]==1.2.3</span>
+</code></pre></div>
+<h3 id="depurar-el-infierno-de-dependencias">Depurar el infierno de dependencias<a class="headerlink" href="#depurar-el-infierno-de-dependencias" title="Permanent link">&para;</a></h3>
+<p>Cuando un trabajo falla con <code>ImportError</code> o <code>ModuleNotFoundError</code> dentro de una ejecución remota de Azure ML:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># 1. Iniciar una sesión interactiva en el mismo cómputo</span>
+az<span class="w"> </span>ml<span class="w"> </span>compute<span class="w"> </span>connect<span class="w"> </span>--name<span class="w"> </span>gpu-cluster
+
+<span class="c1"># 2. Activar el entorno conda manualmente (o verificar la imagen de Docker)</span>
+conda<span class="w"> </span>activate<span class="w"> </span>/azureml-envs/fraud-train
+
+<span class="c1"># 3. Verificar las versiones instaladas</span>
+pip<span class="w"> </span>show<span class="w"> </span>lightgbm<span class="w"> </span>scikit-learn<span class="w"> </span>numpy
+
+<span class="c1"># 4. Verificar errores de importación de forma interactiva</span>
+python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import lightgbm; print(lightgbm.__version__)&quot;</span>
+
+<span class="c1"># 5. Verificar conflictos de versión</span>
+pip<span class="w"> </span>check
+</code></pre></div>
+<blockquote>
+<p><strong>Consejo - pip check:</strong> <code>pip check</code> reporta paquetes con dependencias faltantes o incompatibles
+en el entorno actual. Ejecútalo como parte de tu pipeline de validación de entorno para detectar
+problemas antes de que se manifiesten como errores de tiempo de ejecución crípticos.</p>
+</blockquote>
+<hr />
+<h2 id="pipeline-de-validacion-del-entorno">Pipeline de validación del entorno<a class="headerlink" href="#pipeline-de-validacion-del-entorno" title="Permanent link">&para;</a></h2>
+<p>Validar un entorno antes de ejecutar trabajos de entrenamiento costosos ahorra tiempo de cómputo y detecta
+problemas de configuración a tiempo. Un pipeline de validación robusto tiene tres capas: <strong>pruebas de importación</strong>,
+<strong>pruebas de afirmación de versión</strong> y una <strong>prueba de humo</strong> que ejecuta un mini bucle de entrenamiento.</p>
+<h3 id="pruebas-automatizadas-de-entornos">Pruebas automatizadas de entornos<a class="headerlink" href="#pruebas-automatizadas-de-entornos" title="Permanent link">&para;</a></h3>
+<p>Estructura tus pruebas de entorno como una suite estándar de <code>pytest</code> para que puedan ejecutarse localmente y en CI:</p>
+<div class="highlight"><pre><span></span><code>tests/
+  environment/
+    test_imports.py
+    test_versions.py
+    test_smoke.py
+</code></pre></div>
+<h3 id="probar-importaciones-de-paquetes">Probar importaciones de paquetes<a class="headerlink" href="#probar-importaciones-de-paquetes" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># tests/environment/test_imports.py</span>
+<span class="sd">&quot;&quot;&quot;Verificar que todos los paquetes requeridos se importen sin error.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">pytest</span>
+
+<span class="n">REQUIRED_PACKAGES</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;numpy&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;pandas&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;sklearn&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;lightgbm&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;mlflow&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;azure.ai.ml&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;azure.identity&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;package&quot;</span><span class="p">,</span> <span class="n">REQUIRED_PACKAGES</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">test_package_imports</span><span class="p">(</span><span class="n">package</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Cada paquete crítico debe importarse limpiamente.&quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">importlib</span>
+    <span class="n">mod</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="n">package</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">mod</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Failed to import </span><span class="si">{</span><span class="n">package</span><span class="si">}</span><span class="s2">&quot;</span>
+</code></pre></div>
+<h3 id="pruebas-de-afirmacion-de-version">Pruebas de afirmación de versión<a class="headerlink" href="#pruebas-de-afirmacion-de-version" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># tests/environment/test_versions.py</span>
+<span class="sd">&quot;&quot;&quot;Verificar que las versiones de paquetes fijadas estén instaladas.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">importlib</span>
+<span class="kn">import</span> <span class="nn">pytest</span>
+
+<span class="c1"># Actualiza este dict cuando actualices environment.yml</span>
+<span class="n">EXPECTED_VERSIONS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;numpy&quot;</span><span class="p">:</span> <span class="s2">&quot;1.26.4&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;pandas&quot;</span><span class="p">:</span> <span class="s2">&quot;2.2.2&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;sklearn&quot;</span><span class="p">:</span> <span class="s2">&quot;1.5.0&quot;</span><span class="p">,</span>      <span class="c1"># sklearn.__version__ expuesto vía scikit-learn</span>
+    <span class="s2">&quot;lightgbm&quot;</span><span class="p">:</span> <span class="s2">&quot;4.3.0&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;mlflow&quot;</span><span class="p">:</span> <span class="s2">&quot;2.13.0&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span><span class="s2">&quot;package,expected&quot;</span><span class="p">,</span> <span class="n">EXPECTED_VERSIONS</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+<span class="k">def</span> <span class="nf">test_version</span><span class="p">(</span><span class="n">package</span><span class="p">,</span> <span class="n">expected</span><span class="p">):</span>
+    <span class="n">mod</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">import_module</span><span class="p">(</span><span class="n">package</span><span class="p">)</span>
+    <span class="n">actual</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">mod</span><span class="p">,</span> <span class="s2">&quot;__version__&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">actual</span> <span class="o">==</span> <span class="n">expected</span><span class="p">,</span> <span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">package</span><span class="si">}</span><span class="s2">: expected </span><span class="si">{</span><span class="n">expected</span><span class="si">}</span><span class="s2">, got </span><span class="si">{</span><span class="n">actual</span><span class="si">}</span><span class="s2">. &quot;</span>
+        <span class="sa">f</span><span class="s2">&quot;Update environment.yml or fix the pin.&quot;</span>
+    <span class="p">)</span>
+</code></pre></div>
+<h3 id="como-construir-una-prueba-de-humo-para-un-entorno-de-ml">Cómo construir una prueba de humo para un entorno de ML<a class="headerlink" href="#como-construir-una-prueba-de-humo-para-un-entorno-de-ml" title="Permanent link">&para;</a></h3>
+<p>Una <strong>prueba de humo</strong> ejecuta el bucle de entrenamiento completo en un conjunto de datos pequeño para verificar que el cómputo,
+la carga de datos, el ajuste del modelo y el registro de métricas funcionen de extremo a extremo sin errores:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># tests/environment/test_smoke.py</span>
+<span class="sd">&quot;&quot;&quot;Prueba de humo: ejecutar un mini bucle de entrenamiento para verificar el entorno de extremo a extremo.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">mlflow</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">GradientBoostingClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">roc_auc_score</span>
+
+<span class="k">def</span> <span class="nf">test_smoke_training</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;El bucle completo de entrenamiento → evaluación → registro en datos sintéticos debe completarse en &lt;30s.&quot;&quot;&quot;</span>
+    <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">standard_normal</span><span class="p">((</span><span class="mi">200</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">rng</span><span class="o">.</span><span class="n">standard_normal</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">start_run</span><span class="p">(</span><span class="n">run_name</span><span class="o">=</span><span class="s2">&quot;smoke_test&quot;</span><span class="p">):</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">GradientBoostingClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">[:</span><span class="mi">160</span><span class="p">],</span> <span class="n">y</span><span class="p">[:</span><span class="mi">160</span><span class="p">])</span>
+        <span class="n">auc</span> <span class="o">=</span> <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="mi">160</span><span class="p">:],</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="mi">160</span><span class="p">:])[:,</span> <span class="mi">1</span><span class="p">])</span>
+        <span class="n">mlflow</span><span class="o">.</span><span class="n">log_metric</span><span class="p">(</span><span class="s2">&quot;smoke_auc&quot;</span><span class="p">,</span> <span class="n">auc</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="mf">0.5</span> <span class="o">&lt;=</span> <span class="n">auc</span> <span class="o">&lt;=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Unreasonable AUC in smoke test: </span><span class="si">{</span><span class="n">auc</span><span class="si">}</span><span class="s2">&quot;</span>
+</code></pre></div>
+<p>Ejecutar todas las pruebas de entorno:</p>
+<div class="highlight"><pre><span></span><code>pytest<span class="w"> </span>tests/environment/<span class="w"> </span>-v<span class="w"> </span>--timeout<span class="o">=</span><span class="m">120</span>
+</code></pre></div>
+<p>Integra esto en tu flujo de trabajo de CI para que el entorno sea validado en cada cambio a
+<code>environment.yml</code> o <code>requirements.txt</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># .github/workflows/validate-env.yml</span>
+<span class="nt">on</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">push</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">paths</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;dependencies/**&quot;</span>
+
+<span class="nt">jobs</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">validate</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
+<span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v4</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Set up conda</span>
+<span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">conda-incubator/setup-miniconda@v3</span>
+<span class="w">        </span><span class="nt">with</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">environment-file</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dependencies/environment.yml</span>
+<span class="w">          </span><span class="nt">activate-environment</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fraud-train</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Run environment tests</span>
+<span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pytest tests/environment/ -v</span>
+</code></pre></div>
+<hr />
+<h2 id="configuracion-del-entorno-gpu">Configuración del entorno GPU<a class="headerlink" href="#configuracion-del-entorno-gpu" title="Permanent link">&para;</a></h2>
+<h3 id="por-que-la-configuracion-del-entorno-gpu-es-mas-dificil">Por qué la configuración del entorno GPU es más difícil<a class="headerlink" href="#por-que-la-configuracion-del-entorno-gpu-es-mas-dificil" title="Permanent link">&para;</a></h3>
+<p>Un entorno de entrenamiento GPU requiere no solo paquetes de Python sino una pila precisamente
+coincidente de <strong>componentes a nivel de sistema</strong>:</p>
+<div class="arithmatex">\[\text{Aplicación (PyTorch)} \rightarrow \text{CUDA Toolkit} \rightarrow \text{cuDNN} \rightarrow \text{Driver de GPU}\]</div>
+<p>Cada flecha es una restricción de compatibilidad. Un desajuste en cualquier nivel causa <code>RuntimeError: CUDA
+error: no kernel image is available for execution on the device</code> o un retroceso silencioso a CPU.</p>
+<h3 id="matriz-de-compatibilidad-de-versiones-de-cuda">Matriz de compatibilidad de versiones de CUDA<a class="headerlink" href="#matriz-de-compatibilidad-de-versiones-de-cuda" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Versión de PyTorch</th>
+<th>CUDA requerido</th>
+<th>cuDNN recomendado</th>
+<th>Notas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2.3.x</td>
+<td>11.8 o 12.1</td>
+<td>8.7+</td>
+<td>Recomendado para producción</td>
+</tr>
+<tr>
+<td>2.2.x</td>
+<td>11.8 o 12.1</td>
+<td>8.7+</td>
+<td>Estabilidad tipo LTS</td>
+</tr>
+<tr>
+<td>2.1.x</td>
+<td>11.8 o 12.1</td>
+<td>8.7</td>
+<td></td>
+</tr>
+<tr>
+<td>2.0.x</td>
+<td>11.7 o 11.8</td>
+<td>8.5</td>
+<td>Se introdujo Torch.compile</td>
+</tr>
+<tr>
+<td>TensorFlow 2.16.x</td>
+<td>12.3</td>
+<td>8.9</td>
+<td></td>
+</tr>
+<tr>
+<td>TensorFlow 2.13.x</td>
+<td>11.8</td>
+<td>8.6</td>
+<td>El último en soportar Python 3.8</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Nota - Driver de GPU vs CUDA Toolkit:</strong> El <strong>driver de GPU</strong> (instalado en el host) debe soportar
+la versión de CUDA que usas como objetivo. El CUDA Toolkit está incluido dentro de la imagen de Docker, no lo
+instalas en la VM host. El driver debe ser <span class="arithmatex">\(\geq\)</span> el mínimo requerido para la versión de CUDA.
+Para CUDA 12.1, la versión mínima del driver es 525.60.13 (Linux).</p>
+</blockquote>
+<h3 id="cudnn">cuDNN<a class="headerlink" href="#cudnn" title="Permanent link">&para;</a></h3>
+<p><strong>cuDNN</strong> (biblioteca CUDA Deep Neural Network) proporciona implementaciones optimizadas de convolución,
+atención y funciones de activación. Sin cuDNN, el entrenamiento en GPU es posible pero significativamente
+más lento. La versión de cuDNN debe ser compatible con la versión de CUDA y la versión del framework: los
+desajustes producen errores <code>Could not find cudnn</code> en tiempo de ejecución.</p>
+<h3 id="como-azure-ml-maneja-cuda-automaticamente">Cómo Azure ML maneja CUDA automáticamente<a class="headerlink" href="#como-azure-ml-maneja-cuda-automaticamente" title="Permanent link">&para;</a></h3>
+<p>Los entornos GPU curados de Azure ML se entregan con combinaciones precompiladas y probadas de CUDA
+Toolkit, cuDNN y el framework de ML. Las imágenes base siguen la convención de nomenclatura:</p>
+<div class="highlight"><pre><span></span><code>mcr.microsoft.com/azureml/openmpi4.1.0-cuda&lt;CUDA_VERSION&gt;-cudnn&lt;CUDNN_MAJOR&gt;-ubuntu&lt;UBUNTU_VERSION&gt;
+</code></pre></div>
+<p>Ejemplo:
+<div class="highlight"><pre><span></span><code>mcr.microsoft.com/azureml/openmpi4.1.0-cuda11.8-cudnn8-ubuntu22.04:latest
+</code></pre></div></p>
+<p>Cuando usas un entorno PyTorch curado, no instalas CUDA o cuDNN manualmente: ya están en la imagen base.
+La única versión que controlas es la <strong>versión de PyTorch</strong> y tus propios paquetes.</p>
+<h3 id="construir-un-entorno-gpu-personalizado">Construir un entorno GPU personalizado<a class="headerlink" href="#construir-un-entorno-gpu-personalizado" title="Permanent link">&para;</a></h3>
+<p>Si necesitas una combinación no estándar de CUDA/PyTorch, especifícala explícitamente:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># conda.yml para entorno personalizado CUDA 12.1 + PyTorch 2.3</span>
+<span class="nt">channels</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pytorch</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nvidia</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">conda-forge</span>
+<span class="nt">dependencies</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">python=3.11.*</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pytorch=2.3.*</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pytorch-cuda=12.1</span><span class="w">     </span><span class="c1"># instala el tiempo de ejecución de CUDA desde el canal nvidia</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cudnn=8.9.*</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pip</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">torchvision==0.18.*</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">torchaudio==2.3.*</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">azureml-mlflow==1.57.*</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="c1"># Especificación de entorno de Azure ML referenciando una imagen base CUDA</span>
+<span class="nt">$schema</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">https://azuremlschemas.azureedge.net/latest/environment.schema.json</span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pytorch-cuda121</span>
+<span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mcr.microsoft.com/azureml/openmpi4.1.0-cuda12.1-cudnn8-ubuntu22.04:latest</span>
+<span class="nt">conda_file</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./conda.yml</span>
+<span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">PyTorch 2.3 con CUDA 12.1 para entrenamiento GPU distribuido</span>
+</code></pre></div>
+<h3 id="verificar-la-disponibilidad-de-gpu-en-tiempo-de-ejecucion">Verificar la disponibilidad de GPU en tiempo de ejecución<a class="headerlink" href="#verificar-la-disponibilidad-de-gpu-en-tiempo-de-ejecucion" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Añade esto al inicio de tu script de entrenamiento para fallar rápidamente si falta la GPU</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+
+<span class="k">assert</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">(),</span> <span class="p">(</span>
+    <span class="s2">&quot;CUDA is not available. Check that: &quot;</span>
+    <span class="s2">&quot;(1) the compute target has GPUs, &quot;</span>
+    <span class="s2">&quot;(2) the environment image includes CUDA, &quot;</span>
+    <span class="s2">&quot;(3) the job distribution config is correct.&quot;</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Using </span><span class="si">{</span><span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">device_count</span><span class="p">()</span><span class="si">}</span><span class="s2"> GPU(s): </span><span class="si">{</span><span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">get_device_name</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;CUDA version: </span><span class="si">{</span><span class="n">torch</span><span class="o">.</span><span class="n">version</span><span class="o">.</span><span class="n">cuda</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;cuDNN version: </span><span class="si">{</span><span class="n">torch</span><span class="o">.</span><span class="n">backends</span><span class="o">.</span><span class="n">cudnn</span><span class="o">.</span><span class="n">version</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+<blockquote>
+<p><strong>Consejo - Precisión mixta:</strong> Para la mayoría del entrenamiento de aprendizaje profundo, habilita la <strong>precisión mixta automática
+(AMP)</strong> para usar FP16 para la mayoría de las operaciones mientras se mantiene FP32 para los cálculos críticos de estabilidad.
+Esto típicamente duplica el rendimiento del entrenamiento en GPUs modernas sin pérdida de exactitud:
+<code>scaler = torch.cuda.amp.GradScaler()</code> + <code>with torch.autocast("cuda"):</code>.</p>
+</blockquote>
+<hr />
+<h2 id="gestion-de-secretos-y-credenciales">Gestión de secretos y credenciales<a class="headerlink" href="#gestion-de-secretos-y-credenciales" title="Permanent link">&para;</a></h2>
+<h3 id="nunca-pongas-credenciales-en-el-codigo">Nunca pongas credenciales en el código<a class="headerlink" href="#nunca-pongas-credenciales-en-el-codigo" title="Permanent link">&para;</a></h3>
+<p>Codificar contraseñas, cadenas de conexión o claves de API directamente en el código fuente es uno de los
+errores de seguridad más comunes y graves en los proyectos de ML. Los secretos en el código acaban en:
+- El historial de control de versiones (incluso después de la eliminación, existen en commits antiguos).
+- Las capas de la imagen de Docker (visibles con <code>docker history</code>).
+- Los archivos de registro transmitidos de vuelta desde los trabajos de entrenamiento.
+- Capturas de pantalla, demos y documentación.</p>
+<p>El enfoque correcto es <strong>inyectar secretos en tiempo de ejecución</strong> desde un almacén de secretos administrado.</p>
+<h3 id="integracion-con-azure-key-vault">Integración con Azure Key Vault<a class="headerlink" href="#integracion-con-azure-key-vault" title="Permanent link">&para;</a></h3>
+<p>Azure Key Vault es un servicio administrado para almacenar y acceder a secretos, certificados y
+claves criptográficas. El área de trabajo de Azure ML aprovisiona un Key Vault automáticamente: úsalo:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Acceder a un secreto de Key Vault desde dentro de un trabajo de Azure ML</span>
+<span class="c1"># (el trabajo se ejecuta con una identidad administrada que tiene el rol Key Vault Secrets User)</span>
+<span class="kn">from</span> <span class="nn">azure.identity</span> <span class="kn">import</span> <span class="n">ManagedIdentityCredential</span>
+<span class="kn">from</span> <span class="nn">azure.keyvault.secrets</span> <span class="kn">import</span> <span class="n">SecretClient</span>
+
+<span class="n">credential</span> <span class="o">=</span> <span class="n">ManagedIdentityCredential</span><span class="p">()</span>
+<span class="n">kv_client</span> <span class="o">=</span> <span class="n">SecretClient</span><span class="p">(</span>
+    <span class="n">vault_url</span><span class="o">=</span><span class="s2">&quot;https://my-keyvault.vault.azure.net/&quot;</span><span class="p">,</span>
+    <span class="n">credential</span><span class="o">=</span><span class="n">credential</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">db_password</span> <span class="o">=</span> <span class="n">kv_client</span><span class="o">.</span><span class="n">get_secret</span><span class="p">(</span><span class="s2">&quot;database-password&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
+<span class="n">api_key</span> <span class="o">=</span> <span class="n">kv_client</span><span class="o">.</span><span class="n">get_secret</span><span class="p">(</span><span class="s2">&quot;external-api-key&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
+</code></pre></div>
+<p>Ninguna contraseña está almacenada en el código ni en el archivo de entorno. La credencial de identidad administrada
+es proporcionada automáticamente por el tiempo de ejecución del cómputo de Azure ML; no se requiere inicio de sesión.</p>
+<h3 id="identidad-administrada-para-el-acceso-a-datos">Identidad administrada para el acceso a datos<a class="headerlink" href="#identidad-administrada-para-el-acceso-a-datos" title="Permanent link">&para;</a></h3>
+<p>El enfoque más limpio para el acceso a datos es la <strong>identidad administrada asignada por el sistema</strong> en el clúster de
+cómputo, combinada con <strong>asignaciones de roles RBAC</strong> en las fuentes de datos:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Conceder acceso de lectura a la identidad administrada del clúster de cómputo al data lake</span>
+az<span class="w"> </span>role<span class="w"> </span>assignment<span class="w"> </span>create<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--assignee-object-id<span class="w"> </span>&lt;compute-cluster-principal-id&gt;<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--assignee-principal-type<span class="w"> </span>ServicePrincipal<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--role<span class="w"> </span><span class="s2">&quot;Storage Blob Data Reader&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--scope<span class="w"> </span>/subscriptions/&lt;sub&gt;/resourceGroups/&lt;rg&gt;/providers/Microsoft.Storage/storageAccounts/mydatalake
+</code></pre></div>
+<p>Con esta asignación, los trabajos que se ejecutan en el clúster pueden leer desde el data lake usando
+<code>DefaultAzureCredential()</code> sin ningún secreto:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">azure.identity</span> <span class="kn">import</span> <span class="n">DefaultAzureCredential</span>
+<span class="kn">from</span> <span class="nn">azure.storage.blob</span> <span class="kn">import</span> <span class="n">BlobServiceClient</span>
+
+<span class="n">credential</span> <span class="o">=</span> <span class="n">DefaultAzureCredential</span><span class="p">()</span>
+<span class="n">client</span> <span class="o">=</span> <span class="n">BlobServiceClient</span><span class="p">(</span>
+    <span class="n">account_url</span><span class="o">=</span><span class="s2">&quot;https://mydatalake.blob.core.windows.net&quot;</span><span class="p">,</span>
+    <span class="n">credential</span><span class="o">=</span><span class="n">credential</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div>
+<h3 id="variables-de-entorno-para-secretos-en-el-desarrollo-local">Variables de entorno para secretos en el desarrollo local<a class="headerlink" href="#variables-de-entorno-para-secretos-en-el-desarrollo-local" title="Permanent link">&para;</a></h3>
+<p>Para el desarrollo local donde la identidad administrada no está disponible, inyecta secretos como variables de
+entorno en lugar de codificarlos. Usa un archivo <code>.env</code> (nunca confirmado en git) y el paquete
+<code>python-dotenv</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># .env (en .gitignore)</span>
+<span class="nv">DATABASE_PASSWORD</span><span class="o">=</span>super-secret-password
+<span class="nv">API_KEY</span><span class="o">=</span>another-secret
+<span class="nv">AZURE_STORAGE_CONNECTION_STRING</span><span class="o">=</span><span class="nv">DefaultEndpointsProtocol</span><span class="o">=</span>https<span class="p">;</span>...
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="c1"># load_secrets.py</span>
+<span class="kn">from</span> <span class="nn">dotenv</span> <span class="kn">import</span> <span class="n">load_dotenv</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">load_dotenv</span><span class="p">()</span>  <span class="c1"># lee el archivo .env en variables de entorno</span>
+
+<span class="n">db_password</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;DATABASE_PASSWORD&quot;</span><span class="p">]</span>  <span class="c1"># KeyError si falta — fallar rápido</span>
+</code></pre></div>
+<p>Añade <code>.env</code> a <code>.gitignore</code> inmediatamente al crear un proyecto. Añade un archivo <code>.env.example</code> con
+valores marcadores de posición para documentar qué variables son necesarias:</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># .env.example (confirmado en git)</span>
+<span class="nv">DATABASE_PASSWORD</span><span class="o">=</span>&lt;your-database-password&gt;
+<span class="nv">API_KEY</span><span class="o">=</span>&lt;your-api-key&gt;
+</code></pre></div>
+<h3 id="cadena-de-defaultazurecredential">Cadena de DefaultAzureCredential<a class="headerlink" href="#cadena-de-defaultazurecredential" title="Permanent link">&para;</a></h3>
+<p><code>DefaultAzureCredential</code> prueba una secuencia de fuentes de credenciales y usa la primera que
+tiene éxito:</p>
+<table>
+<thead>
+<tr>
+<th>Orden</th>
+<th>Tipo de credencial</th>
+<th>Cuándo se usa</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>EnvironmentCredential</code></td>
+<td>Variables de entorno <code>AZURE_CLIENT_ID</code> + <code>AZURE_CLIENT_SECRET</code> establecidas</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>WorkloadIdentityCredential</code></td>
+<td>Ejecutándose en Kubernetes con identidad de carga de trabajo</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>ManagedIdentityCredential</code></td>
+<td>Ejecutándose en VM de Azure / cómputo de Azure ML</td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>SharedTokenCacheCredential</code></td>
+<td>Token en caché de <code>az login</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>VisualStudioCodeCredential</code></td>
+<td>Extensión de cuenta de Azure de VS Code</td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>AzureCliCredential</code></td>
+<td>Sesión <code>az login</code> activa</td>
+</tr>
+<tr>
+<td>7</td>
+<td><code>InteractiveBrowserCredential</code></td>
+<td>Abre el navegador para inicio de sesión interactivo</td>
+</tr>
+</tbody>
+</table>
+<p>Esta cadena significa que el <strong>mismo código</strong> funciona localmente (recoge el token de <code>az login</code>) y en producción
+(recoge la identidad administrada) sin ningún cambio ni secretos en el código base.</p>
+<blockquote>
+<p><strong>Nota - Principio de privilegio mínimo:</strong> Concede a la identidad administrada solo los roles que necesita.
+Un trabajo de entrenamiento que solo lee datos necesita <code>Storage Blob Data Reader</code>, no <code>Contributor</code>.
+Los permisos demasiado amplios aumentan el radio de explosión si el cómputo es comprometido.</p>
+</blockquote>
+<hr />
+<h2 id="ejemplo-de-trabajo-completo-entorno-de-proyecto-completo">Ejemplo de trabajo completo: entorno de proyecto completo<a class="headerlink" href="#ejemplo-de-trabajo-completo-entorno-de-proyecto-completo" title="Permanent link">&para;</a></h2>
+<p>Lo siguiente es una especificación de entorno de nivel de producción para un <strong>proyecto de detección de fraude</strong>,
+que demuestra todos los patrones cubiertos en este módulo: base de conda, extras de pip, registro de entorno,
+validación e integración con Key Vault.</p>
+<h3 id="estructura-del-proyecto">Estructura del proyecto<a class="headerlink" href="#estructura-del-proyecto" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>fraud-detection/
+├── dependencies/
+│   ├── environment.yml        # especificación del entorno conda
+│   ├── requirements.txt       # paquetes pip (bloqueados)
+│   └── register_env.py        # script de registro del entorno
+├── src/
+│   └── train.py
+├── tests/
+│   └── environment/
+│       ├── test_imports.py
+│       ├── test_versions.py
+│       └── test_smoke.py
+└── .env.example
+</code></pre></div>
+<h3 id="environmentyml">environment.yml<a class="headerlink" href="#environmentyml" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fraud-train</span>
+<span class="nt">channels</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">conda-forge</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">defaults</span>
+<span class="nt">dependencies</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">python=3.11.9</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">numpy=1.26.4</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pandas=2.2.2</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">scikit-learn=1.5.0</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">lightgbm=4.3.0</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">imbalanced-learn=0.12.3</span><span class="w">   </span><span class="c1"># para SMOTE en datos de fraude desequilibrados</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">shap=0.45.1</span><span class="w">               </span><span class="c1"># para explicabilidad</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">matplotlib=3.9.0</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pip</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">azureml-mlflow==1.57.0</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">azure-ai-ml==1.17.0</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">azure-identity==1.16.1</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">azure-keyvault-secrets==4.8.0</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">python-dotenv==1.0.1</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pytest==8.2.2</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pytest-timeout==2.3.1</span>
+</code></pre></div>
+<h3 id="requirementstxt-bloqueado-para-auditoria-de-pip">requirements.txt (bloqueado, para auditoría de pip)<a class="headerlink" href="#requirementstxt-bloqueado-para-auditoria-de-pip" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code># Generado por: pip freeze &gt; requirements.txt
+# Fecha: 2024-06-26
+# Python: 3.11.9
+azureml-mlflow==1.57.0
+azure-ai-ml==1.17.0
+azure-core==1.30.2
+azure-identity==1.16.1
+azure-keyvault-secrets==4.8.0
+azure-storage-blob==12.20.0
+lightgbm==4.3.0
+imbalanced-learn==0.12.3
+mlflow==2.13.0
+numpy==1.26.4
+pandas==2.2.2
+python-dotenv==1.0.1
+scikit-learn==1.5.0
+shap==0.45.1
+</code></pre></div>
+<h3 id="register_envpy-script-de-registro-del-entorno">register_env.py — script de registro del entorno<a class="headerlink" href="#register_envpy-script-de-registro-del-entorno" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">register_env.py</span>
+<span class="sd">Registrar el entorno conda fraud-train en un área de trabajo de Azure ML.</span>
+
+<span class="sd">Uso:</span>
+<span class="sd">    python register_env.py \</span>
+<span class="sd">        --workspace my-workspace \</span>
+<span class="sd">        --resource-group my-rg \</span>
+<span class="sd">        --subscription &lt;subscription-id&gt; \</span>
+<span class="sd">        [--version 1.0.0]</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">from</span> <span class="nn">azure.ai.ml</span> <span class="kn">import</span> <span class="n">MLClient</span>
+<span class="kn">from</span> <span class="nn">azure.ai.ml.entities</span> <span class="kn">import</span> <span class="n">Environment</span>
+<span class="kn">from</span> <span class="nn">azure.identity</span> <span class="kn">import</span> <span class="n">DefaultAzureCredential</span>
+
+
+<span class="n">CONDA_FILE</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="s2">&quot;environment.yml&quot;</span>
+<span class="n">BASE_IMAGE</span> <span class="o">=</span> <span class="s2">&quot;mcr.microsoft.com/azureml/openmpi4.1.0-ubuntu22.04:latest&quot;</span>
+
+
+<span class="k">def</span> <span class="nf">parse_args</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">:</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--workspace&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--resource-group&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--subscription&quot;</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--version&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;1.0.0&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parse_args</span><span class="p">()</span>
+
+    <span class="n">ml_client</span> <span class="o">=</span> <span class="n">MLClient</span><span class="p">(</span>
+        <span class="n">credential</span><span class="o">=</span><span class="n">DefaultAzureCredential</span><span class="p">(),</span>
+        <span class="n">subscription_id</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">subscription</span><span class="p">,</span>
+        <span class="n">resource_group_name</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">resource_group</span><span class="p">,</span>
+        <span class="n">workspace_name</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">workspace</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">env</span> <span class="o">=</span> <span class="n">Environment</span><span class="p">(</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;fraud-train&quot;</span><span class="p">,</span>
+        <span class="n">version</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">version</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="p">(</span>
+            <span class="s2">&quot;Entorno de producción para entrenamiento e inferencia de detección de fraude. &quot;</span>
+            <span class="s2">&quot;Fijado a versiones exactas de paquetes para reproducibilidad.&quot;</span>
+        <span class="p">),</span>
+        <span class="n">conda_file</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">CONDA_FILE</span><span class="p">),</span>
+        <span class="n">image</span><span class="o">=</span><span class="n">BASE_IMAGE</span><span class="p">,</span>
+        <span class="n">tags</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;project&quot;</span><span class="p">:</span> <span class="s2">&quot;fraud-detection&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;owner&quot;</span><span class="p">:</span> <span class="s2">&quot;ml-platform-team&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;python&quot;</span><span class="p">:</span> <span class="s2">&quot;3.11.9&quot;</span><span class="p">,</span>
+        <span class="p">},</span>
+    <span class="p">)</span>
+
+    <span class="n">registered</span> <span class="o">=</span> <span class="n">ml_client</span><span class="o">.</span><span class="n">environments</span><span class="o">.</span><span class="n">create_or_update</span><span class="p">(</span><span class="n">env</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Registered environment: </span><span class="si">{</span><span class="n">registered</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> version </span><span class="si">{</span><span class="n">registered</span><span class="o">.</span><span class="n">version</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Image build status will appear in: Azure ML Studio &gt; Environments&quot;</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
+<h3 id="ejecucion-de-validacion-completa">Ejecución de validación completa<a class="headerlink" href="#ejecucion-de-validacion-completa" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># 1. Crear el entorno conda local</span>
+conda<span class="w"> </span>env<span class="w"> </span>create<span class="w"> </span>--name<span class="w"> </span>fraud-train<span class="w"> </span>--file<span class="w"> </span>dependencies/environment.yml<span class="w"> </span>--force
+conda<span class="w"> </span>activate<span class="w"> </span>fraud-train
+
+<span class="c1"># 2. Instalar paquetes pip en el entorno conda</span>
+pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>dependencies/requirements.txt<span class="w"> </span>--no-deps
+
+<span class="c1"># 3. Ejecutar pruebas de importación y versión</span>
+pytest<span class="w"> </span>tests/environment/test_imports.py<span class="w"> </span>tests/environment/test_versions.py<span class="w"> </span>-v
+
+<span class="c1"># 4. Ejecutar prueba de humo</span>
+pytest<span class="w"> </span>tests/environment/test_smoke.py<span class="w"> </span>-v<span class="w"> </span>--timeout<span class="o">=</span><span class="m">60</span>
+
+<span class="c1"># 5. Registrar en el área de trabajo de Azure ML</span>
+python<span class="w"> </span>dependencies/register_env.py<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--workspace<span class="w"> </span>my-workspace<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--resource-group<span class="w"> </span>my-rg<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--subscription<span class="w"> </span><span class="m">00000000</span>-0000-0000-0000-000000000000<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--version<span class="w"> </span><span class="m">1</span>.0.0
+
+<span class="c1"># 6. Verificar el registro</span>
+az<span class="w"> </span>ml<span class="w"> </span>environment<span class="w"> </span>show<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--name<span class="w"> </span>fraud-train<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--version<span class="w"> </span><span class="m">1</span>.0.0<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--workspace-name<span class="w"> </span>my-workspace<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--resource-group<span class="w"> </span>my-rg
+</code></pre></div>
+<h3 id="esqueleto-de-trainpy-mostrando-patrones-de-secretos-y-mlflow">Esqueleto de train.py (mostrando patrones de secretos y MLflow)<a class="headerlink" href="#esqueleto-de-trainpy-mostrando-patrones-de-secretos-y-mlflow" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">train.py — Script de entrenamiento del modelo de detección de fraude.</span>
+<span class="sd">Diseñado para ejecutarse como un trabajo de Azure ML con identidad administrada.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">mlflow</span>
+<span class="kn">import</span> <span class="nn">mlflow.sklearn</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">GradientBoostingClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">roc_auc_score</span><span class="p">,</span> <span class="n">average_precision_score</span>
+<span class="kn">from</span> <span class="nn">azure.identity</span> <span class="kn">import</span> <span class="n">DefaultAzureCredential</span>
+<span class="kn">from</span> <span class="nn">azure.keyvault.secrets</span> <span class="kn">import</span> <span class="n">SecretClient</span>
+
+
+<span class="k">def</span> <span class="nf">get_secret</span><span class="p">(</span><span class="n">vault_url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">secret_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Recuperar un secreto de Key Vault usando la credencial ambiental.&quot;&quot;&quot;</span>
+    <span class="n">client</span> <span class="o">=</span> <span class="n">SecretClient</span><span class="p">(</span><span class="n">vault_url</span><span class="o">=</span><span class="n">vault_url</span><span class="p">,</span> <span class="n">credential</span><span class="o">=</span><span class="n">DefaultAzureCredential</span><span class="p">())</span>
+    <span class="k">return</span> <span class="n">client</span><span class="o">.</span><span class="n">get_secret</span><span class="p">(</span><span class="n">secret_name</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
+
+
+<span class="k">def</span> <span class="nf">parse_args</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">:</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--train_data&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--val_data&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--n_estimators&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--learning_rate&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--max_depth&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--keyvault_url&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">p</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parse_args</span><span class="p">()</span>
+
+    <span class="c1"># Recuperar clave de API externa de Key Vault si se proporciona URL</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">keyvault_url</span><span class="p">:</span>
+        <span class="n">_</span> <span class="o">=</span> <span class="n">get_secret</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">keyvault_url</span><span class="p">,</span> <span class="s2">&quot;fraud-db-password&quot;</span><span class="p">)</span>  <span class="c1"># ejemplo de uso</span>
+
+    <span class="c1"># Cargar datos</span>
+    <span class="n">train_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">train_data</span><span class="p">)</span>
+    <span class="n">val_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">val_data</span><span class="p">)</span>
+
+    <span class="n">feature_cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">train_df</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">c</span> <span class="o">!=</span> <span class="s2">&quot;is_fraud&quot;</span><span class="p">]</span>
+    <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span> <span class="o">=</span> <span class="n">train_df</span><span class="p">[</span><span class="n">feature_cols</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">train_df</span><span class="p">[</span><span class="s2">&quot;is_fraud&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+    <span class="n">X_val</span><span class="p">,</span> <span class="n">y_val</span> <span class="o">=</span> <span class="n">val_df</span><span class="p">[</span><span class="n">feature_cols</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">val_df</span><span class="p">[</span><span class="s2">&quot;is_fraud&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+
+    <span class="k">with</span> <span class="n">mlflow</span><span class="o">.</span><span class="n">start_run</span><span class="p">():</span>
+        <span class="c1"># Registrar hiperparámetros</span>
+        <span class="n">mlflow</span><span class="o">.</span><span class="n">log_params</span><span class="p">({</span>
+            <span class="s2">&quot;n_estimators&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">n_estimators</span><span class="p">,</span>
+            <span class="s2">&quot;learning_rate&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">learning_rate</span><span class="p">,</span>
+            <span class="s2">&quot;max_depth&quot;</span><span class="p">:</span> <span class="n">args</span><span class="o">.</span><span class="n">max_depth</span><span class="p">,</span>
+        <span class="p">})</span>
+
+        <span class="c1"># Entrenar</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">GradientBoostingClassifier</span><span class="p">(</span>
+            <span class="n">n_estimators</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">n_estimators</span><span class="p">,</span>
+            <span class="n">learning_rate</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">learning_rate</span><span class="p">,</span>
+            <span class="n">max_depth</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">max_depth</span><span class="p">,</span>
+            <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+        <span class="c1"># Evaluar</span>
+        <span class="n">proba</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_val</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">auc</span> <span class="o">=</span> <span class="n">roc_auc_score</span><span class="p">(</span><span class="n">y_val</span><span class="p">,</span> <span class="n">proba</span><span class="p">)</span>
+        <span class="n">ap</span> <span class="o">=</span> <span class="n">average_precision_score</span><span class="p">(</span><span class="n">y_val</span><span class="p">,</span> <span class="n">proba</span><span class="p">)</span>
+
+        <span class="n">mlflow</span><span class="o">.</span><span class="n">log_metrics</span><span class="p">({</span><span class="s2">&quot;val_roc_auc&quot;</span><span class="p">:</span> <span class="n">auc</span><span class="p">,</span> <span class="s2">&quot;val_avg_precision&quot;</span><span class="p">:</span> <span class="n">ap</span><span class="p">})</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;val_roc_auc=</span><span class="si">{</span><span class="n">auc</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">  val_avg_precision=</span><span class="si">{</span><span class="n">ap</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Registrar modelo con MLflow (Azure ML lo captura automáticamente)</span>
+        <span class="n">mlflow</span><span class="o">.</span><span class="n">sklearn</span><span class="o">.</span><span class="n">log_model</span><span class="p">(</span>
+            <span class="n">sk_model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+            <span class="n">artifact_path</span><span class="o">=</span><span class="s2">&quot;model&quot;</span><span class="p">,</span>
+            <span class="n">registered_model_name</span><span class="o">=</span><span class="s2">&quot;fraud-detection-gbm&quot;</span><span class="p">,</span>
+        <span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
+<blockquote>
+<p><strong>Consejo - Entrenamiento sin secretos:</strong> Con la identidad administrada en el clúster de cómputo y el RBAC de Key Vault
+configurado, el script <code>train.py</code> anterior requiere <strong>cero credenciales codificadas</strong>. La llamada
+<code>DefaultAzureCredential()</code> dentro de <code>get_secret()</code> usa automáticamente la identidad administrada del cómputo
+en tiempo de ejecución y tu sesión <code>az login</code> durante el desarrollo local: el mismo camino de código
+funciona en ambos contextos sin modificación.</p>
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Volver al principio
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Derechos de autor &copy; 2026 <a href="https://github.com/Cloud2BR-MSFTLearningHub" target="_blank" rel="noopener">Cloud2BR MSFT Learning Hub</a>
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.expand", "navigation.top", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../../assets/js/org-link.js"></script>
+      
+    
+  </body>
+</html>
