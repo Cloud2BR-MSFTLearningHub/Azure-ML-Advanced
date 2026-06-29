@@ -1,0 +1,2799 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="Capacitación de Azure Machine Learning desde fundamentos hasta MLOps avanzado." name="description"/>
+<link href="https://cloud2br-msftlearninghub.github.io/Azure-ML-Advanced/es/modules/03-introduction/" rel="canonical"/>
+<link href="../02-e2e-overview/" rel="prev"/>
+<link href="../04-ml-foundations/" rel="next"/>
+<link href="/Azure-ML-Advanced/" hreflang="en" rel="alternate"/>
+<link href="/Azure-ML-Advanced/es/" hreflang="es" rel="alternate"/>
+<link href="../../assets/img/org-logo.png" rel="icon"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.7.6" name="generator"/>
+<title>03. Introducción y Ciclo de Vida - Azure Machine Learning: Advanced</title>
+<link href="../../assets/stylesheets/main.484c7ddc.min.css" rel="stylesheet"/>
+<link href="../../assets/stylesheets/palette.ab4e12ef.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../../assets/css/custom.css" rel="stylesheet"/>
+<script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+</head>
+<body data-md-color-accent="blue" data-md-color-primary="blue" data-md-color-scheme="default" dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#introduccion-y-ciclo-de-vida-del-ml">
+          Saltar a contenido
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header md-header--shadow" data-md-component="header">
+<nav aria-label="Cabecera" class="md-header__inner md-grid">
+<a aria-label="Azure Machine Learning: Advanced" class="md-header__button md-logo" data-md-component="logo" href="../.." title="Azure Machine Learning: Advanced">
+<img alt="logo" src="../../assets/img/org-logo.png"/>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            Azure Machine Learning: Advanced
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              03. Introducción y Ciclo de Vida
+            
+          </span>
+</div>
+</div>
+</div>
+<div class="md-header__option">
+<div class="md-select">
+<button aria-label="Seleccionar idioma" class="md-header__button md-icon">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"></path></svg>
+</button>
+<div class="md-select__inner">
+<ul class="md-select__list">
+<li class="md-select__item">
+<a class="md-select__link" href="/Azure-ML-Advanced/" hreflang="en">
+              English
+            </a>
+</li>
+<li class="md-select__item">
+<a class="md-select__link" href="/Azure-ML-Advanced/es/" hreflang="es">
+              Español
+            </a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Búsqueda" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Búsqueda" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Buscar" class="md-search__options">
+<button aria-label="Limpiar" class="md-search__icon md-icon" tabindex="-1" title="Limpiar" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navegación" class="md-nav md-nav--primary" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Azure Machine Learning: Advanced" class="md-nav__button md-logo" data-md-component="logo" href="../.." title="Azure Machine Learning: Advanced">
+<img alt="logo" src="../../assets/img/org-logo.png"/>
+</a>
+    Azure Machine Learning: Advanced
+  </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../..">
+<span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../01-math-prerequisites/">
+<span class="md-ellipsis">
+    
+  
+    01. Prerrequisitos Matemáticos
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../02-e2e-overview/">
+<span class="md-ellipsis">
+    
+  
+    02. Visión General de Extremo a Extremo
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+<span class="md-ellipsis">
+    
+  
+    03. Introducción y Ciclo de Vida
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
+<span class="md-ellipsis">
+    
+  
+    03. Introducción y Ciclo de Vida
+  
+
+    
+  </span>
+</a>
+<nav aria-label="Tabla de contenidos" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#para-quien-es-esto">
+<span class="md-ellipsis">
+      
+        Para quién es esto
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#resultados-de-aprendizaje">
+<span class="md-ellipsis">
+      
+        Resultados de aprendizaje
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#ia-vs-ml-vs-ciencia-de-datos">
+<span class="md-ellipsis">
+      
+        IA vs ML vs ciencia de datos
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#principales-categorias-de-ia">
+<span class="md-ellipsis">
+      
+        Principales categorías de IA
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tipos-de-ml-de-un-vistazo">
+<span class="md-ellipsis">
+      
+        Tipos de ML de un vistazo
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#puntos-de-confusion-comunes">
+<span class="md-ellipsis">
+      
+        Puntos de confusión comunes
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#ejemplo-del-mundo-real-recomendacion-de-comercio-electronico">
+<span class="md-ellipsis">
+      
+        Ejemplo del mundo real: recomendación de comercio electrónico
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#por-que-importa-azure-ml">
+<span class="md-ellipsis">
+      
+        Por qué importa Azure ML
+      
+    </span>
+</a>
+<nav aria-label="Por qué importa Azure ML" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#que-hace-cada-etapa">
+<span class="md-ellipsis">
+      
+        Qué hace cada etapa
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#servicio-web-vs-api">
+<span class="md-ellipsis">
+      
+        Servicio web vs API
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#analisis-a-fondo-cada-concepto-explicado">
+<span class="md-ellipsis">
+      
+        Análisis a fondo: cada concepto, explicado
+      
+    </span>
+</a>
+<nav aria-label="Análisis a fondo: cada concepto, explicado" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#que-significa-realmente-aprender-a-partir-de-datos">
+<span class="md-ellipsis">
+      
+        Qué significa realmente "aprender a partir de datos"
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#ia-ml-aprendizaje-profundo-y-genai-como-conjuntos-anidados">
+<span class="md-ellipsis">
+      
+        IA, ML, aprendizaje profundo y GenAI como conjuntos anidados
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#supervisado-no-supervisado-y-por-refuerzo-la-senal-que-impulsa-el-aprendizaje">
+<span class="md-ellipsis">
+      
+        Supervisado, no supervisado y por refuerzo: la señal que impulsa el aprendizaje
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#por-que-el-pipeline-importa-mas-que-el-modelo">
+<span class="md-ellipsis">
+      
+        Por qué "el pipeline importa más que el modelo"
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#latencia-rendimiento-y-por-que-un-buen-modelo-puede-ser-inutilizable">
+<span class="md-ellipsis">
+      
+        Latencia, rendimiento y por qué un "buen" modelo puede ser inutilizable
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#planteamiento-del-problema-en-la-practica-convertir-un-objetivo-de-negocio-en-una-tarea-de-ml">
+<span class="md-ellipsis">
+      
+        Planteamiento del problema en la práctica: convertir un objetivo de negocio en una tarea de ML
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#un-recorrido-numerico-concreto">
+<span class="md-ellipsis">
+      
+        Un recorrido numérico concreto
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#api-rest-endpoint-y-servicio-web-la-misma-idea-en-distintas-capas">
+<span class="md-ellipsis">
+      
+        API REST, endpoint y servicio web: la misma idea en distintas capas
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#flujo-de-una-solicitud-de-inferencia-simple">
+<span class="md-ellipsis">
+      
+        Flujo de una solicitud de inferencia (simple)
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#flujo-de-una-solicitud-de-inferencia-detallado">
+<span class="md-ellipsis">
+      
+        Flujo de una solicitud de inferencia (detallado)
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#glosario-de-terminos-clave">
+<span class="md-ellipsis">
+      
+        Glosario de términos clave
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#verificacion-rapida">
+<span class="md-ellipsis">
+      
+        Verificación rápida
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#fundamentos-de-probabilidad-para-el-ml">
+<span class="md-ellipsis">
+      
+        Fundamentos de probabilidad para el ML
+      
+    </span>
+</a>
+<nav aria-label="Fundamentos de probabilidad para el ML" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#probabilidad-conjunta-y-marginal">
+<span class="md-ellipsis">
+      
+        Probabilidad conjunta y marginal
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#probabilidad-condicional">
+<span class="md-ellipsis">
+      
+        Probabilidad condicional
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#teorema-de-bayes">
+<span class="md-ellipsis">
+      
+        Teorema de Bayes
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#por-que-el-pensamiento-probabilistico-es-esencial-para-el-ml">
+<span class="md-ellipsis">
+      
+        Por qué el pensamiento probabilístico es esencial para el ML
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#teoria-de-la-informacion-y-entropia-en-el-ml">
+<span class="md-ellipsis">
+      
+        Teoría de la información y entropía en el ML
+      
+    </span>
+</a>
+<nav aria-label="Teoría de la información y entropía en el ML" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#entropia-midiendo-la-incertidumbre">
+<span class="md-ellipsis">
+      
+        Entropía: midiendo la incertidumbre
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#la-entropia-cruzada-como-perdida-natural-de-clasificacion">
+<span class="md-ellipsis">
+      
+        La entropía cruzada como pérdida natural de clasificación
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#divergencia-kl-midiendo-la-discrepancia-entre-distribuciones">
+<span class="md-ellipsis">
+      
+        Divergencia KL: midiendo la discrepancia entre distribuciones
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#resumen-de-la-teoria-del-aprendizaje-estadistico">
+<span class="md-ellipsis">
+      
+        Resumen de la teoría del aprendizaje estadístico
+      
+    </span>
+</a>
+<nav aria-label="Resumen de la teoría del aprendizaje estadístico" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#el-problema-de-la-generalizacion-de-forma-formal">
+<span class="md-ellipsis">
+      
+        El problema de la generalización de forma formal
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#aprendizaje-pac">
+<span class="md-ellipsis">
+      
+        Aprendizaje PAC
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#dimension-vc">
+<span class="md-ellipsis">
+      
+        Dimensión VC
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cotas-de-generalizacion">
+<span class="md-ellipsis">
+      
+        Cotas de generalización
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#por-que-mas-datos-ayuda-con-la-varianza-pero-no-con-el-sesgo">
+<span class="md-ellipsis">
+      
+        Por qué más datos ayuda con la varianza pero no con el sesgo
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#el-metodo-cientifico-como-flujo-de-trabajo-de-ml">
+<span class="md-ellipsis">
+      
+        El método científico como flujo de trabajo de ML
+      
+    </span>
+</a>
+<nav aria-label="El método científico como flujo de trabajo de ML" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#mapeo-de-la-ciencia-al-ml">
+<span class="md-ellipsis">
+      
+        Mapeo de la ciencia al ML
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#experimentos-controlados-en-ml">
+<span class="md-ellipsis">
+      
+        Experimentos controlados en ML
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#reproducibilidad-y-sus-enemigos">
+<span class="md-ellipsis">
+      
+        Reproducibilidad y sus enemigos
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#ia-responsable-y-encuadre-etico">
+<span class="md-ellipsis">
+      
+        IA responsable y encuadre ético
+      
+    </span>
+</a>
+<nav aria-label="IA responsable y encuadre ético" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#por-que-la-etica-es-una-preocupacion-de-ingenieria-de-primera-clase">
+<span class="md-ellipsis">
+      
+        Por qué la ética es una preocupación de ingeniería de primera clase
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#definiciones-de-equidad">
+<span class="md-ellipsis">
+      
+        Definiciones de equidad
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#transparencia-y-explicabilidad">
+<span class="md-ellipsis">
+      
+        Transparencia y explicabilidad
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#privacidad-y-minimizacion-de-datos">
+<span class="md-ellipsis">
+      
+        Privacidad y minimización de datos
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#responsabilidad-y-gobernanza">
+<span class="md-ellipsis">
+      
+        Responsabilidad y gobernanza
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#taxonomia-de-aplicaciones-industriales">
+<span class="md-ellipsis">
+      
+        Taxonomía de aplicaciones industriales
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#un-recorrido-numerico-completo-clasificacion-de-spam-desde-cero">
+<span class="md-ellipsis">
+      
+        Un recorrido numérico completo: clasificación de spam desde cero
+      
+    </span>
+</a>
+<nav aria-label="Un recorrido numérico completo: clasificación de spam desde cero" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#paso-1-definicion-del-problema-y-caracteristicas">
+<span class="md-ellipsis">
+      
+        Paso 1: Definición del problema y características
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#paso-2-el-modelo-de-regresion-logistica">
+<span class="md-ellipsis">
+      
+        Paso 2: El modelo de regresión logística
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#paso-3-pase-hacia-adelante-calcular-predicciones">
+<span class="md-ellipsis">
+      
+        Paso 3: Pase hacia adelante: calcular predicciones
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#paso-4-calcular-la-perdida-de-entropia-cruzada-binaria">
+<span class="md-ellipsis">
+      
+        Paso 4: Calcular la pérdida de entropía cruzada binaria
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#paso-5-calcular-los-gradientes">
+<span class="md-ellipsis">
+      
+        Paso 5: Calcular los gradientes
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#paso-6-actualizacion-por-descenso-de-gradiente">
+<span class="md-ellipsis">
+      
+        Paso 6: Actualización por descenso de gradiente
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#paso-7-segundo-pase-hacia-adelante">
+<span class="md-ellipsis">
+      
+        Paso 7: Segundo pase hacia adelante
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#paso-8-evaluar-con-una-matriz-de-confusion">
+<span class="md-ellipsis">
+      
+        Paso 8: Evaluar con una matriz de confusión
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#verificacion-rapida-ampliada">
+<span class="md-ellipsis">
+      
+        Verificación rápida (ampliada)
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../04-ml-foundations/">
+<span class="md-ellipsis">
+    
+  
+    04. Fundamentos de ML
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../05-neural-networks/">
+<span class="md-ellipsis">
+    
+  
+    05. Redes Neuronales y Deep Learning
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../06-azure-ml-environment/">
+<span class="md-ellipsis">
+    
+  
+    06. Entorno de Azure ML
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../07-environment-setup/">
+<span class="md-ellipsis">
+    
+  
+    07. Configuración del Entorno
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../08-data-preparation/">
+<span class="md-ellipsis">
+    
+  
+    08. Preparación de Datos
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../09-model-types/">
+<span class="md-ellipsis">
+    
+  
+    09. Tipos de Modelos
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../10-training-automl/">
+<span class="md-ellipsis">
+    
+  
+    10. Entrenamiento y AutoML
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../11-performance-metrics/">
+<span class="md-ellipsis">
+    
+  
+    11. Métricas de Rendimiento
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../12-results-explainability/">
+<span class="md-ellipsis">
+    
+  
+    12. Resultados y Explicabilidad
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../13-deployment/">
+<span class="md-ellipsis">
+    
+  
+    13. Despliegue
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../14-deployment-debug-k8s/">
+<span class="md-ellipsis">
+    
+  
+    14. Depuración de Despliegue
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--section md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_16" type="checkbox"/>
+<label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="">
+<span class="md-ellipsis">
+    
+  
+    Referencia
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_16_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_16">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Referencia
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/">
+<span class="md-ellipsis">
+    
+  
+    Visión General
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/model-math-deep-dive/">
+<span class="md-ellipsis">
+    
+  
+    Análisis Matemático Profundo de Modelos
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/cli-commands/">
+<span class="md-ellipsis">
+    
+  
+    Comandos CLI
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/glossary/">
+<span class="md-ellipsis">
+    
+  
+    Glosario
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Tabla de contenidos" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#para-quien-es-esto">
+<span class="md-ellipsis">
+      
+        Para quién es esto
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#resultados-de-aprendizaje">
+<span class="md-ellipsis">
+      
+        Resultados de aprendizaje
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#ia-vs-ml-vs-ciencia-de-datos">
+<span class="md-ellipsis">
+      
+        IA vs ML vs ciencia de datos
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#principales-categorias-de-ia">
+<span class="md-ellipsis">
+      
+        Principales categorías de IA
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tipos-de-ml-de-un-vistazo">
+<span class="md-ellipsis">
+      
+        Tipos de ML de un vistazo
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#puntos-de-confusion-comunes">
+<span class="md-ellipsis">
+      
+        Puntos de confusión comunes
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#ejemplo-del-mundo-real-recomendacion-de-comercio-electronico">
+<span class="md-ellipsis">
+      
+        Ejemplo del mundo real: recomendación de comercio electrónico
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#por-que-importa-azure-ml">
+<span class="md-ellipsis">
+      
+        Por qué importa Azure ML
+      
+    </span>
+</a>
+<nav aria-label="Por qué importa Azure ML" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#que-hace-cada-etapa">
+<span class="md-ellipsis">
+      
+        Qué hace cada etapa
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#servicio-web-vs-api">
+<span class="md-ellipsis">
+      
+        Servicio web vs API
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#analisis-a-fondo-cada-concepto-explicado">
+<span class="md-ellipsis">
+      
+        Análisis a fondo: cada concepto, explicado
+      
+    </span>
+</a>
+<nav aria-label="Análisis a fondo: cada concepto, explicado" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#que-significa-realmente-aprender-a-partir-de-datos">
+<span class="md-ellipsis">
+      
+        Qué significa realmente "aprender a partir de datos"
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#ia-ml-aprendizaje-profundo-y-genai-como-conjuntos-anidados">
+<span class="md-ellipsis">
+      
+        IA, ML, aprendizaje profundo y GenAI como conjuntos anidados
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#supervisado-no-supervisado-y-por-refuerzo-la-senal-que-impulsa-el-aprendizaje">
+<span class="md-ellipsis">
+      
+        Supervisado, no supervisado y por refuerzo: la señal que impulsa el aprendizaje
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#por-que-el-pipeline-importa-mas-que-el-modelo">
+<span class="md-ellipsis">
+      
+        Por qué "el pipeline importa más que el modelo"
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#latencia-rendimiento-y-por-que-un-buen-modelo-puede-ser-inutilizable">
+<span class="md-ellipsis">
+      
+        Latencia, rendimiento y por qué un "buen" modelo puede ser inutilizable
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#planteamiento-del-problema-en-la-practica-convertir-un-objetivo-de-negocio-en-una-tarea-de-ml">
+<span class="md-ellipsis">
+      
+        Planteamiento del problema en la práctica: convertir un objetivo de negocio en una tarea de ML
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#un-recorrido-numerico-concreto">
+<span class="md-ellipsis">
+      
+        Un recorrido numérico concreto
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#api-rest-endpoint-y-servicio-web-la-misma-idea-en-distintas-capas">
+<span class="md-ellipsis">
+      
+        API REST, endpoint y servicio web: la misma idea en distintas capas
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#flujo-de-una-solicitud-de-inferencia-simple">
+<span class="md-ellipsis">
+      
+        Flujo de una solicitud de inferencia (simple)
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#flujo-de-una-solicitud-de-inferencia-detallado">
+<span class="md-ellipsis">
+      
+        Flujo de una solicitud de inferencia (detallado)
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#glosario-de-terminos-clave">
+<span class="md-ellipsis">
+      
+        Glosario de términos clave
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#verificacion-rapida">
+<span class="md-ellipsis">
+      
+        Verificación rápida
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#fundamentos-de-probabilidad-para-el-ml">
+<span class="md-ellipsis">
+      
+        Fundamentos de probabilidad para el ML
+      
+    </span>
+</a>
+<nav aria-label="Fundamentos de probabilidad para el ML" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#probabilidad-conjunta-y-marginal">
+<span class="md-ellipsis">
+      
+        Probabilidad conjunta y marginal
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#probabilidad-condicional">
+<span class="md-ellipsis">
+      
+        Probabilidad condicional
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#teorema-de-bayes">
+<span class="md-ellipsis">
+      
+        Teorema de Bayes
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#por-que-el-pensamiento-probabilistico-es-esencial-para-el-ml">
+<span class="md-ellipsis">
+      
+        Por qué el pensamiento probabilístico es esencial para el ML
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#teoria-de-la-informacion-y-entropia-en-el-ml">
+<span class="md-ellipsis">
+      
+        Teoría de la información y entropía en el ML
+      
+    </span>
+</a>
+<nav aria-label="Teoría de la información y entropía en el ML" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#entropia-midiendo-la-incertidumbre">
+<span class="md-ellipsis">
+      
+        Entropía: midiendo la incertidumbre
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#la-entropia-cruzada-como-perdida-natural-de-clasificacion">
+<span class="md-ellipsis">
+      
+        La entropía cruzada como pérdida natural de clasificación
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#divergencia-kl-midiendo-la-discrepancia-entre-distribuciones">
+<span class="md-ellipsis">
+      
+        Divergencia KL: midiendo la discrepancia entre distribuciones
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#resumen-de-la-teoria-del-aprendizaje-estadistico">
+<span class="md-ellipsis">
+      
+        Resumen de la teoría del aprendizaje estadístico
+      
+    </span>
+</a>
+<nav aria-label="Resumen de la teoría del aprendizaje estadístico" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#el-problema-de-la-generalizacion-de-forma-formal">
+<span class="md-ellipsis">
+      
+        El problema de la generalización de forma formal
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#aprendizaje-pac">
+<span class="md-ellipsis">
+      
+        Aprendizaje PAC
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#dimension-vc">
+<span class="md-ellipsis">
+      
+        Dimensión VC
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cotas-de-generalizacion">
+<span class="md-ellipsis">
+      
+        Cotas de generalización
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#por-que-mas-datos-ayuda-con-la-varianza-pero-no-con-el-sesgo">
+<span class="md-ellipsis">
+      
+        Por qué más datos ayuda con la varianza pero no con el sesgo
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#el-metodo-cientifico-como-flujo-de-trabajo-de-ml">
+<span class="md-ellipsis">
+      
+        El método científico como flujo de trabajo de ML
+      
+    </span>
+</a>
+<nav aria-label="El método científico como flujo de trabajo de ML" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#mapeo-de-la-ciencia-al-ml">
+<span class="md-ellipsis">
+      
+        Mapeo de la ciencia al ML
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#experimentos-controlados-en-ml">
+<span class="md-ellipsis">
+      
+        Experimentos controlados en ML
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#reproducibilidad-y-sus-enemigos">
+<span class="md-ellipsis">
+      
+        Reproducibilidad y sus enemigos
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#ia-responsable-y-encuadre-etico">
+<span class="md-ellipsis">
+      
+        IA responsable y encuadre ético
+      
+    </span>
+</a>
+<nav aria-label="IA responsable y encuadre ético" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#por-que-la-etica-es-una-preocupacion-de-ingenieria-de-primera-clase">
+<span class="md-ellipsis">
+      
+        Por qué la ética es una preocupación de ingeniería de primera clase
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#definiciones-de-equidad">
+<span class="md-ellipsis">
+      
+        Definiciones de equidad
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#transparencia-y-explicabilidad">
+<span class="md-ellipsis">
+      
+        Transparencia y explicabilidad
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#privacidad-y-minimizacion-de-datos">
+<span class="md-ellipsis">
+      
+        Privacidad y minimización de datos
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#responsabilidad-y-gobernanza">
+<span class="md-ellipsis">
+      
+        Responsabilidad y gobernanza
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#taxonomia-de-aplicaciones-industriales">
+<span class="md-ellipsis">
+      
+        Taxonomía de aplicaciones industriales
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#un-recorrido-numerico-completo-clasificacion-de-spam-desde-cero">
+<span class="md-ellipsis">
+      
+        Un recorrido numérico completo: clasificación de spam desde cero
+      
+    </span>
+</a>
+<nav aria-label="Un recorrido numérico completo: clasificación de spam desde cero" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#paso-1-definicion-del-problema-y-caracteristicas">
+<span class="md-ellipsis">
+      
+        Paso 1: Definición del problema y características
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#paso-2-el-modelo-de-regresion-logistica">
+<span class="md-ellipsis">
+      
+        Paso 2: El modelo de regresión logística
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#paso-3-pase-hacia-adelante-calcular-predicciones">
+<span class="md-ellipsis">
+      
+        Paso 3: Pase hacia adelante: calcular predicciones
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#paso-4-calcular-la-perdida-de-entropia-cruzada-binaria">
+<span class="md-ellipsis">
+      
+        Paso 4: Calcular la pérdida de entropía cruzada binaria
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#paso-5-calcular-los-gradientes">
+<span class="md-ellipsis">
+      
+        Paso 5: Calcular los gradientes
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#paso-6-actualizacion-por-descenso-de-gradiente">
+<span class="md-ellipsis">
+      
+        Paso 6: Actualización por descenso de gradiente
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#paso-7-segundo-pase-hacia-adelante">
+<span class="md-ellipsis">
+      
+        Paso 7: Segundo pase hacia adelante
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#paso-8-evaluar-con-una-matriz-de-confusion">
+<span class="md-ellipsis">
+      
+        Paso 8: Evaluar con una matriz de confusión
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#verificacion-rapida-ampliada">
+<span class="md-ellipsis">
+      
+        Verificación rápida (ampliada)
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1 id="introduccion-y-ciclo-de-vida-del-ml">Introducción y ciclo de vida del ML<a class="headerlink" href="#introduccion-y-ciclo-de-vida-del-ml" title="Permanent link">¶</a></h1>
+<p>Este curso está diseñado para estudiantes que comienzan desde cero y avanzan hacia el<br/>
+pensamiento de MLOps en producción. El objetivo no es solo definir términos, sino construir intuición sobre cómo<br/>
+se diseñan, se entregan y se operan los sistemas reales de ML.</p>
+<h2 id="para-quien-es-esto">Para quién es esto<a class="headerlink" href="#para-quien-es-esto" title="Permanent link">¶</a></h2>
+<ul>
+<li>Principiantes que saben poco o nada sobre ML.</li>
+<li>Ingenieros que saben programar pero necesitan comprender la plataforma de ML de extremo a extremo.</li>
+<li>Equipos que se preparan para desplegar cargas de trabajo de Azure ML en producción.</li>
+</ul>
+<h2 id="resultados-de-aprendizaje">Resultados de aprendizaje<a class="headerlink" href="#resultados-de-aprendizaje" title="Permanent link">¶</a></h2>
+<p>Al finalizar este módulo, deberías ser capaz de:</p>
+<ol>
+<li>Explicar la diferencia entre IA, ML y ciencia de datos.</li>
+<li>Identificar las principales categorías de IA y ML.</li>
+<li>Describir el ciclo de vida de Azure ML desde el planteamiento del problema hasta el monitoreo.</li>
+<li>Explicar cómo un modelo desplegado se expone como una API o servicio web.</li>
+</ol>
+<h2 id="ia-vs-ml-vs-ciencia-de-datos">IA vs ML vs ciencia de datos<a class="headerlink" href="#ia-vs-ml-vs-ciencia-de-datos" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Tema</th>
+<th>Qué es</th>
+<th>Objetivo</th>
+<th>Salida típica</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IA (Inteligencia Artificial)</td>
+<td>Campo amplio de construcción de sistemas que realizan tareas que requieren inteligencia similar a la humana</td>
+<td>Razonar, planear, percibir, generar, decidir</td>
+<td>Comportamiento inteligente</td>
+</tr>
+<tr>
+<td>ML (Aprendizaje Automático)</td>
+<td>Subconjunto de la IA donde los sistemas aprenden patrones a partir de datos</td>
+<td>Predecir/estimar resultados a partir de ejemplos</td>
+<td>Modelo entrenado</td>
+</tr>
+<tr>
+<td>Ciencia de datos</td>
+<td>Práctica interdisciplinaria de extraer conocimiento a partir de datos</td>
+<td>Comprender los datos y apoyar las decisiones</td>
+<td>Análisis, tableros, modelos</td>
+</tr>
+</tbody>
+</table>
+<p>Relación clave para principiantes:</p>
+<ul>
+<li>La <strong>IA</strong> es el paraguas que abarca todo.</li>
+<li>El <strong>ML</strong> es una de las principales formas de construir sistemas de IA.</li>
+<li>La <strong>ciencia de datos</strong> usa estadística, ML y conocimiento del dominio para resolver problemas de negocio<br/>
+y comunicar hallazgos.</li>
+</ul>
+<p>En resumen: la IA es la misión, el ML es un método y la ciencia de datos es la práctica más amplia.</p>
+<h2 id="principales-categorias-de-ia">Principales categorías de IA<a class="headerlink" href="#principales-categorias-de-ia" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Categoría</th>
+<th>Descripción</th>
+<th>Ejemplos del mundo real</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IA simbólica / basada en reglas</td>
+<td>Reglas y lógica explícitas creadas por humanos</td>
+<td>Sistemas expertos, motores de reglas de negocio</td>
+</tr>
+<tr>
+<td>IA de aprendizaje automático</td>
+<td>Aprende a partir de datos en lugar de reglas codificadas a mano</td>
+<td>Puntuación de fraude, pronóstico de demanda</td>
+</tr>
+<tr>
+<td>IA generativa</td>
+<td>Aprende a generar contenido nuevo</td>
+<td>Generación de texto, generación de imágenes, asistentes de código</td>
+</tr>
+<tr>
+<td>Búsqueda/planificación clásica</td>
+<td>Encuentra acciones para optimizar un objetivo</td>
+<td>Planificación de rutas, programación</td>
+</tr>
+</tbody>
+</table>
+<p>Nota práctica: muchas soluciones empresariales combinan categorías. Ejemplo: un sistema de fraude puede<br/>
+usar puntuación de ML supervisado más barreras de protección basadas en reglas.</p>
+<h2 id="tipos-de-ml-de-un-vistazo">Tipos de ML de un vistazo<a class="headerlink" href="#tipos-de-ml-de-un-vistazo" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>Tipo</th>
+<th>Requisito de datos</th>
+<th>Tarea típica</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Aprendizaje supervisado</td>
+<td>Datos etiquetados <span class="arithmatex">\((X, y)\)</span></td>
+<td>Clasificación, regresión</td>
+</tr>
+<tr>
+<td>Aprendizaje no supervisado</td>
+<td>Datos sin etiquetar <span class="arithmatex">\(X\)</span></td>
+<td>Agrupamiento, detección de anomalías</td>
+</tr>
+<tr>
+<td>Aprendizaje por refuerzo</td>
+<td>Entorno + señal de recompensa</td>
+<td>Decisión/control secuencial</td>
+</tr>
+<tr>
+<td>Aprendizaje semisupervisado</td>
+<td>Pocos etiquetados + muchos sin etiquetar</td>
+<td>Clasificación con etiquetas escasas</td>
+</tr>
+<tr>
+<td>Aprendizaje autosupervisado</td>
+<td>Etiquetas generadas a partir de los propios datos</td>
+<td>Aprendizaje de representaciones (NLP/CV)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="puntos-de-confusion-comunes">Puntos de confusión comunes<a class="headerlink" href="#puntos-de-confusion-comunes" title="Permanent link">¶</a></h2>
+<ul>
+<li>Un modelo puede ser "preciso" pero aun así inutilizable si la latencia es demasiado alta.</li>
+<li>Un modelo puede ser estadísticamente sólido pero fallar en las comprobaciones de equidad/cumplimiento.</li>
+<li>Un modelo no es un producto por sí solo; el sistema de datos y operaciones que lo rodea importa.</li>
+<li>El aprendizaje profundo es un subconjunto del ML, no algo separado; usa redes neuronales con muchas capas.</li>
+<li>"Entrenar" un modelo significa encontrar valores de parámetros que minimicen una función de pérdida sobre los datos, no enseñar en el sentido humano.</li>
+</ul>
+<h2 id="ejemplo-del-mundo-real-recomendacion-de-comercio-electronico">Ejemplo del mundo real: recomendación de comercio electrónico<a class="headerlink" href="#ejemplo-del-mundo-real-recomendacion-de-comercio-electronico" title="Permanent link">¶</a></h2>
+<p>Para concretar esto, así es como toda la pila tecnológica se asigna a un producto:</p>
+<table>
+<thead>
+<tr>
+<th>Aspecto</th>
+<th>Elección tecnológica</th>
+<th>Etapa del ciclo de vida del ML</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Recolectar eventos de usuario</td>
+<td>Transmisión de eventos (Kafka, Event Hub)</td>
+<td>Ingesta de datos</td>
+</tr>
+<tr>
+<td>Almacenar características</td>
+<td>Feature store o Azure Data Lake</td>
+<td>Preparación de datos</td>
+</tr>
+<tr>
+<td>Entrenar el modelo</td>
+<td>Trabajo de entrenamiento de Azure ML</td>
+<td>Entrenamiento</td>
+</tr>
+<tr>
+<td>Servir recomendaciones</td>
+<td>Endpoint en línea (AKS)</td>
+<td>Despliegue</td>
+</tr>
+<tr>
+<td>Detectar modelo obsoleto</td>
+<td>Monitor de data drift de Azure ML</td>
+<td>Monitoreo</td>
+</tr>
+</tbody>
+</table>
+<p>El modelo es un componente. El pipeline que lo rodea es lo que lo hace confiable.</p>
+<h2 id="por-que-importa-azure-ml">Por qué importa Azure ML<a class="headerlink" href="#por-que-importa-azure-ml" title="Permanent link">¶</a></h2>
+<p>Azure Machine Learning te ofrece la plataforma administrada para ejecutar el ciclo de vida completo con<br/>
+reproducibilidad y gobernanza: activos de datos/modelos versionados, ejecuciones rastreadas, endpoints de<br/>
+despliegue y monitoreo.</p>
+<p>Azure Machine Learning organiza el ciclo de vida de extremo a extremo:</p>
+<ol>
+<li>Planteamiento del problema</li>
+<li>Preparación de datos</li>
+<li>Entrenamiento y validación</li>
+<li>Registro del modelo</li>
+<li>Despliegue</li>
+<li>Monitoreo y reentrenamiento</li>
+</ol>
+<p>Esto no es un camino lineal. Los sistemas de producción hacen un ciclo continuo desde el monitoreo de vuelta a<br/>
+los datos y el entrenamiento cuando la calidad del modelo o las distribuciones de datos cambian.</p>
+<div class="mermaid">flowchart LR
+  A[Problem Framing] --&gt; B[Data Preparation]
+  B --&gt; C[Training and Validation]
+  C --&gt; D[Model Registration]
+  D --&gt; E[Deployment]
+  E --&gt; F[Monitoring]
+  F --&gt; C
+</div>
+<h3 id="que-hace-cada-etapa">Qué hace cada etapa<a class="headerlink" href="#que-hace-cada-etapa" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Etapa</th>
+<th>Pregunta principal</th>
+<th>Salida clave</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Planteamiento del problema</td>
+<td>¿Qué decisión estamos tratando de mejorar?</td>
+<td>Definición de KPI de negocio, criterios de éxito</td>
+</tr>
+<tr>
+<td>Preparación de datos</td>
+<td>¿Confiamos en los datos y las etiquetas?</td>
+<td>Conjunto de datos validado y versionado</td>
+</tr>
+<tr>
+<td>Entrenamiento</td>
+<td>¿Qué modelo aprende mejor la señal?</td>
+<td>Modelos candidatos con métricas rastreadas</td>
+</tr>
+<tr>
+<td>Registro</td>
+<td>¿El artefacto está versionado y es reproducible?</td>
+<td>Modelo registrado con linaje</td>
+</tr>
+<tr>
+<td>Despliegue</td>
+<td>¿Los consumidores pueden llamar a este modelo de forma segura?</td>
+<td>Endpoint activo con autenticación y monitoreo</td>
+</tr>
+<tr>
+<td>Monitoreo</td>
+<td>¿La calidad es estable a lo largo del tiempo en producción?</td>
+<td>Alertas de drift y de calidad, señales de reentrenamiento</td>
+</tr>
+</tbody>
+</table>
+<p>Nota: la etapa 1 (planteamiento del problema) a menudo recibe poca inversión. La razón más común por la que los proyectos de ML fallan es un objetivo de negocio mal definido, no un modelo débil.</p>
+<p><img alt="Herramientas de infraestructura de ML para producción" src="../../assets/img/ml-infrastructure-tools-for-production.svg"/></p>
+<blockquote>
+<p><strong>Nota - Qué muestra esto:</strong> La pila de ML de producción es mucho más grande que el modelo en sí: la ingesta, el almacenamiento de características,<br/>
+la orquestación del entrenamiento, el servicio y el monitoreo son todas herramientas distintas. La conclusión para quienes aprenden Azure<br/>
+ML es que elegir un modelo es una casilla entre muchas: la mayor parte del trabajo de confiabilidad ocurre en<br/>
+la infraestructura circundante.</p>
+</blockquote>
+<p><img alt="Etapas del flujo de trabajo de ML" src="../../assets/img/ml_workflow_stages.svg"/></p>
+<blockquote>
+<p><strong>Nota - Qué muestra esto:</strong> Las etapas del flujo de trabajo se asignan una a una al ciclo de vida de Azure ML (planteamiento del problema → datos →<br/>
+entrenamiento → registro → despliegue → monitoreo). Observa el bucle de regreso del monitoreo a<br/>
+los datos/entrenamiento: el ML de producción es iterativo, no un pipeline unidireccional.</p>
+</blockquote>
+<p><img alt="Visión general del flujo de ML" src="../../assets/img/Overview_ML_flow.svg"/></p>
+<blockquote>
+<p><strong>Nota - Qué muestra esto:</strong> Una vista de extremo a extremo de cómo los datos en bruto se convierten en una predicción servida. Úsala para ubicar dónde encaja cada<br/>
+módulo posterior: la preparación de datos, el entrenamiento del modelo, el despliegue y el monitoreo son todas etapas<br/>
+de este único flujo.</p>
+</blockquote>
+<h2 id="servicio-web-vs-api">Servicio web vs API<a class="headerlink" href="#servicio-web-vs-api" title="Permanent link">¶</a></h2>
+<ul>
+<li>Un modelo de Azure ML desplegado normalmente se expone como un endpoint de API REST.</li>
+<li>En la práctica, los equipos suelen decir "servicio web" para referirse a la interfaz de scoring desplegada.</li>
+</ul>
+<h2 id="analisis-a-fondo-cada-concepto-explicado">Análisis a fondo: cada concepto, explicado<a class="headerlink" href="#analisis-a-fondo-cada-concepto-explicado" title="Permanent link">¶</a></h2>
+<p>Esta sección amplía los términos usados arriba para que ningún concepto quede como una caja negra.</p>
+<h3 id="que-significa-realmente-aprender-a-partir-de-datos">Qué significa realmente "aprender a partir de datos"<a class="headerlink" href="#que-significa-realmente-aprender-a-partir-de-datos" title="Permanent link">¶</a></h3>
+<p>Un programa clásico es una función fija escrita por un humano: <code>output = program(input)</code>.<br/>
+El aprendizaje automático <strong>invierte</strong> esto. Tú proporcionas ejemplos de entradas y salidas deseadas, y<br/>
+un procedimiento de optimización busca una función que las reproduzca y, lo que es crucial,<br/>
+<em>generalice</em> a entradas no vistas. Formalmente, el ML asume que los datos provienen de una distribución<br/>
+conjunta desconocida <span class="arithmatex">\(P(X, Y)\)</span>, y el objetivo es aprender una función <span class="arithmatex">\(f\)</span> que minimice el<br/>
+<strong>riesgo esperado</strong> sobre esa distribución:</p>
+<div class="arithmatex">\[  
+R(f) = \mathbb{E}_{(x,y)\sim P}\big[\mathcal{L}(f(x), y)\big]  
+\]</div>
+<p>Como <span class="arithmatex">\(P\)</span> es desconocida, en su lugar minimizamos el <strong>riesgo empírico</strong> sobre una muestra finita<br/>
+(el conjunto de entrenamiento). Toda la disciplina del ML consiste en hacer que esa aproximación<br/>
+sea confiable: por eso la calidad de los datos, la validación y el monitoreo importan tanto como el<br/>
+algoritmo.</p>
+<h3 id="ia-ml-aprendizaje-profundo-y-genai-como-conjuntos-anidados">IA, ML, aprendizaje profundo y GenAI como conjuntos anidados<a class="headerlink" href="#ia-ml-aprendizaje-profundo-y-genai-como-conjuntos-anidados" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Término</th>
+<th>Alcance preciso</th>
+<th>Qué lo distingue</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Inteligencia Artificial</td>
+<td>Cualquier sistema que exhibe un comportamiento "inteligente" orientado a objetivos</td>
+<td>Incluye lógica escrita a mano, búsqueda y aprendizaje</td>
+</tr>
+<tr>
+<td>Aprendizaje Automático</td>
+<td>Sistemas de IA que mejoran a partir de datos</td>
+<td>Los parámetros se <em>ajustan</em>, no se codifican a mano</td>
+</tr>
+<tr>
+<td>Aprendizaje Profundo</td>
+<td>ML que usa redes neuronales multicapa</td>
+<td>Aprende representaciones jerárquicas de características de forma automática</td>
+</tr>
+<tr>
+<td>IA Generativa</td>
+<td>Modelos que aprenden <span class="arithmatex">\(P(X)\)</span> (o <span class="arithmatex">\(P(X\mid \text{prompt})\)</span>) para sintetizar datos nuevos</td>
+<td>Produce contenido en lugar de solo etiquetas/puntuaciones</td>
+</tr>
+</tbody>
+</table>
+<p>El modelo mental: cada uno es un subconjunto estricto del anterior. Una regresión logística es<br/>
+ML pero no aprendizaje profundo; una CNN es aprendizaje profundo; un modelo de difusión o un LLM es aprendizaje profundo<br/>
+<em>y</em> IA generativa.</p>
+<h3 id="supervisado-no-supervisado-y-por-refuerzo-la-senal-que-impulsa-el-aprendizaje">Supervisado, no supervisado y por refuerzo: la señal que impulsa el aprendizaje<a class="headerlink" href="#supervisado-no-supervisado-y-por-refuerzo-la-senal-que-impulsa-el-aprendizaje" title="Permanent link">¶</a></h3>
+<p>Las familias difieren solo en <strong>qué señal de retroalimentación está disponible</strong>:</p>
+<ul>
+<li><strong>Supervisado</strong>: cada ejemplo lleva una respuesta correcta <span class="arithmatex">\(y\)</span>. La pérdida mide directamente la<br/>
+brecha entre la predicción y la verdad, de modo que el gradiente "sabe" en qué dirección moverse.</li>
+<li><strong>No supervisado</strong>: no hay <span class="arithmatex">\(y\)</span>. En su lugar, el objetivo recompensa la estructura que el modelo<br/>
+descubre por sí mismo: minimizar el error de reconstrucción, maximizar la compacidad de los grupos o<br/>
+maximizar la verosimilitud de los datos bajo un modelo de densidad.</li>
+<li><strong>Por refuerzo</strong>: la retroalimentación es una <strong>recompensa</strong> escalar y retardada obtenida al interactuar con un<br/>
+entorno. La parte difícil es la <em>asignación de crédito</em>: decidir qué acciones anteriores causaron<br/>
+una recompensa posterior.</li>
+<li>El <strong>autosupervisado</strong> es el puente que impulsa los modelos fundacionales: fabrica una<br/>
+señal supervisada <em>a partir de los propios datos</em> (predecir la palabra enmascarada, el siguiente token, el<br/>
+parche de imagen faltante), brindando los beneficios de escala del aprendizaje supervisado sin etiquetas manuales.</li>
+</ul>
+<h3 id="por-que-el-pipeline-importa-mas-que-el-modelo">Por qué "el pipeline importa más que el modelo"<a class="headerlink" href="#por-que-el-pipeline-importa-mas-que-el-modelo" title="Permanent link">¶</a></h3>
+<p>El diagrama del ciclo de vida es un bucle cerrado a propósito. En producción, el modo de falla dominante es<br/>
+no un algoritmo débil, sino un <strong>cambio de distribución</strong>: los datos que el modelo ve en producción<br/>
+se alejan de los datos con los que fue entrenado (<code>P_train(X) ≠ P_prod(X)</code>), de modo que un modelo que era<br/>
+preciso al lanzarse se degrada silenciosamente. La arista de retroalimentación monitoreo → entrenamiento existe para<br/>
+detectar esto y reentrenar. Esta es la idea central de <strong>MLOps</strong>: tratar los datos, los modelos y los<br/>
+despliegues como activos versionados, comprobables y observables en lugar de artefactos de un solo uso.</p>
+<h3 id="latencia-rendimiento-y-por-que-un-buen-modelo-puede-ser-inutilizable">Latencia, rendimiento y por qué un "buen" modelo puede ser inutilizable<a class="headerlink" href="#latencia-rendimiento-y-por-que-un-buen-modelo-puede-ser-inutilizable" title="Permanent link">¶</a></h3>
+<p>Dos términos operativos aparecen a lo largo del curso:</p>
+<ul>
+<li><strong>Latencia</strong>: tiempo para atender una sola solicitud (a menudo medido en el percentil p95 o p99,<br/>
+no en el promedio, porque la latencia de cola es lo que los usuarios sienten).</li>
+<li><strong>Rendimiento</strong>: solicitudes atendidas por segundo (QPS) con una latencia aceptable.</li>
+</ul>
+<p>Un modelo que obtiene 0.99 de AUC pero necesita 800 ms por llamada puede ser inútil para un flujo de pago<br/>
+con un presupuesto de 100 ms. Por lo tanto, la selección del modelo es siempre una optimización <em>conjunta</em> sobre<br/>
+la exactitud, la latencia, el costo y las restricciones de gobernanza: un tema que se repite en cada módulo posterior.</p>
+<h3 id="planteamiento-del-problema-en-la-practica-convertir-un-objetivo-de-negocio-en-una-tarea-de-ml">Planteamiento del problema en la práctica: convertir un objetivo de negocio en una tarea de ML<a class="headerlink" href="#planteamiento-del-problema-en-la-practica-convertir-un-objetivo-de-negocio-en-una-tarea-de-ml" title="Permanent link">¶</a></h3>
+<p>El planteamiento del problema es la etapa donde la mayoría de los proyectos se ganan o se pierden silenciosamente, así que merece una<br/>
+lista de verificación concreta. El trabajo consiste en traducir un deseo de negocio vago ("reducir la fuga de clientes") en una<br/>
+tarea de aprendizaje precisa y medible. Cinco preguntas fuerzan esa traducción:</p>
+<ol>
+<li><strong>¿Qué decisión cambia a causa de la predicción?</strong> Si ningún humano o sistema actuará<br/>
+  de manera diferente, el modelo no tiene valor. "Predecir la fuga de clientes" solo es útil si activa una<br/>
+   oferta de retención. La decisión define todo el proyecto.</li>
+<li><strong>¿Cuál es la unidad de predicción?</strong> ¿Una fila por cliente? ¿Por cliente por mes? ¿Por<br/>
+  sesión? Esto fija la granularidad de tus datos y etiquetas.</li>
+<li><strong>¿Qué es exactamente la etiqueta?</strong> "Fuga de clientes" debe convertirse en una regla: por ejemplo, "ninguna compra en<br/>
+  los próximos 60 días". Las etiquetas ambiguas producen modelos que aprenden lo incorrecto.</li>
+<li><strong>¿Cómo se ve el éxito como un número?</strong> Vincula el modelo a un KPI de negocio (ingresos<br/>
+  retenidos, fraude detectado, costo evitado), no solo a la exactitud. Esta es la métrica por la que se juzga el<br/>
+   proyecto.</li>
+<li><strong>¿Cuál es el costo de cada tipo de error?</strong> Un falso positivo (marcar a un cliente leal) y<br/>
+  un falso negativo (pasar por alto a uno que se va) rara vez cuestan lo mismo. Esta asimetría impulsa la función<br/>
+   de pérdida y el umbral de decisión en los módulos posteriores.</li>
+</ol>
+<blockquote>
+<p><strong>Nota - La trampa del planteamiento:</strong> Un modelo técnicamente excelente construido sobre un problema mal planteado<br/>
+es peor que inútil: produce respuestas seguras y bien validadas a la pregunta equivocada.<br/>
+Dedica tiempo real aquí antes de tocar los datos o los algoritmos.</p>
+</blockquote>
+<h3 id="un-recorrido-numerico-concreto">Un recorrido numérico concreto<a class="headerlink" href="#un-recorrido-numerico-concreto" title="Permanent link">¶</a></h3>
+<p>Para desmitificar que "el modelo es solo matemáticas", aquí está el ejemplo de extremo a extremo más pequeño posible. Supongamos<br/>
+que predecimos si un correo electrónico es spam a partir de una sola característica, el número de enlaces sospechosos <span class="arithmatex">\(x\)</span>. Un<br/>
+modelo de regresión logística aprende dos números, un peso <span class="arithmatex">\(w\)</span> y un sesgo <span class="arithmatex">\(b\)</span>, y calcula:</p>
+<div class="arithmatex">\[  
+\hat{p} = \frac{1}{1 + e^{-(wx + b)}}  
+\]</div>
+<p>Digamos que el entrenamiento se estabiliza en <span class="arithmatex">\(w = 1.2\)</span> y <span class="arithmatex">\(b = -2.0\)</span>. Para un correo electrónico con <span class="arithmatex">\(x = 3\)</span> enlaces, la puntuación es<br/>
+<span class="arithmatex">\(wx + b = 1.6\)</span>, y <span class="arithmatex">\(\hat{p} = 1/(1 + e^{-1.6}) \approx 0.83\)</span>. Con un umbral de decisión de<br/>
+<span class="arithmatex">\(0.5\)</span>, el correo electrónico se marca como spam. Cada modelo en este curso es una versión más rica de exactamente<br/>
+esto: aprender parámetros a partir de ejemplos, combinarlos con la entrada para obtener una puntuación y luego aplicar un<br/>
+umbral para tomar una decisión.</p>
+<h3 id="api-rest-endpoint-y-servicio-web-la-misma-idea-en-distintas-capas">API REST, endpoint y servicio web: la misma idea en distintas capas<a class="headerlink" href="#api-rest-endpoint-y-servicio-web-la-misma-idea-en-distintas-capas" title="Permanent link">¶</a></h3>
+<ul>
+<li>Una <strong>API REST</strong> es un contrato HTTP: un cliente envía una solicitud (normalmente JSON) a una URL y<br/>
+obtiene una respuesta estructurada. "REST" significa que usa verbos HTTP estándar y es sin estado.</li>
+<li>Un <strong>endpoint</strong> en Azure ML es el despliegue concreto y direccionable de esa API, con<br/>
+autenticación, escalado y enrutamiento de tráfico incorporados.</li>
+<li>"<strong>Servicio web</strong>" es el nombre informal que los equipos dan al endpoint en ejecución. Los tres describen<br/>
+lo mismo visto desde el contrato, la plataforma y el vocabulario del equipo respectivamente.</li>
+</ul>
+<p>Distinción práctica:</p>
+<ul>
+<li>La <strong>API</strong> describe el contrato (esquema de solicitud/respuesta, autenticación, versionado).</li>
+<li>El <strong>servicio web</strong> es la implementación alojada de esa API.</li>
+<li>En los endpoints en línea de Azure ML, diseñas el contrato de la API a través del payload de scoring<br/>
+y la autenticación del endpoint, y Azure aloja el servicio.</li>
+</ul>
+<h3 id="flujo-de-una-solicitud-de-inferencia-simple">Flujo de una solicitud de inferencia (simple)<a class="headerlink" href="#flujo-de-una-solicitud-de-inferencia-simple" title="Permanent link">¶</a></h3>
+<ol>
+<li>El cliente envía un payload JSON al URI del endpoint.</li>
+<li>La autenticación del endpoint valida la identidad/clave.</li>
+<li>El script de scoring analiza la entrada y ejecuta el modelo.</li>
+<li>La API devuelve la respuesta de predicción + metadatos.</li>
+</ol>
+<h3 id="flujo-de-una-solicitud-de-inferencia-detallado">Flujo de una solicitud de inferencia (detallado)<a class="headerlink" href="#flujo-de-una-solicitud-de-inferencia-detallado" title="Permanent link">¶</a></h3>
+<div class="mermaid">sequenceDiagram
+  participant C as Client App
+  participant G as API Gateway / Auth
+  participant E as Scoring Endpoint
+  participant M as Model
+  participant L as Logging
+  C-&gt;&gt;G: POST /score {features: [...]}
+  G-&gt;&gt;G: Validate auth token / key
+  G-&gt;&gt;E: Forward request
+  E-&gt;&gt;E: Deserialize and validate schema
+  E-&gt;&gt;M: Run model.predict(features)
+  M--&gt;&gt;E: Return raw prediction
+  E-&gt;&gt;E: Post-process / format response
+  E-&gt;&gt;L: Log input hash + prediction
+  E--&gt;&gt;C: Return {prediction, confidence}
+</div>
+<p>Consideraciones clave de producción para este flujo:</p>
+<ul>
+<li><strong>La validación de esquema en el script de scoring</strong> protege contra formas de entrada inesperadas.</li>
+<li><strong>El registro de hashes de entrada</strong> (no PII en crudo) permite el análisis de drift y la auditoría posteriores.</li>
+<li><strong>Los tiempos de espera y los reintentos</strong> deben definirse tanto en la capa de gateway como en la del cliente para evitar fallos silenciosos.</li>
+</ul>
+<p><img alt="Servicio web vs API" src="../../assets/img/webservice_vs_api.svg"/></p>
+<blockquote>
+<p><strong>Consejo - Modelo mental:</strong> Un <em>servicio web</em> es el despliegue en ejecución; la <em>API</em> es el contrato que usan los clientes para llamarlo.<br/>
+En Azure ML un modelo se envuelve detrás de un endpoint REST: los clientes envían JSON y reciben una<br/>
+predicción, sin saber qué modelo o framework se ejecuta por debajo.</p>
+</blockquote>
+<p><img alt="Tabla de servicio web vs API" src="../../assets/img/table_webservice_vs_api.svg"/></p>
+<blockquote>
+<p><strong>Nota - Comparación rápida:</strong> La tabla contrasta el término informal <em>servicio web</em> con el término técnico <em>API</em>. Describen<br/>
+la misma interfaz de scoring desplegada desde dos ángulos: el proceso en ejecución frente al<br/>
+contrato HTTP que expone.</p>
+</blockquote>
+<h2 id="glosario-de-terminos-clave">Glosario de términos clave<a class="headerlink" href="#glosario-de-terminos-clave" title="Permanent link">¶</a></h2>
+<p>Este glosario reúne en un solo lugar el vocabulario introducido arriba para que los módulos posteriores puedan asumirlo.<br/>
+Cada término se define en una frase sencilla.</p>
+<table>
+<thead>
+<tr>
+<th>Término</th>
+<th>Significado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Modelo</td>
+<td>Una función con números aprendidos (parámetros) que convierte entradas en predicciones.</td>
+</tr>
+<tr>
+<td>Parámetro / peso</td>
+<td>Uno de los números que el proceso de entrenamiento ajusta; juntos almacenan lo que se aprendió.</td>
+</tr>
+<tr>
+<td>Característica</td>
+<td>Una sola columna de entrada (una propiedad medible) que el modelo lee.</td>
+</tr>
+<tr>
+<td>Etiqueta / objetivo</td>
+<td>La respuesta correcta adjunta a cada ejemplo de entrenamiento en el aprendizaje supervisado.</td>
+</tr>
+<tr>
+<td>Función de pérdida</td>
+<td>Un solo número que mide cuánto se equivoca el modelo; el entrenamiento trata de minimizarlo.</td>
+</tr>
+<tr>
+<td>Entrenamiento</td>
+<td>El proceso de optimización que busca los parámetros que minimizan la pérdida.</td>
+</tr>
+<tr>
+<td>Generalización</td>
+<td>Qué tan bien funciona el modelo con datos que nunca vio durante el entrenamiento.</td>
+</tr>
+<tr>
+<td>Sobreajuste</td>
+<td>Memorizar el ruido del entrenamiento de modo que la exactitud baje en datos nuevos.</td>
+</tr>
+<tr>
+<td>Inferencia / scoring</td>
+<td>Usar un modelo entrenado para hacer predicciones sobre entradas nuevas.</td>
+</tr>
+<tr>
+<td>Endpoint</td>
+<td>El servicio desplegado y direccionable que sirve un modelo a través de HTTP.</td>
+</tr>
+<tr>
+<td>Drift</td>
+<td>Un cambio en la distribución de los datos de producción que degrada la calidad del modelo con el tiempo.</td>
+</tr>
+<tr>
+<td>MLOps</td>
+<td>Tratar los datos, los modelos y los despliegues como activos versionados, probados y monitoreados.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="verificacion-rapida">Verificación rápida<a class="headerlink" href="#verificacion-rapida" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Pregunta</th>
+<th>Respuesta</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>¿Todo sistema de IA es un sistema de ML?</td>
+<td>No. El ML es un subconjunto de la IA; los sistemas de IA basados en reglas o simbólicos toman decisiones sin aprender de los datos.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>En producción, ¿qué etapa detecta los problemas de drift?</td>
+<td>La etapa de monitoreo, que vigila la distribución de los datos en vivo y la calidad del modelo y detecta el drift con el tiempo.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>¿Cuál es la diferencia entre API y servicio web?</td>
+<td>La API es el contrato (esquema de petición/respuesta, autenticación, versionado); el servicio web es la implementación alojada y en ejecución de esa API (el endpoint).</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Dado un objetivo de negocio, ¿cuáles son las cinco preguntas de planteamiento del problema que debes responder primero?</td>
+<td>(1) ¿Qué decisión cambia gracias a la predicción? (2) ¿Cuál es la unidad de predicción? (3) ¿Qué es exactamente la etiqueta? (4) ¿Cómo se ve el éxito como número (KPI de negocio)? (5) ¿Cuál es el costo de cada tipo de error?</td>
+</tr>
+<tr>
+<td>5</td>
+<td>¿Por qué un modelo con excelente exactitud puede ser de todas formas la elección incorrecta para producción?</td>
+<td>La exactitud ignora los costos de error, el desbalance de clases, la equidad, la latencia y el KPI de negocio; un modelo muy exacto puede no detectar los positivos raros o ser demasiado lento, costoso o injusto para desplegar.</td>
+</tr>
+</tbody>
+</table>
+<hr/>
+<h2 id="fundamentos-de-probabilidad-para-el-ml">Fundamentos de probabilidad para el ML<a class="headerlink" href="#fundamentos-de-probabilidad-para-el-ml" title="Permanent link">¶</a></h2>
+<p>El aprendizaje automático es fundamentalmente probabilidad aplicada. Cada función de pérdida, cada métrica y cada garantía de generalización tiene un argumento probabilístico detrás. Esta sección construye el vocabulario mínimo necesario.</p>
+<h3 id="probabilidad-conjunta-y-marginal">Probabilidad conjunta y marginal<a class="headerlink" href="#probabilidad-conjunta-y-marginal" title="Permanent link">¶</a></h3>
+<p>La <strong>probabilidad conjunta</strong> <span class="arithmatex">\(P(X = x, Y = y)\)</span> es la probabilidad de que un ejemplo extraído aleatoriamente tenga valor de característica <span class="arithmatex">\(x\)</span> <em>y</em> etiqueta <span class="arithmatex">\(y\)</span> simultáneamente. El aprendizaje supervisado asume que tu conjunto de datos se muestrea i.i.d. de esta distribución conjunta.</p>
+<p>La <strong>probabilidad marginal</strong> de <span class="arithmatex">\(X\)</span> se obtiene sumando (o integrando) <span class="arithmatex">\(Y\)</span>:</p>
+<div class="arithmatex">\[
+P(X = x) = \sum_{y} P(X = x, Y = y)
+\]</div>
+<p>Esto no te dice nada sobre la etiqueta: solo cómo luce la entrada.</p>
+<h3 id="probabilidad-condicional">Probabilidad condicional<a class="headerlink" href="#probabilidad-condicional" title="Permanent link">¶</a></h3>
+<p>La <strong>probabilidad condicional</strong> <span class="arithmatex">\(P(Y = y \mid X = x)\)</span> es la probabilidad de la etiqueta <span class="arithmatex">\(y\)</span> dado que la entrada es <span class="arithmatex">\(x\)</span>. Esto es exactamente lo que un clasificador aprende a estimar. Formalmente:</p>
+<div class="arithmatex">\[
+P(Y \mid X) = \frac{P(X, Y)}{P(X)}
+\]</div>
+<p>El denominador <span class="arithmatex">\(P(X)\)</span> normaliza la conjunta para que las probabilidades sobre todos los <span class="arithmatex">\(y\)</span> sumen 1. Cuando un modelo produce una "probabilidad" de la clase 1, está estimando <span class="arithmatex">\(P(Y=1 \mid X=x)\)</span>.</p>
+<h3 id="teorema-de-bayes">Teorema de Bayes<a class="headerlink" href="#teorema-de-bayes" title="Permanent link">¶</a></h3>
+<p>El teorema de Bayes es el motor central del razonamiento probabilístico. Invierte el condicionamiento:</p>
+<div class="arithmatex">\[
+P(Y \mid X) = \frac{P(X \mid Y) \cdot P(Y)}{P(X)}
+\]</div>
+<ul>
+<li><span class="arithmatex">\(P(Y)\)</span> es la <strong>distribución a priori</strong>: lo que crees sobre <span class="arithmatex">\(Y\)</span> antes de ver <span class="arithmatex">\(X\)</span>. Para spam, esto podría ser "el 5% de todos los correos son spam."</li>
+<li><span class="arithmatex">\(P(X \mid Y)\)</span> es la <strong>verosimilitud</strong>: ¿qué tan probable es esta entrada dada la etiqueta? Por ejemplo, ¿qué tan probable es la palabra "lotería" en un correo spam?</li>
+<li><span class="arithmatex">\(P(Y \mid X)\)</span> es la <strong>distribución a posteriori</strong>: tu creencia actualizada después de ver <span class="arithmatex">\(X\)</span>. Esto es lo que quieres.</li>
+<li><span class="arithmatex">\(P(X)\)</span> es la <strong>evidencia</strong>: una constante de normalización.</li>
+</ul>
+<p>Un <strong>clasificador Naive Bayes</strong> aplica directamente este teorema, asumiendo que las características son condicionalmente independientes dada la clase. A pesar de esta suposición poco realista, funciona sorprendentemente bien en la clasificación de texto porque se conserva el ordenamiento relativo de las distribuciones a posteriori.</p>
+<h3 id="por-que-el-pensamiento-probabilistico-es-esencial-para-el-ml">Por qué el pensamiento probabilístico es esencial para el ML<a class="headerlink" href="#por-que-el-pensamiento-probabilistico-es-esencial-para-el-ml" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Calibración</strong>: un modelo que predice una probabilidad de 0.9 debería acertar el 90% de las veces. Los modelos mal calibrados engañan a los sistemas de decisión posteriores.</li>
+<li><strong>Cuantificación de la incertidumbre</strong>: saber <em>qué tan seguro</em> está el modelo importa tanto como la predicción misma en entornos médicos y financieros.</li>
+<li><strong>Derivación de la pérdida</strong>: la mayoría de las funciones de pérdida estándar (entropía cruzada, MSE) surgen naturalmente como objetivos de máxima verosimilitud bajo suposiciones probabilísticas específicas.</li>
+<li><strong>Manejo del desequilibrio de clases</strong>: los conjuntos de datos desequilibrados tienen una distribución a priori sesgada <span class="arithmatex">\(P(Y)\)</span>; comprenderlo evita que la exactitud ingenua sea una métrica engañosa.</li>
+</ul>
+<blockquote>
+<p><strong>Nota - Probabilidad vs estadística:</strong> La probabilidad razona hacia adelante desde un modelo conocido hacia los datos. La estadística razona hacia atrás desde los datos hacia los parámetros desconocidos. El ML hace ambas simultáneamente: usa estimación estadística para aprender un modelo probabilístico, luego usa ese modelo para razonar hacia adelante en el momento de la inferencia.</p>
+</blockquote>
+<hr/>
+<h2 id="teoria-de-la-informacion-y-entropia-en-el-ml">Teoría de la información y entropía en el ML<a class="headerlink" href="#teoria-de-la-informacion-y-entropia-en-el-ml" title="Permanent link">¶</a></h2>
+<p>La teoría de la información, desarrollada por Claude Shannon en 1948, proporciona el lenguaje matemático para medir la incertidumbre. Resulta ser el fundamento natural para las pérdidas de clasificación.</p>
+<h3 id="entropia-midiendo-la-incertidumbre">Entropía: midiendo la incertidumbre<a class="headerlink" href="#entropia-midiendo-la-incertidumbre" title="Permanent link">¶</a></h3>
+<p>La <strong>entropía</strong> de una distribución de probabilidad discreta <span class="arithmatex">\(P\)</span> sobre <span class="arithmatex">\(K\)</span> clases mide la sorpresa promedio (imprevisibilidad) de extraer una muestra:</p>
+<div class="arithmatex">\[
+H(P) = -\sum_{k=1}^{K} p_k \log_2 p_k
+\]</div>
+<p>La entropía se mide en <strong>bits</strong> cuando se usa <span class="arithmatex">\(\log_2\)</span>, y en <strong>nats</strong> cuando se usa <span class="arithmatex">\(\ln\)</span>. Propiedades clave:</p>
+<ul>
+<li><span class="arithmatex">\(H = 0\)</span> cuando una clase tiene probabilidad 1 (sin incertidumbre).</li>
+<li><span class="arithmatex">\(H\)</span> se maximiza en <span class="arithmatex">\(\log_2 K\)</span> bits cuando todas las <span class="arithmatex">\(K\)</span> clases son igualmente probables (máxima incertidumbre).</li>
+<li>Para una moneda justa (binaria, <span class="arithmatex">\(p = 0.5\)</span>): <span class="arithmatex">\(H = -0.5 \log_2 0.5 - 0.5 \log_2 0.5 = 1\)</span> bit.</li>
+</ul>
+<h3 id="la-entropia-cruzada-como-perdida-natural-de-clasificacion">La entropía cruzada como pérdida natural de clasificación<a class="headerlink" href="#la-entropia-cruzada-como-perdida-natural-de-clasificacion" title="Permanent link">¶</a></h3>
+<p>Supongamos que la distribución verdadera sobre las clases es <span class="arithmatex">\(P\)</span> (el vector one-hot de etiquetas), y tu modelo produce una distribución predicha <span class="arithmatex">\(Q\)</span> (las salidas del softmax). La <strong>entropía cruzada</strong> entre <span class="arithmatex">\(P\)</span> y <span class="arithmatex">\(Q\)</span> es:</p>
+<div class="arithmatex">\[
+H(P, Q) = -\sum_{k=1}^{K} p_k \log q_k
+\]</div>
+<p>Para un único ejemplo con clase verdadera <span class="arithmatex">\(c\)</span>, el vector one-hot hace que <span class="arithmatex">\(p_k = 1\)</span> solo para <span class="arithmatex">\(k = c\)</span>, de modo que esto se reduce a:</p>
+<div class="arithmatex">\[
+H(P, Q) = -\log q_c
+\]</div>
+<p>Esto es exactamente la <strong>log-verosimilitud negativa</strong> de la clase correcta bajo la distribución del modelo. Minimizar la entropía cruzada equivale a maximizar la probabilidad que el modelo asigna a las etiquetas verdaderas, el objetivo más fundamentado posible.</p>
+<p>La entropía cruzada promediada sobre un conjunto de datos es la <strong>pérdida de entropía cruzada categórica</strong> estándar usada en prácticamente todos los modelos de clasificación:</p>
+<div class="arithmatex">\[
+\mathcal{L}_{CE} = -\frac{1}{N} \sum_{i=1}^{N} \sum_{k=1}^{K} y_{ik} \log \hat{p}_{ik}
+\]</div>
+<h3 id="divergencia-kl-midiendo-la-discrepancia-entre-distribuciones">Divergencia KL: midiendo la discrepancia entre distribuciones<a class="headerlink" href="#divergencia-kl-midiendo-la-discrepancia-entre-distribuciones" title="Permanent link">¶</a></h3>
+<p>La <strong>divergencia de Kullback-Leibler (KL)</strong> de la distribución <span class="arithmatex">\(Q\)</span> a <span class="arithmatex">\(P\)</span> mide cuánta información se pierde cuando <span class="arithmatex">\(Q\)</span> se usa para aproximar <span class="arithmatex">\(P\)</span>:</p>
+<div class="arithmatex">\[
+D_{KL}(P \| Q) = \sum_{k} p_k \log \frac{p_k}{q_k} = H(P, Q) - H(P)
+\]</div>
+<p>Datos clave:</p>
+<ul>
+<li><span class="arithmatex">\(D_{KL}(P \| Q) \geq 0\)</span> siempre, con igualdad solo cuando <span class="arithmatex">\(P = Q\)</span> (desigualdad de Gibbs).</li>
+<li>Es <strong>asimétrica</strong>: <span class="arithmatex">\(D_{KL}(P \| Q) \neq D_{KL}(Q \| P)\)</span> en general.</li>
+<li>Minimizar la entropía cruzada <span class="arithmatex">\(H(P, Q)\)</span> respecto a los parámetros del modelo es idéntico a minimizar <span class="arithmatex">\(D_{KL}(P \| Q)\)</span>, porque <span class="arithmatex">\(H(P)\)</span> no depende del modelo.</li>
+</ul>
+<p>La divergencia KL aparece en todo el ML: en los autoencoders variacionales (como término de regularización), en la destilación del conocimiento (alineando distribuciones de estudiante y maestro) y en el monitoreo (midiendo cuánto se ha alejado una distribución de producción del entrenamiento).</p>
+<blockquote>
+<p><strong>Consejo - Intuición para la entropía cruzada:</strong> Piensa en <span class="arithmatex">\(-\log q_c\)</span> como el "costo" de codificar la clase verdadera usando la distribución de probabilidad de tu modelo. Si el modelo es muy seguro y correcto (<span class="arithmatex">\(q_c \approx 1\)</span>), el costo es cercano a cero. Si el modelo está seguro pero equivocado (<span class="arithmatex">\(q_c \approx 0\)</span>), el costo es enorme. Por eso la entropía cruzada penaliza fuertemente los errores con exceso de confianza.</p>
+</blockquote>
+<hr/>
+<h2 id="resumen-de-la-teoria-del-aprendizaje-estadistico">Resumen de la teoría del aprendizaje estadístico<a class="headerlink" href="#resumen-de-la-teoria-del-aprendizaje-estadistico" title="Permanent link">¶</a></h2>
+<p>La teoría del aprendizaje estadístico es la rama de la matemática que pregunta: <em>¿cuándo funciona realmente la minimización del riesgo empírico?</em> Proporciona garantías formales que conectan lo que observamos en los datos de entrenamiento con lo que podemos esperar en datos no vistos.</p>
+<h3 id="el-problema-de-la-generalizacion-de-forma-formal">El problema de la generalización de forma formal<a class="headerlink" href="#el-problema-de-la-generalizacion-de-forma-formal" title="Permanent link">¶</a></h3>
+<p>Queremos aprender una función <span class="arithmatex">\(f\)</span> de una clase de hipótesis <span class="arithmatex">\(\mathcal{H}\)</span> tal que el <strong>riesgo verdadero</strong> <span class="arithmatex">\(R(f)\)</span> sea pequeño. Solo tenemos acceso al <strong>riesgo empírico</strong> sobre <span class="arithmatex">\(N\)</span> muestras:</p>
+<div class="arithmatex">\[
+\hat{R}(f) = \frac{1}{N} \sum_{i=1}^{N} \mathcal{L}(f(x_i), y_i)
+\]</div>
+<p>La brecha de generalización <span class="arithmatex">\(R(f) - \hat{R}(f)\)</span> es la cantidad central que la teoría intenta acotar.</p>
+<h3 id="aprendizaje-pac">Aprendizaje PAC<a class="headerlink" href="#aprendizaje-pac" title="Permanent link">¶</a></h3>
+<p>El <strong>aprendizaje PAC (Probablemente Aproximadamente Correcto)</strong>, introducido por Leslie Valiant (1984), formaliza qué significa que un algoritmo de aprendizaje tenga éxito. Un algoritmo aprende PAC una clase de conceptos <span class="arithmatex">\(\mathcal{C}\)</span> si: para cualquier concepto objetivo, cualquier distribución sobre las entradas, y cualquier <span class="arithmatex">\(\epsilon, \delta &gt; 0\)</span>, el algoritmo produce una hipótesis <span class="arithmatex">\(h\)</span> tal que:</p>
+<div class="arithmatex">\[
+P\big[R(h) \leq \epsilon\big] \geq 1 - \delta
+\]</div>
+<p>usando un número de muestras que es polinomial en <span class="arithmatex">\(1/\epsilon\)</span>, <span class="arithmatex">\(1/\delta\)</span> y la complejidad de la clase de conceptos. De forma intuitiva: con suficientes datos, el algoritmo encontrará (con alta probabilidad) una hipótesis cuyo error verdadero sea pequeño.</p>
+<h3 id="dimension-vc">Dimensión VC<a class="headerlink" href="#dimension-vc" title="Permanent link">¶</a></h3>
+<p>La <strong>dimensión de Vapnik-Chervonenkis (VC)</strong> de una clase de hipótesis <span class="arithmatex">\(\mathcal{H}\)</span> es el conjunto más grande de puntos que <span class="arithmatex">\(\mathcal{H}\)</span> puede <strong>destrozar</strong>: clasificar de todas las <span class="arithmatex">\(2^n\)</span> formas binarias posibles. Mide el poder expresivo de la clase del modelo.</p>
+<p>Ejemplos:</p>
+<ul>
+<li>Clasificadores lineales en <span class="arithmatex">\(\mathbb{R}^2\)</span> (semiplanos): dimensión VC = 3. Cualquier 3 puntos no colineales pueden destrozarse; ningún conjunto de 4 puede.</li>
+<li>Decision stumps (umbral en una sola característica): dimensión VC = 2.</li>
+<li><span class="arithmatex">\(k\)</span> vecinos más cercanos: dimensión VC = <span class="arithmatex">\(\infty\)</span> (infinitamente expresivo).</li>
+</ul>
+<p>La cota de complejidad muestral fundamental:</p>
+<div class="arithmatex">\[
+N = O\!\left(\frac{d_{VC} + \log(1/\delta)}{\epsilon^2}\right)
+\]</div>
+<p>donde <span class="arithmatex">\(d_{VC}\)</span> es la dimensión VC. Para reducir a la mitad el error permitido <span class="arithmatex">\(\epsilon\)</span>, necesitas aproximadamente <strong>cuatro veces más datos</strong>.</p>
+<h3 id="cotas-de-generalizacion">Cotas de generalización<a class="headerlink" href="#cotas-de-generalizacion" title="Permanent link">¶</a></h3>
+<p>Una cota de convergencia uniforme establece que con probabilidad al menos <span class="arithmatex">\(1 - \delta\)</span>:</p>
+<div class="arithmatex">\[
+R(f) \leq \hat{R}(f) + O\!\left(\sqrt{\frac{d_{VC} \log N + \log(1/\delta)}{N}}\right)
+\]</div>
+<p>Implicaciones prácticas:</p>
+<ul>
+<li><strong>Más datos</strong> (<span class="arithmatex">\(N\)</span> aumenta): la cota se ajusta, la varianza disminuye.</li>
+<li><strong>Modelo más complejo</strong> (<span class="arithmatex">\(d_{VC}\)</span> aumenta): la cota se afloja, la varianza aumenta.</li>
+<li>El <strong>sesgo</strong> no está capturado por esta cota; solo describe cuánto puede sobreajustarse el modelo.</li>
+</ul>
+<h3 id="por-que-mas-datos-ayuda-con-la-varianza-pero-no-con-el-sesgo">Por qué más datos ayuda con la varianza pero no con el sesgo<a class="headerlink" href="#por-que-mas-datos-ayuda-con-la-varianza-pero-no-con-el-sesgo" title="Permanent link">¶</a></h3>
+<p>Aumentar <span class="arithmatex">\(N\)</span> reduce la brecha de generalización concentrando la distribución empírica alrededor de la distribución verdadera (ley de los grandes números). Sin embargo, si la clase de hipótesis es demasiado simple (pequeño <span class="arithmatex">\(d_{VC}\)</span>), ninguna cantidad de datos permitirá al modelo expresar la función verdadera: eso es sesgo, una limitación estructural de la familia del modelo.</p>
+<blockquote>
+<p><strong>Nota - Implicación práctica:</strong> Si tu modelo se estanca a pesar de añadir datos, el problema es el sesgo (capacidad). Si el error de entrenamiento y de prueba divergen, el problema es la varianza (complejidad). Estos dos diagnósticos guían todas las decisiones de selección de modelos.</p>
+</blockquote>
+<hr/>
+<h2 id="el-metodo-cientifico-como-flujo-de-trabajo-de-ml">El método científico como flujo de trabajo de ML<a class="headerlink" href="#el-metodo-cientifico-como-flujo-de-trabajo-de-ml" title="Permanent link">¶</a></h2>
+<p>Una buena práctica de ML es buena ciencia. El método científico proporciona la disciplina epistemológica que evita que los equipos se engañen a sí mismos.</p>
+<h3 id="mapeo-de-la-ciencia-al-ml">Mapeo de la ciencia al ML<a class="headerlink" href="#mapeo-de-la-ciencia-al-ml" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Paso científico</th>
+<th>Equivalente en ML</th>
+<th>Riesgo si se omite</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hipótesis</td>
+<td>Definir el problema y la métrica de éxito con precisión</td>
+<td>Construir un modelo que responde la pregunta incorrecta</td>
+</tr>
+<tr>
+<td>Diseño experimental</td>
+<td>Diseñar la división entrenamiento/validación/prueba y la evaluación</td>
+<td>Fuga de datos; resultados optimistas que no se transfieren</td>
+</tr>
+<tr>
+<td>Experimento</td>
+<td>Entrenar el modelo con hiperparámetros controlados</td>
+<td>Resultados no interpretables; no se pueden aislar causas</td>
+</tr>
+<tr>
+<td>Medición</td>
+<td>Registrar métricas en datos apartados</td>
+<td>Sobreajustar el número reportado al conjunto de prueba</td>
+</tr>
+<tr>
+<td>Conclusión</td>
+<td>Aceptar/rechazar la hipótesis; decidir el siguiente paso</td>
+<td>Despliegue prematuro o abandono de buenos modelos</td>
+</tr>
+<tr>
+<td>Replicación</td>
+<td>Versionar el código, los datos y el entorno</td>
+<td>Resultados que no pueden ser reproducidos por compañeros o auditores</td>
+</tr>
+</tbody>
+</table>
+<h3 id="experimentos-controlados-en-ml">Experimentos controlados en ML<a class="headerlink" href="#experimentos-controlados-en-ml" title="Permanent link">¶</a></h3>
+<p>Un <strong>experimento controlado</strong> cambia una variable a la vez. En ML esto significa:</p>
+<ul>
+<li>Al comparar modelos, mantener fijo el conjunto de datos, el preprocesamiento y la métrica de evaluación.</li>
+<li>Al comparar conjuntos de características, mantener fija la arquitectura del modelo y los hiperparámetros.</li>
+<li>Al comparar hiperparámetros, usar la misma semilla aleatoria y la misma división de datos.</li>
+</ul>
+<p>El <strong>seguimiento de experimentos de Azure ML</strong> aplica esta disciplina registrando cada ejecución con sus hiperparámetros, versión de datos, commit de código y métricas.</p>
+<h3 id="reproducibilidad-y-sus-enemigos">Reproducibilidad y sus enemigos<a class="headerlink" href="#reproducibilidad-y-sus-enemigos" title="Permanent link">¶</a></h3>
+<p>Un resultado es <strong>reproducible</strong> si cualquier persona con las mismas entradas puede obtener las mismas salidas. La reproducibilidad está amenazada por:</p>
+<ul>
+<li><strong>Semillas aleatorias</strong>: la aleatoriedad en la inicialización de pesos, el mezclado de datos o el aumento de datos debe fijarse y registrarse.</li>
+<li><strong>Versiones de bibliotecas</strong>: una versión diferente de scikit-learn o PyTorch puede producir resultados numéricamente distintos.</li>
+<li><strong>Versión de datos</strong>: si el conjunto de datos de entrenamiento cambia sin versionado, no puedes recrear ejecuciones históricas.</li>
+<li><strong>Hardware</strong>: el no-determinismo de las GPU significa que la reproducción bit a bit a veces requiere fijar el hardware.</li>
+</ul>
+<p>Azure ML aborda estos problemas con el versionado de conjuntos de datos, instantáneas de entornos y metadatos de reproducibilidad de ejecuciones.</p>
+<blockquote>
+<p><strong>Consejo - La lista de verificación de reproducibilidad:</strong> Antes de publicar o desplegar un resultado, verifica: (1) la versión de los datos está fijada, (2) el commit del código está etiquetado, (3) el entorno está en contenedor, (4) las semillas aleatorias están registradas. Un resultado que no puede reproducirse no es un resultado.</p>
+</blockquote>
+<hr/>
+<h2 id="ia-responsable-y-encuadre-etico">IA responsable y encuadre ético<a class="headerlink" href="#ia-responsable-y-encuadre-etico" title="Permanent link">¶</a></h2>
+<p>La IA responsable no es una casilla que marcar al final de un proyecto, sino una disciplina de diseño que debe estar incorporada desde el planteamiento del problema en adelante.</p>
+<h3 id="por-que-la-etica-es-una-preocupacion-de-ingenieria-de-primera-clase">Por qué la ética es una preocupación de ingeniería de primera clase<a class="headerlink" href="#por-que-la-etica-es-una-preocupacion-de-ingenieria-de-primera-clase" title="Permanent link">¶</a></h3>
+<p>Un modelo codifica decisiones. Esas decisiones afectan a personas. Cuando un modelo de puntuación de crédito deniega un préstamo, un modelo de contratación clasifica currículums o un modelo de triaje médico asigna atención, las consecuencias posteriores son reales y potencialmente discriminatorias. La pregunta "¿es preciso este modelo?" está incompleta sin preguntarse también "¿preciso para quién, y a qué costo para qué grupo?"</p>
+<h3 id="definiciones-de-equidad">Definiciones de equidad<a class="headerlink" href="#definiciones-de-equidad" title="Permanent link">¶</a></h3>
+<p>No existe una única definición acordada de equidad. Las tres definiciones estadísticas más comunes son:</p>
+<p><strong>Paridad demográfica (paridad estadística):</strong> La tasa de predicción positiva es igual en los grupos <span class="arithmatex">\(A\)</span> y <span class="arithmatex">\(B\)</span>:</p>
+<div class="arithmatex">\[
+P(\hat{Y} = 1 \mid G = A) = P(\hat{Y} = 1 \mid G = B)
+\]</div>
+<p>Esto garantiza igual representación de resultados positivos. No requiere igual exactitud.</p>
+<p><strong>Odds igualadas:</strong> Tanto la tasa de verdaderos positivos (TPR) como la tasa de falsos positivos (FPR) son iguales entre grupos:</p>
+<div class="arithmatex">\[
+P(\hat{Y} = 1 \mid Y = y, G = A) = P(\hat{Y} = 1 \mid Y = y, G = B) \quad \text{para } y \in \{0, 1\}
+\]</div>
+<p>Esto es más estricto: el modelo debe ser igualmente preciso <em>e</em> igualmente inexacto entre grupos.</p>
+<p><strong>Calibración:</strong> La probabilidad predicha <span class="arithmatex">\(\hat{p}\)</span> coincide con la tasa de verdaderos positivos dentro de cada grupo. Un modelo calibrado a nivel de población puede estar mal calibrado dentro de subgrupos, un modo de fallo común en la puntuación médica.</p>
+<blockquote>
+<p><strong>Nota - El teorema de imposibilidad:</strong> Es matemáticamente imposible satisfacer la paridad demográfica, las odds igualadas y la calibración simultáneamente cuando las tasas base difieren entre grupos (Chouldechova 2017; Kleinberg et al. 2016). Elegir un criterio de equidad es un juicio de valor que debe involucrar a las partes interesadas, no solo a los ingenieros.</p>
+</blockquote>
+<h3 id="transparencia-y-explicabilidad">Transparencia y explicabilidad<a class="headerlink" href="#transparencia-y-explicabilidad" title="Permanent link">¶</a></h3>
+<ul>
+<li>La <strong>transparencia</strong> se refiere a la capacidad de entender <em>por qué</em> un modelo tomó una decisión específica. Los modelos opacos de "caja negra" crean vacíos de responsabilidad en industrias reguladas.</li>
+<li>Las técnicas de <strong>explicabilidad</strong> (SHAP, LIME, visualización de atención) aproximan o exponen las atribuciones de características. Estas se tratan en el módulo de Resultados y Explicabilidad.</li>
+<li>Regulaciones como el RGPD (Artículo 22) y la Ley de IA de la UE exigen que las decisiones automatizadas que afectan a individuos sean explicables bajo solicitud.</li>
+</ul>
+<h3 id="privacidad-y-minimizacion-de-datos">Privacidad y minimización de datos<a class="headerlink" href="#privacidad-y-minimizacion-de-datos" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Minimización de datos</strong>: solo recopilar y usar las características necesarias para la tarea. Cada atributo personal adicional es un pasivo.</li>
+<li><strong>Privacidad diferencial</strong>: una garantía matemática formal de que la presencia o ausencia de cualquier individuo en los datos de entrenamiento no puede inferirse de la salida del modelo.</li>
+<li><strong>Aprendizaje federado</strong>: entrenar modelos sobre datos que nunca salen del dispositivo o la institución. Los gradientes se agregan centralmente pero los datos en bruto permanecen locales.</li>
+</ul>
+<h3 id="responsabilidad-y-gobernanza">Responsabilidad y gobernanza<a class="headerlink" href="#responsabilidad-y-gobernanza" title="Permanent link">¶</a></h3>
+<ul>
+<li>Cada modelo desplegado en producción debería tener un propietario nombrado responsable del monitoreo, reentrenamiento y retirada.</li>
+<li>Las <strong>tarjetas de modelo</strong> documentan el uso previsto de un modelo, el rendimiento entre subgrupos, las limitaciones conocidas y los usos fuera de alcance. Son el rastro de auditoría que requieren las organizaciones reguladas.</li>
+<li>En el marco de la Ley de IA de la UE, los sistemas de IA de alto riesgo (contratación, crédito, identificación biométrica, infraestructura crítica) se enfrentan a evaluaciones obligatorias de conformidad, requisitos de registro y mecanismos de supervisión humana.</li>
+</ul>
+<blockquote>
+<p><strong>Nota - RGPD y Azure ML:</strong> Si los datos de entrenamiento incluyen datos personales de residentes de la UE, el responsable del tratamiento debe documentar la base legal, el período de retención y el propósito del tratamiento. Las salidas del modelo que constituyen decisiones automatizadas que desencadenan efectos jurídicos requieren una vía de revisión humana. Los registros de auditoría de Azure ML y las características de linaje de conjuntos de datos apoyan directamente este requisito de cumplimiento.</p>
+</blockquote>
+<hr/>
+<h2 id="taxonomia-de-aplicaciones-industriales">Taxonomía de aplicaciones industriales<a class="headerlink" href="#taxonomia-de-aplicaciones-industriales" title="Permanent link">¶</a></h2>
+<p>La tabla siguiente cataloga 22 aplicaciones reales de ML en las principales industrias. Para cada aplicación se enumeran el tipo de problema de ML relevante, la familia de modelos típica, el tipo de datos y un riesgo clave de despliegue.</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Industria</th>
+<th>Aplicación</th>
+<th>Tipo de problema</th>
+<th>Familia de modelos</th>
+<th>Tipo de datos</th>
+<th>Riesgo clave</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Salud</td>
+<td>Puntuación de riesgo de enfermedades</td>
+<td>Clasificación binaria</td>
+<td>Gradient boosting, regresión logística</td>
+<td>Tabular (HCE)</td>
+<td>Rendimiento dispar entre grupos demográficos</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Salud</td>
+<td>Diagnóstico por imagen médica</td>
+<td>Clasificación multiclase</td>
+<td>CNN, Vision Transformer</td>
+<td>Imágenes (rayos X, MRI)</td>
+<td>Cambio de distribución entre sistemas hospitalarios</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Salud</td>
+<td>Predicción de duración de estancia</td>
+<td>Regresión</td>
+<td>XGBoost, RNN</td>
+<td>Tabular + series temporales</td>
+<td>Fuga temporal de observaciones futuras</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Salud</td>
+<td>Descubrimiento de fármacos</td>
+<td>Generativo / regresión</td>
+<td>Redes neuronales de grafos</td>
+<td>Grafos moleculares</td>
+<td>Extrapolación fuera de distribución</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Finanzas</td>
+<td>Puntuación de incumplimiento crediticio</td>
+<td>Clasificación binaria</td>
+<td>Regresión logística, XGBoost</td>
+<td>Tabular (datos de buró)</td>
+<td>Equidad regulatoria (ECOA); explicabilidad del modelo</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Finanzas</td>
+<td>Detección de fraude</td>
+<td>Detección de anomalías / binaria</td>
+<td>Isolation Forest, XGBoost</td>
+<td>Tabular + grafo</td>
+<td>Desequilibrio severo de clases; evolución adversarial</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Finanzas</td>
+<td>Trading algorítmico</td>
+<td>Pronóstico de series temporales</td>
+<td>LSTM, Transformer</td>
+<td>Datos de tick de mercado</td>
+<td>No estacionariedad; cambio de régimen</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Finanzas</td>
+<td>Procesamiento de documentos (KYC)</td>
+<td>NER / clasificación</td>
+<td>BERT, LayoutLM</td>
+<td>Texto + diseño PDF</td>
+<td>Riesgo de alucinación por LLMs</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Comercio</td>
+<td>Recomendación de productos</td>
+<td>Filtrado colaborativo</td>
+<td>Factorización matricial, red neuronal de dos torres</td>
+<td>Registros de interacción</td>
+<td>Sesgo de popularidad; problema de arranque en frío</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Comercio</td>
+<td>Pronóstico de demanda</td>
+<td>Regresión de series temporales</td>
+<td>LightGBM, N-BEATS</td>
+<td>Tabular + características de calendario</td>
+<td>Promociones que causan rupturas distribucionales</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Comercio</td>
+<td>Fijación dinámica de precios</td>
+<td>Regresión + RL</td>
+<td>Modelos bandit, policy gradient</td>
+<td>Tabular</td>
+<td>Errores del modelo de elasticidad de precios amplifican pérdidas</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Comercio</td>
+<td>Predicción de abandono de clientes</td>
+<td>Clasificación binaria</td>
+<td>XGBoost, regresión logística</td>
+<td>Tabular (CRM)</td>
+<td>Ambigüedad de etiqueta; ¿qué cuenta como abandono?</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Manufactura</td>
+<td>Mantenimiento predictivo</td>
+<td>Detección de anomalías / binaria</td>
+<td>Autoencoder, LSTM</td>
+<td>Series temporales de sensores</td>
+<td>Desequilibrio de clase de evento raro; costo de falsos negativos</td>
+</tr>
+<tr>
+<td>14</td>
+<td>Manufactura</td>
+<td>Inspección de calidad visual</td>
+<td>Detección de objetos</td>
+<td>YOLO, ResNet</td>
+<td>Imágenes</td>
+<td>Cambio de iluminación/fondo entre líneas de producción</td>
+</tr>
+<tr>
+<td>15</td>
+<td>Manufactura</td>
+<td>Optimización de cadena de suministro</td>
+<td>Optimización combinatoria</td>
+<td>Aprendizaje por refuerzo, solucionadores OR</td>
+<td>Mixto (tabular + grafo)</td>
+<td>Errores de diseño de recompensa; brecha sim-to-real</td>
+</tr>
+<tr>
+<td>16</td>
+<td>Gobierno</td>
+<td>Clasificación de documentos</td>
+<td>Clasificación multiclase</td>
+<td>Ajuste fino de BERT</td>
+<td>Texto</td>
+<td>Categorías sensibles; normativas de privacidad</td>
+</tr>
+<tr>
+<td>17</td>
+<td>Gobierno</td>
+<td>Detección de fraude en prestaciones</td>
+<td>Detección de anomalías</td>
+<td>Analítica de grafos + XGBoost</td>
+<td>Tabular + relacional</td>
+<td>Impacto dispar sobre poblaciones vulnerables</td>
+</tr>
+<tr>
+<td>18</td>
+<td>Gobierno</td>
+<td>Predicción de flujo de tráfico</td>
+<td>Regresión de series temporales</td>
+<td>GNN, LSTM</td>
+<td>Datos de sensores + GPS</td>
+<td>Fallos de sensores que causan cambio de covariables silencioso</td>
+</tr>
+<tr>
+<td>19</td>
+<td>Energía</td>
+<td>Pronóstico de producción renovable</td>
+<td>Regresión de series temporales</td>
+<td>Prophet, TCN</td>
+<td>Sensores meteorológicos + de red</td>
+<td>Cambio de distribución por tendencias climáticas</td>
+</tr>
+<tr>
+<td>20</td>
+<td>Medios</td>
+<td>Moderación de contenido</td>
+<td>Clasificación multietiqueta</td>
+<td>BERT, CLIP</td>
+<td>Texto + imágenes</td>
+<td>Evasión adversarial; equidad lingüística/dialectal</td>
+</tr>
+<tr>
+<td>21</td>
+<td>RRHH / Talento</td>
+<td>Filtrado de currículums</td>
+<td>Clasificación / ranking</td>
+<td>BERT, regresión logística</td>
+<td>Texto</td>
+<td>Sesgo histórico de contratación codificado en etiquetas</td>
+</tr>
+<tr>
+<td>22</td>
+<td>Logística</td>
+<td>Optimización de rutas</td>
+<td>Combinatoria + regresión</td>
+<td>Aprendizaje por refuerzo</td>
+<td>Grafo + espacial</td>
+<td>Desajuste de la función objetivo con el costo real</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Nota - Cómo usar esta tabla:</strong> Antes de seleccionar una familia de modelos, identifica la fila de tu industria. La columna "Riesgo clave" es la más valiosa: contiene el modo de fallo específico observado con más frecuencia en producción para ese tipo de aplicación. Ignorarlo es la causa más frecuente de proyectos de ML que tienen éxito en la evaluación offline pero fracasan en el despliegue.</p>
+</blockquote>
+<hr/>
+<h2 id="un-recorrido-numerico-completo-clasificacion-de-spam-desde-cero">Un recorrido numérico completo: clasificación de spam desde cero<a class="headerlink" href="#un-recorrido-numerico-completo-clasificacion-de-spam-desde-cero" title="Permanent link">¶</a></h2>
+<p>Esta sección recorre un ejemplo de clasificación de spam de extremo a extremo con aritmética completa en cada paso. Ningún paso se deja como "y luego ocurre la magia."</p>
+<h3 id="paso-1-definicion-del-problema-y-caracteristicas">Paso 1: Definición del problema y características<a class="headerlink" href="#paso-1-definicion-del-problema-y-caracteristicas" title="Permanent link">¶</a></h3>
+<p><strong>Tarea</strong>: clasificar un correo electrónico como spam (1) o no spam (0).</p>
+<p><strong>Características</strong> (dos, por claridad):</p>
+<ul>
+<li><span class="arithmatex">\(x_1\)</span>: número de enlaces sospechosos en el correo.</li>
+<li><span class="arithmatex">\(x_2\)</span>: 1 si el asunto contiene la palabra "FREE", 0 en caso contrario.</li>
+</ul>
+<p><strong>Conjunto de datos de entrenamiento</strong> (cuatro ejemplos):</p>
+<table>
+<thead>
+<tr>
+<th>Correo</th>
+<th><span class="arithmatex">\(x_1\)</span></th>
+<th><span class="arithmatex">\(x_2\)</span></th>
+<th>Etiqueta <span class="arithmatex">\(y\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>3</td>
+<td>1</td>
+<td>1 (spam)</td>
+</tr>
+<tr>
+<td>B</td>
+<td>0</td>
+<td>0</td>
+<td>0 (no spam)</td>
+</tr>
+<tr>
+<td>C</td>
+<td>5</td>
+<td>1</td>
+<td>1 (spam)</td>
+</tr>
+<tr>
+<td>D</td>
+<td>1</td>
+<td>0</td>
+<td>0 (no spam)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="paso-2-el-modelo-de-regresion-logistica">Paso 2: El modelo de regresión logística<a class="headerlink" href="#paso-2-el-modelo-de-regresion-logistica" title="Permanent link">¶</a></h3>
+<p>La regresión logística aprende pesos <span class="arithmatex">\(w_1, w_2\)</span> y un sesgo <span class="arithmatex">\(b\)</span> para calcular:</p>
+<div class="arithmatex">\[
+z_i = w_1 x_{i1} + w_2 x_{i2} + b
+\]</div>
+<div class="arithmatex">\[
+\hat{p}_i = \sigma(z_i) = \frac{1}{1 + e^{-z_i}}
+\]</div>
+<p>La función sigmoide <span class="arithmatex">\(\sigma\)</span> aplana cualquier número real a <span class="arithmatex">\((0, 1)\)</span>, haciéndolo interpretable como probabilidad.</p>
+<p><strong>Inicialización:</strong> <span class="arithmatex">\(w_1 = 0,\; w_2 = 0,\; b = 0\)</span>.</p>
+<h3 id="paso-3-pase-hacia-adelante-calcular-predicciones">Paso 3: Pase hacia adelante: calcular predicciones<a class="headerlink" href="#paso-3-pase-hacia-adelante-calcular-predicciones" title="Permanent link">¶</a></h3>
+<p>Con todos los parámetros en cero, <span class="arithmatex">\(z_i = 0\)</span> para todos los correos, por lo que <span class="arithmatex">\(\hat{p}_i = \sigma(0) = 0.5\)</span> para los cuatro ejemplos.</p>
+<h3 id="paso-4-calcular-la-perdida-de-entropia-cruzada-binaria">Paso 4: Calcular la pérdida de entropía cruzada binaria<a class="headerlink" href="#paso-4-calcular-la-perdida-de-entropia-cruzada-binaria" title="Permanent link">¶</a></h3>
+<div class="arithmatex">\[
+\mathcal{L} = -\frac{1}{N} \sum_{i=1}^{N} \left[ y_i \log \hat{p}_i + (1 - y_i) \log(1 - \hat{p}_i) \right]
+\]</div>
+<p>Para <span class="arithmatex">\(\hat{p}_i = 0.5\)</span> y <span class="arithmatex">\(N = 4\)</span>, cada término es igual a <span class="arithmatex">\(-\log 0.5 = \log 2 \approx 0.693\)</span>.</p>
+<p>Total: <span class="arithmatex">\(\mathcal{L} = 0.693\)</span>. Esta es la línea de base de máxima entropía: el modelo no sabe nada.</p>
+<h3 id="paso-5-calcular-los-gradientes">Paso 5: Calcular los gradientes<a class="headerlink" href="#paso-5-calcular-los-gradientes" title="Permanent link">¶</a></h3>
+<p>Para la regresión logística con entropía cruzada binaria, el gradiente respecto a <span class="arithmatex">\(w_j\)</span> es:</p>
+<div class="arithmatex">\[
+\frac{\partial \mathcal{L}}{\partial w_j} = \frac{1}{N} \sum_{i=1}^{N} (\hat{p}_i - y_i) x_{ij}
+\]</div>
+<p><strong>Gradiente para <span class="arithmatex">\(w_1\)</span>:</strong></p>
+<div class="arithmatex">\[
+\frac{\partial \mathcal{L}}{\partial w_1} = \frac{1}{4}\big[(0.5-1)(3) + (0.5-0)(0) + (0.5-1)(5) + (0.5-0)(1)\big]
+= \frac{-1.5 + 0 - 2.5 + 0.5}{4} = -0.875
+\]</div>
+<p><strong>Gradiente para <span class="arithmatex">\(w_2\)</span>:</strong></p>
+<div class="arithmatex">\[
+\frac{\partial \mathcal{L}}{\partial w_2} = \frac{1}{4}\big[(0.5-1)(1) + (0.5-0)(0) + (0.5-1)(1) + (0.5-0)(0)\big]
+= \frac{-0.5 + 0 - 0.5 + 0}{4} = -0.25
+\]</div>
+<p><strong>Gradiente para <span class="arithmatex">\(b\)</span>:</strong></p>
+<div class="arithmatex">\[
+\frac{\partial \mathcal{L}}{\partial b} = \frac{1}{4}\big[-0.5 + 0.5 - 0.5 + 0.5\big] = 0
+\]</div>
+<h3 id="paso-6-actualizacion-por-descenso-de-gradiente">Paso 6: Actualización por descenso de gradiente<a class="headerlink" href="#paso-6-actualizacion-por-descenso-de-gradiente" title="Permanent link">¶</a></h3>
+<p>Con tasa de aprendizaje <span class="arithmatex">\(\eta = 0.5\)</span>:</p>
+<div class="arithmatex">\[
+w_1 \leftarrow 0 - 0.5 \times (-0.875) = +0.4375
+\]</div>
+<div class="arithmatex">\[
+w_2 \leftarrow 0 - 0.5 \times (-0.25) = +0.125
+\]</div>
+<div class="arithmatex">\[
+b \leftarrow 0 - 0.5 \times 0 = 0
+\]</div>
+<p>Tanto <span class="arithmatex">\(w_1\)</span> como <span class="arithmatex">\(w_2\)</span> se volvieron positivos, lo que tiene sentido: más enlaces y "FREE" en el asunto ambos aumentan la probabilidad de spam.</p>
+<h3 id="paso-7-segundo-pase-hacia-adelante">Paso 7: Segundo pase hacia adelante<a class="headerlink" href="#paso-7-segundo-pase-hacia-adelante" title="Permanent link">¶</a></h3>
+<p>Recalcular predicciones con los pesos actualizados:</p>
+<table>
+<thead>
+<tr>
+<th>Correo</th>
+<th><span class="arithmatex">\(z_i = 0.4375 x_1 + 0.125 x_2\)</span></th>
+<th><span class="arithmatex">\(\hat{p}_i = \sigma(z_i)\)</span></th>
+<th>Etiqueta</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td><span class="arithmatex">\(0.4375(3) + 0.125(1) = 1.4375\)</span></td>
+<td><span class="arithmatex">\(\approx 0.808\)</span></td>
+<td>1</td>
+</tr>
+<tr>
+<td>B</td>
+<td><span class="arithmatex">\(0.4375(0) + 0.125(0) = 0.000\)</span></td>
+<td><span class="arithmatex">\(= 0.500\)</span></td>
+<td>0</td>
+</tr>
+<tr>
+<td>C</td>
+<td><span class="arithmatex">\(0.4375(5) + 0.125(1) = 2.3125\)</span></td>
+<td><span class="arithmatex">\(\approx 0.910\)</span></td>
+<td>1</td>
+</tr>
+<tr>
+<td>D</td>
+<td><span class="arithmatex">\(0.4375(1) + 0.125(0) = 0.4375\)</span></td>
+<td><span class="arithmatex">\(\approx 0.607\)</span></td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>Los correos spam (A, C) ahora tienen probabilidades superiores a 0.5. Después de más iteraciones de descenso de gradiente, el modelo separará limpiamente las clases.</p>
+<h3 id="paso-8-evaluar-con-una-matriz-de-confusion">Paso 8: Evaluar con una matriz de confusión<a class="headerlink" href="#paso-8-evaluar-con-una-matriz-de-confusion" title="Permanent link">¶</a></h3>
+<p>Tras la convergencia completa, predicciones con umbral <span class="arithmatex">\(0.5\)</span>:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Predicho como spam</th>
+<th>Predicho como no spam</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Spam real</strong></td>
+<td>VP = 2</td>
+<td>FN = 0</td>
+</tr>
+<tr>
+<td><strong>No spam real</strong></td>
+<td>FP = 0</td>
+<td>VN = 2</td>
+</tr>
+</tbody>
+</table>
+<p>Métricas derivadas:</p>
+<ul>
+<li><strong>Precisión</strong> <span class="arithmatex">\(= \frac{VP}{VP + FP} = \frac{2}{2} = 1.0\)</span></li>
+<li><strong>Exhaustividad</strong> <span class="arithmatex">\(= \frac{VP}{VP + FN} = \frac{2}{2} = 1.0\)</span></li>
+<li><strong>F1</strong> <span class="arithmatex">\(= 2 \cdot \frac{1.0 \times 1.0}{1.0 + 1.0} = 1.0\)</span></li>
+</ul>
+<blockquote>
+<p><strong>Nota - Qué enseña este recorrido:</strong> El pipeline completo de ML, definir características, inicializar pesos, pase hacia adelante, calcular pérdida, calcular gradientes, actualizar, repetir, es aritmética. Cada modelo de aprendizaje profundo, por grande que sea, está haciendo exactamente esta secuencia. La complejidad crece pero el principio no cambia.</p>
+</blockquote>
+<hr/>
+<h2 id="verificacion-rapida-ampliada">Verificación rápida (ampliada)<a class="headerlink" href="#verificacion-rapida-ampliada" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Pregunta</th>
+<th>Respuesta</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>¿Todo sistema de IA es un sistema de ML?</td>
+<td>No. El ML es un subconjunto de la IA; los sistemas de IA basados en reglas o simbólicos toman decisiones sin aprender de los datos.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>En producción, ¿qué etapa detecta los problemas de drift?</td>
+<td>La etapa de monitoreo, que vigila la distribución de los datos en vivo y la calidad del modelo y detecta el drift con el tiempo.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>¿Cuál es la diferencia entre API y servicio web?</td>
+<td>La API es el contrato (esquema de petición/respuesta, autenticación, versionado); el servicio web es la implementación alojada y en ejecución de esa API (el endpoint).</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Dado un objetivo de negocio, ¿cuáles son las cinco preguntas de planteamiento del problema que debes responder primero?</td>
+<td>(1) ¿Qué decisión cambia gracias a la predicción? (2) ¿Cuál es la unidad de predicción? (3) ¿Qué es exactamente la etiqueta? (4) ¿Cómo se ve el éxito como número (KPI de negocio)? (5) ¿Cuál es el costo de cada tipo de error?</td>
+</tr>
+<tr>
+<td>5</td>
+<td>¿Por qué un modelo con excelente exactitud puede ser de todas formas la elección incorrecta para producción?</td>
+<td>La exactitud ignora los costos de error, el desbalance de clases, la equidad, la latencia y el KPI de negocio; un modelo muy exacto puede no detectar los positivos raros o ser demasiado lento, costoso o injusto para desplegar.</td>
+</tr>
+<tr>
+<td>6</td>
+<td>¿Qué mide la entropía y cuáles son su valor mínimo y máximo para una distribución binaria?</td>
+<td>Mide la incertidumbre (sorpresa) promedio de una distribución; para una distribución binaria se minimiza en 0 bits (un resultado seguro) y se maximiza en 1 bit (cuando <span class="arithmatex">\(p = 0.5\)</span>).</td>
+</tr>
+<tr>
+<td>7</td>
+<td>¿Por qué minimizar la entropía cruzada equivale a maximizar la verosimilitud de las etiquetas de entrenamiento?</td>
+<td>Para la clase verdadera la entropía cruzada se reduce a <span class="arithmatex">\(-\log q_c\)</span>, la log-verosimilitud negativa de la etiqueta correcta, así que minimizarla maximiza la probabilidad que el modelo asigna a las etiquetas verdaderas.</td>
+</tr>
+<tr>
+<td>8</td>
+<td>¿Cuál es la dimensión VC de un clasificador lineal en dos dimensiones?</td>
+<td>3 — cualquier conjunto de 3 puntos no colineales puede fragmentarse (shatter), pero ningún conjunto de 4 puede.</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Nombra dos definiciones de equidad y explica por qué no pueden satisfacerse todas simultáneamente cuando las tasas base difieren.</td>
+<td>La paridad demográfica y las probabilidades igualadas (y la calibración). Cuando las tasas base difieren entre grupos, el teorema de imposibilidad (Chouldechova; Kleinberg et al.) muestra que no pueden cumplirse todas a la vez, por lo que elegir una es un juicio de valor.</td>
+</tr>
+<tr>
+<td>10</td>
+<td>En el recorrido del spam, ¿por qué <span class="arithmatex">\(w_1\)</span> recibió una actualización de gradiente mayor que <span class="arithmatex">\(w_2\)</span> después del primer paso?</td>
+<td>Porque <span class="arithmatex">\(x_1\)</span> (número de enlaces) tiene valores de característica mayores que <span class="arithmatex">\(x_2\)</span>, así que el gradiente <span class="arithmatex">\(\frac{1}{N}\sum_i(\hat{p}_i - y_i)x_{ij}\)</span> fue mayor en magnitud para <span class="arithmatex">\(w_1\)</span> (<span class="arithmatex">\(-0.875\)</span> frente a <span class="arithmatex">\(-0.25\)</span>).</td>
+</tr>
+</tbody>
+</table>
+</article>
+</div>
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+</div>
+<button class="md-top md-icon" data-md-component="top" hidden="" type="button">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Volver al principio
+</button>
+</main>
+<footer class="md-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+<div class="md-copyright__highlight">
+      Derechos de autor © 2026 <a href="https://github.com/Cloud2BR-MSFTLearningHub" rel="noopener" target="_blank">Cloud2BR MSFT Learning Hub</a>
+</div>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.expand", "navigation.top", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+<script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script src="../../assets/js/org-link.js"></script>
+<script type="module">import mermaid from "https://unpkg.com/mermaid@10.4.0/dist/mermaid.esm.min.mjs";
+mermaid.initialize({});</script></body>
+</html>

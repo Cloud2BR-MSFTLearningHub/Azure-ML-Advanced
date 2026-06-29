@@ -1,0 +1,2387 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Capacitación de Azure Machine Learning desde fundamentos hasta MLOps avanzado.">
+      
+      
+      
+        <link rel="canonical" href="https://cloud2br-msftlearninghub.github.io/Azure-ML-Advanced/es/modules/11-performance-metrics/">
+      
+      
+        <link rel="prev" href="../10-training-automl/">
+      
+      
+        <link rel="next" href="../12-results-explainability/">
+      
+      
+        
+          <link rel="alternate" href="/Azure-ML-Advanced/" hreflang="en">
+        
+          <link rel="alternate" href="/Azure-ML-Advanced/es/" hreflang="es">
+        
+      
+      
+      <link rel="icon" href="../../assets/img/org-logo.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>11. Métricas de Rendimiento - Azure Machine Learning: Advanced</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/css/custom.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#metricas-de-rendimiento" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href="../.." title="Azure Machine Learning: Advanced" class="md-header__button md-logo" aria-label="Azure Machine Learning: Advanced" data-md-component="logo">
+      
+  <img src="../../assets/img/org-logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Azure Machine Learning: Advanced
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              11. Métricas de Rendimiento
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="Seleccionar idioma">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="/Azure-ML-Advanced/" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="/Azure-ML-Advanced/es/" hreflang="es" class="md-select__link">
+              Español
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Azure Machine Learning: Advanced" class="md-nav__button md-logo" aria-label="Azure Machine Learning: Advanced" data-md-component="logo">
+      
+  <img src="../../assets/img/org-logo.png" alt="logo">
+
+    </a>
+    Azure Machine Learning: Advanced
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-math-prerequisites/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01. Prerrequisitos Matemáticos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-e2e-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02. Visión General de Extremo a Extremo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03. Introducción y Ciclo de Vida
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-ml-foundations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04. Fundamentos de ML
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-neural-networks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05. Redes Neuronales y Deep Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-azure-ml-environment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06. Entorno de Azure ML
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-environment-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07. Configuración del Entorno
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-data-preparation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08. Preparación de Datos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-model-types/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09. Tipos de Modelos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-training-automl/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Entrenamiento y AutoML
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Métricas de Rendimiento
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Métricas de Rendimiento
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#conceptos-basicos-de-la-matriz-de-confusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conceptos básicos de la matriz de confusión
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Conceptos básicos de la matriz de confusión">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#leyendo-la-matriz-de-confusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Leyendo la matriz de confusión
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#metricas-de-clasificacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Métricas de clasificación
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#metricas-de-regresion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Métricas de regresión
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#metricas-de-prediccion-practicas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Métricas de predicción (prácticas)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#errores-a-evitar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Errores a evitar
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#optimizacion-del-umbral-clasificacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Optimización del umbral (clasificación)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#calibracion-y-confiabilidad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Calibración y confiabilidad
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ejemplos-de-slislo-para-calidad-del-modelo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejemplos de SLI/SLO para calidad del modelo
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#autoevaluacion-rapida" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Autoevaluación rápida
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inmersion-profunda-cada-concepto-explicado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inmersión profunda: cada concepto explicado
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Inmersión profunda: cada concepto explicado">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#la-matriz-de-confusion-es-el-origen-de-cada-metrica-de-clasificacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        La matriz de confusión es el origen de cada métrica de clasificación
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#por-que-la-exactitud-falla-en-datos-desbalanceados" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Por qué la exactitud falla en datos desbalanceados
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#roc-auc-vs-pr-auc-y-que-significa-sin-umbral" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ROC-AUC vs PR-AUC, y qué significa "sin umbral"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optimizacion-del-umbral-como-minimizacion-de-costos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Optimización del umbral como minimización de costos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metricas-de-regresion-mae-vs-rmse-vs-r2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Métricas de regresión: MAE vs RMSE vs \(R^2\)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metricas-de-prediccion-y-la-trampa-del-denominador-cero" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Métricas de predicción y la trampa del denominador cero
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#calibracion-clasificar-bien-no-es-lo-mismo-que-estar-en-lo-correcto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Calibración: clasificar bien no es lo mismo que estar en lo correcto
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#de-las-metricas-a-los-slisslos-cerrando-el-ciclo-hacia-las-operaciones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        De las métricas a los SLIs/SLOs: cerrando el ciclo hacia las operaciones
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#autoevaluacion-rapida-inmersion-profunda" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Autoevaluación rápida (inmersión profunda)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#metricas-multiclase-y-multietiqueta-en-profundidad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Métricas multiclase y multietiqueta en profundidad
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Métricas multiclase y multietiqueta en profundidad">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#promediado-macro-micro-y-ponderado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Promediado macro, micro y ponderado
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kappa-de-cohen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Kappa de Cohen
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#metricas-de-clasificacion_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Métricas de clasificación
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Métricas de clasificación">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ndcg-ganancia-acumulada-descontada-normalizada" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NDCG (Ganancia Acumulada Descontada Normalizada)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#precision-media-map" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Precisión Media (MAP)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inmersion-profunda-en-metricas-de-regresion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inmersión profunda en métricas de regresión
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Inmersión profunda en métricas de regresión">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#perdida-de-huber" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pérdida de Huber
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metricas-cuantilicas-e-intervalos-de-prediccion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Métricas cuantílicas e intervalos de predicción
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#alineacion-con-las-metricas-del-negocio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Alineación con las métricas del negocio
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Alineación con las métricas del negocio">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#curvas-de-lift-y-ganancia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Curvas de lift y ganancia
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#marco-de-valor-esperado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Marco de valor esperado
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../12-results-explainability/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Resultados y Explicabilidad
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13-deployment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Despliegue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../14-deployment-debug-k8s/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. Depuración de Despliegue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_16" >
+        
+          
+          <label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Referencia
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_16">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Referencia
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visión General
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/model-math-deep-dive/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Análisis Matemático Profundo de Modelos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/cli-commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comandos CLI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glosario
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#conceptos-basicos-de-la-matriz-de-confusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conceptos básicos de la matriz de confusión
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Conceptos básicos de la matriz de confusión">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#leyendo-la-matriz-de-confusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Leyendo la matriz de confusión
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#metricas-de-clasificacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Métricas de clasificación
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#metricas-de-regresion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Métricas de regresión
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#metricas-de-prediccion-practicas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Métricas de predicción (prácticas)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#errores-a-evitar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Errores a evitar
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#optimizacion-del-umbral-clasificacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Optimización del umbral (clasificación)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#calibracion-y-confiabilidad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Calibración y confiabilidad
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ejemplos-de-slislo-para-calidad-del-modelo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejemplos de SLI/SLO para calidad del modelo
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#autoevaluacion-rapida" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Autoevaluación rápida
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inmersion-profunda-cada-concepto-explicado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inmersión profunda: cada concepto explicado
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Inmersión profunda: cada concepto explicado">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#la-matriz-de-confusion-es-el-origen-de-cada-metrica-de-clasificacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        La matriz de confusión es el origen de cada métrica de clasificación
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#por-que-la-exactitud-falla-en-datos-desbalanceados" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Por qué la exactitud falla en datos desbalanceados
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#roc-auc-vs-pr-auc-y-que-significa-sin-umbral" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ROC-AUC vs PR-AUC, y qué significa "sin umbral"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optimizacion-del-umbral-como-minimizacion-de-costos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Optimización del umbral como minimización de costos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metricas-de-regresion-mae-vs-rmse-vs-r2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Métricas de regresión: MAE vs RMSE vs \(R^2\)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metricas-de-prediccion-y-la-trampa-del-denominador-cero" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Métricas de predicción y la trampa del denominador cero
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#calibracion-clasificar-bien-no-es-lo-mismo-que-estar-en-lo-correcto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Calibración: clasificar bien no es lo mismo que estar en lo correcto
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#de-las-metricas-a-los-slisslos-cerrando-el-ciclo-hacia-las-operaciones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        De las métricas a los SLIs/SLOs: cerrando el ciclo hacia las operaciones
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#autoevaluacion-rapida-inmersion-profunda" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Autoevaluación rápida (inmersión profunda)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#metricas-multiclase-y-multietiqueta-en-profundidad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Métricas multiclase y multietiqueta en profundidad
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Métricas multiclase y multietiqueta en profundidad">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#promediado-macro-micro-y-ponderado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Promediado macro, micro y ponderado
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kappa-de-cohen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Kappa de Cohen
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#metricas-de-clasificacion_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Métricas de clasificación
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Métricas de clasificación">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ndcg-ganancia-acumulada-descontada-normalizada" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NDCG (Ganancia Acumulada Descontada Normalizada)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#precision-media-map" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Precisión Media (MAP)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inmersion-profunda-en-metricas-de-regresion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inmersión profunda en métricas de regresión
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Inmersión profunda en métricas de regresión">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#perdida-de-huber" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pérdida de Huber
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#metricas-cuantilicas-e-intervalos-de-prediccion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Métricas cuantílicas e intervalos de predicción
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#alineacion-con-las-metricas-del-negocio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Alineación con las métricas del negocio
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Alineación con las métricas del negocio">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#curvas-de-lift-y-ganancia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Curvas de lift y ganancia
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#marco-de-valor-esperado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Marco de valor esperado
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="metricas-de-rendimiento">Métricas de Rendimiento<a class="headerlink" href="#metricas-de-rendimiento" title="Permanent link">&para;</a></h1>
+<p>Elegir la métrica correcta es una de las decisiones más importantes en ML. Un modelo puede parecer
+excelente en una métrica y fallar en el objetivo real del negocio.</p>
+<p><img alt="Cómo elegir una métrica" src="../../assets/img/How-to-Choose-a-Metric-for-Imbalanced-Classification-latest.svg" /></p>
+<blockquote>
+<p><strong>Consejo - Cómo usar este gráfico:</strong> Elija la métrica a partir del <em>costo de los errores</em>, no del hábito. En problemas desbalanceados, prefiera F1, PR-AUC,
+o MCC sobre la exactitud; pese el recall cuando los positivos perdidos son costosos, la precisión cuando las falsas alarmas son costosas.</p>
+</blockquote>
+<h2 id="conceptos-basicos-de-la-matriz-de-confusion">Conceptos básicos de la matriz de confusión<a class="headerlink" href="#conceptos-basicos-de-la-matriz-de-confusion" title="Permanent link">&para;</a></h2>
+<p>Conteos:</p>
+<ul>
+<li><span class="arithmatex">\(TP\)</span>: verdaderos positivos</li>
+<li><span class="arithmatex">\(FP\)</span>: falsos positivos</li>
+<li><span class="arithmatex">\(TN\)</span>: verdaderos negativos</li>
+<li><span class="arithmatex">\(FN\)</span>: falsos negativos</li>
+</ul>
+<p>Tasas:</p>
+<div class="arithmatex">\[
+\text{TPR}=\frac{TP}{TP+FN},\quad
+\text{FPR}=\frac{FP}{FP+TN},\quad
+\text{TNR}=\frac{TN}{TN+FP}
+\]</div>
+<h3 id="leyendo-la-matriz-de-confusion">Leyendo la matriz de confusión<a class="headerlink" href="#leyendo-la-matriz-de-confusion" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Real \ Predicho</th>
+<th>Positivo</th>
+<th>Negativo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Positivo</td>
+<td>TP</td>
+<td>FN</td>
+</tr>
+<tr>
+<td>Negativo</td>
+<td>FP</td>
+<td>TN</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Celda</th>
+<th>Significado</th>
+<th>Ejemplo (modelo de fraude)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>TP</td>
+<td>Positivo correctamente marcado</td>
+<td>Fraude real detectado</td>
+</tr>
+<tr>
+<td>FP</td>
+<td>Falsa alarma</td>
+<td>Transacción legítima bloqueada</td>
+</tr>
+<tr>
+<td>TN</td>
+<td>Negativo correctamente eliminado</td>
+<td>Transacción legítima aprobada</td>
+</tr>
+<tr>
+<td>FN</td>
+<td>Positivo perdido</td>
+<td>Fraude no detectado</td>
+</tr>
+</tbody>
+</table>
+<p>Para un caso de uso de fraude, <strong>el FN es el error más peligroso</strong> (fraude no detectado). Esto significa que el recall debe tener mucho peso en la elección de la métrica.</p>
+<h2 id="metricas-de-clasificacion">Métricas de clasificación<a class="headerlink" href="#metricas-de-clasificacion" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Precisión: <span class="arithmatex">\(\frac{TP}{TP+FP}\)</span></li>
+<li>Recall: <span class="arithmatex">\(\frac{TP}{TP+FN}\)</span></li>
+<li>F1: <span class="arithmatex">\(2\cdot\frac{PR}{P+R}\)</span></li>
+<li>AUC</li>
+</ul>
+<p>Fórmulas adicionales:</p>
+<div class="arithmatex">\[
+\text{Exactitud}=\frac{TP+TN}{TP+TN+FP+FN}
+\]</div>
+<div class="arithmatex">\[
+\mathrm{MCC}=\frac{TP\cdot TN-FP\cdot FN}{\sqrt{(TP+FP)(TP+FN)(TN+FP)(TN+FN)}}
+\]</div>
+<div class="arithmatex">\[
+\mathrm{AUC}=\int_0^1 \mathrm{TPR}(\mathrm{FPR})\,d\mathrm{FPR}
+\]</div>
+<p>Cuándo usar qué:</p>
+<table>
+<thead>
+<tr>
+<th>Escenario</th>
+<th>Mejores opciones de métrica</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Desequilibrio de clases</td>
+<td>F1, PR-AUC, MCC, exactitud balanceada</td>
+</tr>
+<tr>
+<td>Alto costo de falsos negativos</td>
+<td>Recall, F2</td>
+</tr>
+<tr>
+<td>Alto costo de falsos positivos</td>
+<td>Precisión</td>
+</tr>
+<tr>
+<td>Calidad de probabilidad</td>
+<td>Pérdida logarítmica, métricas de calibración</td>
+</tr>
+</tbody>
+</table>
+<h2 id="metricas-de-regresion">Métricas de regresión<a class="headerlink" href="#metricas-de-regresion" title="Permanent link">&para;</a></h2>
+<ul>
+<li>MAE</li>
+<li>RMSE</li>
+<li>R2</li>
+</ul>
+<p>Fórmulas:</p>
+<div class="arithmatex">\[
+\mathrm{MAE}=\frac{1}{N}\sum_{i=1}^{N}|y_i-\hat{y}_i|,
+\quad
+\mathrm{RMSE}=\sqrt{\frac{1}{N}\sum_{i=1}^{N}(y_i-\hat{y}_i)^2}
+\]</div>
+<div class="arithmatex">\[
+R^2=1-\frac{\sum_{i=1}^{N}(y_i-\hat{y}_i)^2}{\sum_{i=1}^{N}(y_i-\bar{y})^2}
+\]</div>
+<p>Consejos de interpretación:</p>
+<ul>
+<li>MAE es robusto y fácil de explicar en unidades originales.</li>
+<li>RMSE penaliza los errores grandes más fuertemente.</li>
+<li><span class="arithmatex">\(R^2\)</span> compara contra una línea de base de predicción de la media.</li>
+</ul>
+<h2 id="metricas-de-prediccion-practicas">Métricas de predicción (prácticas)<a class="headerlink" href="#metricas-de-prediccion-practicas" title="Permanent link">&para;</a></h2>
+<ul>
+<li>MAPE: error porcentual intuitivo, inestable cerca de valores cero.</li>
+<li>sMAPE: variante simétrica para mejor comparabilidad.</li>
+<li>RMSE/MAE: todavía útiles para la calidad de la predicción.</li>
+</ul>
+<p>Fórmulas:</p>
+<div class="arithmatex">\[
+\text{MAPE}=\frac{100}{N}\sum_{i=1}^{N}\left|\frac{y_i-\hat{y}_i}{y_i}\right|
+\]</div>
+<div class="arithmatex">\[
+\text{sMAPE}=\frac{100}{N}\sum_{i=1}^{N}\frac{2|y_i-\hat{y}_i|}{|y_i|+|\hat{y}_i|}
+\]</div>
+<p>Orientación: prefiera RMSE/MAE para comparar modelos en la misma escala. Use MAPE/sMAPE solo cuando comunique errores como porcentajes a las partes interesadas del negocio.</p>
+<h2 id="errores-a-evitar">Errores a evitar<a class="headerlink" href="#errores-a-evitar" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Reportar una métrica sin intervalos de confianza.</li>
+<li>Comparar modelos en diferentes particiones de validación.</li>
+<li>Ignorar el ajuste del umbral en la clasificación.</li>
+<li>Usar la exactitud como métrica principal para datos desbalanceados.</li>
+<li>Evaluar solo globalmente cuando el rendimiento a nivel de segmento puede divergir significativamente.</li>
+</ul>
+<h2 id="optimizacion-del-umbral-clasificacion">Optimización del umbral (clasificación)<a class="headerlink" href="#optimizacion-del-umbral-clasificacion" title="Permanent link">&para;</a></h2>
+<p>Las decisiones de clasificación en producción requieren una política de umbral, no el valor predeterminado <span class="arithmatex">\(0.5\)</span>.</p>
+<p>Costo esperado del negocio en el umbral <span class="arithmatex">\(\tau\)</span>:</p>
+<div class="arithmatex">\[
+\mathbb{E}[\text{Costo}(\tau)] = C_{FP}\cdot FP(\tau)+C_{FN}\cdot FN(\tau)
+\]</div>
+<p>Elegir <span class="arithmatex">\(\tau\)</span> que minimice el costo esperado bajo las restricciones del negocio.</p>
+<h2 id="calibracion-y-confiabilidad">Calibración y confiabilidad<a class="headerlink" href="#calibracion-y-confiabilidad" title="Permanent link">&para;</a></h2>
+<p>Un clasificador puede clasificar bien (alta AUC) pero producir probabilidades mal calibradas.</p>
+<p>Comprobaciones de calibración:</p>
+<ul>
+<li>Curva de fiabilidad</li>
+<li>Puntuación de Brier</li>
+<li>Error de calibración esperado (ECE)</li>
+</ul>
+<p>Use métodos de calibración (escala de Platt, regresión isotónica) cuando los sistemas de decisión dependen
+de los valores de probabilidad, no solo del orden de clasificación.</p>
+<h2 id="ejemplos-de-slislo-para-calidad-del-modelo">Ejemplos de SLI/SLO para calidad del modelo<a class="headerlink" href="#ejemplos-de-slislo-para-calidad-del-modelo" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>SLI</th>
+<th>Ejemplo de SLO</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Macro-F1 semanal</td>
+<td>&gt;= 0.82</td>
+</tr>
+<tr>
+<td>RMSE semanal</td>
+<td>&lt;= 5.0</td>
+</tr>
+<tr>
+<td>Error de calibración</td>
+<td>&lt;= 0.03</td>
+</tr>
+<tr>
+<td>Ratio de disparidad por segmento</td>
+<td>&lt;= 1.25</td>
+</tr>
+</tbody>
+</table>
+<h2 id="autoevaluacion-rapida">Autoevaluación rápida<a class="headerlink" href="#autoevaluacion-rapida" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Pregunta</th>
+<th>Respuesta</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>¿Qué métrica es más segura que la exactitud para datos desbalanceados?</td>
+<td>F1 (o PR-AUC, MCC o exactitud balanceada), que evitan que la clase mayoritaria domine la puntuación.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>¿Por qué puede ser RMSE mucho mayor que MAE?</td>
+<td>RMSE eleva al cuadrado los errores, así que unos pocos errores grandes se penalizan desproporcionadamente; una gran brecha RMSE–MAE indica errores de cola pesada o atípicos.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>¿Qué implica un <span class="arithmatex">\(R^2\)</span> negativo?</td>
+<td>Que el modelo es peor que simplemente predecir la media: una señal clara de que algo está roto.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="inmersion-profunda-cada-concepto-explicado">Inmersión profunda: cada concepto explicado<a class="headerlink" href="#inmersion-profunda-cada-concepto-explicado" title="Permanent link">&para;</a></h2>
+<p>Esta sección explica <em>por qué</em> cada métrica está construida de la manera en que está y cuándo engaña.</p>
+<h3 id="la-matriz-de-confusion-es-el-origen-de-cada-metrica-de-clasificacion">La matriz de confusión es el origen de cada métrica de clasificación<a class="headerlink" href="#la-matriz-de-confusion-es-el-origen-de-cada-metrica-de-clasificacion" title="Permanent link">&para;</a></h3>
+<p>Todas las métricas de clasificación son cocientes de las cuatro celdas <span class="arithmatex">\(TP, FP, TN, FN\)</span>. Memorizar las celdas
+es suficiente para reconstruir cualquier métrica:</p>
+<ul>
+<li>La <strong>Precisión</strong> <span class="arithmatex">\(\tfrac{TP}{TP+FP}\)</span> responde "cuando el modelo dice positivo, ¿con qué frecuencia tiene razón?"
+  Es la métrica que importa cuando <strong>los falsos positivos son costosos</strong> (bloquear buenos
+  clientes, marcar pacientes sanos).</li>
+<li>El <strong>Recall / TPR</strong> <span class="arithmatex">\(\tfrac{TP}{TP+FN}\)</span> responde "de todos los positivos reales, ¿cuántos capturamos?"
+  La métrica cuando <strong>los falsos negativos son costosos</strong> (fraude no detectado, enfermedad no detectada).</li>
+<li><strong>F1</strong> <span class="arithmatex">\(2\tfrac{PR}{P+R}\)</span> es la <strong>media armónica</strong> de los dos. La media armónica (no el
+  promedio ordinario) se usa porque se mantiene baja a menos que <em>tanto</em> la precisión como el recall sean altos:
+  se niega a recompensar a un modelo que sacrifica uno por el otro.</li>
+</ul>
+<h3 id="por-que-la-exactitud-falla-en-datos-desbalanceados">Por qué la exactitud falla en datos desbalanceados<a class="headerlink" href="#por-que-la-exactitud-falla-en-datos-desbalanceados" title="Permanent link">&para;</a></h3>
+<p>La exactitud <span class="arithmatex">\(\tfrac{TP+TN}{\text{todos}}\)</span> pondera cada ejemplo igualmente, por lo que cuando el 99% de los casos son
+negativos, predecir "siempre negativo" obtiene el 99% sin capturar ningún positivo. Por eso el
+curso orienta repetidamente hacia <strong>F1, PR-AUC, MCC o exactitud balanceada</strong> para problemas sesgados:
+todos, de diferentes maneras, evitan que la clase mayoritaria domine la puntuación.</p>
+<h3 id="roc-auc-vs-pr-auc-y-que-significa-sin-umbral">ROC-AUC vs PR-AUC, y qué significa "sin umbral"<a class="headerlink" href="#roc-auc-vs-pr-auc-y-que-significa-sin-umbral" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>AUC</strong> es el área bajo la curva ROC (TPR vs FPR a medida que el umbral se desliza de 1 a 0). Es
+  igual a la probabilidad de que el modelo clasifique un positivo aleatorio por encima de un negativo aleatorio: una medida pura de
+  <strong>calidad de clasificación</strong>, independiente de cualquier umbral elegido.</li>
+<li>En un desequilibrio severo, el ROC-AUC puede parecer engañosamente alto porque el enorme conteo negativo mantiene el FPR
+  bajo. El <strong>PR-AUC</strong> (precisión vs recall) se centra en la clase positiva y es el resumen más honesto
+  cuando los positivos son raros.</li>
+</ul>
+<h3 id="optimizacion-del-umbral-como-minimizacion-de-costos">Optimización del umbral como minimización de costos<a class="headerlink" href="#optimizacion-del-umbral-como-minimizacion-de-costos" title="Permanent link">&para;</a></h3>
+<p>Un modelo produce probabilidades; el <strong>umbral</strong> <span class="arithmatex">\(\tau\)</span> las convierte en decisiones. Debido a que los falsos
+positivos y los falsos negativos generalmente tienen <em>costos diferentes</em>, el umbral óptimo minimiza el costo esperado
+<span class="arithmatex">\(\mathbb{E}[\text{Costo}(\tau)] = C_{FP}\cdot FP(\tau) + C_{FN}\cdot FN(\tau)\)</span> en lugar de
+maximizar la exactitud. Concretamente: si un fraude no detectado cuesta 20 veces más que una falsa alarma, baje <span class="arithmatex">\(\tau\)</span>
+para intercambiar muchos falsos positivos por menos falsos negativos. El predeterminado 0.5 casi nunca es óptimo
+en producción.</p>
+<h3 id="metricas-de-regresion-mae-vs-rmse-vs-r2">Métricas de regresión: MAE vs RMSE vs <span class="arithmatex">\(R^2\)</span><a class="headerlink" href="#metricas-de-regresion-mae-vs-rmse-vs-r2" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>MAE</strong> promedia errores absolutos: está en las unidades del objetivo y trata todos los errores linealmente,
+  por lo que es <strong>robusto a los valores atípicos</strong> y fácil de explicar ("errado en $5 en promedio").</li>
+<li><strong>RMSE</strong> promedia los errores <em>cuadráticos</em> y luego saca la raíz cuadrada, por lo que los errores grandes se penalizan
+  desproporcionadamente. RMSE ≥ MAE siempre; una <em>gran brecha</em> entre ellos señala algunos errores grandes
+  (errores de cola pesada) que vale la pena investigar.</li>
+<li><span class="arithmatex">\(R^2 = 1 - \tfrac{SS_{res}}{SS_{tot}}\)</span> compara el modelo contra la línea de base trivial "predecir la media".
+  <span class="arithmatex">\(R^2=1\)</span> es perfecto, <span class="arithmatex">\(0\)</span> significa que no es mejor que la media, y <strong>un <span class="arithmatex">\(R^2\)</span> negativo significa que el
+  modelo es <em>peor</em> que predecir la media</strong>: una señal clara de que algo está roto.</li>
+</ul>
+<h3 id="metricas-de-prediccion-y-la-trampa-del-denominador-cero">Métricas de predicción y la trampa del denominador cero<a class="headerlink" href="#metricas-de-prediccion-y-la-trampa-del-denominador-cero" title="Permanent link">&para;</a></h3>
+<p><strong>MAPE</strong> expresa el error como un porcentaje, que las partes interesadas encuentran intuitivo, pero <strong>divide por
+el valor real</strong>, por lo que explota o es indefinido cerca de cero y penaliza excesivamente las predicciones bajas.
+<strong>sMAPE</strong> simetriza el denominador para limitar el valor y tratar las predicciones altas/bajas de forma más equilibrada. La regla práctica del módulo: optimizar y comparar modelos en RMSE/MAE (estable),
+y traducir a MAPE/sMAPE solo para <em>comunicar</em> con las partes interesadas del negocio.</p>
+<h3 id="calibracion-clasificar-bien-no-es-lo-mismo-que-estar-en-lo-correcto">Calibración: clasificar bien no es lo mismo que estar en lo correcto<a class="headerlink" href="#calibracion-clasificar-bien-no-es-lo-mismo-que-estar-en-lo-correcto" title="Permanent link">&para;</a></h3>
+<p>Un modelo con alta AUC clasifica los ejemplos correctamente pero puede aún producir probabilidades que no
+coinciden con la realidad (p. ej. sus predicciones del "90%" son correctas solo el 70% de las veces). Cuando las decisiones posteriores usan el <em>valor</em> de la probabilidad (cálculos de pérdida esperada, precios, triaje), necesita
+<strong>calibración</strong>:</p>
+<ul>
+<li>La <strong>curva de fiabilidad</strong> representa la frecuencia predicha vs la observada; la diagonal es perfecta.</li>
+<li>La <strong>puntuación de Brier</strong> es el error cuadrático medio de las probabilidades mismas.</li>
+<li>El <strong>ECE</strong> (error de calibración esperado) resume la brecha promedio entre la confianza y la exactitud.</li>
+<li>La <strong>escala de Platt</strong> (ajustar una logística sobre las puntuaciones) y la <strong>regresión isotónica</strong> (ajustar una función de paso monótona) son las correcciones post-hoc estándar.</li>
+</ul>
+<h3 id="de-las-metricas-a-los-slisslos-cerrando-el-ciclo-hacia-las-operaciones">De las métricas a los SLIs/SLOs: cerrando el ciclo hacia las operaciones<a class="headerlink" href="#de-las-metricas-a-los-slisslos-cerrando-el-ciclo-hacia-las-operaciones" title="Permanent link">&para;</a></h3>
+<p>Una métrica fuera de línea se convierte en un <strong>SLI</strong> (indicador de nivel de servicio) de producción cuando se mide
+continuamente, y en un <strong>SLO</strong> (objetivo) cuando se adjunta un umbral (p. ej. "macro-F1 semanal ≥ 0.82"). Así es como la calidad del modelo se une a la latencia y la disponibilidad como una propiedad monitoreada y alertable: el puente de este módulo a la monitorización de deriva y los SLOs de despliegue más adelante en el curso.</p>
+<h2 id="autoevaluacion-rapida-inmersion-profunda">Autoevaluación rápida (inmersión profunda)<a class="headerlink" href="#autoevaluacion-rapida-inmersion-profunda" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Pregunta</th>
+<th>Respuesta</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>¿Por qué F1 es la media armónica de la precisión y el recall en lugar del promedio ordinario?</td>
+<td>La media armónica se mantiene baja a menos que tanto la precisión como el recall sean altos, por lo que se niega a recompensar a un modelo que sacrifica uno por el otro.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>En un conjunto de datos con 99% negativos, ¿por qué puede parecer excelente el ROC-AUC mientras que el PR-AUC es deficiente?</td>
+<td>El enorme conteo de negativos mantiene el FPR bajo, así que el ROC-AUC se ve alto, mientras que el PR-AUC se centra en la clase positiva rara y revela el débil desempeño en ella.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>¿Qué le dice sobre el modelo un <span class="arithmatex">\(R^2\)</span> negativo?</td>
+<td>Que rinde peor que el predictor trivial de la media: una señal clara de que algo está roto.</td>
+</tr>
+<tr>
+<td>4</td>
+<td>¿Por qué el umbral predeterminado 0.5 casi nunca es óptimo en producción?</td>
+<td>Porque los falsos positivos y los falsos negativos tienen costos diferentes; el umbral óptimo minimiza el costo esperado, no la exactitud.</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Un modelo tiene alta AUC pero sus predicciones del "90%" son correctas solo el 70% de las veces: ¿cuál es el problema y qué correcciones se aplican?</td>
+<td>Clasifica bien pero está mal calibrado; se corrige con escala de Platt o regresión isotónica.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="metricas-multiclase-y-multietiqueta-en-profundidad">Métricas multiclase y multietiqueta en profundidad<a class="headerlink" href="#metricas-multiclase-y-multietiqueta-en-profundidad" title="Permanent link">&para;</a></h2>
+<p>Las métricas de clasificación binaria se extienden a configuraciones multiclase, pero la estrategia de agregación
+cambia drásticamente lo que significa la puntuación final.</p>
+<h3 id="promediado-macro-micro-y-ponderado">Promediado macro, micro y ponderado<a class="headerlink" href="#promediado-macro-micro-y-ponderado" title="Permanent link">&para;</a></h3>
+<p>Considere un problema de 3 clases (clases A, B, C) con los siguientes conteos por clase y
+precisión/recall:</p>
+<table>
+<thead>
+<tr>
+<th>Clase</th>
+<th>Soporte (<span class="arithmatex">\(n_k\)</span>)</th>
+<th>Precisión (<span class="arithmatex">\(P_k\)</span>)</th>
+<th>Recall (<span class="arithmatex">\(R_k\)</span>)</th>
+<th><span class="arithmatex">\(F1_k\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>1000</td>
+<td>0.90</td>
+<td>0.85</td>
+<td>0.874</td>
+</tr>
+<tr>
+<td>B</td>
+<td>100</td>
+<td>0.70</td>
+<td>0.75</td>
+<td>0.724</td>
+</tr>
+<tr>
+<td>C</td>
+<td>20</td>
+<td>0.50</td>
+<td>0.60</td>
+<td>0.545</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td><strong>1120</strong></td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p>El <strong>promedio macro</strong> calcula la media no ponderada de las puntuaciones por clase:</p>
+<div class="arithmatex">\[
+F1_{\text{macro}} = \frac{1}{K}\sum_{k=1}^{K} F1_k = \frac{0.874 + 0.724 + 0.545}{3} = 0.714
+\]</div>
+<p>El promedio macro trata cada clase igualmente independientemente del tamaño. Es apropiado cuando todas las clases importan igualmente, especialmente cuando las clases minoritarias son importantes.</p>
+<p>El <strong>promedio micro</strong> agrupa todos los conteos TP, FP, FN entre las clases antes de calcular la métrica:</p>
+<div class="arithmatex">\[
+F1_{\text{micro}} = \frac{2\cdot\sum_k TP_k}{2\cdot\sum_k TP_k + \sum_k FP_k + \sum_k FN_k}
+\]</div>
+<p>El promedio micro está dominado por la clase más grande. Use el promedio micro cuando la fracción total de instancias correctamente clasificadas es la preocupación principal.</p>
+<p>El <strong>promedio ponderado</strong> escala cada puntuación de clase por su soporte:</p>
+<div class="arithmatex">\[
+F1_{\text{weighted}} = \frac{\sum_k n_k \cdot F1_k}{\sum_k n_k}
+= \frac{1000\cdot 0.874 + 100\cdot 0.724 + 20\cdot 0.545}{1120} = 0.858
+\]</div>
+<p>El promedio ponderado tiene en cuenta el desequilibrio de clases mientras sigue reflejando el rendimiento por clase.
+Es el predeterminado en <code>sklearn.metrics.f1_score(average='weighted')</code>.</p>
+<blockquote>
+<p><strong>Nota - Cómo elegir la estrategia de promediado:</strong> Use macro cuando el rendimiento de la clase minoritaria es crítico. Use micro cuando
+le importa la exactitud a nivel de instancia general. Use ponderado como predeterminado balanceado que
+refleja naturalmente la distribución de clases en sus datos.</p>
+</blockquote>
+<p><strong>Código para los tres modos de promediado:</strong></p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">f1_score</span><span class="p">,</span> <span class="n">precision_score</span><span class="p">,</span> <span class="n">recall_score</span><span class="p">,</span> <span class="n">classification_report</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">target_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="s2">&quot;C&quot;</span><span class="p">]))</span>
+
+<span class="n">f1_macro</span>    <span class="o">=</span> <span class="n">f1_score</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">average</span><span class="o">=</span><span class="s2">&quot;macro&quot;</span><span class="p">)</span>
+<span class="n">f1_micro</span>    <span class="o">=</span> <span class="n">f1_score</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">average</span><span class="o">=</span><span class="s2">&quot;micro&quot;</span><span class="p">)</span>
+<span class="n">f1_weighted</span> <span class="o">=</span> <span class="n">f1_score</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">average</span><span class="o">=</span><span class="s2">&quot;weighted&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Macro F1: </span><span class="si">{</span><span class="n">f1_macro</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">, Micro F1: </span><span class="si">{</span><span class="n">f1_micro</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">, F1 ponderado: </span><span class="si">{</span><span class="n">f1_weighted</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="kappa-de-cohen">Kappa de Cohen<a class="headerlink" href="#kappa-de-cohen" title="Permanent link">&para;</a></h3>
+<p>El kappa de Cohen mide el acuerdo entre evaluadores (o clasificador vs. verdad de base) mientras corrige el acuerdo esperado por azar:</p>
+<div class="arithmatex">\[
+\kappa = \frac{p_o - p_e}{1 - p_e}
+\]</div>
+<p><strong>Escala de interpretación:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Rango de <span class="arithmatex">\(\kappa\)</span></th>
+<th>Interpretación</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(&lt; 0\)</span></td>
+<td>Peor que el azar</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(0.01 – 0.20\)</span></td>
+<td>Acuerdo leve</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(0.21 – 0.40\)</span></td>
+<td>Acuerdo regular</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(0.41 – 0.60\)</span></td>
+<td>Acuerdo moderado</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(0.61 – 0.80\)</span></td>
+<td>Acuerdo sustancial</td>
+</tr>
+<tr>
+<td><span class="arithmatex">\(0.81 – 1.00\)</span></td>
+<td>Acuerdo casi perfecto</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">cohen_kappa_score</span>
+<span class="n">kappa</span> <span class="o">=</span> <span class="n">cohen_kappa_score</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Kappa de Cohen: </span><span class="si">{</span><span class="n">kappa</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="metricas-de-clasificacion_1">Métricas de clasificación<a class="headerlink" href="#metricas-de-clasificacion_1" title="Permanent link">&para;</a></h2>
+<p>Las métricas de clasificación evalúan listas ordenadas de predicciones. Son las métricas primarias en recuperación de información, sistemas de recomendación y problemas de aprendizaje a clasificar.</p>
+<h3 id="ndcg-ganancia-acumulada-descontada-normalizada">NDCG (Ganancia Acumulada Descontada Normalizada)<a class="headerlink" href="#ndcg-ganancia-acumulada-descontada-normalizada" title="Permanent link">&para;</a></h3>
+<p>NDCG mide la calidad de una lista clasificada de elementos, recompensando los elementos relevantes que aparecen
+antes en la lista.</p>
+<p><strong>Ganancia Acumulada Descontada en el rango <span class="arithmatex">\(k\)</span>:</strong></p>
+<div class="arithmatex">\[
+\text{DCG}_k = \sum_{i=1}^{k} \frac{2^{rel_i} - 1}{\log_2(i + 1)}
+\]</div>
+<p><strong>Normalización NDCG:</strong></p>
+<div class="arithmatex">\[
+\text{NDCG}_k = \frac{\text{DCG}_k}{\text{IDCG}_k}
+\]</div>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">ndcg_score</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># Etiquetas de relevancia verdadera (una consulta)</span>
+<span class="n">y_true</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+<span class="c1"># Puntuaciones predichas (mayor = más relevante)</span>
+<span class="n">y_score</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">]])</span>
+
+<span class="n">ndcg</span> <span class="o">=</span> <span class="n">ndcg_score</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_score</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;NDCG@4: </span><span class="si">{</span><span class="n">ndcg</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="precision-media-map">Precisión Media (MAP)<a class="headerlink" href="#precision-media-map" title="Permanent link">&para;</a></h3>
+<p><strong>Precisión Promedio (AP)</strong> para una sola consulta resume el trade-off precisión-recall a través de todos los elementos relevantes en la lista clasificada.</p>
+<p><strong>Precisión Media Promedio (MAP)</strong> promedia AP sobre todas las consultas:</p>
+<div class="arithmatex">\[
+\text{MAP} = \frac{1}{|Q|} \sum_{q=1}^{|Q|} \text{AP}(q)
+\]</div>
+<h2 id="inmersion-profunda-en-metricas-de-regresion">Inmersión profunda en métricas de regresión<a class="headerlink" href="#inmersion-profunda-en-metricas-de-regresion" title="Permanent link">&para;</a></h2>
+<h3 id="perdida-de-huber">Pérdida de Huber<a class="headerlink" href="#perdida-de-huber" title="Permanent link">&para;</a></h3>
+<p>La pérdida de Huber combina las mejores propiedades de MAE y MSE. Para errores menores que un umbral
+<span class="arithmatex">\(\delta\)</span> se comporta como MSE (suave, diferenciable); para errores mayores se comporta como MAE (lineal, robusto a valores atípicos):</p>
+<div class="arithmatex">\[
+\mathcal{L}_\delta(y, \hat{y}) =
+\begin{cases}
+\frac{1}{2}(y - \hat{y})^2 &amp; \text{si } |y - \hat{y}| \leq \delta \\
+\delta\left(|y - \hat{y}| - \frac{1}{2}\delta\right) &amp; \text{en otro caso}
+\end{cases}
+\]</div>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">HuberRegressor</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_absolute_error</span><span class="p">,</span> <span class="n">mean_squared_error</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">HuberRegressor</span><span class="p">(</span><span class="n">epsilon</span><span class="o">=</span><span class="mf">1.35</span><span class="p">)</span>   <span class="c1"># epsilon = delta en la parametrización de sklearn</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;MAE: </span><span class="si">{</span><span class="n">mean_absolute_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span><span class="w"> </span><span class="n">y_pred</span><span class="p">)</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;RMSE: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span><span class="w"> </span><span class="n">y_pred</span><span class="p">))</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="metricas-cuantilicas-e-intervalos-de-prediccion">Métricas cuantílicas e intervalos de predicción<a class="headerlink" href="#metricas-cuantilicas-e-intervalos-de-prediccion" title="Permanent link">&para;</a></h3>
+<p>La regresión cuantílica evalúa predicciones <em>distribucionales</em>: estimaciones de percentiles específicos de la distribución objetivo.</p>
+<p><strong>Pérdida pinball (pérdida cuantílica):</strong></p>
+<div class="arithmatex">\[
+\mathcal{L}_q(y, \hat{y}) =
+\begin{cases}
+q(y - \hat{y}) &amp; \text{si } y \geq \hat{y} \\
+(q - 1)(y - \hat{y}) &amp; \text{si } y &lt; \hat{y}
+\end{cases}
+\]</div>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">GradientBoostingRegressor</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># Entrenar modelos para cuantiles inferior, mediano y superior</span>
+<span class="n">quantiles</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.50</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">]</span>
+<span class="n">models</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="n">quantiles</span><span class="p">:</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">GradientBoostingRegressor</span><span class="p">(</span>
+        <span class="n">loss</span><span class="o">=</span><span class="s2">&quot;quantile&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">q</span><span class="p">,</span>
+        <span class="n">n_estimators</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="mi">4</span>
+    <span class="p">)</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+    <span class="n">models</span><span class="p">[</span><span class="n">q</span><span class="p">]</span> <span class="o">=</span> <span class="n">model</span>
+
+<span class="n">lower</span> <span class="o">=</span> <span class="n">models</span><span class="p">[</span><span class="mf">0.05</span><span class="p">]</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="n">median</span> <span class="o">=</span> <span class="n">models</span><span class="p">[</span><span class="mf">0.50</span><span class="p">]</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="n">upper</span> <span class="o">=</span> <span class="n">models</span><span class="p">[</span><span class="mf">0.95</span><span class="p">]</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+
+<span class="c1"># Cobertura empírica: debería ser ~90%</span>
+<span class="n">coverage</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">y_test</span> <span class="o">&gt;=</span> <span class="n">lower</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">y_test</span> <span class="o">&lt;=</span> <span class="n">upper</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Cobertura empírica del intervalo del 90%: </span><span class="si">{</span><span class="n">coverage</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+<blockquote>
+<p><strong>Nota - Verificación de calibración del intervalo:</strong> Siempre verifique la cobertura empírica. Si un intervalo del 90% cubre solo el 70% de los puntos de prueba,
+el modelo tiene exceso de confianza (intervalos demasiado estrechos). Si cubre el 99%, el modelo tiene falta de confianza (intervalos demasiado amplios). Los intervalos calibrados son el objetivo.</p>
+</blockquote>
+<h2 id="alineacion-con-las-metricas-del-negocio">Alineación con las métricas del negocio<a class="headerlink" href="#alineacion-con-las-metricas-del-negocio" title="Permanent link">&para;</a></h2>
+<p>Elegir la métrica de ML correcta es necesario pero no suficiente. La medida final del valor de un modelo es su impacto en el objetivo del negocio.</p>
+<h3 id="curvas-de-lift-y-ganancia">Curvas de lift y ganancia<a class="headerlink" href="#curvas-de-lift-y-ganancia" title="Permanent link">&para;</a></h3>
+<p>Las curvas de lift responden: "en comparación con la selección aleatoria de clientes/registros, ¿cuánto mejor lo hace el modelo?" Son herramientas fundamentales en marketing directo, puntuación de crédito y detección de fraude.</p>
+<p><strong>Ejemplo trabajado — campaña de marketing:</strong></p>
+<p>Suponga 10,000 clientes, 500 compradores (tasa base del 5%). El modelo clasifica a todos los clientes.</p>
+<table>
+<thead>
+<tr>
+<th>Décil</th>
+<th>Clientes</th>
+<th>Compradores en el décil</th>
+<th>Ganancia acum.</th>
+<th>Lift</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>1,000</td>
+<td>200</td>
+<td>40%</td>
+<td>4.0</td>
+</tr>
+<tr>
+<td>2</td>
+<td>1,000</td>
+<td>100</td>
+<td>60%</td>
+<td>3.0</td>
+</tr>
+<tr>
+<td>3</td>
+<td>1,000</td>
+<td>75</td>
+<td>75%</td>
+<td>2.5</td>
+</tr>
+<tr>
+<td>5</td>
+<td>1,000</td>
+<td>25</td>
+<td>90%</td>
+<td>1.8</td>
+</tr>
+<tr>
+<td>10</td>
+<td>1,000</td>
+<td>10</td>
+<td>100%</td>
+<td>1.0</td>
+</tr>
+</tbody>
+</table>
+<p>Si el presupuesto de la campaña permite contactar solo a 2,000 clientes (los 2 primeros déciles), dirigirse con
+el modelo captura el 60% de todos los compradores vs. el 20% con selección aleatoria: un lift de 3× en el ROI.</p>
+<h3 id="marco-de-valor-esperado">Marco de valor esperado<a class="headerlink" href="#marco-de-valor-esperado" title="Permanent link">&para;</a></h3>
+<p>El marco de valor esperado (VE) convierte una matriz de confusión en valor de negocio adjuntando
+montos en dólares (o cualquier utilidad) a cada celda:</p>
+<div class="arithmatex">\[
+\text{VE} = TP \cdot v_{TP} - FP \cdot c_{FP} - FN \cdot c_{FN} + TN \cdot v_{TN}
+\]</div>
+<p><strong>Optimización del umbral para el VE, no para la exactitud:</strong></p>
+<p>Para un modelo fijo, el umbral <span class="arithmatex">\(\tau\)</span> determina los conteos TP/FP/FN/TN. El umbral óptimo maximiza el VE:</p>
+<div class="arithmatex">\[
+\tau^* = \arg\max_\tau \; \text{VE}(\tau)
+\]</div>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="k">def</span> <span class="nf">expected_value</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_scores</span><span class="p">,</span> <span class="n">threshold</span><span class="p">,</span> <span class="n">v_tp</span><span class="p">,</span> <span class="n">c_fp</span><span class="p">,</span> <span class="n">c_fn</span><span class="p">,</span> <span class="n">v_tn</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="n">y_pred</span> <span class="o">=</span> <span class="p">(</span><span class="n">y_scores</span> <span class="o">&gt;=</span> <span class="n">threshold</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">tp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">y_pred</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">y_true</span> <span class="o">==</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">fp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">y_pred</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">y_true</span> <span class="o">==</span> <span class="mi">0</span><span class="p">))</span>
+    <span class="n">fn</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">y_pred</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">y_true</span> <span class="o">==</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="n">tn</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">y_pred</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">y_true</span> <span class="o">==</span> <span class="mi">0</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">tp</span> <span class="o">*</span> <span class="n">v_tp</span> <span class="o">-</span> <span class="n">fp</span> <span class="o">*</span> <span class="n">c_fp</span> <span class="o">-</span> <span class="n">fn</span> <span class="o">*</span> <span class="n">c_fn</span> <span class="o">+</span> <span class="n">tn</span> <span class="o">*</span> <span class="n">v_tn</span>
+
+<span class="c1"># Explorar umbrales y encontrar el que maximiza el VE</span>
+<span class="n">thresholds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.99</span><span class="p">,</span> <span class="mi">99</span><span class="p">)</span>
+<span class="n">evs</span> <span class="o">=</span> <span class="p">[</span><span class="n">expected_value</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_scores</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">v_tp</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">c_fp</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">c_fn</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+       <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">thresholds</span><span class="p">]</span>
+
+<span class="n">best_thresh</span> <span class="o">=</span> <span class="n">thresholds</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">evs</span><span class="p">)]</span>
+<span class="n">best_ev</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">evs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Umbral óptimo: </span><span class="si">{</span><span class="n">best_thresh</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, VE diario: $</span><span class="si">{</span><span class="n">best_ev</span><span class="si">:</span><span class="s2">,.0f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Comparar con el umbral predeterminado 0.5</span>
+<span class="n">default_ev</span> <span class="o">=</span> <span class="n">expected_value</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_scores</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">v_tp</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">c_fp</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">c_fn</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;VE con umbral predeterminado (0.5): $</span><span class="si">{</span><span class="n">default_ev</span><span class="si">:</span><span class="s2">,.0f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Ganancia de VE con umbral óptimo: $</span><span class="si">{</span><span class="n">best_ev</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">default_ev</span><span class="si">:</span><span class="s2">,.0f</span><span class="si">}</span><span class="s2"> por día&quot;</span><span class="p">)</span>
+</code></pre></div>
+<blockquote>
+<p><strong>Consejo - Marco de VE en Azure ML AutoML:</strong> El <code>primary_metric</code> de AutoML optimiza una métrica estadística. Después de que AutoML
+seleccione el mejor modelo, aplique el marco de VE post-hoc para ajustar el umbral. Este
+enfoque en dos pasos separa la selección del modelo (calidad estadística) del establecimiento del umbral
+(optimización del valor del negocio).</p>
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Volver al principio
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Derechos de autor &copy; 2026 <a href="https://github.com/Cloud2BR-MSFTLearningHub" target="_blank" rel="noopener">Cloud2BR MSFT Learning Hub</a>
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.expand", "navigation.top", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../../assets/js/org-link.js"></script>
+      
+    
+  </body>
+</html>

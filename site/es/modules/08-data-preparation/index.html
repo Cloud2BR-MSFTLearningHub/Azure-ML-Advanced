@@ -1,0 +1,2761 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Capacitación de Azure Machine Learning desde fundamentos hasta MLOps avanzado.">
+      
+      
+      
+        <link rel="canonical" href="https://cloud2br-msftlearninghub.github.io/Azure-ML-Advanced/es/modules/08-data-preparation/">
+      
+      
+        <link rel="prev" href="../07-environment-setup/">
+      
+      
+        <link rel="next" href="../09-model-types/">
+      
+      
+        
+          <link rel="alternate" href="/Azure-ML-Advanced/" hreflang="en">
+        
+          <link rel="alternate" href="/Azure-ML-Advanced/es/" hreflang="es">
+        
+      
+      
+      <link rel="icon" href="../../assets/img/org-logo.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>08. Preparación de Datos - Azure Machine Learning: Advanced</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/css/custom.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#preparacion-de-datos" class="md-skip">
+          Saltar a contenido
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href="../.." title="Azure Machine Learning: Advanced" class="md-header__button md-logo" aria-label="Azure Machine Learning: Advanced" data-md-component="logo">
+      
+  <img src="../../assets/img/org-logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Azure Machine Learning: Advanced
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              08. Preparación de Datos
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="Seleccionar idioma">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="/Azure-ML-Advanced/" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="/Azure-ML-Advanced/es/" hreflang="es" class="md-select__link">
+              Español
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Búsqueda" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Buscar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpiar" aria-label="Limpiar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando búsqueda
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Azure Machine Learning: Advanced" class="md-nav__button md-logo" aria-label="Azure Machine Learning: Advanced" data-md-component="logo">
+      
+  <img src="../../assets/img/org-logo.png" alt="logo">
+
+    </a>
+    Azure Machine Learning: Advanced
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Inicio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-math-prerequisites/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    01. Prerrequisitos Matemáticos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-e2e-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    02. Visión General de Extremo a Extremo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    03. Introducción y Ciclo de Vida
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-ml-foundations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    04. Fundamentos de ML
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-neural-networks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    05. Redes Neuronales y Deep Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-azure-ml-environment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    06. Entorno de Azure ML
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-environment-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    07. Configuración del Entorno
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08. Preparación de Datos
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    08. Preparación de Datos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#ciclo-de-vida-de-los-datos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ciclo de vida de los datos
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lista-de-verificacion-de-preparacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lista de verificación de preparación
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dimensiones-de-calidad-de-los-datos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dimensiones de calidad de los datos
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pipeline-minimo-de-preprocesamiento" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pipeline mínimo de preprocesamiento
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advertencia-sobre-fuga-de-datos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Advertencia sobre fuga de datos
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Advertencia sobre fuga de datos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#patron-correcto-vs-incorrecto-en-el-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Patrón correcto vs incorrecto en el pipeline
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contrato-de-datos-recomendado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Contrato de datos (recomendado)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#puertas-de-validacion-antes-del-entrenamiento" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Puertas de validación antes del entrenamiento
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#estrategias-de-division-por-tipo-de-problema" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Estrategias de división por tipo de problema
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inmersion-profunda-cada-concepto-explicado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inmersión profunda: cada concepto explicado
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Inmersión profunda: cada concepto explicado">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#por-que-la-preparacion-de-datos-domina-el-esfuerzo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Por qué la preparación de datos domina el esfuerzo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#imputacion-como-elegir-como-llenar-los-valores-faltantes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Imputación: cómo elegir cómo llenar los valores faltantes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#codificacion-de-caracteristicas-categoricas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Codificación de características categóricas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#por-que-escalar-y-por-que-ajustar-solo-en-entrenamiento" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Por qué escalar, y por qué ajustar solo en entrenamiento
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fuga-de-datos-formalizada" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fuga de datos, formalizada
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entrenamiento-validacion-prueba-y-estratificacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entrenamiento / validación / prueba y estratificación
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#el-contrato-de-datos-y-las-puertas-de-validacion-como-cortafuegos-de-calidad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        El contrato de datos y las puertas de validación como cortafuegos de calidad
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#manejo-de-datos-desbalanceados" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Manejo de datos desbalanceados
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ejemplo-de-division-estratificada" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejemplo de división estratificada
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#patrones-de-ingenieria-de-caracteristicas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Patrones de ingeniería de características
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Patrones de ingeniería de características">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ejemplo-de-transformacion-logaritmica-numerico-sesgado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejemplo de transformación logarítmica (numérico sesgado)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agregado-deslizante-caracteristicas-de-series-temporales" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Agregado deslizante (características de series temporales)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#codificacion-por-objetivo-con-proteccion-contra-fugas-validacion-cruzada-por-pliegues" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Codificación por objetivo con protección contra fugas (validación cruzada por pliegues)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lista-de-verificacion-de-reproducibilidad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lista de verificación de reproducibilidad
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#autoevaluacion-rapida" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Autoevaluación rápida
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flujo-de-trabajo-de-analisis-exploratorio-de-datos-eda" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Flujo de trabajo de Análisis Exploratorio de Datos (EDA)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Flujo de trabajo de Análisis Exploratorio de Datos (EDA)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#paso-1-auditoria-de-forma-y-tipos-de-datos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paso 1: Auditoría de forma y tipos de datos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paso-2-distribuciones-univariadas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paso 2: Distribuciones univariadas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paso-3-graficos-bivariados" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paso 3: Gráficos bivariados
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paso-4-matriz-de-correlacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paso 4: Matriz de correlación
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paso-5-deteccion-de-valores-atipicos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paso 5: Detección de valores atípicos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paso-6-analisis-del-objetivo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paso 6: Análisis del objetivo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paso-7-mapa-de-valores-faltantes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paso 7: Mapa de valores faltantes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inmersion-profunda-en-la-ingenieria-de-caracteristicas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inmersión profunda en la ingeniería de características
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Inmersión profunda en la ingeniería de características">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#transformaciones-de-caracteristicas-numericas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Transformaciones de características numéricas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#caracteristicas-de-interaccion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Características de interacción
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#caracteristicas-de-fecha-y-hora" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Características de fecha y hora
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#caracteristicas-de-texto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Características de texto
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reduccion-de-dimensionalidad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reducción de dimensionalidad
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Reducción de dimensionalidad">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pca-desde-cero" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PCA desde cero
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-model-types/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    09. Tipos de Modelos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-training-automl/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Entrenamiento y AutoML
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11-performance-metrics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Métricas de Rendimiento
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../12-results-explainability/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Resultados y Explicabilidad
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../13-deployment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Despliegue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../14-deployment-debug-k8s/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. Depuración de Despliegue
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_16" >
+        
+          
+          <label class="md-nav__link" for="__nav_16" id="__nav_16_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Referencia
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_16">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Referencia
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visión General
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/model-math-deep-dive/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Análisis Matemático Profundo de Modelos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/cli-commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Comandos CLI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glosario
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#ciclo-de-vida-de-los-datos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ciclo de vida de los datos
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lista-de-verificacion-de-preparacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lista de verificación de preparación
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dimensiones-de-calidad-de-los-datos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dimensiones de calidad de los datos
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pipeline-minimo-de-preprocesamiento" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pipeline mínimo de preprocesamiento
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advertencia-sobre-fuga-de-datos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Advertencia sobre fuga de datos
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Advertencia sobre fuga de datos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#patron-correcto-vs-incorrecto-en-el-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Patrón correcto vs incorrecto en el pipeline
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contrato-de-datos-recomendado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Contrato de datos (recomendado)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#puertas-de-validacion-antes-del-entrenamiento" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Puertas de validación antes del entrenamiento
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#estrategias-de-division-por-tipo-de-problema" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Estrategias de división por tipo de problema
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inmersion-profunda-cada-concepto-explicado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inmersión profunda: cada concepto explicado
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Inmersión profunda: cada concepto explicado">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#por-que-la-preparacion-de-datos-domina-el-esfuerzo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Por qué la preparación de datos domina el esfuerzo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#imputacion-como-elegir-como-llenar-los-valores-faltantes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Imputación: cómo elegir cómo llenar los valores faltantes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#codificacion-de-caracteristicas-categoricas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Codificación de características categóricas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#por-que-escalar-y-por-que-ajustar-solo-en-entrenamiento" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Por qué escalar, y por qué ajustar solo en entrenamiento
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fuga-de-datos-formalizada" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fuga de datos, formalizada
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#entrenamiento-validacion-prueba-y-estratificacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Entrenamiento / validación / prueba y estratificación
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#el-contrato-de-datos-y-las-puertas-de-validacion-como-cortafuegos-de-calidad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        El contrato de datos y las puertas de validación como cortafuegos de calidad
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#manejo-de-datos-desbalanceados" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Manejo de datos desbalanceados
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ejemplo-de-division-estratificada" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejemplo de división estratificada
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#patrones-de-ingenieria-de-caracteristicas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Patrones de ingeniería de características
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Patrones de ingeniería de características">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ejemplo-de-transformacion-logaritmica-numerico-sesgado" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ejemplo de transformación logarítmica (numérico sesgado)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agregado-deslizante-caracteristicas-de-series-temporales" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Agregado deslizante (características de series temporales)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#codificacion-por-objetivo-con-proteccion-contra-fugas-validacion-cruzada-por-pliegues" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Codificación por objetivo con protección contra fugas (validación cruzada por pliegues)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lista-de-verificacion-de-reproducibilidad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lista de verificación de reproducibilidad
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#autoevaluacion-rapida" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Autoevaluación rápida
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flujo-de-trabajo-de-analisis-exploratorio-de-datos-eda" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Flujo de trabajo de Análisis Exploratorio de Datos (EDA)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Flujo de trabajo de Análisis Exploratorio de Datos (EDA)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#paso-1-auditoria-de-forma-y-tipos-de-datos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paso 1: Auditoría de forma y tipos de datos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paso-2-distribuciones-univariadas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paso 2: Distribuciones univariadas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paso-3-graficos-bivariados" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paso 3: Gráficos bivariados
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paso-4-matriz-de-correlacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paso 4: Matriz de correlación
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paso-5-deteccion-de-valores-atipicos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paso 5: Detección de valores atípicos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paso-6-analisis-del-objetivo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paso 6: Análisis del objetivo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paso-7-mapa-de-valores-faltantes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paso 7: Mapa de valores faltantes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inmersion-profunda-en-la-ingenieria-de-caracteristicas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inmersión profunda en la ingeniería de características
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Inmersión profunda en la ingeniería de características">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#transformaciones-de-caracteristicas-numericas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Transformaciones de características numéricas
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#caracteristicas-de-interaccion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Características de interacción
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#caracteristicas-de-fecha-y-hora" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Características de fecha y hora
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#caracteristicas-de-texto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Características de texto
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reduccion-de-dimensionalidad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reducción de dimensionalidad
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Reducción de dimensionalidad">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pca-desde-cero" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PCA desde cero
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="preparacion-de-datos">Preparación de Datos<a class="headerlink" href="#preparacion-de-datos" title="Permanent link">&para;</a></h1>
+<p>La preparación de datos es con frecuencia la etapa de mayor esfuerzo en la entrega de ML. Este módulo enseña
+cómo pasar de datos brutos a datos listos para el modelo con calidad, reproducibilidad y
+prevención de fuga de datos.</p>
+<h2 id="ciclo-de-vida-de-los-datos">Ciclo de vida de los datos<a class="headerlink" href="#ciclo-de-vida-de-los-datos" title="Permanent link">&para;</a></h2>
+<p>Esta secuencia ilustra el ciclo de vida: definición del problema de negocio, recolección de datos, ingeniería
+de características y dimensionamiento del conjunto de datos para un entrenamiento de modelo confiable.</p>
+<p><img alt="Proceso de ML por etapas" src="../../assets/img/ml_process_by_stages.svg" /></p>
+<blockquote>
+<p><strong>Nota - Qué muestra esto:</strong> El ciclo de vida de los datos por etapa: desde la definición del problema de negocio hasta la recolección y la ingeniería de características.
+La mayor parte del esfuerzo de entrega reside en estas etapas tempranas, y los defectos aquí limitan la calidad que cualquier modelo puede alcanzar.</p>
+</blockquote>
+<p><img alt="Recolección de datos y objetivos" src="../../assets/img/collect_data_init_primary_second_targets.svg" /></p>
+<blockquote>
+<p><strong>Nota - Qué muestra esto:</strong> Cómo se recopilan los objetivos primarios y secundarios junto con las características. Definir el objetivo
+con precisión (y cuándo se conoce) es lo que más adelante previene la fuga del objetivo.</p>
+</blockquote>
+<p><img alt="Ingeniería de características durante la recolección de datos" src="../../assets/img/feature_engineering_collect_data.svg" /></p>
+<blockquote>
+<p><strong>Consejo - Punto práctico:</strong> La ingeniería de características debe ocurrir <em>mientras</em> se comprenden los datos, pero las transformaciones deben ajustarse
+solo en la partición de entrenamiento. Diseñar las características y la estrategia de partición juntas es cómo se mantiene
+el preprocesamiento libre de fugas.</p>
+</blockquote>
+<p><img alt="Guía de tamaño de conjunto de datos" src="../../assets/img/msft-dataset-size-guidance.svg" /></p>
+<blockquote>
+<p><strong>Consejo - Cómo usar este gráfico:</strong> Haga coincidir su caso de uso con una banda de tamaño de conjunto de datos antes de comprometerse con una familia de modelos. Las
+líneas de base tabulares necesitan mucho menos datos que el aprendizaje profundo; las cargas de trabajo de modelos de base necesitan órdenes de
+magnitud más. Dimensionar los datos primero evita elegir un modelo que no puede alimentar.</p>
+<p><strong>Nota - Referencia en GB:</strong> En la planificación de conjuntos de datos, el almacenamiento de proveedores es típicamente en unidades decimales:
+1 KB = 1,000 bytes, 1 MB = 1,000,000 bytes, 1 GB = 1,000,000,000 bytes.
+Las herramientas de memoria pueden mostrar unidades binarias en su lugar: 1 GiB = 1,073,741,824 bytes,
+por lo que 1 GB equivale aproximadamente a 0.93 GiB.</p>
+</blockquote>
+<h2 id="lista-de-verificacion-de-preparacion">Lista de verificación de preparación<a class="headerlink" href="#lista-de-verificacion-de-preparacion" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Eliminar duplicados y valores nulos</li>
+<li>Validar esquema y tipos de datos</li>
+<li>Dividir conjuntos de entrenamiento y prueba</li>
+<li>Registrar conjuntos de datos en Azure ML</li>
+</ul>
+<h2 id="dimensiones-de-calidad-de-los-datos">Dimensiones de calidad de los datos<a class="headerlink" href="#dimensiones-de-calidad-de-los-datos" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Dimensión</th>
+<th>Por qué importa</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Completitud</td>
+<td>Los valores faltantes pueden sesgar el entrenamiento</td>
+</tr>
+<tr>
+<td>Consistencia</td>
+<td>La deriva de esquema/tipo rompe los pipelines</td>
+</tr>
+<tr>
+<td>Exactitud</td>
+<td>Las etiquetas ruidosas reducen el techo del modelo</td>
+</tr>
+<tr>
+<td>Puntualidad</td>
+<td>Los datos obsoletos perjudican la relevancia en producción</td>
+</tr>
+</tbody>
+</table>
+<h2 id="pipeline-minimo-de-preprocesamiento">Pipeline mínimo de preprocesamiento<a class="headerlink" href="#pipeline-minimo-de-preprocesamiento" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Eliminar duplicados y registros inválidos.</li>
+<li>Definir columnas de características y objetivo.</li>
+<li>Manejar valores faltantes (estrategia de imputación).</li>
+<li>Codificar características categóricas.</li>
+<li>Dividir datos con una estrategia libre de fugas.</li>
+</ol>
+<p>División útil:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.33</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div>
+<p>Para la predicción de series temporales, use divisiones cronológicas (nunca mezcla aleatoria a través del tiempo).</p>
+<p>Los siguientes elementos visuales refuerzan cómo los conjuntos de datos supervisados se dividen y validan antes del
+entrenamiento, además de una referencia de tipos de datos para prevenir errores de esquema y conversión.</p>
+<p><img alt="Flujo de datos de entrenamiento/prueba" src="../../assets/img/training_testing_data_flow.svg" /></p>
+<blockquote>
+<p><strong>Nota - Qué muestra esto:</strong> El flujo de datos a través de las etapas de entrenamiento y prueba. El conjunto de prueba se separa al principio y no
+se toca hasta la evaluación final: la disciplina que mantiene honestos los puntajes fuera de línea.</p>
+</blockquote>
+<p><img alt="División de entrenamiento y prueba" src="../../assets/img/training_test_split.svg" /></p>
+<blockquote>
+<p><strong>Nota - Qué muestra esto:</strong> Una división de entrenamiento/prueba. Para el desequilibrio de clases use una división <em>estratificada</em> para preservar las proporciones de clase; para
+series temporales use una división <em>cronológica</em> para que el modelo nunca entrene con datos futuros.</p>
+</blockquote>
+<p><img alt="Resumen de tipos de datos de Python" src="../../assets/img/python_dtype.svg" /></p>
+<blockquote>
+<p><strong>Nota - Qué muestra esto:</strong> Una referencia de tipos de datos de Python/pandas. Validar los tipos de datos contra su contrato de datos detecta
+la deriva del esquema y errores de conversión silenciosos antes de que corrompan el entrenamiento.</p>
+</blockquote>
+<h2 id="advertencia-sobre-fuga-de-datos">Advertencia sobre fuga de datos<a class="headerlink" href="#advertencia-sobre-fuga-de-datos" title="Permanent link">&para;</a></h2>
+<p>La fuga ocurre cuando información futura/del objetivo entra en las características de entrenamiento. Causas típicas:</p>
+<ul>
+<li>Ajustar preprocesadores en los datos completos antes de la división.</li>
+<li>Incluir campos posteriores al resultado.</li>
+<li>División aleatoria en datos temporales.</li>
+</ul>
+<p>La fuga crea métricas fuera de línea infladas y un comportamiento deficiente en producción.</p>
+<h3 id="patron-correcto-vs-incorrecto-en-el-pipeline">Patrón correcto vs incorrecto en el pipeline<a class="headerlink" href="#patron-correcto-vs-incorrecto-en-el-pipeline" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># INCORRECTO: ajustar el escalador en el conjunto de datos completo antes de la división</span>
+<span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+<span class="n">X_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>  <span class="c1"># filtra estadísticas de prueba al entrenamiento</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+
+<span class="c1"># CORRECTO: ajustar el escalador solo en los datos de entrenamiento</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+<span class="n">X_train_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>  <span class="c1"># ajustar solo en entrenamiento</span>
+<span class="n">X_test_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>         <span class="c1"># transformar prueba usando estadísticas de entrenamiento</span>
+</code></pre></div>
+<p>Envuelva esto en un <code>sklearn.pipeline.Pipeline</code> para que fit/transform siempre se apliquen de manera consistente:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+
+<span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([</span>
+    <span class="p">(</span><span class="s2">&quot;scaler&quot;</span><span class="p">,</span> <span class="n">StandardScaler</span><span class="p">()),</span>
+    <span class="p">(</span><span class="s2">&quot;model&quot;</span><span class="p">,</span> <span class="n">LogisticRegression</span><span class="p">())</span>
+<span class="p">])</span>
+<span class="n">pipeline</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>   <span class="c1"># scaler.fit solo en X_train internamente</span>
+<span class="n">pipeline</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>   <span class="c1"># scaler.transform en X_test</span>
+</code></pre></div>
+<h2 id="contrato-de-datos-recomendado">Contrato de datos (recomendado)<a class="headerlink" href="#contrato-de-datos-recomendado" title="Permanent link">&para;</a></h2>
+<p>Defina un contrato antes del entrenamiento para que todos los productores/consumidores estén alineados:</p>
+<table>
+<thead>
+<tr>
+<th>Campo</th>
+<th>Tipo</th>
+<th>Anulable</th>
+<th>Rango/patrón permitido</th>
+<th>Notas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>customer_id</code></td>
+<td>string</td>
+<td>No</td>
+<td>Regex UUID</td>
+<td>Identificador único</td>
+</tr>
+<tr>
+<td><code>event_ts</code></td>
+<td>datetime</td>
+<td>No</td>
+<td>ISO-8601</td>
+<td>Marca de tiempo del evento (UTC)</td>
+</tr>
+<tr>
+<td><code>label</code></td>
+<td>int</td>
+<td>Sí</td>
+<td>0 o 1</td>
+<td>Nulo para filas solo de inferencia</td>
+</tr>
+<tr>
+<td><code>amount</code></td>
+<td>float</td>
+<td>No</td>
+<td>&gt;= 0</td>
+<td>Característica monetaria</td>
+</tr>
+</tbody>
+</table>
+<h2 id="puertas-de-validacion-antes-del-entrenamiento">Puertas de validación antes del entrenamiento<a class="headerlink" href="#puertas-de-validacion-antes-del-entrenamiento" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>Puerta de esquema</strong>: columnas y tipos de datos coinciden con el contrato.</li>
+<li><strong>Puerta de calidad</strong>: tasas de nulos, tasas de duplicados, comprobaciones de valores atípicos dentro de los umbrales.</li>
+<li><strong>Puerta de deriva</strong>: el cambio de distribución de características por debajo de los límites configurados.</li>
+<li><strong>Puerta de fuga</strong>: no hay características posteriores al resultado en el conjunto de entrenamiento.</li>
+</ol>
+<h2 id="estrategias-de-division-por-tipo-de-problema">Estrategias de división por tipo de problema<a class="headerlink" href="#estrategias-de-division-por-tipo-de-problema" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Problema</th>
+<th>División recomendada</th>
+<th>Notas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Clasificación/regresión tabular IID</td>
+<td>División aleatoria entrenamiento/validación/prueba</td>
+<td>Usar división estratificada si existe desequilibrio de clases</td>
+</tr>
+<tr>
+<td>Series temporales</td>
+<td>División cronológica (ventanas deslizantes/expansivas)</td>
+<td>La mezcla aleatoria destruye el orden temporal</td>
+</tr>
+<tr>
+<td>Datos correlacionados por entidad (usuarios/dispositivos)</td>
+<td>División por grupo por clave de entidad</td>
+<td>Previene la filtración de entidades entre particiones</td>
+</tr>
+<tr>
+<td>Detección de eventos raros</td>
+<td>División aleatoria estratificada</td>
+<td>Garantiza la clase minoritaria en cada pliegue</td>
+</tr>
+</tbody>
+</table>
+<h2 id="inmersion-profunda-cada-concepto-explicado">Inmersión profunda: cada concepto explicado<a class="headerlink" href="#inmersion-profunda-cada-concepto-explicado" title="Permanent link">&para;</a></h2>
+<p>Esta sección explica el razonamiento detrás de cada paso de preparación para que las reglas se conviertan en
+principios que pueda aplicar a nuevos conjuntos de datos.</p>
+<h3 id="por-que-la-preparacion-de-datos-domina-el-esfuerzo">Por qué la preparación de datos domina el esfuerzo<a class="headerlink" href="#por-que-la-preparacion-de-datos-domina-el-esfuerzo" title="Permanent link">&para;</a></h3>
+<p>Un modelo solo puede aprender la señal que sobrevive en los datos. Cada defecto: una fila mal etiquetada,
+una característica con fuga, una unidad inconsistente: establece un techo duro en la calidad alcanzable que ningún
+algoritmo puede superar. Este es el significado práctico de "basura entra, basura sale", y
+es por eso que los equipos pasan la mayor parte de su tiempo aquí.</p>
+<h3 id="imputacion-como-elegir-como-llenar-los-valores-faltantes">Imputación: cómo elegir cómo llenar los valores faltantes<a class="headerlink" href="#imputacion-como-elegir-como-llenar-los-valores-faltantes" title="Permanent link">&para;</a></h3>
+<p>La <strong>imputación</strong> reemplaza los valores faltantes para que los modelos que no pueden aceptar nulos puedan ejecutarse. El método
+codifica una suposición sobre <em>por qué</em> falta el valor:</p>
+<table>
+<thead>
+<tr>
+<th>Estrategia</th>
+<th>Suposición</th>
+<th>Riesgo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Relleno por media/mediana</td>
+<td>Falta aleatoriamente; el valor central es representativo</td>
+<td>Reduce la varianza, oculta la estructura</td>
+</tr>
+<tr>
+<td>Relleno por moda (categórico)</td>
+<td>La categoría más frecuente es un valor predeterminado seguro</td>
+<td>Sobre-representa la mayoría</td>
+</tr>
+<tr>
+<td>Basado en modelo (kNN/MICE)</td>
+<td>La ausencia es predecible a partir de otras características</td>
+<td>Más costoso, puede filtrarse si se ajusta a todos los datos</td>
+</tr>
+<tr>
+<td>Indicador de "faltante"</td>
+<td>La propia ausencia es informativa</td>
+<td>Añade dimensionalidad</td>
+</tr>
+</tbody>
+</table>
+<p>Crucialmente, el imputador debe ser <strong>ajustado solo en la partición de entrenamiento</strong> y luego aplicado a validación
+y prueba: de lo contrario, las estadísticas de los datos retenidos se filtran al entrenamiento.</p>
+<h3 id="codificacion-de-caracteristicas-categoricas">Codificación de características categóricas<a class="headerlink" href="#codificacion-de-caracteristicas-categoricas" title="Permanent link">&para;</a></h3>
+<p>Los modelos operan con números, por lo que las categorías deben convertirse:</p>
+<ul>
+<li>La <strong>codificación one-hot</strong> crea una columna binaria por categoría. Segura para características de baja cardinalidad;
+  explota la dimensionalidad para las de alta cardinalidad.</li>
+<li>La <strong>codificación ordinal</strong> mapea categorías a enteros. Solo válida cuando las categorías tienen un verdadero
+  orden (p. ej. pequeño/mediano/grande), de lo contrario inventa un ranking falso.</li>
+<li>La <strong>codificación por objetivo/media</strong> reemplaza una categoría con la media del objetivo para esa categoría. Poderosa
+  para alta cardinalidad pero una <em>fuente principal de fuga</em>: debe calcularse dentro de los pliegues de validación cruzada,
+  nunca en el conjunto de datos completo.</li>
+</ul>
+<p>Los modelos basados en árboles (y CatBoost nativamente) toleran mejor las categorías brutas que los modelos lineales,
+que es parte de la razón por la que dominan los problemas tabulares.</p>
+<h3 id="por-que-escalar-y-por-que-ajustar-solo-en-entrenamiento">Por qué escalar, y por qué ajustar solo en entrenamiento<a class="headerlink" href="#por-que-escalar-y-por-que-ajustar-solo-en-entrenamiento" title="Permanent link">&para;</a></h3>
+<p>El <strong>escalado de características</strong> (p. ej. <code>StandardScaler</code>: restar la media, dividir por la desviación estándar) pone
+las características en rangos comparables. Importa para los modelos basados en distancia y gradiente (kNN, SVM,
+modelos lineales, redes neuronales) donde una característica de gran magnitud de otro modo dominaría; los modelos de árbol
+son invariantes a la escala y no lo necesitan. La media y la desviación estándar del escalador son
+<em>parámetros aprendidos</em>: ajustarlos en el conjunto de datos completo antes de la división permite que las estadísticas
+del conjunto de prueba influyan en la transformación de entrenamiento, la fuga mostrada en el ejemplo INCORRECTO anterior.</p>
+<h3 id="fuga-de-datos-formalizada">Fuga de datos, formalizada<a class="headerlink" href="#fuga-de-datos-formalizada" title="Permanent link">&para;</a></h3>
+<p>La <strong>fuga</strong> es cualquier situación donde la información no disponible en el momento de la predicción entra al entrenamiento.
+Infla las métricas fuera de línea y colapsa en producción. Tres mecanismos se repiten:</p>
+<ol>
+<li><strong>Fuga de preprocesamiento</strong>: ajustar escaladores/imputadores/codificadores en datos que incluyen la partición de prueba.
+   Se corrige ajustando las transformaciones dentro de un <code>Pipeline</code> <em>después</em> de la división.</li>
+<li><strong>Fuga del objetivo</strong>: una característica que es un proxy de, o se calcula a partir del resultado (p. ej.
+   "account_closed_date" al predecir la cancelación). Se corrige auditando la disponibilidad temporal de cada característica
+   en relación con el momento de predicción.</li>
+<li><strong>Fuga temporal</strong>: mezclar aleatoriamente datos ordenados en el tiempo para que el modelo "vea el futuro".
+   Se corrige con divisiones cronológicas.</li>
+</ol>
+<p>El patrón <code>Pipeline</code> es la defensa estructural: porque <code>fit</code> solo ve datos de entrenamiento y
+<code>transform</code> se reaaplica de manera idéntica a los datos nuevos, la fuga a través del preprocesamiento se vuelve
+imposible por construcción.</p>
+<h3 id="entrenamiento-validacion-prueba-y-estratificacion">Entrenamiento / validación / prueba y estratificación<a class="headerlink" href="#entrenamiento-validacion-prueba-y-estratificacion" title="Permanent link">&para;</a></h3>
+<ul>
+<li>El <strong>entrenamiento</strong> ajusta los parámetros, la <strong>validación</strong> ajusta los hiperparámetros y compara modelos, la <strong>prueba</strong>
+  da una estimación final imparcial.</li>
+<li>La <strong>división estratificada</strong> preserva la proporción de clases en cada partición. Sin ella, una clase positiva rara
+  (p. ej. 1% de fraude) puede estar sub-representada o ausente en un pliegue, haciendo que las métricas sean ruidosas o
+  indefinidas. Estratificar en la etiqueta para clasificación; para series temporales, nunca mezclar en absoluto.</li>
+</ul>
+<h3 id="el-contrato-de-datos-y-las-puertas-de-validacion-como-cortafuegos-de-calidad">El contrato de datos y las puertas de validación como cortafuegos de calidad<a class="headerlink" href="#el-contrato-de-datos-y-las-puertas-de-validacion-como-cortafuegos-de-calidad" title="Permanent link">&para;</a></h3>
+<p>El <strong>contrato de datos</strong> (esquema, tipos, nulabilidad, rangos) convierte los supuestos implícitos en un
+acuerdo aplicable entre los productores de datos y el pipeline de entrenamiento. Las cuatro <strong>puertas de validación</strong>
+(esquema, calidad, deriva, fuga) son comprobaciones automatizadas que <em>bloquean</em> un conjunto de datos defectuoso para que
+nunca llegue al entrenamiento: el equivalente de pruebas unitarias en la ingeniería de datos. Esto desplaza los fallos
+hacia la izquierda, donde son baratos de corregir, en lugar de descubrirlos como predicciones de producción degradadas
+semanas después.</p>
+<h3 id="manejo-de-datos-desbalanceados">Manejo de datos desbalanceados<a class="headerlink" href="#manejo-de-datos-desbalanceados" title="Permanent link">&para;</a></h3>
+<p>Muchos problemas de alto valor (fraude, cancelación, defectos) tienen una clase positiva rara. Un modelo ingenuo puede
+obtener un 99% de exactitud prediciendo siempre "negativo" sin capturar ningún positivo, por lo que el desbalance
+debe manejarse deliberadamente:</p>
+<table>
+<thead>
+<tr>
+<th>Técnica</th>
+<th>Cómo funciona</th>
+<th>Precaución</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pesos de clase</td>
+<td>Penalizar más los errores en la clase rara en la pérdida</td>
+<td>El más simple, sin cambio de datos; ajustar el peso</td>
+</tr>
+<tr>
+<td>Sobremuestreo (p. ej. SMOTE)</td>
+<td>Sintetizar más ejemplos de la minoría</td>
+<td>Ajustar solo en la partición de entrenamiento, nunca antes de la división</td>
+</tr>
+<tr>
+<td>Submuestreo</td>
+<td>Eliminar ejemplos de la mayoría</td>
+<td>Descarta datos; usar cuando la mayoría es enorme</td>
+</tr>
+<tr>
+<td>Ajuste de umbral</td>
+<td>Mover el punto de corte de decisión después del entrenamiento</td>
+<td>Desacopla el modelo del umbral de negocio</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Nota - Remuestrear después de dividir:</strong> Cualquier remuestreo (SMOTE, sobre/submuestreo) debe ocurrir
+<em>dentro</em> del pliegue de entrenamiento únicamente. Remuestrear antes de la división filtra vecinos sintéticos de las filas de prueba
+al entrenamiento y produce puntuaciones fuera de línea demasiado optimistas.</p>
+</blockquote>
+<h3 id="ejemplo-de-division-estratificada">Ejemplo de división estratificada<a class="headerlink" href="#ejemplo-de-division-estratificada" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+
+<span class="c1"># stratify= garantiza que las proporciones de etiquetas se preserven en cada división</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">stratify</span><span class="o">=</span><span class="n">y</span>
+<span class="p">)</span>
+</code></pre></div>
+<h2 id="patrones-de-ingenieria-de-caracteristicas">Patrones de ingeniería de características<a class="headerlink" href="#patrones-de-ingenieria-de-caracteristicas" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Numérico: escalado, recorte, transformaciones logarítmicas.</li>
+<li>Categórico: one-hot, codificación por objetivo (con pliegues libres de fugas).</li>
+<li>Tiempo: rezagos, agregados deslizantes, características de calendario/estacionalidad.</li>
+<li>Texto: tokenización, TF-IDF, embeddings.</li>
+</ul>
+<h3 id="ejemplo-de-transformacion-logaritmica-numerico-sesgado">Ejemplo de transformación logarítmica (numérico sesgado)<a class="headerlink" href="#ejemplo-de-transformacion-logaritmica-numerico-sesgado" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;amount_log&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log1p</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;amount&quot;</span><span class="p">])</span>  <span class="c1"># log1p = log(1+x), seguro para valores 0</span>
+</code></pre></div>
+<h3 id="agregado-deslizante-caracteristicas-de-series-temporales">Agregado deslizante (características de series temporales)<a class="headerlink" href="#agregado-deslizante-caracteristicas-de-series-temporales" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s2">&quot;event_ts&quot;</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;spend_7d&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;customer_id&quot;</span><span class="p">)[</span><span class="s2">&quot;amount&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span>
+    <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">min_periods</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="p">)</span>
+</code></pre></div>
+<h3 id="codificacion-por-objetivo-con-proteccion-contra-fugas-validacion-cruzada-por-pliegues">Codificación por objetivo con protección contra fugas (validación cruzada por pliegues)<a class="headerlink" href="#codificacion-por-objetivo-con-proteccion-contra-fugas-validacion-cruzada-por-pliegues" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">category_encoders</span> <span class="kn">import</span> <span class="n">TargetEncoder</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_val_score</span>
+
+<span class="n">enc</span> <span class="o">=</span> <span class="n">TargetEncoder</span><span class="p">(</span><span class="n">smoothing</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">X_encoded</span> <span class="o">=</span> <span class="n">enc</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">[[</span><span class="s2">&quot;category&quot;</span><span class="p">]],</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="c1"># El codificador estima estadísticas dentro del pliegue cuando se usa en un pipeline de validación cruzada</span>
+</code></pre></div>
+<h2 id="lista-de-verificacion-de-reproducibilidad">Lista de verificación de reproducibilidad<a class="headerlink" href="#lista-de-verificacion-de-reproducibilidad" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Persistir el pipeline de transformación con los artefactos del modelo.</li>
+<li>Versionar los instantáneos del conjunto de datos y las definiciones de esquema.</li>
+<li>Almacenar semillas de división e índices de división para reejecutar exactamente.</li>
+<li>Registrar la lista de características y el orden de características usado para el entrenamiento.</li>
+</ul>
+<h2 id="autoevaluacion-rapida">Autoevaluación rápida<a class="headerlink" href="#autoevaluacion-rapida" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Pregunta</th>
+<th>Respuesta</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>¿Por qué la división aleatoria es incorrecta para la mayoría de las tareas de predicción?</td>
+<td>Los datos de predicción están ordenados en el tiempo, así que una división aleatoria filtra información futura al entrenamiento; hay que dividir cronológicamente.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>¿Qué dimensión de calidad se ve afectada por una discrepancia de esquema?</td>
+<td>La validez: los datos dejan de ajustarse a los tipos/esquema esperados.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>¿Cuál es una fuente común de fuga de datos?</td>
+<td>Ajustar transformaciones (o usar información del objetivo/futura) sobre todo el conjunto antes de separar entrenamiento y prueba.</td>
+</tr>
+<tr>
+<td>4</td>
+<td>¿Por qué un escalador o imputador debe ajustarse solo en la partición de entrenamiento?</td>
+<td>Ajustarlo con todos los datos filtra estadísticas de prueba al entrenamiento y produce una evaluación optimista sesgada; ajústalo en entrenamiento y aplícalo a validación/prueba.</td>
+</tr>
+<tr>
+<td>5</td>
+<td>¿Dónde en el pipeline debe ocurrir SMOTE/sobremuestreo, y por qué?</td>
+<td>Solo en el pliegue de entrenamiento después de dividir (dentro de la validación cruzada), para que las muestras sintéticas nunca se filtren a validación/prueba.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="flujo-de-trabajo-de-analisis-exploratorio-de-datos-eda">Flujo de trabajo de Análisis Exploratorio de Datos (EDA)<a class="headerlink" href="#flujo-de-trabajo-de-analisis-exploratorio-de-datos-eda" title="Permanent link">&para;</a></h2>
+<p>El EDA es la investigación sistemática de un conjunto de datos antes del modelado. Su propósito es comprender
+la estructura y la calidad de los datos, identificar anomalías, revelar propiedades de distribución y
+generar hipótesis de ingeniería de características. Omitir el EDA lleva a sorpresas durante el entrenamiento y
+fallos de modelo inexplicados en producción.</p>
+<p>Un EDA disciplinado sigue esta secuencia:</p>
+<div class="highlight"><pre><span></span><code>1. Auditoría de forma y tipos de datos
+2. Distribuciones univariadas
+3. Relaciones bivariadas
+4. Matriz de correlación
+5. Detección de valores atípicos
+6. Análisis del objetivo
+7. Mapa de valores faltantes
+</code></pre></div>
+<h3 id="paso-1-auditoria-de-forma-y-tipos-de-datos">Paso 1: Auditoría de forma y tipos de datos<a class="headerlink" href="#paso-1-auditoria-de-forma-y-tipos-de-datos" title="Permanent link">&para;</a></h3>
+<p>La primera acción es siempre comprender qué se tiene.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;dataset.csv&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>          <span class="c1"># (filas, columnas)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">dtypes</span><span class="p">)</span>         <span class="c1"># tipo de cada columna</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>         <span class="c1"># primeras cinco filas</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span>     <span class="c1"># conteo, media, desv. est., mín., cuartiles, máx. para numéricos</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">info</span><span class="p">())</span>         <span class="c1"># conteos no nulos y tipos de datos juntos</span>
+</code></pre></div>
+<p>Verificar columnas que se leen como <code>object</code> cuando deberían ser numéricas (a menudo señala problemas de codificación),
+y columnas de fechas y horas analizadas como cadenas. Corregir los tipos de datos antes de cualquier otro análisis.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Corregir problemas comunes de tipos de datos</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;event_ts&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;event_ts&quot;</span><span class="p">])</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;amount&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;amount&quot;</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s2">&quot;coerce&quot;</span><span class="p">)</span>  <span class="c1"># convertir valores incorrectos a NaN</span>
+</code></pre></div>
+<h3 id="paso-2-distribuciones-univariadas">Paso 2: Distribuciones univariadas<a class="headerlink" href="#paso-2-distribuciones-univariadas" title="Permanent link">&para;</a></h3>
+<p>Para cada característica, comprender la distribución marginal independientemente de otras características.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Numérico: histograma + KDE</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;amount&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s2">&quot;hist&quot;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Distribución de amount&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Categórico: gráfico de barras de conteos de valores</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;category&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s2">&quot;bar&quot;</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Frecuencia de categoría&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Estadísticas resumidas para todos los numéricos</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">describe</span><span class="p">(</span><span class="n">percentiles</span><span class="o">=</span><span class="p">[</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">,</span> <span class="mf">0.99</span><span class="p">]))</span>
+</code></pre></div>
+<p>Aspectos clave a notar: sesgo fuerte hacia la derecha (señala transformación logarítmica), multimodalidad (puede indicar
+subpoblaciones) y varianza casi nula (características casi constantes no tienen señal).</p>
+<h3 id="paso-3-graficos-bivariados">Paso 3: Gráficos bivariados<a class="headerlink" href="#paso-3-graficos-bivariados" title="Permanent link">&para;</a></h3>
+<p>Explorar relaciones entre pares de características y entre cada característica y el objetivo.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="c1"># Dispersión: numérico vs numérico</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;feature_a&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;feature_b&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;label&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Diagrama de caja: numérico vs objetivo categórico</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;label&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;amount&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Diagrama de violín para comparación de distribución más rica</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">violinplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;label&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;amount&quot;</span><span class="p">,</span> <span class="n">inner</span><span class="o">=</span><span class="s2">&quot;quartile&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+<blockquote>
+<p><strong>Consejo - Superposición de puntos en conjuntos de datos grandes:</strong> Cuando <code>n &gt; 100,000</code>, muestrear antes de graficar para evitar
+cuellos de botella de renderizado: <code>df.sample(10_000, random_state=42)</code>.</p>
+</blockquote>
+<h3 id="paso-4-matriz-de-correlacion">Paso 4: Matriz de correlación<a class="headerlink" href="#paso-4-matriz-de-correlacion" title="Permanent link">&para;</a></h3>
+<p>La matriz de correlación de Pearson muestra las relaciones lineales por pares entre características numéricas.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">corr</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="s2">&quot;number&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">corr</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;.2f&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;coolwarm&quot;</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+            <span class="n">linewidths</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Matriz de correlación de Pearson&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+<p>Los valores cercanos a <span class="arithmatex">\(\pm 1\)</span> indican características casi colineales; una de ellas a menudo puede eliminarse sin
+perder información. Una alta correlación entre una característica y el objetivo es una señal fuerte de
+poder predictivo, pero verifique que no sea fuga del objetivo.</p>
+<blockquote>
+<p><strong>Nota - Limitaciones de Pearson:</strong> Pearson mide solo la asociación <em>lineal</em>. Use la correlación de rango de Spearman
+(<code>corr(method='spearman')</code>) para relaciones no lineales monótonas, y la información mutua para dependencias arbitrarias.</p>
+</blockquote>
+<h3 id="paso-5-deteccion-de-valores-atipicos">Paso 5: Detección de valores atípicos<a class="headerlink" href="#paso-5-deteccion-de-valores-atipicos" title="Permanent link">&para;</a></h3>
+<p>Los valores atípicos son observaciones extremas que pueden distorsionar el entrenamiento del modelo, particularmente para los modelos lineales
+y los métodos basados en distancia.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Método z-score: marcar observaciones a más de 3 desv. est. de la media</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">z_scores</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">stats</span><span class="o">.</span><span class="n">zscore</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="s2">&quot;number&quot;</span><span class="p">)))</span>
+<span class="n">outlier_mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">z_scores</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Filas atípicas (z &gt; 3): </span><span class="si">{</span><span class="n">outlier_mask</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Método IQR: más robusto para colas pesadas</span>
+<span class="n">Q1</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;amount&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.25</span><span class="p">)</span>
+<span class="n">Q3</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;amount&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.75</span><span class="p">)</span>
+<span class="n">IQR</span> <span class="o">=</span> <span class="n">Q3</span> <span class="o">-</span> <span class="n">Q1</span>
+<span class="n">lower</span> <span class="o">=</span> <span class="n">Q1</span> <span class="o">-</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="n">IQR</span>
+<span class="n">upper</span> <span class="o">=</span> <span class="n">Q3</span> <span class="o">+</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="n">IQR</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">[(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;amount&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">lower</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;amount&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">upper</span><span class="p">)]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;valores atípicos IQR&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>Opciones de tratamiento de valores atípicos: recorte (limitar al percentil 99), eliminación (solo si es claramente erróneo)
+o modelado robusto (los modelos de árbol toleran bien los valores atípicos).</p>
+<h3 id="paso-6-analisis-del-objetivo">Paso 6: Análisis del objetivo<a class="headerlink" href="#paso-6-analisis-del-objetivo" title="Permanent link">&para;</a></h3>
+<p>Comprender la distribución del objetivo es crítico antes de cualquier decisión de modelado.</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># Clasificación: verificar el desequilibrio de clases</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;label&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+<span class="c1"># Si la clase minoritaria &lt; 5%, planificar el manejo del desequilibrio</span>
+
+<span class="c1"># Regresión: verificar el sesgo del objetivo</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Sesgo del objetivo: </span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">skew</span><span class="p">()</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="c1"># |sesgo| &gt; 1 sugiere transformación logarítmica del objetivo para modelos lineales</span>
+
+<span class="c1"># Graficar distribución del objetivo</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s2">&quot;hist&quot;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Distribución del objetivo&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
+<blockquote>
+<p><strong>Nota - Umbral de desequilibrio:</strong> Un desequilibrio de clases por debajo del 10% en la minoría merece manejo explícito.
+Por debajo del 1% (eventos raros), la exactitud estándar no tiene sentido; use AUC de precisión-recall en su lugar.</p>
+</blockquote>
+<h3 id="paso-7-mapa-de-valores-faltantes">Paso 7: Mapa de valores faltantes<a class="headerlink" href="#paso-7-mapa-de-valores-faltantes" title="Permanent link">&para;</a></h3>
+<p>Visualizar y cuantificar los valores faltantes para decidir estrategias de imputación.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">missingno</span> <span class="k">as</span> <span class="nn">msno</span>   <span class="c1"># pip install missingno</span>
+
+<span class="c1"># Gráfico matricial: muestra el patrón de ausencia en todas las filas</span>
+<span class="n">msno</span><span class="o">.</span><span class="n">matrix</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Gráfico de barras: fracción faltante por columna</span>
+<span class="n">msno</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Tabla resumen</span>
+<span class="n">missing_summary</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">missing_summary</span><span class="p">[</span><span class="n">missing_summary</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">])</span>
+</code></pre></div>
+<p>Si dos columnas faltan en las mismas filas, pueden compartir una causa común: esto puede informar
+una característica indicadora de "ausencia" que en sí misma tiene poder predictivo.</p>
+<hr />
+<h2 id="inmersion-profunda-en-la-ingenieria-de-caracteristicas">Inmersión profunda en la ingeniería de características<a class="headerlink" href="#inmersion-profunda-en-la-ingenieria-de-caracteristicas" title="Permanent link">&para;</a></h2>
+<p>La ingeniería de características es el proceso de transformar columnas brutas en representaciones que exponen
+señal al modelo. Es la palanca individual más grande para mejorar el rendimiento en datos tabulares.
+Las siguientes subsecciones cubren transformaciones numéricas, construcción de interacciones, características temporales
+y representaciones de texto.</p>
+<h3 id="transformaciones-de-caracteristicas-numericas">Transformaciones de características numéricas<a class="headerlink" href="#transformaciones-de-caracteristicas-numericas" title="Permanent link">&para;</a></h3>
+<p>Las características numéricas brutas rara vez están en la forma óptima para el aprendizaje. El problema más común es
+el <strong>sesgo</strong>: una cola larga a la derecha significa que la mayoría de los valores se agrupan cerca de cero mientras que unos pocos valores extremos
+dominan la escala.</p>
+<p>La <strong>transformación logarítmica</strong> es la solución más simple para características con sesgo a la derecha y estrictamente positivas:</p>
+<div class="arithmatex">\[
+x' = \log(1 + x)
+\]</div>
+<p>Usar <span class="arithmatex">\(\log(1+x)\)</span> (implementado como <code>np.log1p</code>) evita valores indefinidos en <span class="arithmatex">\(x=0\)</span>.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;revenue_log&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log1p</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;revenue&quot;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Antes: sesgo=</span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;revenue&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">skew</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Después:  sesgo=</span><span class="si">{</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;revenue_log&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">skew</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>La <strong>transformación Box-Cox</strong> encuentra la potencia óptima <span class="arithmatex">\(\lambda\)</span> para normalizar una distribución. Requiere
+valores estrictamente positivos:</p>
+<div class="arithmatex">\[
+x'(\lambda) = \begin{cases} \frac{x^\lambda - 1}{\lambda} &amp; \lambda \neq 0 \\ \ln x &amp; \lambda = 0 \end{cases}
+\]</div>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">boxcox</span>
+
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;revenue_bc&quot;</span><span class="p">],</span> <span class="n">lambda_bc</span> <span class="o">=</span> <span class="n">boxcox</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;revenue&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># +1 garantiza positividad</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Lambda óptimo: </span><span class="si">{</span><span class="n">lambda_bc</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>La <strong>transformación Yeo-Johnson</strong> extiende Box-Cox para manejar valores cero y negativos:</p>
+<div class="arithmatex">\[
+x'(\lambda) = \begin{cases}
+\frac{(x+1)^\lambda - 1}{\lambda} &amp; x \geq 0,\, \lambda \neq 0 \\
+\ln(x+1) &amp; x \geq 0,\, \lambda = 0 \\
+\frac{-((-x+1)^{2-\lambda} - 1)}{2 - \lambda} &amp; x &lt; 0,\, \lambda \neq 2 \\
+-\ln(-x+1) &amp; x &lt; 0,\, \lambda = 2
+\end{cases}
+\]</div>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">PowerTransformer</span>
+
+<span class="n">pt</span> <span class="o">=</span> <span class="n">PowerTransformer</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;yeo-johnson&quot;</span><span class="p">)</span>
+<span class="n">df_transformed</span> <span class="o">=</span> <span class="n">pt</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df</span><span class="p">[[</span><span class="s2">&quot;revenue&quot;</span><span class="p">,</span> <span class="s2">&quot;spend&quot;</span><span class="p">]])</span>
+</code></pre></div>
+<p><strong>Cuándo usar cuál:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Transformación</th>
+<th>Requisitos</th>
+<th>Mejor para</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Log / log1p</td>
+<td><span class="arithmatex">\(x \geq 0\)</span></td>
+<td>Ingresos, conteos, precios</td>
+</tr>
+<tr>
+<td>Box-Cox</td>
+<td><span class="arithmatex">\(x &gt; 0\)</span></td>
+<td>Estrictamente positivo, distribución desconocida</td>
+</tr>
+<tr>
+<td>Yeo-Johnson</td>
+<td>Cualquier signo</td>
+<td>Propósito general, predeterminado recomendado</td>
+</tr>
+<tr>
+<td>Transformación cuantil</td>
+<td>Cualquiera</td>
+<td>Cuando importa la normalidad basada en rango</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Nota - Escalar antes de modelos lineales, no de árboles:</strong> Los modelos basados en árboles son invariantes a las transformaciones
+monótonas de características individuales. Las transformaciones de potencia importan más para los modelos lineales, SVMs
+y redes neuronales donde la escala y distribución de las entradas afectan la optimización.</p>
+</blockquote>
+<h3 id="caracteristicas-de-interaccion">Características de interacción<a class="headerlink" href="#caracteristicas-de-interaccion" title="Permanent link">&para;</a></h3>
+<p>Algunas señales predictivas solo existen en la <em>combinación</em> de dos características. Una sola característica puede
+ser poco informativa; multiplicada o dividida, se vuelve muy predictiva.</p>
+<p><strong>Características producto</strong> capturan efectos multiplicativos:</p>
+<div class="highlight"><pre><span></span><code><span class="n">df</span><span class="p">[</span><span class="s2">&quot;length_x_width&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;length&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;width&quot;</span><span class="p">]</span>       <span class="c1"># proxy de área</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;price_x_qty&quot;</span><span class="p">]</span>    <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;unit_price&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;quantity&quot;</span><span class="p">]</span> <span class="c1"># proxy de ingresos</span>
+</code></pre></div>
+<p><strong>Características de ratio</strong> normalizan una característica por otra:</p>
+<div class="highlight"><pre><span></span><code><span class="n">df</span><span class="p">[</span><span class="s2">&quot;spend_per_visit&quot;</span><span class="p">]</span>    <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;total_spend&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;visit_count&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;click_through_rate&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;clicks&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;impressions&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Características polinomiales</strong> expanden todas las características al grado <span class="arithmatex">\(d\)</span>, incluidos los productos cruzados:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">PolynomialFeatures</span>
+
+<span class="n">poly</span> <span class="o">=</span> <span class="n">PolynomialFeatures</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">interaction_only</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">include_bias</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">X_poly</span> <span class="o">=</span> <span class="n">poly</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">[[</span><span class="s2">&quot;age&quot;</span><span class="p">,</span> <span class="s2">&quot;income&quot;</span><span class="p">,</span> <span class="s2">&quot;tenure&quot;</span><span class="p">]])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Original: 3 características -&gt; Polinomial grado-2: </span><span class="si">{</span><span class="n">X_poly</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2"> características&quot;</span><span class="p">)</span>
+</code></pre></div>
+<blockquote>
+<p><strong>Nota - Maldición de la dimensionalidad:</strong> Las características polinomiales de grado 2 con <span class="arithmatex">\(p\)</span> características originales producen <span class="arithmatex">\(O(p^2)\)</span> nuevas características.
+Al grado 3, <span class="arithmatex">\(O(p^3)\)</span>. Con <span class="arithmatex">\(p=100\)</span> características y grado 2, se obtienen aproximadamente 5,000 características,
+más de lo que la mayoría de los conjuntos de datos pueden soportar. Use el conocimiento del dominio para seleccionar interacciones manualmente,
+o use <code>interaction_only=True</code> con un modelo regularizado para que la penalización elimine las poco informativas.</p>
+</blockquote>
+<h3 id="caracteristicas-de-fecha-y-hora">Características de fecha y hora<a class="headerlink" href="#caracteristicas-de-fecha-y-hora" title="Permanent link">&para;</a></h3>
+<p>Las marcas de tiempo brutas son opacas para la mayoría de los modelos. Descomponerlas en campos de calendario numéricos expone
+patrones estacionales y cíclicos.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;event_ts&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;event_ts&quot;</span><span class="p">])</span>
+
+<span class="c1"># Descomposición de calendario</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;year&quot;</span><span class="p">]</span>       <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;event_ts&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">year</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;month&quot;</span><span class="p">]</span>      <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;event_ts&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">month</span>       <span class="c1"># 1-12</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;day&quot;</span><span class="p">]</span>        <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;event_ts&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">day</span>         <span class="c1"># 1-31</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;hour&quot;</span><span class="p">]</span>       <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;event_ts&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">hour</span>        <span class="c1"># 0-23</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;weekday&quot;</span><span class="p">]</span>    <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;event_ts&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">dayofweek</span>   <span class="c1"># 0=Lunes, 6=Domingo</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;is_weekend&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;weekday&quot;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;quarter&quot;</span><span class="p">]</span>    <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;event_ts&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">quarter</span>
+</code></pre></div>
+<p>La <strong>codificación cíclica</strong> evita que el modelo trate la hora 23 como "lejos" de la hora 0. Codifique
+las características circulares con proyecciones de seno y coseno:</p>
+<div class="arithmatex">\[
+\text{hour\_sin} = \sin\!\left(\frac{2\pi \cdot \text{hour}}{24}\right), \quad
+\text{hour\_cos} = \cos\!\left(\frac{2\pi \cdot \text{hour}}{24}\right)
+\]</div>
+<div class="highlight"><pre><span></span><code><span class="n">df</span><span class="p">[</span><span class="s2">&quot;hour_sin&quot;</span><span class="p">]</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;hour&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="mi">24</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;hour_cos&quot;</span><span class="p">]</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;hour&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="mi">24</span><span class="p">)</span>
+
+<span class="c1"># Mismo patrón para mes (período=12) y día de semana (período=7)</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;month_sin&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;month&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="mi">12</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;month_cos&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;month&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="mi">12</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Días desde el evento</strong> captura la recencia:</p>
+<div class="highlight"><pre><span></span><code><span class="n">reference_date</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">(</span><span class="s2">&quot;2024-01-01&quot;</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;days_since_signup&quot;</span><span class="p">]</span>    <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;event_ts&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;signup_ts&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">days</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;days_since_reference&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;event_ts&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">reference_date</span><span class="p">)</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">days</span>
+</code></pre></div>
+<h3 id="caracteristicas-de-texto">Características de texto<a class="headerlink" href="#caracteristicas-de-texto" title="Permanent link">&para;</a></h3>
+<p>Cuando las características incluyen columnas de texto libre, deben codificarse numéricamente antes del entrenamiento.</p>
+<p><strong>Bolsa de palabras (BoW)</strong> cuenta las ocurrencias de términos por documento:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">CountVectorizer</span>
+
+<span class="n">cv</span> <span class="o">=</span> <span class="n">CountVectorizer</span><span class="p">(</span><span class="n">max_features</span><span class="o">=</span><span class="mi">5000</span><span class="p">,</span> <span class="n">stop_words</span><span class="o">=</span><span class="s2">&quot;english&quot;</span><span class="p">)</span>
+<span class="n">X_bow</span> <span class="o">=</span> <span class="n">cv</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;description&quot;</span><span class="p">])</span>   <span class="c1"># matriz dispersa (n_docs, vocab_size)</span>
+</code></pre></div>
+<p><strong>TF-IDF</strong> reduce el peso de los términos que aparecen en casi todos los documentos (valor discriminativo bajo):</p>
+<div class="arithmatex">\[
+\text{TF-IDF}(t, d) = \text{TF}(t, d) \cdot \log\frac{N}{df(t)}
+\]</div>
+<p>donde <span class="arithmatex">\(\text{TF}(t,d)\)</span> es la frecuencia del término <span class="arithmatex">\(t\)</span> en el documento <span class="arithmatex">\(d\)</span>, <span class="arithmatex">\(N\)</span> es el número total de
+documentos, y <span class="arithmatex">\(df(t)\)</span> es el número de documentos que contienen el término <span class="arithmatex">\(t\)</span>.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">TfidfVectorizer</span>
+
+<span class="n">tfidf</span> <span class="o">=</span> <span class="n">TfidfVectorizer</span><span class="p">(</span><span class="n">max_features</span><span class="o">=</span><span class="mi">10_000</span><span class="p">,</span> <span class="n">ngram_range</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">sublinear_tf</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">X_tfidf</span> <span class="o">=</span> <span class="n">tfidf</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;description&quot;</span><span class="p">])</span>
+</code></pre></div>
+<p><strong>Los N-gramas</strong> extienden BoW/TF-IDF para capturar frases de múltiples palabras. <code>ngram_range=(1, 2)</code> incluye
+unigramas y bigramas, p. ej. "no bueno" como un solo token junto con "no" y "bueno".</p>
+<p><strong>Los embeddings</strong> mapean el texto a un espacio semántico denso de baja dimensión (p. ej. sentence-transformers
+o embeddings de OpenAI). Capturan el significado en lugar de solo la superposición de términos:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">sentence_transformers</span> <span class="kn">import</span> <span class="n">SentenceTransformer</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">SentenceTransformer</span><span class="p">(</span><span class="s2">&quot;all-MiniLM-L6-v2&quot;</span><span class="p">)</span>
+<span class="n">embeddings</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;description&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="n">show_progress_bar</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1"># forma de embeddings: (n_docs, 384)</span>
+</code></pre></div>
+<p><strong>Cuándo usar cada uno:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Método</th>
+<th>Dimensionalidad</th>
+<th>Captura semántica</th>
+<th>Costo de entrenamiento</th>
+<th>Mejor para</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bolsa de palabras</td>
+<td>Alta (tamaño del vocabulario)</td>
+<td>No</td>
+<td>Muy bajo</td>
+<td>Problemas dominados por palabras clave</td>
+</tr>
+<tr>
+<td>TF-IDF</td>
+<td>Alta (tamaño del vocabulario)</td>
+<td>Parcialmente</td>
+<td>Muy bajo</td>
+<td>Línea de base de clasificación de documentos</td>
+</tr>
+<tr>
+<td>N-gramas (bi/tri)</td>
+<td>Muy alta</td>
+<td>Parcialmente</td>
+<td>Bajo</td>
+<td>Sentimiento, detección de frases</td>
+</tr>
+<tr>
+<td>Embeddings preentrenados</td>
+<td>Baja (128-1536)</td>
+<td>Sí</td>
+<td>Bajo (solo inferencia)</td>
+<td>Similitud semántica, pocos datos</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="reduccion-de-dimensionalidad">Reducción de dimensionalidad<a class="headerlink" href="#reduccion-de-dimensionalidad" title="Permanent link">&para;</a></h2>
+<p>Los espacios de características de alta dimensión causan varios problemas: dispersión, multicolinealidad, entrenamiento lento
+y sobreajuste. La reducción de dimensionalidad condensa el espacio preservando la mayor
+estructura útil posible.</p>
+<h3 id="pca-desde-cero">PCA desde cero<a class="headerlink" href="#pca-desde-cero" title="Permanent link">&para;</a></h3>
+<p>El Análisis de Componentes Principales encuentra las direcciones (componentes principales) de máxima varianza en
+los datos y proyecta los datos sobre un subespacio de menor dimensión.</p>
+<p><strong>Algoritmo:</strong></p>
+<ol>
+<li>Centrar los datos: <span class="arithmatex">\(\tilde{X} = X - \bar{X}\)</span></li>
+<li>Calcular la matriz de covarianza: <span class="arithmatex">\(C = \frac{1}{n-1}\tilde{X}^T\tilde{X}\)</span></li>
+<li>Calcular vectores propios y valores propios: <span class="arithmatex">\(C v_k = \lambda_k v_k\)</span></li>
+<li>Ordenar por valor propio descendente; conservar los <span class="arithmatex">\(k\)</span> vectores propios superiores.</li>
+<li>Proyectar: <span class="arithmatex">\(Z = \tilde{X} W_k\)</span> donde <span class="arithmatex">\(W_k\)</span> contiene los <span class="arithmatex">\(k\)</span> vectores propios superiores como columnas.</li>
+</ol>
+<p>La <strong>ratio de varianza explicada</strong> del componente <span class="arithmatex">\(k\)</span> es <span class="arithmatex">\(\frac{\lambda_k}{\sum_j \lambda_j}\)</span>.</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+<span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">PCA</span>
+
+<span class="c1"># Escalar primero: PCA es sensible a la magnitud de las características</span>
+<span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+<span class="n">X_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+
+<span class="c1"># Ajustar PCA solo en los datos de entrenamiento</span>
+<span class="n">pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">()</span>
+<span class="n">pca</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">)</span>
+
+<span class="c1"># Gráfico de sedimentación: visualizar la varianza explicada por componente</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">pca</span><span class="o">.</span><span class="n">explained_variance_ratio_</span><span class="p">),</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mf">0.95</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Umbral del 95%&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Número de componentes&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Varianza explicada acumulada&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Gráfico de sedimentación de PCA&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Elegir k componentes que expliquen el 95% de la varianza</span>
+<span class="n">k</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">pca</span><span class="o">.</span><span class="n">explained_variance_ratio_</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mf">0.95</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Componentes para el 95% de varianza: </span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">pca_k</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="n">k</span><span class="p">)</span>
+<span class="n">X_train_pca</span> <span class="o">=</span> <span class="n">pca_k</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">)</span>
+<span class="n">X_test_pca</span>  <span class="o">=</span> <span class="n">pca_k</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">scaler</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_test</span><span class="p">))</span>
+</code></pre></div>
+<p><strong>Limitaciones de PCA:</strong></p>
+<ul>
+<li>Solo captura la estructura de varianza <em>lineal</em>; no puede desenrollar una variedad.</li>
+<li>Los componentes principales son combinaciones lineales de todas las características originales, por lo que no son
+  directamente interpretables.</li>
+<li>Sensible a los valores atípicos (que distorsionan la matriz de covarianza).</li>
+<li>No tiene en cuenta la variable objetivo; los componentes que explican la varianza en <span class="arithmatex">\(X\)</span> pueden no ser
+  los componentes que explican la varianza en <span class="arithmatex">\(y\)</span>.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Volver al principio
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Derechos de autor &copy; 2026 <a href="https://github.com/Cloud2BR-MSFTLearningHub" target="_blank" rel="noopener">Cloud2BR MSFT Learning Hub</a>
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.expand", "navigation.top", "search.highlight", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado al portapapeles", "clipboard.copy": "Copiar al portapapeles", "search.result.more.one": "1 m\u00e1s en esta p\u00e1gina", "search.result.more.other": "# m\u00e1s en esta p\u00e1gina", "search.result.none": "No se encontraron documentos", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Teclee para comenzar b\u00fasqueda", "search.result.term.missing": "Falta", "select.version": "Seleccionar versi\u00f3n"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+        <script src="../../assets/js/org-link.js"></script>
+      
+    
+  </body>
+</html>
